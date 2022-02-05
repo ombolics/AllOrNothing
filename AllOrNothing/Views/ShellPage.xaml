@@ -7,6 +7,8 @@
     xmlns:helpers="using:AllOrNothing.Helpers"
     xmlns:behaviors="using:AllOrNothing.Behaviors"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:fa5="http://schemas.fontawesome.com/icons/"  
+    xmlns:winui="using:Microsoft.UI.Xaml.Controls"
     Loaded="OnLoaded"
     Style="{StaticResource PageStyle}"
     >
@@ -33,14 +35,16 @@
                 <NavigationViewItem.Content>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Menüpont"/>
-                        
-                        <Button Content="X" Margin="10,0,0,0">
+
+                        <Button Width="15" Height="15" Margin ="10,0,0,0" Padding="0,0,0,0"  Background="{ThemeResource SystemControlAccentAcrylicElementAccentMediumHighBrush}">
                             <!--<StackPanel>
                                 <Border/>
-                                --><!--<SymbolIcon Symbol="Go"/>--><!--
+                                --><!--<SymbolIcon Symbol="Go"/>--><!--s
                                 
                             </StackPanel>-->
-                           
+                            <Image  Source="/Assests/cross3.png" Width="10" Height="10" Stretch="UniformToFill" />
+                            <!--<TextBlock Text="X"/>-->
+
                         </Button>
                        
                     </StackPanel>

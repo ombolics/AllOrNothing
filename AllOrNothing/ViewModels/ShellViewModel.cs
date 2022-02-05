@@ -6,6 +6,8 @@ using AllOrNothing.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml.Navigation;
+using Microsoft.UI.Xaml.Media.Imaging;
+using Microsoft.UI.Xaml.Media;
 
 namespace AllOrNothing.ViewModels
 {
@@ -61,6 +63,21 @@ namespace AllOrNothing.ViewModels
 
         private void On_NavigateTo(object sender, NavigateToEventargs e)
         {
+            //TODO close button
+            //StackPanel p = new StackPanel();
+            //p.Children.Add(new TextBlock { Text = e.PageName });
+            //Button b = new Button();
+            //Image i = new Image();
+            //var uriSource = new Uri();
+            //i.Source = new BitmapImage();
+            //i.Width = 10;
+            //i.Height = 10;
+            //i.Stretch = Stretch.UniformToFill;
+            //b.Content = i;
+
+            //p.Children.Add(b);
+
+
             NavigationViewService.AddNavItem(new NavigationViewItem { Content = e.PageName }, e.PageVM);
             NavigationService.NavigateTo(e.PageVM.FullName);
         }

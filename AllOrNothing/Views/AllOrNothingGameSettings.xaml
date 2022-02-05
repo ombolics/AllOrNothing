@@ -25,21 +25,26 @@
 
             <ListView Grid.Row="2" x:Name="TeamList" Header="Kisorsolt csapatok" 
                       ItemsSource="{x:Bind ViewModel.ListViewItemSource}"
-                       IsItemClickEnabled="False"
-                       SelectionMode="None"
-                      HorizontalAlignment="Left">
+                      ScrollViewer.VerticalScrollMode="Auto"
+                      ShowsScrollingPlaceholders="False"
+                      IsItemClickEnabled="True"
+                      SelectionMode="Single"
+                      HorizontalAlignment="Left"
+                      Width="400"
+                      Background="{ThemeResource GreyBrush}">
 
 
                 <ListView.ItemTemplate>
 
                     <DataTemplate>
-                        <Grid>
+                        <Grid Margin="10,25,10,0">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
 
-                            <StackPanel Grid.Row="0" Orientation="Horizontal" AllowDrop ="True">
+                            <StackPanel Grid.Row="0" Orientation="Horizontal" AllowDrop ="True" 
+                                        DataContext="{Binding Players[0].Name}">
 
                                 <!--<dd:DragDropService.VisualConfiguration>
                                     <dd:VisualDropConfiguration
@@ -62,9 +67,6 @@
                             </StackPanel>
 
                             <StackPanel Grid.Row="1" Orientation="Horizontal">
-                                <Border Background="DarkOliveGreen">
-                                    <TextBlock Text="Csapatnév"/>
-                                </Border>
                                 <TextBox Background="DarkSeaGreen" Margin="10,10,10,10" Text="{Binding TeamName}"/>
                             </StackPanel>
 
