@@ -3,27 +3,36 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:winui="using:Microsoft.UI.Xaml.Controls"
+    xmlns:conv="using:AllOrNothing.Converters"
     mc:Ignorable="d"
     Background="{ThemeResource GradientBrush5}">
 
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled" HorizontalScrollMode="Disabled">
+        <Grid>
 
-    <Grid>
+            <!--Game Settings -->
+            <Grid Visibility="{x:Bind ViewModel.GameSettingsVisible, Mode=OneWay}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
 
-        <!--Game Settings -->
-        <Grid Visibility="{x:Bind ViewModel.GameSettingsVisible, Mode=OneWay}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="2*"/>
-            </Grid.RowDefinitions>
-            <Border Grid.Row="0" Background="DarkGray">
-                <TextBlock Text="Játszma beállításai" />
-            </Border>
-            <Button Grid.Row="1" Content="Kör beállításai" VerticalAlignment="Center"
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Border Grid.Row="0" Background="DarkGray">
+                    <TextBlock Text="Játszma beállításai" />
+                </Border>
+
+                <Button Grid.Column="2" Grid.Row="2" Content="Kör beállításai" VerticalAlignment="Center"
                     HorizontalAlignment="Right" Command="{x:Bind ViewModel.ShowRoundSettingsCommand}"/>
 
-            <ListView Grid.Row="2" x:Name="TeamList" Header="Kisorsolt csapatok" 
+                <ListView Grid.Column="0" Grid.Row="1" x:Name="TeamList" Header="Kisorsolt csapatok" 
                       ItemsSource="{x:Bind ViewModel.ListViewItemSource}"
                       ScrollViewer.VerticalScrollMode="Auto"
                       ShowsScrollingPlaceholders="False"
@@ -31,68 +40,120 @@
                       SelectionMode="Single"
                       HorizontalAlignment="Left"
                       Width="400"
-                      Background="{ThemeResource GreyBrush}">
+                      Background="{ThemeResource GreyBrush}" CornerRadius="30">
 
 
-                <ListView.ItemTemplate>
+                    <ListView.ItemTemplate>
 
-                    <DataTemplate>
-                        <Grid Margin="10,25,10,0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
+                        <DataTemplate>
+                            <Grid Margin="10,25,10,0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
 
-                            <StackPanel Grid.Row="0" Orientation="Horizontal" AllowDrop ="True" 
+                                <StackPanel Grid.Row="0" Orientation="Horizontal" AllowDrop ="True" 
                                         DataContext="{Binding Players[0].Name}">
 
-                                <!--<dd:DragDropService.VisualConfiguration>
+                                    <!--<dd:DragDropService.VisualConfiguration>
                                     <dd:VisualDropConfiguration
                                     Caption="Csapattag áthelyezése"
                                     IsContentVisible="True"
                                     IsGlyphVisible="False"/>
                                 </dd:DragDropService.VisualConfiguration>-->
 
-                                <Border  CanDrag="True">
-                                    <TextBlock Text="{Binding Players[0].Name}"/>
-                                </Border>
+                                    <Border  CanDrag="True">
+                                        <TextBlock Text="{Binding Players[0].Name}"/>
+                                    </Border>
 
-                                <Border>
-                                    <TextBlock Text="{Binding Players[1].Name}"/>
-                                </Border>
+                                    <Border>
+                                        <TextBlock Text="{Binding Players[1].Name}"/>
+                                    </Border>
 
-                                <Border>
-                                    <TextBlock Text="{Binding Players[2].Name}"/>
-                                </Border>
-                            </StackPanel>
+                                    <Border>
+                                        <TextBlock Text="{Binding Players[2].Name}"/>
+                                    </Border>
+                                </StackPanel>
 
-                            <StackPanel Grid.Row="1" Orientation="Horizontal">
-                                <TextBox Background="DarkSeaGreen" Margin="10,10,10,10" Text="{Binding TeamName}"/>
-                            </StackPanel>
+                                <StackPanel Grid.Row="1" Orientation="Horizontal">
+                                    <TextBox Background="DarkSeaGreen" Margin="10,10,10,10" Text="{Binding TeamName}"/>
+                                </StackPanel>
 
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
 
-        </Grid>
+                <StackPanel Grid.Column="1" Grid.Row="1" Background="{ThemeResource DarkGreenBrush}" CornerRadius="30" 
+                            Orientation="Vertical">
+                    
+                    <TextBlock Text="Játékosok" FontSize="{StaticResource LargeFontSize}" Margin="10,10,10,30"/>
 
-        <!--Round Settings -->
-        <Grid Visibility="{x:Bind ViewModel.RoundSettingsVisible, Mode=OneWay}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <Border Grid.Row="0" Background="DarkGray">
-                <TextBlock Text="Kör beállításai"/>
-            </Border>
-            <Button Grid.Row="1" Content="Játszma beállításai" VerticalAlignment="Center"
+                    <CheckBox Content="Csapatos játék" Margin="15,10,10,10" Command="{x:Bind ViewModel.TeamGameCheckBoxCommand}"/>
+                    <CheckBox Content="Csapatok sorsolása" Margin="15,10,10,10" IsEnabled="{x:Bind ViewModel.TeamGame, Mode=TwoWay}"/>
+
+                    <winui:RadioButtons  x:Name="TeamSizeRadio" SelectedIndex="-1"  MaxColumns="4" Header="Csapatméret"
+                                        Margin="15,10,10,10" IsEnabled="{x:Bind ViewModel.TeamGame, Mode=TwoWay}">
+                        <x:String>2</x:String>
+                        <x:String>3</x:String>
+                        <x:String>4</x:String>
+                        <TextBox PlaceholderText="pl.: 5" MaxHeight="20"/>
+                        <!--<x:String>Egyéb</x:String>-->
+                    </winui:RadioButtons>
+                </StackPanel>
+                
+                
+                <!--<Grid Grid.Column="1" Grid.Row="1" Background="{ThemeResource GreyBrush}" CornerRadius="30"
+                  >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+                    
+
+
+
+                    --><!--<StackPanel Grid.Row="3" Orientation="Horizontal" Visibility="Visible" >
+
+
+                        <Button  Content="2" FontSize="{StaticResource MediumFontSize}" Margin="10,10,10,10" 
+                             VerticalAlignment="Stretch"/>
+                        <Button  Content="3" FontSize="{StaticResource MediumFontSize}" Margin="10,10,10,10" 
+                             VerticalAlignment="Stretch"/>
+                        <Button  Content="4" FontSize="{StaticResource MediumFontSize}" Margin="10,10,10,10" 
+                             VerticalAlignment="Stretch"/>
+
+                        <Button Content="Egyéb" FontSize="{StaticResource MediumFontSize}"/>
+                        <TextBox PlaceholderText="Csapatlétszám" FontSize="{StaticResource MediumFontSize}" 
+                             TextAlignment="Center" HorizontalTextAlignment="Center"/>
+                    </StackPanel>--><!--
+
+
+                </Grid>-->
+            </Grid>
+
+            <!--Round Settings -->
+            <Grid Visibility="{x:Bind ViewModel.RoundSettingsVisible, Mode=OneWay}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" Background="DarkGray">
+                    <TextBlock Text="Kör beállításai"/>
+                </Border>
+                <Button Grid.Row="1" Content="Játszma beállításai" VerticalAlignment="Center"
                     HorizontalAlignment="Right" Command="{x:Bind ViewModel.ShowGameSettingsCommand}"/>
 
-            <Button Grid.Row="2" Content="Tematikus betöltése" VerticalAlignment="Center"
+                <Button Grid.Row="2" Content="Tematikus betöltése" VerticalAlignment="Center"
                     HorizontalAlignment="Right" Command="{x:Bind ViewModel.StartGameCommand}"/>
-        </Grid>
+            </Grid>
 
-    </Grid>
+        </Grid>
+    </ScrollViewer>
 </Page>

@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -104,7 +105,47 @@ namespace AllOrNothing.ViewModels
 
         public ICommand StartGameCommand => _startGameCommand ??= new RelayCommand(StartGameClicked);
 
+        public int TeamSize 
+        { 
+            get => _teamSize; 
+            set => SetProperty(ref _teamSize, value); 
+        }
 
+        private int _teamSize;
+
+
+        private void BackgroundColor_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender is RadioButtons rb)
+            {
+                string selectedValue;
+
+                if(rb.SelectedItem is TextBox tb)
+                {
+                    //not validated
+                    selectedValue = tb.Text;
+                }
+                else
+                {
+                    selectedValue = rb.SelectedItem as string;
+                }
+
+                TeamSize = int.Parse(selectedValue);              
+            }
+        }
+
+        private ICommand _teamGameCheckBoxCommand;
+
+        public ICommand TeamGameCheckBoxCommand => _teamGameCheckBoxCommand ??= new RelayCommand( () => TeamGame = !TeamGame);
+
+        public bool TeamGame 
+        { 
+            get => _teamGame; 
+            set => SetProperty(ref _teamGame, value); 
+        }
+
+        private bool _teamGame;
+        
 
         private void StartGameClicked()
         {

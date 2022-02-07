@@ -4,6 +4,7 @@
     <SolidColorBrush x:Key="ThemeControlForegroundBaseHighBrush" Color="{ThemeResource SystemBaseHighColor}"></SolidColorBrush>
 
     <SolidColorBrush x:Key="GreyBrush" Color="#D1D1D1"/>
+    <SolidColorBrush x:Key="DarkGreenBrush" Color="#576b5c"/>
 
     <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1" x:Key="MillionaireMainPageBackBrush">
         <GradientStop Color="#38064b" Offset="0.0" />
