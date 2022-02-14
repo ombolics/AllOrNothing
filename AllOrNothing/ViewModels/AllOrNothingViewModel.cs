@@ -19,6 +19,15 @@ namespace AllOrNothing.ViewModels
         private ICommand _openStatsCommand;
         public ICommand OpenStatsCommand => _openStatsCommand ?? (_openStatsCommand = new RelayCommand(OpenStatsPage));
 
+
+        private ICommand _openQuestionSeriesCommand;
+        public ICommand OpenQuestionSeriesCommand => _openQuestionSeriesCommand ?? (_openQuestionSeriesCommand = new RelayCommand(OpenQuestionSeries));
+
+        private void OpenQuestionSeries()
+        {
+            NavigateTo?.Invoke(this, new NavigateToEventargs { PageVM = typeof(QuestionSeriesViewModel), PageName = "Kérdéssorok" });
+        }
+
         private void OpenStatsPage()
         {
             NavigateTo?.Invoke(this, new NavigateToEventargs { PageVM = typeof(StatisticsViewModel), PageName = "Statisztikák" });

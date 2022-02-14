@@ -24,5 +24,32 @@ namespace AllOrNothing.Controls
         {
             this.InitializeComponent();
         }
+
+
+        public static readonly DependencyProperty ScoreProperty = DependencyProperty.Register(
+        "Score", typeof(int),
+        typeof(TeamScore),
+        null
+        );
+
+        private int _score;
+
+        public int Score
+        {
+            get => _score;
+            set
+            {
+                _score = value;
+                if (!string.Equals(ScoreBox.Text, value.ToString()))
+                    ScoreBox.Text = _score.ToString();
+            }
+        }
+
+        private void On_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            int scr;
+            if (int.TryParse(ScoreBox.Text, out scr))
+                Score = scr;
+        }
     }
 }

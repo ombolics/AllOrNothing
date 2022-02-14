@@ -23,7 +23,8 @@
                 Command="{x:Bind ViewModel.NewGameCommand}"/>
 
         <Button Grid.Row="2" Content="Kérdéssorok" HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch" MaxWidth="300" Margin="10,10,10,10"/>
+                VerticalAlignment="Stretch" MaxWidth="300" Margin="10,10,10,10"
+                 Command ="{x:Bind ViewModel.OpenQuestionSeriesCommand}"/>
 
         <Button Grid.Row="3" Content="Statisztikák" HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch" MaxWidth="300" Margin="10,10,10,10"

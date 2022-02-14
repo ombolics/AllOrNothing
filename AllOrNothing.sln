@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AllOrNothing", "AllOrNothin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AllOrNothing.Core", "AllOrNothing.Core\AllOrNothing.Core.csproj", "{92BCC8E6-E479-4A53-A59D-42B1A4A3EF10}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AllOrNothing.Data", "AllOrNothing.Data\AllOrNothing.Data.csproj", "{E6D589DC-1448-4899-AD7F-62DA14888E9C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AllOrNothing.Data", "AllOrNothing.Data\AllOrNothing.Data.csproj", "{E6D589DC-1448-4899-AD7F-62DA14888E9C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AllOrNothing.Repository", "AllOrNothing.Repository\AllOrNothing.Repository.csproj", "{D473DDEA-45FC-4C12-8B95-96EB4D5F8CA1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -89,6 +91,22 @@ Global
 		{E6D589DC-1448-4899-AD7F-62DA14888E9C}.Release|x64.Build.0 = Release|Any CPU
 		{E6D589DC-1448-4899-AD7F-62DA14888E9C}.Release|x86.ActiveCfg = Release|Any CPU
 		{E6D589DC-1448-4899-AD7F-62DA14888E9C}.Release|x86.Build.0 = Release|Any CPU
+		{D473DDEA-45FC-4C12-8B95-96EB4D5F8CA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D473DDEA-45FC-4C12-8B95-96EB4D5F8CA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D473DDEA-45FC-4C12-8B95-96EB4D5F8CA1}.Debug|arm64.ActiveCfg = Debug|Any CPU
+		{D473DDEA-45FC-4C12-8B95-96EB4D5F8CA1}.Debug|arm64.Build.0 = Debug|Any CPU
+		{D473DDEA-45FC-4C12-8B95-96EB4D5F8CA1}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D473DDEA-45FC-4C12-8B95-96EB4D5F8CA1}.Debug|x64.Build.0 = Debug|Any CPU
+		{D473DDEA-45FC-4C12-8B95-96EB4D5F8CA1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D473DDEA-45FC-4C12-8B95-96EB4D5F8CA1}.Debug|x86.Build.0 = Debug|Any CPU
+		{D473DDEA-45FC-4C12-8B95-96EB4D5F8CA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D473DDEA-45FC-4C12-8B95-96EB4D5F8CA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D473DDEA-45FC-4C12-8B95-96EB4D5F8CA1}.Release|arm64.ActiveCfg = Release|Any CPU
+		{D473DDEA-45FC-4C12-8B95-96EB4D5F8CA1}.Release|arm64.Build.0 = Release|Any CPU
+		{D473DDEA-45FC-4C12-8B95-96EB4D5F8CA1}.Release|x64.ActiveCfg = Release|Any CPU
+		{D473DDEA-45FC-4C12-8B95-96EB4D5F8CA1}.Release|x64.Build.0 = Release|Any CPU
+		{D473DDEA-45FC-4C12-8B95-96EB4D5F8CA1}.Release|x86.ActiveCfg = Release|Any CPU
+		{D473DDEA-45FC-4C12-8B95-96EB4D5F8CA1}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

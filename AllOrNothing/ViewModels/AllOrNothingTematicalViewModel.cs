@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AllOrNothing.DummyData;
 
 namespace AllOrNothing.ViewModels
 {
@@ -16,10 +17,9 @@ namespace AllOrNothing.ViewModels
         private static AllOrNothingTematicalViewModel _instance = null;
         private static readonly object padlock = new object();
 
-        public int MyProperty { get; set; }
-
         private AllOrNothingTematicalViewModel()
         {
+            ScoreTest = 3000;
         }
 
         public static AllOrNothingTematicalViewModel Instance
@@ -38,12 +38,11 @@ namespace AllOrNothing.ViewModels
         }
         #endregion 
 
-
-        public QuestionSerie Serie => null;//QuestionSerieDummyData.QS1;
-
-        public void ResetReachablePages()
+        public int ScoreTest 
         {
-
+            get; 
+            set; 
         }
+        public QuestionSerie Serie => QuestionSerieDummyData.QS1;
     }
 }

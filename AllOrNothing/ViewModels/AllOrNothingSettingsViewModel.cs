@@ -138,15 +138,38 @@ namespace AllOrNothing.ViewModels
 
         public ICommand TeamGameCheckBoxCommand => _teamGameCheckBoxCommand ??= new RelayCommand( () => TeamGame = !TeamGame);
 
+        private bool _hasTematical;
+        public bool HasTematical 
+        { 
+            get => _hasTematical; 
+            set => SetProperty( ref _hasTematical, value); 
+        }
+
+        private bool _hasLightning;
+        public bool HasLightning
+        {
+            get => _hasLightning;
+            set => SetProperty(ref _hasLightning, value);
+        }
+
+        private ICommand _lightningCheckBoxCommand;
+
+        public ICommand LightningCheckBoxCommand => _lightningCheckBoxCommand ??= new RelayCommand(() => HasLightning = !HasLightning);
+
+        private ICommand _tematicalCheckBoxCommand;
+
+        public ICommand TematicalCheckBoxCommand => _tematicalCheckBoxCommand ??= new RelayCommand(() => HasTematical = !HasTematical);
+
         public bool TeamGame 
         { 
             get => _teamGame; 
             set => SetProperty(ref _teamGame, value); 
         }
+       
 
         private bool _teamGame;
-        
 
+        
         private void StartGameClicked()
         {
             NavigateTo?.Invoke(this, new NavigateToEventargs { PageVM = typeof(AllOrNothingTematicalViewModel), PageName = "Tematikus" });

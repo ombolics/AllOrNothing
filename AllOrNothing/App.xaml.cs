@@ -78,6 +78,10 @@ namespace AllOrNothing
 
             services.AddTransient<PlayerStatViewModel>();
             services.AddTransient<PlayerStatPage>();
+
+            services.AddTransient<QuestionSeriesViewModel>();
+            services.AddTransient<QuestionSeriesPage>();
+
             return services.BuildServiceProvider();
         }
     }

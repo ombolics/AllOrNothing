@@ -18,6 +18,7 @@
     <None Remove="Assests\cross.svg" />
     <None Remove="Views\AllOrNothingGameSettings.xaml" />
     <None Remove="Views\PlayerStatPage.xaml" />
+    <None Remove="Views\QuestionSeriesPage.xaml" />
     <None Remove="Views\StatisticsPage.xaml" />
     <None Remove="Views\TematicalPage.xaml" />
   </ItemGroup>
@@ -54,6 +55,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controls\" />
+    <Folder Include="Enums\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\QuestionSeriesPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\PlayerStatPage.xaml">

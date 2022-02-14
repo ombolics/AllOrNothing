@@ -21,19 +21,6 @@ namespace AllOrNothing.Controls
 {
     public sealed partial class QuestionGrid : UserControl
     {
-        private int _columnCount;
-        private int _rowCount;
-
-        public int ColumnCount
-        {
-            get => _columnCount;
-            set => _columnCount = value;
-        }
-        public int RowCount
-        {
-            get => _rowCount;
-            set => _rowCount = value;
-        }
 
         private string _currentQuestionText;
         public string CurrentQuestionText
@@ -58,9 +45,6 @@ namespace AllOrNothing.Controls
         public QuestionGrid()
         {
             this.InitializeComponent();
-
-            _columnCount = 5;
-            _rowCount = 6;
         }
 
         private void CreateGrid()
@@ -120,6 +104,8 @@ namespace AllOrNothing.Controls
         {
             var button = (sender as QuestionButton);
             button.Visibility = Visibility.Collapsed;
+
+            //TODO kép hang videó typusok megjelenítése
             QuestionText.Text = button.Question.Text;
             QuestionPicked?.Invoke(this, new QuestionPickedEventArgs(button.Question));
         }

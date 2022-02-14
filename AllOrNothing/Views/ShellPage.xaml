@@ -31,7 +31,7 @@
             Edit String/en-US/Resources.resw: Add a menu item title for each page
             -->
             <NavigationViewItem x:Uid="Shell_Menu" Icon="Home" helpers:NavHelper.NavigateTo="AllOrNothing.ViewModels.AllOrNothingViewModel" />
-            <NavigationViewItem Icon="Accept">
+            <NavigationViewItem>
                 <NavigationViewItem.Content>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Menüpont"/>

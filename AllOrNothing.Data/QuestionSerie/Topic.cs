@@ -10,6 +10,7 @@ namespace AllOrNothing.Data
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
+        public string Description { get; set; }
         public List<Question> Questions { get; set; }
         public List<Competence> Competences { get; set; }
         public Player Author { get; set; }

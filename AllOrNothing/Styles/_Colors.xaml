@@ -45,4 +45,11 @@
         <GradientStop Color="#CDB699" Offset="0.55" />
         <GradientStop Color="#BB6464" Offset="0.9" />
     </LinearGradientBrush>
+
+    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1" x:Key="GradientBrush7">
+        <GradientStop Color="#F4DFBA" Offset="0.0" />
+        <GradientStop Color="#EEC373" Offset="0.25" />
+        <GradientStop Color="#CA965C" Offset="0.75" />
+        <GradientStop Color="#876445" Offset="1.0" />
+    </LinearGradientBrush>
 </ResourceDictionary>

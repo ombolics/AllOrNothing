@@ -5,6 +5,7 @@ namespace AllOrNothing.Data
 {
     public class RoundHistory
     {
+        public int Id { get; set; }
         public QuestionSerie QuestionSerie { get; set; }
         public List<Team> Teams { get; set; }
         public List<Answer> Answers { get; set; }
