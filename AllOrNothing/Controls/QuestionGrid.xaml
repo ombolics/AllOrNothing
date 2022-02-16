@@ -19,7 +19,8 @@
 
         <Grid Grid.Row="1">
             <Border Margin="0,20,0,0" Background="{ThemeResource GradientBrush5}">
-                <TextBlock x:Name="QuestionText" Text="{x:Bind CurrentQuestionText, Mode=OneWay}" TextAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock x:Name="QuestionTextBlock" Text="{x:Bind CurrentQuestion.Text, Mode=OneWay}" 
+                           TextAlignment="Center" VerticalAlignment="Center" TextWrapping="WrapWholeWords" FontSize="{ThemeResource MediumFontSize}"/>
             </Border>
 
         </Grid>

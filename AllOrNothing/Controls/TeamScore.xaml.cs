@@ -1,4 +1,6 @@
-﻿using Microsoft.UI.Xaml;
+﻿using AllOrNothing.Data;
+using CommunityToolkit.Mvvm.Input;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Data;
@@ -10,6 +12,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Windows.Input;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 
@@ -32,24 +35,45 @@ namespace AllOrNothing.Controls
         null
         );
 
-        private int _score;
+
+
+        public Question CurrentQuestion
+        {
+            get { return (Question)GetValue(CurrentQuestionProperty); }
+            set { SetValue(CurrentQuestionProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for CurrentQuestion.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty CurrentQuestionProperty =
+            DependencyProperty.Register("CurrentQuestion", typeof(Question), typeof(TeamScore), null);
+
+
 
         public int Score
         {
-            get => _score;
-            set
-            {
-                _score = value;
-                if (!string.Equals(ScoreBox.Text, value.ToString()))
-                    ScoreBox.Text = _score.ToString();
-            }
+            get { return (int)GetValue(ScoreProperty); }
+            set { SetValue(ScoreProperty, value); }
         }
+
+        private void On_ButtonPressed(object sender, RoutedEventArgs e)
+        {
+            if (CurrentQuestion == null)
+                return;
+
+            if((sender as Button).Name == "PlusButton")
+                Score += CurrentQuestion.Value;
+            else
+                Score -= CurrentQuestion.Value;
+
+            CurrentQuestion = null;
+        }
+
 
         private void On_TextChanged(object sender, TextChangedEventArgs e)
         {
-            int scr;
-            if (int.TryParse(ScoreBox.Text, out scr))
-                Score = scr;
-        }
+            //int scr;
+            //if (int.TryParse(ScoreBox.Text, out scr))
+            //    Score = scr;
+        }     
     }
 }

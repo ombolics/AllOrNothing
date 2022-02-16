@@ -38,11 +38,23 @@ namespace AllOrNothing.ViewModels
         }
         #endregion 
 
+        private int _scoreTest;
         public int ScoreTest 
         {
-            get; 
-            set; 
+            get => _scoreTest;
+            set => SetProperty(ref _scoreTest, value);
         }
+
+        private Question _currentQuestion;
         public QuestionSerie Serie => QuestionSerieDummyData.QS1;
+
+        public Question CurrentQuestion 
+        {
+            get => _currentQuestion;
+            set
+            {
+                SetProperty(ref _currentQuestion, value);
+            } 
+        }
     }
 }

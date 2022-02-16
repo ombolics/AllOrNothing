@@ -24,7 +24,7 @@
 
         <TextBlock Grid.Row="1" Text="Kvíztábor 2022 13. forduló" FontSize="{StaticResource LargeFontSize}" Margin="10,10,10,10"/>
 
-        <cCon:QuestionGrid Grid.Column="0" Grid.Row="2" QuestionSerie="{x:Bind ViewModel.Serie}" QuestionPicked="On_QuestionPicked"/>
+        <cCon:QuestionGrid Grid.Column="0" Grid.Row="2" QuestionSerie="{x:Bind ViewModel.Serie}" CurrentQuestion="{x:Bind ViewModel.CurrentQuestion, Mode=TwoWay}"/>
 
         <Grid Grid.Column="2" Grid.Row="2">
             <Grid.RowDefinitions>
@@ -38,7 +38,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <cCon:TeamScore Grid.Row="0" Grid.Column="0" Score="{x:Bind ViewModel.ScoreTest, Mode=TwoWay}" />
+            <cCon:TeamScore Grid.Row="0" Grid.Column="0" Score="{x:Bind ViewModel.ScoreTest, Mode=TwoWay}" CurrentQuestion="{x:Bind ViewModel.CurrentQuestion, Mode=TwoWay}" />
             <cCon:TeamScore Grid.Row="1" Grid.Column="0" />
             <cCon:TeamScore Grid.Row="2" Grid.Column="0" />
             <cCon:TeamScore Grid.Row="3" Grid.Column="0" />

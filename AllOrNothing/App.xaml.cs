@@ -22,6 +22,10 @@ namespace AllOrNothing
             InitializeComponent();
             UnhandledException += App_UnhandledException;
             Ioc.Default.ConfigureServices(ConfigureServices());
+
+            //Borderless mode
+            //MainWindow.ExtendsContentIntoTitleBar = true;
+
         }
 
         private void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)

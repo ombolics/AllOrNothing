@@ -44,7 +44,7 @@
             </Grid.RowDefinitions>
 
             <TextBlock x:Name="TeamNameBlock" Grid.Row="0" Text="Csapat neve" HorizontalAlignment="Stretch"/>
-            <TextBox x:Name="ScoreBox" Grid.Row="1" Text="{x:Bind Score}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+            <TextBox x:Name="ScoreBox" Grid.Row="1" Text="{x:Bind Score, Mode=TwoWay}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
                      TextAlignment="Left" TextWrapping="Wrap" TextChanged="On_TextChanged"/>
 
             <Grid Grid.Row="2">
@@ -52,8 +52,8 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" Content="+" HorizontalAlignment="Stretch"/>
-                <Button Grid.Column="1" Content="-" HorizontalAlignment="Stretch"/>
+                <Button x:Name="PlusButton" Grid.Column="0" Content="+" HorizontalAlignment="Stretch" Click="On_ButtonPressed"/>
+                <Button x:Name="MinusButton" Grid.Column="1" Content="-" HorizontalAlignment="Stretch" Click="On_ButtonPressed"/>
             </Grid>
         </Grid>
 

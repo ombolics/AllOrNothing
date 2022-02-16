@@ -20,15 +20,7 @@ using Windows.Foundation.Collections;
 namespace AllOrNothing.Controls
 {
     public sealed partial class QuestionGrid : UserControl
-    {
-
-        private string _currentQuestionText;
-        public string CurrentQuestionText
-        {
-            get => _currentQuestionText;
-            set => _currentQuestionText = value;
-        }
-
+    {      
         private QuestionSerie _questionSerie;
         public QuestionSerie QuestionSerie
         {
@@ -40,12 +32,44 @@ namespace AllOrNothing.Controls
             }
         }
 
-        public event EventHandler<QuestionPickedEventArgs> QuestionPicked;
-
         public QuestionGrid()
         {
             this.InitializeComponent();
         }
+
+        public string QuestionText { get; set; }
+
+        public Question CurrentQuestion
+        {
+            get { return (Question)GetValue(CurrentQuestionProperty); }
+            set { SetValue(CurrentQuestionProperty, value); QuestionText = CurrentQuestion == null ? "" : CurrentQuestion.Text; }
+        }
+
+        // Using a DependencyProperty as the backing store for CurrentQuestion.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty CurrentQuestionProperty =
+            DependencyProperty.Register("CurrentQuestion", typeof(Question), typeof(QuestionGrid), null);
+
+
+
+        public bool IsAnswered
+        {
+            get { return (bool)GetValue(IsAnsweredProperty); }
+            set 
+            { 
+                SetValue(IsAnsweredProperty, value); 
+                if(value)
+                {
+                    //QuestionText.Text = "";
+                    CurrentQuestion = null;
+                }
+            }
+        }
+
+        // Using a DependencyProperty as the backing store for IsAnswered.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IsAnsweredProperty =
+            DependencyProperty.Register("IsAnswered", typeof(bool), typeof(QuestionGrid), null);
+
+
 
         private void CreateGrid()
         {
@@ -105,9 +129,8 @@ namespace AllOrNothing.Controls
             var button = (sender as QuestionButton);
             button.Visibility = Visibility.Collapsed;
 
-            //TODO kép hang videó typusok megjelenítése
-            QuestionText.Text = button.Question.Text;
-            QuestionPicked?.Invoke(this, new QuestionPickedEventArgs(button.Question));
+            //TODO kép hang videó typusok megjelenítése         
+            CurrentQuestion = button.Question;
         }
     }
 }

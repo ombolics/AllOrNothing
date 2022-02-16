@@ -39,7 +39,7 @@ namespace AllOrNothing.DummyData
                         new Question
                         {
                             Id = 0,
-                            Text = "Mennyi 2+2?",
+                            Text = "A matematika, tárgyát és módszereit tekintve, sajátos tudomány, mely részben a többi tudomány által vizsgált, részben pedig a matematika „belső” fejlődéséből adódóan létrejött (felfedezett, ill. feltalált) rendszereket, struktúrákat, azok absztrakt, közösen meglévő tulajdonságait vizsgálja.Régebben a „mennyiség és a tér tudományaként” (vagyis a számok és geometriai alakzatok tanaként) határozták meg, a múlt század elejétől kezdve pedig a",
                             Answer = "4",
                             Resource = null,
                             Type = QuestionType.THEMATICAL,

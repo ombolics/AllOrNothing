@@ -150,14 +150,9 @@
                 <Button Grid.Row="2" Grid.Column="2" Content="Tematikus betöltése" VerticalAlignment="Center"
                     HorizontalAlignment="Right" Command="{x:Bind ViewModel.StartGameCommand}"/>
 
-                
+
                 <StackPanel Grid.Column="1" Grid.Row="1" Background="{ThemeResource DarkGreenBrush}" CornerRadius="30" 
                             Orientation="Vertical" Margin="10,10,10,10">
-                    <StackPanel.ChildrenTransitions>
-                        <TransitionCollection>
-                            <EntranceThemeTransition IsStaggeringEnabled="True" />
-                        </TransitionCollection>
-                    </StackPanel.ChildrenTransitions>
 
                     <TextBlock Text="Játékelemek" FontSize="{StaticResource LargeFontSize}" Margin="10,10,10,30"/>
 

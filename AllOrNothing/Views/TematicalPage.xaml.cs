@@ -1,4 +1,5 @@
 ﻿using AllOrNothing.Controls;
+using AllOrNothing.Data;
 using AllOrNothing.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -31,6 +32,7 @@ namespace AllOrNothing.Views
             NavigationCacheMode = NavigationCacheMode.Enabled;
             this.InitializeComponent();
         }
+
 
         private void On_QuestionPicked(object sender, QuestionPickedEventArgs e)
         {
