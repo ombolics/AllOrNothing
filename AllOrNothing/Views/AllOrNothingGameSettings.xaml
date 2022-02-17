@@ -4,15 +4,144 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:tK="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:winui="using:Microsoft.UI.Xaml.Controls"
     xmlns:conv="using:AllOrNothing.Converters"
     mc:Ignorable="d"
     Background="{ThemeResource GradientBrush5}">
 
     <ScrollViewer HorizontalScrollBarVisibility="Disabled" HorizontalScrollMode="Disabled">
+
+
+
         <Grid>
             <!--Game Settings -->
-            <Grid Visibility="{x:Bind ViewModel.GameSettingsVisible, Mode=OneWay}">
+
+            <Grid MaxHeight="400" VerticalAlignment="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Orientation="Vertical" CornerRadius="30" Background="White" Margin="15,15,15,15"
+                            HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <AutoSuggestBox PlaceholderText="Játékos keresése" QueryIcon="Find" Margin="15,15,15,15"/>
+                    
+                    <ItemsControl ItemsSource="{x:Bind ViewModel.PlayerTest}" Background="{ThemeResource GreyBrush}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <!--<ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <ItemsStackPanel/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>-->
+                    </ItemsControl>
+                    
+                    
+                    <!--<ItemsWrapGrid>
+                        <Border Background="{ThemeResource GreyBrush}" Margin="10,10,10,10">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Zareczky András Zsombor" VerticalAlignment="Center"/>
+                                <Button Content="X" Width="20" Height="20" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Background="{ThemeResource GreyBrush}" Margin="10,10,10,10">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="András Zsombor" VerticalAlignment="Center"/>
+                                <Button Content="X" Width="20" Height="20" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                        <Border Background="{ThemeResource GreyBrush}" Margin="10,10,10,10">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Zareczky András Zsombor" VerticalAlignment="Center"/>
+                                <Button Content="X" Width="20" Height="20" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                        <Border Background="{ThemeResource GreyBrush}" Margin="10,10,10,10">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="ÖCS" VerticalAlignment="Center"/>
+                                <Button Content="X" Width="20" Height="20" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                    </ItemsWrapGrid>-->
+                
+                   
+
+                </StackPanel>
+
+
+                <Grid Grid.Column="1" CornerRadius="30" Background="White" Margin="15,15,15,15" 
+                            HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="2*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{ThemeResource GreyBrush}" 
+                                    CornerRadius="30" Margin="15,15,15,15">
+                            <Border HorizontalAlignment="Stretch" Background="{ThemeResource SystemAccentColor}">
+                                <TextBlock Text="Körökkel kapcsolatos adatok" HorizontalAlignment="Stretch" Margin="20,0,10,3"/>
+                            </Border>
+                            
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox/>
+                                <TextBlock  Text="Kör döntő nélkül"/>
+                            </StackPanel>
+                            <CheckBox Content="Körök sorsolása"/>
+                            <CheckBox Content="Kérdéssor beállítása előre"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{ThemeResource GreyBrush}"
+                                    CornerRadius="30" Margin="15,15,15,15">
+                            <Border HorizontalAlignment="Stretch" Background="{ThemeResource SystemAccentColor}">
+                                <TextBlock Text="Csapatokkal kapcsolatos adatok" HorizontalAlignment="Stretch" Margin="20,0,10,3"/>
+                            </Border>
+
+                            <CheckBox Content="Csapatos játék" Margin="20,10,10,5"/>
+
+                            <StackPanel Orientation="Horizontal" Margin="50,5,10,5">
+                                <TextBox Height="30"/>
+                                <TextBlock  Text="Kör döntő nélkül"/>
+                            </StackPanel>
+
+                            <CheckBox Content="Csapatok sorsolása" Margin="50,5,10,5"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <StackPanel Grid.Row="1" CornerRadius="30" Background="{ThemeResource GreyBrush}" Margin="15,0,15,15" 
+                            HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        
+                        <Border HorizontalAlignment="Stretch" Background="{ThemeResource SystemAccentColor}">
+                            <TextBlock Text="Játékmódok" HorizontalAlignment="Stretch" Margin="20,0,10,3"/>
+                        </Border>
+
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox Content="Tematikus" Margin="20,10,10,5"/>
+                            <TimePicker ClockIdentifier="24HourClock" Time="7:00"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox Content="Villám" Margin="20,5,10,5"/>
+                            <TimePicker ClockIdentifier="24HourClock" Time="3:00"/>
+                        </StackPanel>
+                       
+                    </StackPanel>
+                </Grid>
+
+
+
+            </Grid>
+            <!--<Grid Visibility="{x:Bind ViewModel.GameSettingsVisible, Mode=OneWay}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
@@ -88,14 +217,17 @@
                         <x:String>3</x:String>
                         <x:String>4</x:String>
                         <TextBox PlaceholderText="pl.: 5" MaxHeight="20"/>
-                        <!--<x:String>Egyéb</x:String>-->
+                        -->
+            <!--<x:String>Egyéb</x:String>-->
+            <!--
                     </winui:RadioButtons>
                 </StackPanel>
 
                 
 
 
-                <!--<Grid Grid.Column="1" Grid.Row="1" Background="{ThemeResource GreyBrush}" CornerRadius="30"
+                -->
+            <!--<Grid Grid.Column="1" Grid.Row="1" Background="{ThemeResource GreyBrush}" CornerRadius="30"
                   >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
@@ -110,7 +242,8 @@
 
 
 
-                    --><!--<StackPanel Grid.Row="3" Orientation="Horizontal" Visibility="Visible" >
+                    -->
+            <!--<StackPanel Grid.Row="3" Orientation="Horizontal" Visibility="Visible" >
 
 
                         <Button  Content="2" FontSize="{StaticResource MediumFontSize}" Margin="10,10,10,10" 
@@ -123,11 +256,13 @@
                         <Button Content="Egyéb" FontSize="{StaticResource MediumFontSize}"/>
                         <TextBox PlaceholderText="Csapatlétszám" FontSize="{StaticResource MediumFontSize}" 
                              TextAlignment="Center" HorizontalTextAlignment="Center"/>
-                    </StackPanel>--><!--
+                    </StackPanel>-->
+            <!--
 
 
                 </Grid>-->
-            </Grid>
+            <!--
+            </Grid>-->
 
             <!--Round Settings -->
             <Grid Visibility="{x:Bind ViewModel.RoundSettingsVisible, Mode=OneWay}">
