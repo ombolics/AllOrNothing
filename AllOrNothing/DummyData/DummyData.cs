@@ -387,18 +387,21 @@ namespace AllOrNothing.DummyData
         {
             new Player
             {
+                Id = 0,
                 Institue = "PSEG",
                 Name = "Ömböli Csaba",
                 NickNames = new List<string> {"Csabi", "ÖCS"}
             },
             new Player
             {
+                Id = 1,
                 Institue = "PSEG",
                 Name = "Zareczky András",
                 NickNames = new List<string> {"Zarkó", "Bandi"}
             },
             new Player
             {
+                Id = 2,
                 Institue = "PSEG",
                 Name = "Zell Julian Maxim",
                 NickNames = new List<string> {}
@@ -406,36 +409,42 @@ namespace AllOrNothing.DummyData
 
             new Player
             {
+                Id = 3,
                 Institue = "PSEG",
                 Name = "Kiss Géza Ferenc Péter János",
                 NickNames = new List<string> {}
             },
             new Player
             {
+                Id = 4,
                 Institue = "PSEG",
                 Name = "Németh Zoltán",
                 NickNames = new List<string> {}
             },
             new Player
             {
+                Id = 5,
                 Institue = "PSEG",
                 Name = "Nagy Lajos",
                 NickNames = new List<string> {}
             },
             new Player
             {
+                Id = 6,
                 Institue = "PSEG",
                 Name = "Kis Pippin",
                 NickNames = new List<string> {}
             },
             new Player
             {
+                Id = 7,
                 Institue = "PSEG",
                 Name = "XVII. Lajos",
                 NickNames = new List<string> {}
             },
             new Player
             {
+                Id = 8,
                 Institue = "PSEG",
                 Name = "Loius Bonaparte",
                 NickNames = new List<string> {}

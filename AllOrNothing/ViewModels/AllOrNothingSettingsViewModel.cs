@@ -21,6 +21,7 @@ namespace AllOrNothing.ViewModels
             _gameSettingsVisible = Visibility.Visible;
             _roundSettingsVisible = Visibility.Collapsed;
             _listViewItemSource = new ObservableCollection<Team>();
+            _playerTest = new ObservableCollection<Player>();
 
             for (int i = 0; i < 10; i++)
             {
@@ -62,11 +63,63 @@ namespace AllOrNothing.ViewModels
             set => SetProperty(ref _listViewItemSource, value);
         }
 
+        private ICommand _removePlayerCommand;
+        public ICommand RemovePlayerCommand => _removePlayerCommand ??= new RelayCommand<object>(On_RemovePlayer);
+
+        public void On_RemovePlayer(object param)
+        {
+            var player = param as Player;
+            PlayerTest.Remove(player);
+        }
+
+        public void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+        {
+            // Since selecting an item will also change the text,
+            // only listen to changes caused by user entering text.
+            if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
+            {
+                var suitableItems = new List<Player>();
+                var splitText = sender.Text.ToLower().Split(" ");
+                foreach (var player in DummyData.DummyData.PLayers)
+                {
+                    var found = splitText.All((key) =>
+                    {
+                        return player.Name.ToLower().Contains(key);
+                    });
+                    if (found)
+                    {
+                        suitableItems.Add(player);
+                    }
+                }
+                if (suitableItems.Count == 0)
+                {
+                    suitableItems.Add( new Player { Name = "Nem található játékos" });
+                }
+                sender.ItemsSource = suitableItems;
+            }
+        }
+
+        public void AutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+        {
+            var p = args.SelectedItem as Player;
+            p.RemoveCommand = RemovePlayerCommand;
+            PlayerTest.Add(p);
+            sender.Text = string.Empty;
+        }
+
+
         public ObservableCollection<Type> ReachablePages { get => new ObservableCollection<Type>(); set { } }
 
         public event EventHandler<NavigateToEventargs> NavigateTo;
 
-        public List<Player> PlayerTest => DummyData.DummyData.PLayers;
+        private ObservableCollection<Player> _playerTest;
+
+        public ObservableCollection<Player> PlayerTest
+        {
+            get { return _playerTest; }
+            set { SetProperty(ref _playerTest, value); }
+        }
+
         public List<Team> TeamTest => DummyData.DummyData.Teams;
 
         private Visibility _gameSettingsVisible;
@@ -167,7 +220,7 @@ namespace AllOrNothing.ViewModels
             get => _teamGame; 
             set => SetProperty(ref _teamGame, value); 
         }
-       
+        
 
         private bool _teamGame;
 

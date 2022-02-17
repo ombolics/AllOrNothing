@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:cc="using:AllOrNothing.Controls"
     xmlns:tK="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:winui="using:Microsoft.UI.Xaml.Controls"
     xmlns:conv="using:AllOrNothing.Converters"
@@ -29,51 +30,31 @@
 
                 <StackPanel Grid.Column="0" Orientation="Vertical" CornerRadius="30" Background="White" Margin="15,15,15,15"
                             HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                    <AutoSuggestBox PlaceholderText="Játékos keresése" QueryIcon="Find" Margin="15,15,15,15"/>
-                    
-                    <ItemsControl ItemsSource="{x:Bind ViewModel.PlayerTest}" Background="{ThemeResource GreyBrush}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Name}"/>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                        <!--<ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <ItemsStackPanel/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>-->
-                    </ItemsControl>
-                    
-                    
-                    <!--<ItemsWrapGrid>
-                        <Border Background="{ThemeResource GreyBrush}" Margin="10,10,10,10">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Zareczky András Zsombor" VerticalAlignment="Center"/>
-                                <Button Content="X" Width="20" Height="20" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Border>
+                    <AutoSuggestBox PlaceholderText="Játékos keresése" QueryIcon="Find" Margin="15,15,15,15" 
+                                    TextChanged="{x:Bind ViewModel.AutoSuggestBox_TextChanged}"
+                                    SuggestionChosen="{x:Bind ViewModel.AutoSuggestBox_SuggestionChosen}"/>
 
-                        <Border Background="{ThemeResource GreyBrush}" Margin="10,10,10,10">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="András Zsombor" VerticalAlignment="Center"/>
-                                <Button Content="X" Width="20" Height="20" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Border>
-                        <Border Background="{ThemeResource GreyBrush}" Margin="10,10,10,10">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Zareczky András Zsombor" VerticalAlignment="Center"/>
-                                <Button Content="X" Width="20" Height="20" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Border>
-                        <Border Background="{ThemeResource GreyBrush}" Margin="10,10,10,10">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="ÖCS" VerticalAlignment="Center"/>
-                                <Button Content="X" Width="20" Height="20" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Border>
-                    </ItemsWrapGrid>-->
-                
-                   
+                    <Border  Background="White" CornerRadius="30" Margin="15,15,15,15">
+                        <ItemsControl ItemsSource="{x:Bind ViewModel.PlayerTest}"  >
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <cc:WrapPanel/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Background="{ThemeResource GreyBrush}" Margin="10,10,10,10" CornerRadius="5">
+                                        <StackPanel Orientation="Horizontal" Spacing="5">
+                                            <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+                                            <Button Content="X" VerticalAlignment="Center" Command="{Binding RemoveCommand}" CommandParameter="{Binding}"/>
+                                        </StackPanel>
+                                    </Border>
+                                    
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Border>
 
                 </StackPanel>
 
@@ -146,7 +127,41 @@
 
             </Grid>
 
-            <GridView Grid.Row="1" ItemsSource="{x:Bind ViewModel.TeamTest}" Background="White" CornerRadius="30" Margin="15,15,15,15">
+            
+            <Border Grid.Row="1" Background="White" CornerRadius="30" Margin="15,15,15,15">
+                <ItemsControl ItemsSource="{x:Bind ViewModel.TeamTest}"  >
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <cc:WrapPanel/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Vertical" Spacing="5" Background="{ThemeResource GreyBrush}" CornerRadius="30" Margin="10,10,10,10">
+                                <TextBlock Text="{Binding TeamName}" Margin="10,10,0,10" HorizontalAlignment="Center"/>
+
+                                <ItemsControl ItemsSource="{Binding Players}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <cc:WrapPanel/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Name}" Margin="10,10,10,10"/>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Border>
+            
+
+            <!--<GridView Grid.Row="1" ItemsSource="{x:Bind ViewModel.TeamTest}" Background="White" CornerRadius="30" Margin="15,15,15,15">
                 <GridView.ItemTemplate>
                     <DataTemplate>
 
@@ -168,7 +183,9 @@
                         </Grid>
                     </DataTemplate>
                 </GridView.ItemTemplate>
-            </GridView>
+            </GridView>-->
+            
+            
             <!--<Grid Visibility="{x:Bind ViewModel.GameSettingsVisible, Mode=OneWay}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>

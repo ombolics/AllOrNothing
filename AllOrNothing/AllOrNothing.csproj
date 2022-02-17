@@ -54,7 +54,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controls\WrapPanel\" />
     <Folder Include="Enums\" />
   </ItemGroup>
   <ItemGroup>
