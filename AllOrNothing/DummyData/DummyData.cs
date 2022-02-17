@@ -441,5 +441,64 @@ namespace AllOrNothing.DummyData
                 NickNames = new List<string> {}
             },
         };
+
+        public static List<Team> Teams => new List<Team>()
+        {
+            new Team
+            {
+                Id = 0,
+                Players = PLayers.GetRange(0,2),
+                TeamName = "Csapat1",
+            },
+            new Team
+            {
+                Id = 0,
+                Players = PLayers.GetRange(1,2),
+                TeamName = "Csapat2",
+            },
+            new Team
+            {
+                Id = 0,
+                Players = PLayers.GetRange(0,2),
+                TeamName = "Csapat3",
+            },
+            new Team
+            {
+                Id = 0,
+                Players = PLayers.GetRange(0,2),
+                TeamName = "Csapat4",
+            },
+            new Team
+            {
+                Id = 0,
+                Players = PLayers.GetRange(2,2),
+                TeamName = "Csapat5",
+            },
+            new Team
+            {
+                Id = 0,
+                Players = PLayers.GetRange(2,2),
+                TeamName = "Csapat6",
+            },
+            new Team
+            {
+                Id = 0,
+                Players = PLayers.GetRange(3,2),
+                TeamName = "Csapat7",
+            },
+            new Team
+            {
+                Id = 0,
+                Players = PLayers.GetRange(1,3),
+                TeamName = "Csapat8",
+            },
+            new Team
+            {
+                Id = 0,
+                Players = PLayers.GetRange(4,2),
+                TeamName = "Csapat9",
+            },
+        };
+        
     }
 }

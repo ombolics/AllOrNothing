@@ -67,6 +67,7 @@ namespace AllOrNothing.ViewModels
         public event EventHandler<NavigateToEventargs> NavigateTo;
 
         public List<Player> PlayerTest => DummyData.DummyData.PLayers;
+        public List<Team> TeamTest => DummyData.DummyData.Teams;
 
         private Visibility _gameSettingsVisible;
         public Visibility GameSettingsVisible

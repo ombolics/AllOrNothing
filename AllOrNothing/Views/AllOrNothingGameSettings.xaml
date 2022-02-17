@@ -15,9 +15,13 @@
 
 
         <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
             <!--Game Settings -->
 
-            <Grid MaxHeight="400" VerticalAlignment="Top">
+            <Grid Grid.Row="0" MaxHeight="400" VerticalAlignment="Top">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width="3*"/>
@@ -141,6 +145,30 @@
 
 
             </Grid>
+
+            <GridView Grid.Row="1" ItemsSource="{x:Bind ViewModel.TeamTest}" Background="White" CornerRadius="30" Margin="15,15,15,15">
+                <GridView.ItemTemplate>
+                    <DataTemplate>
+
+                        <Grid Background="{ThemeResource GreyBrush}" RowSpacing="10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <Border Grid.Row="0">
+                                <TextBlock Text="{Binding TeamName}" HorizontalAlignment="Center" VerticalAlignment="Stretch"/>
+                            </Border>
+                            
+                            
+                            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Stretch" Spacing="10">
+                                <TextBlock Text="{Binding Players[0].Name}"/>
+                                <TextBlock Text="{Binding Players[1].Name}"/>
+                            </StackPanel>
+                            
+                        </Grid>
+                    </DataTemplate>
+                </GridView.ItemTemplate>
+            </GridView>
             <!--<Grid Visibility="{x:Bind ViewModel.GameSettingsVisible, Mode=OneWay}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
