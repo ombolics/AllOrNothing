@@ -15,6 +15,12 @@
     <NoWarn>CA1416, $(NoWarn)</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Enums\**" />
+    <EmbeddedResource Remove="Enums\**" />
+    <None Remove="Enums\**" />
+    <Page Remove="Enums\**" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="Assests\cross.svg" />
     <None Remove="Views\AllOrNothingGameSettings.xaml" />
     <None Remove="Views\PlayerStatPage.xaml" />
@@ -52,9 +58,6 @@
     <Page Update="Views\AllOrNothingGameSettings.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Enums\" />
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\QuestionSeriesPage.xaml">
