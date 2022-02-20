@@ -160,6 +160,8 @@ namespace AllOrNothing.Services.DragAndDrop
                 Uri uri = await dataview.GetWebLinkAsync();
                 DropWebLinkCommand.Execute(uri);
             }
+            var asd = dataview.AvailableFormats.Count;
+
         }
     }
 }

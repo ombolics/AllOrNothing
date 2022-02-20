@@ -1,6 +1,7 @@
 ﻿using AllOrNothing.Controls;
 using AllOrNothing.Data;
 using AllOrNothing.ViewModels;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -24,10 +25,10 @@ namespace AllOrNothing.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class TematicalPage : Page
+    public sealed partial class GamePage : Page
     {
-        public AllOrNothingTematicalViewModel ViewModel { get; } = AllOrNothingTematicalViewModel.Instance;
-        public TematicalPage()
+        public AllOrNothingGameViewModel ViewModel { get; } = Ioc.Default.GetService< AllOrNothingGameViewModel>();
+        public GamePage()
         {
             NavigationCacheMode = NavigationCacheMode.Enabled;
             this.InitializeComponent();

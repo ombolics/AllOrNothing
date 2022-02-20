@@ -74,8 +74,8 @@ namespace AllOrNothing
             services.AddSingleton<AllOrNothingGameSettings>();
             services.AddSingleton<AllOrNothingSettingsViewModel>();
 
-            services.AddSingleton<TematicalPage>();
-            services.AddSingleton<AllOrNothingTematicalViewModel>();
+            services.AddSingleton<GamePage>();
+            services.AddSingleton<AllOrNothingGameViewModel>();
 
             services.AddSingleton<StatisticsPage>();
             services.AddSingleton<StatisticsViewModel>();

@@ -23,10 +23,10 @@
   <ItemGroup>
     <None Remove="Assests\cross.svg" />
     <None Remove="Views\AllOrNothingGameSettings.xaml" />
+    <None Remove="Views\GamePage.xaml" />
     <None Remove="Views\PlayerStatPage.xaml" />
     <None Remove="Views\QuestionSeriesPage.xaml" />
     <None Remove="Views\StatisticsPage.xaml" />
-    <None Remove="Views\TematicalPage.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assests\cross.svg" />
@@ -50,7 +50,7 @@
     <ProjectReference Include="..\AllOrNothing.Data\AllOrNothing.Data.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Views\TematicalPage.xaml">
+    <Page Update="Views\GamePage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

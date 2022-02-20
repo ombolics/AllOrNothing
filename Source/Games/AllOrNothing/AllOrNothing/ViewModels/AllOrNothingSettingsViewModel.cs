@@ -227,7 +227,8 @@ namespace AllOrNothing.ViewModels
         
         private void StartGameClicked()
         {
-            NavigateTo?.Invoke(this, new NavigateToEventargs { PageVM = typeof(AllOrNothingTematicalViewModel), PageName = "Tematikus" });
+            NavigateTo?.Invoke(this, new NavigateToEventargs { PageVM = typeof(AllOrNothingGameViewModel), PageName = "Játék" });
+            //TODO close this page
         }
 
         public void ResetReachablePages()

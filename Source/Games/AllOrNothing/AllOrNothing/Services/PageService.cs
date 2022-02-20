@@ -22,7 +22,7 @@ namespace AllOrNothing.Services
             Configure<SettingsViewModel, SettingsPage>();
             Configure<AllOrNothingViewModel, MenuPage>();
             Configure<AllOrNothingSettingsViewModel, AllOrNothingGameSettings>();
-            Configure<AllOrNothingTematicalViewModel, TematicalPage>();
+            Configure<AllOrNothingGameViewModel, GamePage>();
             Configure<StatisticsViewModel, StatisticsPage>();
             Configure<PlayerStatViewModel, PlayerStatPage>();
             Configure<QuestionSeriesViewModel, QuestionSeriesPage>();
