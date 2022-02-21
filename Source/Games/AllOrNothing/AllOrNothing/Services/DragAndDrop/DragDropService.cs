@@ -2,11 +2,26 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Imaging;
+using System.Runtime.Serialization;
 using Windows.ApplicationModel.DataTransfer;
-
+using Windows.Storage.Streams;
+using System.Text.Json;
 
 namespace AllOrNothing.Services.DragAndDrop
 {
+    public class TestData : ISerializable
+    {
+        public int val { get; set; }
+        public TestData()
+        {
+           
+        }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            throw new System.NotImplementedException();
+        }
+    }
     // For instructions on testing this service see https://github.com/Microsoft/WindowsTemplateStudio/blob/release/docs/UWP/features/drag-and-drop.md
     public class DragDropService
     {
@@ -64,6 +79,7 @@ namespace AllOrNothing.Services.DragAndDrop
 
         private static void ConfigureUIElement(UIElement element, DropConfiguration configuration)
         {
+
             element.DragEnter += (sender, args) =>
             {
                 // Operation is copy by default
@@ -111,26 +127,32 @@ namespace AllOrNothing.Services.DragAndDrop
         private static void OnVisualConfigurationPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
             var element = dependencyObject as UIElement;
-            var configuration = GetVisualConfiguration(element);
+            var visualConfiguration = GetVisualConfiguration(element);
+            var configuration = GetConfiguration(element);
 
             element.DragStarting += (sender, args) =>
             {
-                if (configuration.DropOverImage != null)
+                //args.AllowedOperations = DataPackageOperation.Move;
+                args.Data.SetText(JsonSerializer.Serialize(new TestData { val = 11}));
+                //var asd = RandomAccessStream.
+                //args.Data.SetData("TestData", RandomAccessStreamReference.Cre);
+                //sender.StartDragAsync()
+                if (visualConfiguration.DropOverImage != null)
                 {
-                    args.DragUI.SetContentFromBitmapImage(configuration.DragStartingImage as BitmapImage);
+                    args.DragUI.SetContentFromBitmapImage(visualConfiguration.DragStartingImage as BitmapImage);
                 }
             };
 
             element.DragOver += (sender, args) =>
             {
-                args.DragUIOverride.Caption = configuration.Caption;
-                args.DragUIOverride.IsCaptionVisible = configuration.IsCaptionVisible;
-                args.DragUIOverride.IsContentVisible = configuration.IsContentVisible;
-                args.DragUIOverride.IsGlyphVisible = configuration.IsGlyphVisible;
+                args.DragUIOverride.Caption = visualConfiguration.Caption;
+                args.DragUIOverride.IsCaptionVisible = visualConfiguration.IsCaptionVisible;
+                args.DragUIOverride.IsContentVisible = visualConfiguration.IsContentVisible;
+                args.DragUIOverride.IsGlyphVisible = visualConfiguration.IsGlyphVisible;
 
-                if (configuration.DropOverImage != null)
+                if (visualConfiguration.DropOverImage != null)
                 {
-                    args.DragUIOverride.SetContentFromBitmapImage(configuration.DropOverImage as BitmapImage);
+                    args.DragUIOverride.SetContentFromBitmapImage(visualConfiguration.DropOverImage as BitmapImage);
                 }
             };
         }

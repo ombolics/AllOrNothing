@@ -1,11 +1,22 @@
 ﻿using AllOrNothing.Data;
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
+using System.Windows.Input;
 
 namespace AllOrNothing.DummyData
 {
     public static class DummyData
     {
+        private static ICommand _testCommand;
+        public static ICommand TestCommand => _testCommand ??= new RelayCommand(Asd);
+
+        public static void Asd()
+        {
+
+        }
+
+
         private static Player _author = new Player
         {
             Institue = "",
@@ -390,21 +401,24 @@ namespace AllOrNothing.DummyData
                 Id = 0,
                 Institue = "PSEG",
                 Name = "Ömböli Csaba",
-                NickNames = new List<string> {"Csabi", "ÖCS"}
+                NickNames = new List<string> {"Csabi", "ÖCS"},
+                TestCommand = TestCommand,
             },
             new Player
             {
                 Id = 1,
                 Institue = "PSEG",
                 Name = "Zareczky András",
-                NickNames = new List<string> {"Zarkó", "Bandi"}
+                NickNames = new List<string> {"Zarkó", "Bandi"},
+                TestCommand = TestCommand,
             },
             new Player
             {
                 Id = 2,
                 Institue = "PSEG",
                 Name = "Zell Julian Maxim",
-                NickNames = new List<string> {}
+                NickNames = new List<string> {},
+                TestCommand = TestCommand,
             },
 
             new Player
@@ -412,42 +426,48 @@ namespace AllOrNothing.DummyData
                 Id = 3,
                 Institue = "PSEG",
                 Name = "Kiss Géza Ferenc Péter János",
-                NickNames = new List<string> {}
+                NickNames = new List<string> {},
+                TestCommand = TestCommand,
             },
             new Player
             {
                 Id = 4,
                 Institue = "PSEG",
                 Name = "Németh Zoltán",
-                NickNames = new List<string> {}
+                NickNames = new List<string> {},
+                TestCommand = TestCommand,
             },
             new Player
             {
                 Id = 5,
                 Institue = "PSEG",
                 Name = "Nagy Lajos",
-                NickNames = new List<string> {}
+                NickNames = new List<string> {},
+                TestCommand = TestCommand,
             },
             new Player
             {
                 Id = 6,
                 Institue = "PSEG",
                 Name = "Kis Pippin",
-                NickNames = new List<string> {}
+                NickNames = new List<string> {},
+                TestCommand = TestCommand,
             },
             new Player
             {
                 Id = 7,
                 Institue = "PSEG",
                 Name = "XVII. Lajos",
-                NickNames = new List<string> {}
+                NickNames = new List<string> {},
+                TestCommand = TestCommand,
             },
             new Player
             {
                 Id = 8,
                 Institue = "PSEG",
                 Name = "Loius Bonaparte",
-                NickNames = new List<string> {}
+                NickNames = new List<string> {},
+                TestCommand = TestCommand,
             },
         };
 
@@ -458,54 +478,63 @@ namespace AllOrNothing.DummyData
                 Id = 0,
                 Players = PLayers.GetRange(0,2),
                 TeamName = "Csapat1",
+                TestCommand = TestCommand,
             },
             new Team
             {
                 Id = 0,
                 Players = PLayers.GetRange(1,2),
                 TeamName = "Csapat2",
+                TestCommand = TestCommand,
             },
             new Team
             {
                 Id = 0,
                 Players = PLayers.GetRange(0,2),
                 TeamName = "Csapat3",
+                TestCommand = TestCommand,
             },
             new Team
             {
                 Id = 0,
                 Players = PLayers.GetRange(0,2),
                 TeamName = "Csapat4",
+                TestCommand = TestCommand,
             },
             new Team
             {
                 Id = 0,
                 Players = PLayers.GetRange(2,2),
                 TeamName = "Csapat5",
+                TestCommand = TestCommand,
             },
             new Team
             {
                 Id = 0,
                 Players = PLayers.GetRange(2,2),
                 TeamName = "Csapat6",
+                TestCommand = TestCommand,
             },
             new Team
             {
                 Id = 0,
                 Players = PLayers.GetRange(3,2),
                 TeamName = "Csapat7",
+                TestCommand = TestCommand,
             },
             new Team
             {
                 Id = 0,
                 Players = PLayers.GetRange(1,3),
                 TeamName = "Csapat8",
+                TestCommand = TestCommand,
             },
             new Team
             {
                 Id = 0,
                 Players = PLayers.GetRange(4,2),
                 TeamName = "Csapat9",
+                TestCommand = TestCommand,
             },
         };
         

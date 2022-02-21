@@ -1,4 +1,5 @@
-﻿using AllOrNothing.ViewModels;
+﻿using AllOrNothing.Data;
+using AllOrNothing.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -29,6 +30,14 @@ namespace AllOrNothing.Views
         public AllOrNothingGameSettings()
         {
             this.InitializeComponent();
+            DataContext = ViewModel;
+        }        
+
+        public void teamPanel_PlayerDropped(object sender, Player p)
+        {
+
         }
+            
+
     }
 }

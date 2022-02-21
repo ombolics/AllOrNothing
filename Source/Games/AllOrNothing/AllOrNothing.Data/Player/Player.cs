@@ -14,6 +14,7 @@ namespace AllOrNothing.Data
         public string Institue { get; set; }
         public List<string> NickNames { get; set; }
         public ICommand RemoveCommand { get; set; }
+        public ICommand TestCommand { get; set; }
         public override string ToString()
         {
             return Name;

@@ -1,6 +1,8 @@
-﻿using Microsoft.UI.Xaml;
+﻿using AllOrNothing.Data;
+using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -152,7 +154,10 @@ namespace AllOrNothing.Services.DragAndDrop
             if (dataview.Contains(StandardDataFormats.Text) && DropTextCommand != null)
             {
                 string text = await dataview.GetTextAsync();
-                DropTextCommand.Execute(text);
+
+                //var obj = JsonSerializer.Deserialize<Player>(text);
+
+                DropTextCommand.Execute(new Player());
             }
 
             if (dataview.Contains(StandardDataFormats.WebLink) && DropWebLinkCommand != null)
@@ -160,7 +165,13 @@ namespace AllOrNothing.Services.DragAndDrop
                 Uri uri = await dataview.GetWebLinkAsync();
                 DropWebLinkCommand.Execute(uri);
             }
-            var asd = dataview.AvailableFormats.Count;
+
+            if (dataview.Contains("TestData"))
+            {
+               
+            }
+            var asd = dataview.AvailableFormats as List<string>;
+            var asd1 = dataview.AvailableFormats.Count;
 
         }
     }

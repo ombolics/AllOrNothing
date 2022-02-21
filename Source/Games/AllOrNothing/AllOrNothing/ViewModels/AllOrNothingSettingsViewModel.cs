@@ -1,4 +1,5 @@
 ﻿using AllOrNothing.Data;
+using AllOrNothing.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
@@ -10,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Windows.ApplicationModel.DataTransfer;
 
 namespace AllOrNothing.ViewModels
 {
@@ -22,6 +24,9 @@ namespace AllOrNothing.ViewModels
             _roundSettingsVisible = Visibility.Collapsed;
             _listViewItemSource = new ObservableCollection<Team>();
             _playerTest = new ObservableCollection<Player>();
+
+            _gameSettingsModel = new GameSettingsModel();
+
 
             for (int i = 0; i < 10; i++)
             {
@@ -55,6 +60,17 @@ namespace AllOrNothing.ViewModels
             }
 
         }
+        private GameSettingsModel _gameSettingsModel;
+        public GameSettingsModel GameSettingsModel 
+        {
+            get => _gameSettingsModel;
+            set => SetProperty(ref _gameSettingsModel, value);
+        }
+
+        public void teamPanel_PlayerDropped(object sender, Player e)
+        {
+
+        }
 
         private ObservableCollection<Team> _listViewItemSource;
         public ObservableCollection<Team> ListViewItemSource
@@ -72,6 +88,12 @@ namespace AllOrNothing.ViewModels
             PlayerTest.Remove(player);
         }
 
+        public void ItemDragStarting(UIElement sender, DragStartingEventArgs e)
+        {
+            e.AllowedOperations = DataPackageOperation.Move;
+            var asd = e.Data;
+        }
+       
         public void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
             // Since selecting an item will also change the text,

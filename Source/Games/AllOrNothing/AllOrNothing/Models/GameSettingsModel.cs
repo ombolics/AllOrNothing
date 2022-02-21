@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AllOrNothing.Models
 {
-    class AllOrNothingGameModel : ObservableRecipient
+    public class GameSettingsModel : ObservableRecipient
     {
         private int _numberOfRounds;
 

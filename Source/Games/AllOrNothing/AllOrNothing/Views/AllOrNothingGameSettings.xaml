@@ -10,7 +10,9 @@
     xmlns:winui="using:Microsoft.UI.Xaml.Controls"
     xmlns:conv="using:AllOrNothing.Converters"
     mc:Ignorable="d"
-    Background="{ThemeResource GradientBrush5}">
+    Background="{ThemeResource GradientBrush5}"
+    Name="gameSettingsPage">
+
 
     <ScrollViewer HorizontalScrollBarVisibility="Disabled" HorizontalScrollMode="Disabled">
         
@@ -82,11 +84,11 @@
                             </Border>
 
                             <StackPanel Orientation="Horizontal">
-                                <TextBox/>
+                                <TextBox Text="{x:Bind ViewModel.GameSettingsModel.NumberOfRounds, Mode=TwoWay}"/>
                                 <TextBlock  Text="Kör döntő nélkül"/>
                             </StackPanel>
-                            <CheckBox Content="Körök sorsolása"/>
-                            <CheckBox Content="Kérdéssor beállítása előre"/>
+                            <CheckBox Content="Körök sorsolása" IsChecked="{x:Bind ViewModel.GameSettingsModel.GenerateSchedule, Mode=TwoWay}"/>
+                            <CheckBox Content="Kérdéssor beállítása előre" IsChecked="{x:Bind ViewModel.GameSettingsModel.AssignSeriesForAllGame, Mode=TwoWay}"/>
                         </StackPanel>
 
                         <StackPanel Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{ThemeResource GreyBrush}"
@@ -95,14 +97,17 @@
                                 <TextBlock Text="Csapatokkal kapcsolatos adatok" HorizontalAlignment="Stretch" Margin="20,0,10,3"/>
                             </Border>
 
-                            <CheckBox Content="Csapatos játék" Margin="20,10,10,5"/>
+                            <CheckBox Content="Csapatos játék" Margin="20,10,10,5" IsChecked="{x:Bind ViewModel.GameSettingsModel.TeamsAllowed, Mode=TwoWay}"/>
 
-                            <StackPanel Orientation="Horizontal" Margin="50,5,10,5">
-                                <TextBox Height="30"/>
-                                <TextBlock  Text="Kör döntő nélkül"/>
+                            <StackPanel Orientation="Horizontal" Margin="50,5,10,5" >
+                                <TextBox Height="30" Text="{x:Bind ViewModel.GameSettingsModel.MaxTeamSize, Mode=TwoWay}" 
+                                         IsEnabled="{x:Bind ViewModel.GameSettingsModel.TeamsAllowed, Mode=TwoWay}"/>
+                                <TextBlock  Text="maximális csaptalétszám"/>
                             </StackPanel>
 
-                            <CheckBox Content="Csapatok sorsolása" Margin="50,5,10,5"/>
+                            <CheckBox Content="Csapatok sorsolása" Margin="50,5,10,5" 
+                                      IsChecked="{x:Bind ViewModel.GameSettingsModel.GenerateTeams, Mode=TwoWay}"
+                                      IsEnabled="{x:Bind ViewModel.GameSettingsModel.TeamsAllowed, Mode=TwoWay}"/>
                         </StackPanel>
                     </Grid>
 
@@ -114,13 +119,18 @@
                         </Border>
 
                         <StackPanel Orientation="Horizontal">
-                            <CheckBox Content="Tematikus" Margin="20,10,10,5"/>
-                            <TimePicker ClockIdentifier="24HourClock" Time="7:00"/>
+                            <CheckBox Content="Tematikus" Margin="20,10,10,5" 
+                                      IsChecked="{x:Bind ViewModel.GameSettingsModel.IsTematicalAllowed, Mode=TwoWay}"/>
+                            <TimePicker ClockIdentifier="24HourClock" Time="7:00" 
+                                        SelectedTime="{x:Bind ViewModel.GameSettingsModel.GeneralTematicalTime, Mode=TwoWay}"
+                                        IsEnabled="{x:Bind ViewModel.GameSettingsModel.IsTematicalAllowed, Mode=TwoWay}"/>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal">
-                            <CheckBox Content="Villám" Margin="20,5,10,5"/>
-                            <TimePicker ClockIdentifier="24HourClock" Time="3:00"/>
+                            <CheckBox Content="Villám" Margin="20,5,10,5" IsChecked="{x:Bind ViewModel.GameSettingsModel.IsLightningAllowed, Mode=TwoWay}"/>
+                            <TimePicker ClockIdentifier="24HourClock" Time="3:00" 
+                                        SelectedTime="{x:Bind ViewModel.GameSettingsModel.GeneralLightningTime, Mode=TwoWay}"
+                                        IsEnabled="{x:Bind ViewModel.GameSettingsModel.IsLightningAllowed, Mode=TwoWay}"/>
                         </StackPanel>
 
                     </StackPanel>
@@ -131,28 +141,36 @@
             </Grid>
 
             <!--Teams-->
-            <Border Grid.Row="1" Background="White" CornerRadius="30" Margin="15,15,15,15">
-                <ItemsControl ItemsSource="{x:Bind ViewModel.TeamTest}"  >
+            <Border Name="teamsLayoutOuterBorder" Grid.Row="1" Background="White" CornerRadius="30" Margin="15,15,15,15"
+                    Visibility="{x:Bind ViewModel.GameSettingsModel.TeamsAllowed, Converter={StaticResource }}">
+                <ItemsControl ItemsSource="{x:Bind ViewModel.TeamTest}" >
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <cc:WrapPanel/>
+                            <cc:WrapPanel>
+                                                              
+                            </cc:WrapPanel>
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
 
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Vertical" Spacing="5" Background="{ThemeResource GreyBrush}" CornerRadius="30" Margin="10,10,10,10"
-                                            AllowDrop="True">
+                            <cc:TeamStackPanel Name="teamPanel" Orientation="Vertical" Spacing="5" Background="{ThemeResource GreyBrush}" CornerRadius="30" Margin="10,10,10,10"
+                                            >
 
-                                <dd:DragDropService.VisualConfiguration>
+
+                                <!--AllowDrop="True" PlayerDropped="{Binding teamPanel_PlayerDropped, ElementName=teamsLayoutOuterBorder}"-->
+
+
+
+                                <!--<dd:DragDropService.VisualConfiguration>
                                     <dd:VisualDropConfiguration
                                             Caption="Csapattag áthelyezése"
                                             IsContentVisible="True"
                                             IsGlyphVisible="False"/>
-                                </dd:DragDropService.VisualConfiguration>
+                                </dd:DragDropService.VisualConfiguration>-->
 
                                 <dd:DragDropService.Configuration>
-                                    <dd:DropConfiguration  />
+                                    <dd:DropConfiguration DropTextCommand="{Binding PlayerDroppedCommand, ElementName=teamPanel}"/>
                                 </dd:DragDropService.Configuration>
 
                                 <TextBlock Text="{Binding TeamName}" Margin="10,10,0,10" HorizontalAlignment="Center" />
@@ -166,15 +184,32 @@
 
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding Name}" Margin="10,10,10,10" CanDrag="True">
+                                            <TextBlock Text="{Binding Name}" Margin="10,10,10,10" CanDrag="True" >
 
+                                                <dd:DragDropService.VisualConfiguration>
+                                                    <dd:VisualDropConfiguration
+                                                    Caption="Csapattag áthelyezése"
+                                                    IsContentVisible="True"
+                                                    IsGlyphVisible="False"/>
+                                                </dd:DragDropService.VisualConfiguration>
 
+                                                <dd:DragDropService.Configuration>
+                                                    <dd:DropConfiguration 
+                                                        DropApplicationLinkCommand="{Binding TestCommand}"
+                                                        DropBitmapCommand="{Binding TestCommand}"
+                                                        DropDataViewCommand="{Binding TestCommand}"
+                                                        DropHtmlCommand="{Binding TestCommand}"
+                                                        DropRtfCommand="{Binding TestCommand}"
+                                                        DropStorageItemsCommand="{Binding TestCommand}"
+                                                        DropTextCommand="{Binding TestCommand}"
+                                                        DropWebLinkCommand="{Binding TestCommand}"/>
+                                                </dd:DragDropService.Configuration>
 
                                             </TextBlock>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
-                            </StackPanel>
+                            </cc:TeamStackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>

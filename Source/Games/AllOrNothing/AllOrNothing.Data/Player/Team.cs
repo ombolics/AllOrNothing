@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace AllOrNothing.Data
 {
@@ -13,6 +14,7 @@ namespace AllOrNothing.Data
         public int Id { get; set; } 
         [Required]
         public List<Player> Players { get; set; }
+        public ICommand TestCommand { get; set; }
         [Required]
         public string TeamName { get; set; }
     }
