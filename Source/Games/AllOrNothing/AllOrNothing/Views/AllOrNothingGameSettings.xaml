@@ -12,6 +12,9 @@
     mc:Ignorable="d"
     Background="{ThemeResource GradientBrush5}"
     Name="gameSettingsPage">
+    <Page.Resources>
+        <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    </Page.Resources>
 
 
     <ScrollViewer HorizontalScrollBarVisibility="Disabled" HorizontalScrollMode="Disabled">
@@ -83,7 +86,7 @@
                                 <TextBlock Text="Körökkel kapcsolatos adatok" HorizontalAlignment="Stretch" Margin="20,0,10,3"/>
                             </Border>
 
-                            <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal" Margin="10,10,10,10">
                                 <TextBox Text="{x:Bind ViewModel.GameSettingsModel.NumberOfRounds, Mode=TwoWay}"/>
                                 <TextBlock  Text="Kör döntő nélkül"/>
                             </StackPanel>
@@ -121,15 +124,15 @@
                         <StackPanel Orientation="Horizontal">
                             <CheckBox Content="Tematikus" Margin="20,10,10,5" 
                                       IsChecked="{x:Bind ViewModel.GameSettingsModel.IsTematicalAllowed, Mode=TwoWay}"/>
-                            <TimePicker ClockIdentifier="24HourClock" Time="7:00" 
-                                        SelectedTime="{x:Bind ViewModel.GameSettingsModel.GeneralTematicalTime, Mode=TwoWay}"
+                            <TimePicker ClockIdentifier="24HourClock" Time="{x:Bind ViewModel.GameSettingsModel.GeneralTematicalTime, Mode=TwoWay}" 
+                                        SelectedTime="7:00"
                                         IsEnabled="{x:Bind ViewModel.GameSettingsModel.IsTematicalAllowed, Mode=TwoWay}"/>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal">
                             <CheckBox Content="Villám" Margin="20,5,10,5" IsChecked="{x:Bind ViewModel.GameSettingsModel.IsLightningAllowed, Mode=TwoWay}"/>
-                            <TimePicker ClockIdentifier="24HourClock" Time="3:00" 
-                                        SelectedTime="{x:Bind ViewModel.GameSettingsModel.GeneralLightningTime, Mode=TwoWay}"
+                            <TimePicker ClockIdentifier="24HourClock" Time="{x:Bind ViewModel.GameSettingsModel.GeneralLightningTime, Mode=TwoWay}" 
+                                        SelectedTime="3:00"
                                         IsEnabled="{x:Bind ViewModel.GameSettingsModel.IsLightningAllowed, Mode=TwoWay}"/>
                         </StackPanel>
 
@@ -142,7 +145,7 @@
 
             <!--Teams-->
             <Border Name="teamsLayoutOuterBorder" Grid.Row="1" Background="White" CornerRadius="30" Margin="15,15,15,15"
-                    Visibility="{x:Bind ViewModel.GameSettingsModel.TeamsAllowed, Converter={StaticResource }}">
+                    Visibility="{x:Bind ViewModel.GameSettingsModel.TeamsAllowed,Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
                 <ItemsControl ItemsSource="{x:Bind ViewModel.TeamTest}" >
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>

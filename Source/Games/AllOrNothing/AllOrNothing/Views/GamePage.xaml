@@ -19,6 +19,7 @@
             </Grid.ColumnDefinitions>
 
             <ListView Grid.Column="0" x:Name="ScheduleList" Header="Körök beosztása" 
+                      ItemsSource="{x:Bind ViewModel.Rounds}"
                       ScrollViewer.VerticalScrollMode="Auto"
                       ShowsScrollingPlaceholders="False"
                       IsItemClickEnabled="True"
@@ -26,21 +27,14 @@
                       SelectionMode="Single"
                       HorizontalAlignment="Stretch"
                       VerticalAlignment="Stretch"
+                      AllowDrop="True"
                       Margin="10,10,10,10"
-                      Background="{ThemeResource GreyBrush}" CornerRadius="30">
-
-                <dd:DragDropService.VisualConfiguration>
-                    <dd:VisualDropConfiguration
-                                    Caption="Csapattag áthelyezése"
-                                    IsContentVisible="True"
-                                    IsGlyphVisible="True"/>
-                </dd:DragDropService.VisualConfiguration>
+                      Background="{ThemeResource GreyBrush}" CornerRadius="30"
+                      ItemClick="{x:Bind ViewModel.RoundSelected}">
 
                 <ListView.ItemTemplate>
-
                     <DataTemplate>
-
-                        <ItemsControl ItemsSource="{Binding }">
+                        <ItemsControl ItemsSource="{Binding Teams }">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <cc:WrapPanel/>
@@ -50,46 +44,16 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <Border Background="{ThemeResource GreyBrush}" Margin="10,10,10,10" CornerRadius="5">
-                                        <StackPanel Orientation="Horizontal" Spacing="5">
-                                            <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
-                                            <Button Content="X" VerticalAlignment="Center" Command="{Binding RemoveCommand}" CommandParameter="{Binding}"/>
-                                        </StackPanel>
+                                        <TextBlock Text="{Binding TeamName}"/>
                                     </Border>
 
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
-
-                        <!--<Grid Margin="10,25,10,0">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
-
-                                <StackPanel Grid.Row="0" Orientation="Horizontal" AllowDrop ="True" 
-                                        DataContext="{Binding Players[0].Name}">
-
-                                    <Border  CanDrag="True">
-                                        <TextBlock Text="{Binding Players[0].Name}"/>
-                                    </Border>
-
-                                    <Border>
-                                        <TextBlock Text="{Binding Players[1].Name}"/>
-                                    </Border>
-
-                                    <Border>
-                                        <TextBlock Text="{Binding Players[2].Name}"/>
-                                    </Border>
-                                </StackPanel>
-
-                                <StackPanel Grid.Row="1" Orientation="Horizontal">
-                                    <TextBox Background="DarkSeaGreen" Margin="10,10,10,10" Text="{Binding TeamName}"/>
-                                </StackPanel>
-
-                            </Grid>-->
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+            
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
@@ -110,13 +74,19 @@
                         </Border>
 
                         <StackPanel Orientation="Horizontal">
-                            <CheckBox Content="Tematikus" Margin="20,10,10,5"/>
-                            <TimePicker ClockIdentifier="24HourClock" Time="7:00"/>
+                            <CheckBox Content="Tematikus" Margin="20,10,10,5" 
+                                      IsChecked="{x:Bind ViewModel.SelectedRound.IsTematicalAllowed, Mode=TwoWay}"/>
+                            <TimePicker ClockIdentifier="24HourClock" Time="7:00"
+                                        IsEnabled="{x:Bind ViewModel.SelectedRound.IsTematicalAllowed, Mode=TwoWay}"
+                                        SelectedTime="{x:Bind ViewModel.SelectedRound.TematicalTime, Mode=TwoWay}"/>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal">
-                            <CheckBox Content="Villám" Margin="20,5,10,5"/>
-                            <TimePicker ClockIdentifier="24HourClock" Time="3:00"/>
+                            <CheckBox Content="Villám" Margin="20,5,10,5" 
+                                      IsChecked="{x:Bind ViewModel.SelectedRound.IsLightningAllowed, Mode=TwoWay}"/>
+                            <TimePicker ClockIdentifier="24HourClock"
+                                        IsEnabled="{x:Bind ViewModel.SelectedRound.IsLightningAllowed, Mode=TwoWay}"
+                                        Time="3:00" SelectedTime="{x:Bind ViewModel.SelectedRound.LightningTime, Mode=TwoWay}"/>
                         </StackPanel>
 
                     </StackPanel>
@@ -152,7 +122,13 @@
 
             <TextBlock Grid.Row="1" Text="Kvíztábor 2022 13. forduló" FontSize="{StaticResource LargeFontSize}" Margin="10,10,10,10"/>
 
-            <cc:QuestionGrid Grid.Column="0" Grid.Row="2" QuestionSerie="{x:Bind ViewModel.Serie}" CurrentQuestion="{x:Bind ViewModel.CurrentQuestion, Mode=TwoWay}"/>
+            <cc:QuestionGrid Grid.Column="0" Grid.Row="2" Margin="15,15,15,15"
+                             QuestionSerie="{x:Bind ViewModel.Serie}" 
+                             CurrentQuestion="{x:Bind ViewModel.CurrentQuestion, Mode=TwoWay}"/>
+
+            <Button Grid.Row="1" Grid.Column="1" Content="{x:Bind ViewModel.SelectedRound.TematicalTime.ToString(), Mode=OneWay}" CornerRadius="10" 
+                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Command="{x:Bind ViewModel.ToggleTimerCommand}"/>
+            
 
             <Grid Grid.Column="2" Grid.Row="2">
                 <Grid.RowDefinitions>
@@ -161,21 +137,12 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+
 
                 <cc:TeamScore Grid.Row="0" Grid.Column="0" Score="{x:Bind ViewModel.ScoreTest, Mode=TwoWay}" CurrentQuestion="{x:Bind ViewModel.CurrentQuestion, Mode=TwoWay}" />
-                <cc:TeamScore Grid.Row="1" Grid.Column="0" />
-                <cc:TeamScore Grid.Row="2" Grid.Column="0" />
-                <cc:TeamScore Grid.Row="3" Grid.Column="0" />
-
-                <cc:TeamScore Grid.Row="0" Grid.Column="1"/>
-                <cc:TeamScore Grid.Row="1" Grid.Column="1"/>
-                <cc:TeamScore Grid.Row="2" Grid.Column="1"/>
-                <cc:TeamScore Grid.Row="3" Grid.Column="1"/>
-
+                <cc:TeamScore Grid.Row="1" />
+                <cc:TeamScore Grid.Row="2" />
+                <cc:TeamScore Grid.Row="3" />
             </Grid>
 
         </Grid>

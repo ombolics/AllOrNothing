@@ -9,6 +9,15 @@ namespace AllOrNothing.Models
 {
     public class GameSettingsModel : ObservableRecipient
     {
+        private List<Schedule> _schedules;
+
+        public List<Schedule> Schedules
+        {
+            get { return _schedules; }
+            set => SetProperty(ref _schedules, value);
+        }
+
+
         private int _numberOfRounds;
 
         public int NumberOfRounds 
@@ -77,10 +86,6 @@ namespace AllOrNothing.Models
         { 
             get => _generalLightningTime;
             set => SetProperty(ref _generalLightningTime, value); 
-        }
-
-        
-
-        
+        }        
     }
 }

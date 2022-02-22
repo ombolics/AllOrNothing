@@ -4,7 +4,7 @@ using System;
 
 namespace AllOrNothing.Converters
 {
-    public class BooleanToVisibilityConverter : IValueConverter
+    public class BoolToVisibilityConverter : IValueConverter
     {
         private object GetVisibility(object value)
         {

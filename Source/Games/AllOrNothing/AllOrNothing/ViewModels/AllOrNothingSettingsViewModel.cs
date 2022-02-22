@@ -1,6 +1,7 @@
 ﻿using AllOrNothing.Data;
 using AllOrNothing.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -65,6 +66,34 @@ namespace AllOrNothing.ViewModels
         {
             get => _gameSettingsModel;
             set => SetProperty(ref _gameSettingsModel, value);
+        }
+
+
+        public void FinalizeSettings()
+        {
+            var roundSettings = new List<RoundSettingsModel>();
+            //TODO értelmesen megcsinálni
+            var tmp = new RoundSettingsModel();
+
+        }
+
+        public void GenerateSchedule()
+        {
+            var Schedues = new List<Schedule>();
+            var sch = new Schedule();
+            //TODO generálási algoritmus
+            for (int i = 0; i < TeamTest.Count; i++)
+            {
+                sch.Teams.Add(TeamTest[i]);
+                if(i % 4 == 3 || i == TeamTest.Count-1)
+                {
+                    Schedues.Add(sch);
+                    sch = new Schedule();
+                }
+            }
+
+            GameSettingsModel.Schedules = Schedues;
+            
         }
 
         public void teamPanel_PlayerDropped(object sender, Player e)
@@ -249,6 +278,10 @@ namespace AllOrNothing.ViewModels
         
         private void StartGameClicked()
         {
+            GenerateSchedule();
+            var vm = Ioc.Default.GetService<AllOrNothingGameViewModel>();
+            vm.Rounds = new ObservableCollection<RoundSettingsModel>(RoundSettingsModel.FromGameSettingsModel(GameSettingsModel));
+
             NavigateTo?.Invoke(this, new NavigateToEventargs { PageVM = typeof(AllOrNothingGameViewModel), PageName = "Játék" });
             //TODO close this page
         }
