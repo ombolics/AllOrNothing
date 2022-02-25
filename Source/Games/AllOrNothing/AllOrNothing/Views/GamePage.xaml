@@ -7,8 +7,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:dd="using:AllOrNothing.Services.DragAndDrop"
     xmlns:cc="using:AllOrNothing.Controls"
+    xmlns:winui="using:CommunityToolkit.WinUI.UI.Controls"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Name="gamePage">
     <Grid>
 
         <!--Round Settings -->
@@ -98,7 +100,17 @@
                 
 
                 <StackPanel Grid.Row="1" CornerRadius="30" Background="{ThemeResource GreyBrush}" Margin="15,0,15,15" 
-                            HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Spacing="10">
+
+                    <StackPanel Orientation="Horizontal" Spacing="20">
+                        <TextBlock Text="Kiválasztott kérdéssor"/>
+                        <Button Content="Betöltés fájlból"/>
+                    </StackPanel>
+
+                    <winui:DataGrid ItemsSource="{x:Bind ViewModel.TestSeries}">
+                        
+                    </winui:DataGrid>
+                    
 
                 </StackPanel>
             </Grid>
@@ -109,40 +121,90 @@
         <!-- Tematical-->
         <Grid x:Name="MainGrid" Visibility="{x:Bind ViewModel.IsTematicalVisible, Mode=OneWay}" Background="{ ThemeResource GradientBrush4}">
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="5*"/>
-            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="8*"/>
-                <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
-
-            <TextBlock Grid.Row="1" Text="Kvíztábor 2022 13. forduló" FontSize="{StaticResource LargeFontSize}" Margin="10,10,10,10"/>
-
-            <cc:QuestionGrid Grid.Column="0" Grid.Row="2" Margin="15,15,15,15"
-                             QuestionSerie="{x:Bind ViewModel.Serie}" 
-                             CurrentQuestion="{x:Bind ViewModel.CurrentQuestion, Mode=TwoWay}"/>
-
-            <Button Grid.Row="1" Grid.Column="1" Content="{x:Bind ViewModel.SelectedRound.TematicalTime.ToString(), Mode=OneWay}" CornerRadius="10" 
-                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Command="{x:Bind ViewModel.ToggleTimerCommand}"/>
-            
-
-            <Grid Grid.Column="2" Grid.Row="2">
+            <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="5*"/>
                 </Grid.RowDefinitions>
 
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="1" Text="Kvíztábor 2022 13. forduló" FontSize="{StaticResource LargeFontSize}" Margin="10,10,10,10"/>
 
-                <cc:TeamScore Grid.Row="0" Grid.Column="0" Score="{x:Bind ViewModel.ScoreTest, Mode=TwoWay}" CurrentQuestion="{x:Bind ViewModel.CurrentQuestion, Mode=TwoWay}" />
-                <cc:TeamScore Grid.Row="1" />
-                <cc:TeamScore Grid.Row="2" />
-                <cc:TeamScore Grid.Row="3" />
+                    <Button Grid.Row="1" Grid.Column="1" 
+                            Content="{x:Bind ViewModel.SelectedRound.TematicalTime.ToString(), Mode=OneWay}" 
+                            CornerRadius="10" 
+                            HorizontalAlignment="Right" 
+                            VerticalAlignment="Stretch" 
+                            FontSize="{StaticResource LargeFontSize}"
+                            Command="{x:Bind ViewModel.ToggleTimerCommand}"/>
+
+                </Grid>
+
+                <cc:QuestionGrid Grid.Row="2" Margin="15,15,15,15"
+                             QuestionSerie="{x:Bind ViewModel.Serie}" 
+                             CurrentQuestion="{x:Bind ViewModel.CurrentQuestion, Mode=TwoWay}"
+                             CornerRadius="30"/>
+
+            </Grid>
+
+            <Grid Grid.Column="1" Margin="10,0,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="4*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+               
+                <ListBox Grid.Row="0" 
+                          ItemsSource="{x:Bind ViewModel.SelectedRound.Teams, Mode=OneWay}"
+
+                          HorizontalContentAlignment="Stretch"
+                          VerticalContentAlignment="Stretch"
+ 
+                          Background="White"
+                          CornerRadius="20">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <cc:TeamScore Team="{Binding}" Score="{Binding ViewModel.ScoreTest, ElementName=gamePage}" 
+                                          HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="HorizontalContentAlignment"  Value="Stretch"></Setter>
+                            <Setter Property="VerticalContentAlignment"  Value="Stretch"></Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                </ListBox>
+                
+                <!--<cc:TeamScore Grid.Row="0" Grid.Column="0" Score="{x:Bind ViewModel.ScoreTest, Mode=TwoWay}" CurrentQuestion="{x:Bind ViewModel.CurrentQuestion, Mode=TwoWay}" />-->
+
+
+                <Grid Grid.Row="1" Background="white" CornerRadius="20" Margin="10,10,10,10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Button Grid.Row="0" Content="Nincs válasz" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                    
+                    <Grid Grid.Row="1" Margin="10,10,10,10" ColumnSpacing="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Content="V" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                        <Button Grid.Column="1" Content="E" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                    </Grid>
+
+
+                </Grid>
             </Grid>
 
         </Grid>

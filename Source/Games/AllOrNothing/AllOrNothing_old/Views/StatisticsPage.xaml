@@ -1,0 +1,43 @@
+﻿<Page
+    x:Class="AllOrNothing.Views.StatisticsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:AllOrNothing.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:winui="using:Microsoft.UI.Xaml.Controls"
+    xmlns:helpers="using:AllOrNothing.Helpers"
+
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    >
+
+
+    <Grid>
+
+        <!--<winui:NavigationView x:Name="navView" IsBackButtonVisible="Collapsed" IsSettingsVisible="False" 
+                              IsPaneToggleButtonVisible="False" SelectedItem="{x:Bind ViewModel.Selected, Mode=OneWay}">
+            <winui:NavigationView.MenuItems>
+                <winui:NavigationViewItem IsTapEnabled="True" helpers:NavHelper.NavigateTo="AllOrNothing.ViewModels.PlayerStatViewModel">
+                    <winui:NavigationViewItem.Content >
+
+                        <winui:AutoSuggestBox PlaceholderText="Type a control name"
+                         TextChanged="AutoSuggestBox_TextChanged"
+                        QueryIcon="Find"
+                        SuggestionChosen="AutoSuggestBox_SuggestionChosen"/> 
+
+                    </winui:NavigationViewItem.Content>
+                </winui:NavigationViewItem>
+                <winui:NavigationViewItem Icon="LeaveChat" Content="Menu Item2" Tag="SamplePage2" />
+                <winui:NavigationViewItem Icon="Refresh" Content="Menu Item3" Tag="SamplePage3" />
+                <winui:NavigationViewItem Icon="Download" Content="Menu Item4" Tag="SamplePage4" />
+            </winui:NavigationView.MenuItems>
+            
+            <Frame x:Name="contentFrame"/>
+            
+        </winui:NavigationView>-->
+
+        <!--<oxy:PlotView Model="{x:Bind ViewModel.PlotModel}"/>-->
+
+    </Grid>
+</Page>

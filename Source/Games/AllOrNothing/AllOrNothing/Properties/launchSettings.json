@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "AllOrNothing (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "AllOrNothing (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

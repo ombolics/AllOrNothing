@@ -2,7 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 
-using AllOrNothing.Core.Helpers;
+using AllOrNothing.Helpers;
 
 using Windows.Storage;
 using Windows.Storage.Streams;

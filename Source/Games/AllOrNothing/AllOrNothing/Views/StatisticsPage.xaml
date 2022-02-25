@@ -7,13 +7,15 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:winui="using:Microsoft.UI.Xaml.Controls"
     xmlns:helpers="using:AllOrNothing.Helpers"
+    xmlns:oxy="using:OxyPlot"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource GreyBrush}"
+    >
 
 
     <Grid>
 
-        <winui:NavigationView x:Name="navView" IsBackButtonVisible="Collapsed" IsSettingsVisible="False" 
+        <!--<winui:NavigationView x:Name="navView" IsBackButtonVisible="Collapsed" IsSettingsVisible="False" 
                               IsPaneToggleButtonVisible="False" SelectedItem="{x:Bind ViewModel.Selected, Mode=OneWay}">
             <winui:NavigationView.MenuItems>
                 <winui:NavigationViewItem IsTapEnabled="True" helpers:NavHelper.NavigateTo="AllOrNothing.ViewModels.PlayerStatViewModel">
@@ -33,6 +35,9 @@
             
             <Frame x:Name="contentFrame"/>
             
-        </winui:NavigationView>
+        </winui:NavigationView>-->
+
+        <oxy:PlotView Model="{x:Bind ViewModel.PlotModel}" Visibility="Visible"/>
+
     </Grid>
 </Page>
