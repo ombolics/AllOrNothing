@@ -21,11 +21,23 @@ namespace AllOrNothing.DummyData
         {
             Institue = "",
             NickNames = new List<string> { "Csabi, ÖCS" },
-            Name = "Csaba",
+            Name = " Ömböli Csaba",
         };
 
         private static int _currentId = 0;
         public static int CurrentId => _currentId;
+
+        public static List<QuestionSerie> TestSeries => new List<QuestionSerie>
+        {
+            QS1,
+            QS1,
+            QS1,
+            QS1,
+            QS1,
+            QS1,
+            QS1,
+        };
+
         public static QuestionSerie QS1 => new QuestionSerie
         {
             Id = _currentId++,
@@ -391,7 +403,18 @@ namespace AllOrNothing.DummyData
                     }
                 },
             },
+            Authors = new List<Player> 
+            { _author,
+                new Player 
+                {
+                    Id = ++_currentId,
+                    Institue = "ELTE",
+                    Name = "Kiss András Lajos Géza",
+                    NickNames = new List<string>{"Andris", "Bandi"},                   
 
+                } 
+            },
+            CreatedOn = DateTime.Now,
         };
 
         public static List<Player> PLayers => new List<Player>

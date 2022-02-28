@@ -8,118 +8,22 @@
     xmlns:dd="using:AllOrNothing.Services.DragAndDrop"
     xmlns:cc="using:AllOrNothing.Controls"
     xmlns:winui="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:conv="using:AllOrNothing.Converters"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     Name="gamePage">
+
+    <Page.Resources>
+        <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <conv:TimeSpanToStringConverter x:Key="TimeSpanToStringConverter"/>
+        <conv:GamePhaseToVisibilityConverter x:Key="GamePhaseToVisibilityConverter"/>
+    </Page.Resources>
+
+
     <Grid>
-
-        <!--Round Settings -->
-        <Grid Visibility="{x:Bind ViewModel.IsRoundSettingsVisible, Mode=OneWay}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="4*"/>
-                <ColumnDefinition Width="5*"/>
-            </Grid.ColumnDefinitions>
-
-            <ListView Grid.Column="0" x:Name="ScheduleList" Header="Körök beosztása" 
-                      ItemsSource="{x:Bind ViewModel.Rounds}"
-                      ScrollViewer.VerticalScrollMode="Auto"
-                      ShowsScrollingPlaceholders="False"
-                      IsItemClickEnabled="True"
-                      CanReorderItems="True"
-                      SelectionMode="Single"
-                      HorizontalAlignment="Stretch"
-                      VerticalAlignment="Stretch"
-                      AllowDrop="True"
-                      Margin="10,10,10,10"
-                      Background="{ThemeResource GreyBrush}" CornerRadius="30"
-                      ItemClick="{x:Bind ViewModel.RoundSelected}">
-
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ItemsControl ItemsSource="{Binding Teams }">
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <cc:WrapPanel/>
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Border Background="{ThemeResource GreyBrush}" Margin="10,10,10,10" CornerRadius="5">
-                                        <TextBlock Text="{Binding TeamName}"/>
-                                    </Border>
-
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-            
-            <Grid Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="4*"/>
-                </Grid.RowDefinitions>
-
-                <Grid Grid.Row="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                        
-                    <StackPanel Grid.Column="0" CornerRadius="30" Background="{ThemeResource GreyBrush}" Margin="15,0,15,15" 
-                            HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-
-                        <Border HorizontalAlignment="Stretch" Background="{ThemeResource SystemAccentColor}">
-                            <TextBlock Text="Játékmódok" HorizontalAlignment="Stretch" Margin="20,0,10,3"/>
-                        </Border>
-
-                        <StackPanel Orientation="Horizontal">
-                            <CheckBox Content="Tematikus" Margin="20,10,10,5" 
-                                      IsChecked="{x:Bind ViewModel.SelectedRound.IsTematicalAllowed, Mode=TwoWay}"/>
-                            <TimePicker ClockIdentifier="24HourClock" Time="7:00"
-                                        IsEnabled="{x:Bind ViewModel.SelectedRound.IsTematicalAllowed, Mode=TwoWay}"
-                                        SelectedTime="{x:Bind ViewModel.SelectedRound.TematicalTime, Mode=TwoWay}"/>
-                        </StackPanel>
-
-                        <StackPanel Orientation="Horizontal">
-                            <CheckBox Content="Villám" Margin="20,5,10,5" 
-                                      IsChecked="{x:Bind ViewModel.SelectedRound.IsLightningAllowed, Mode=TwoWay}"/>
-                            <TimePicker ClockIdentifier="24HourClock"
-                                        IsEnabled="{x:Bind ViewModel.SelectedRound.IsLightningAllowed, Mode=TwoWay}"
-                                        Time="3:00" SelectedTime="{x:Bind ViewModel.SelectedRound.LightningTime, Mode=TwoWay}"/>
-                        </StackPanel>
-
-                    </StackPanel>
-
-                    <Button Grid.Column="1" Content="Indítás" FontSize="{ThemeResource LargeFontSize}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                            Margin="10,10,10,10" CornerRadius="10" Command="{x:Bind ViewModel.StartGameCommand}"/>
-
-                </Grid>
-                
-
-                <StackPanel Grid.Row="1" CornerRadius="30" Background="{ThemeResource GreyBrush}" Margin="15,0,15,15" 
-                            HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Spacing="10">
-
-                    <StackPanel Orientation="Horizontal" Spacing="20">
-                        <TextBlock Text="Kiválasztott kérdéssor"/>
-                        <Button Content="Betöltés fájlból"/>
-                    </StackPanel>
-
-                    <winui:DataGrid ItemsSource="{x:Bind ViewModel.TestSeries}">
-                        
-                    </winui:DataGrid>
-                    
-
-                </StackPanel>
-            </Grid>
-        </Grid>
-
-        
-        
+       
         <!-- Tematical-->
-        <Grid x:Name="MainGrid" Visibility="{x:Bind ViewModel.IsTematicalVisible, Mode=OneWay}" Background="{ ThemeResource GradientBrush4}">
+        <Grid x:Name="MainGrid" Background="{ ThemeResource GradientBrush4}">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="8*"/>
@@ -139,7 +43,7 @@
                     <TextBlock Grid.Row="1" Text="Kvíztábor 2022 13. forduló" FontSize="{StaticResource LargeFontSize}" Margin="10,10,10,10"/>
 
                     <Button Grid.Row="1" Grid.Column="1" 
-                            Content="{x:Bind ViewModel.SelectedRound.TematicalTime.ToString(), Mode=OneWay}" 
+                            Content="{x:Bind ViewModel.SelectedRound.TematicalTime, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}" 
                             CornerRadius="10" 
                             HorizontalAlignment="Right" 
                             VerticalAlignment="Stretch" 
@@ -151,7 +55,8 @@
                 <cc:QuestionGrid Grid.Row="2" Margin="15,15,15,15"
                              QuestionSerie="{x:Bind ViewModel.Serie}" 
                              CurrentQuestion="{x:Bind ViewModel.CurrentQuestion, Mode=TwoWay}"
-                             CornerRadius="30"/>
+                             CornerRadius="30"
+                             Visibility="{x:Bind ViewModel.GamePhase, Converter={StaticResource GamePhaseToVisibilityConverter}, ConverterParameter=Tematical }"/>
 
             </Grid>
 
@@ -162,7 +67,7 @@
                 </Grid.RowDefinitions>
                
                 <ListBox Grid.Row="0" 
-                          ItemsSource="{x:Bind ViewModel.SelectedRound.Teams, Mode=OneWay}"
+                          ItemsSource="{x:Bind ViewModel.CurrentStandings, Mode=OneWay}"
 
                           HorizontalContentAlignment="Stretch"
                           VerticalContentAlignment="Stretch"
@@ -171,7 +76,7 @@
                           CornerRadius="20">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <cc:TeamScore Team="{Binding}" Score="{Binding ViewModel.ScoreTest, ElementName=gamePage}" 
+                            <cc:TeamScore Standing="{Binding}" CurrentQuestion="{Binding ViewModel.CurrentQuestion, Mode=TwoWay, ElementName=gamePage}"
                                           HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
@@ -199,7 +104,9 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Content="V" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                        <Button Grid.Column="0" Content="V" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                                Command="{x:Bind ViewModel.ShowLightningCommand}"
+                                 Visibility="{x:Bind ViewModel.GamePhase, Converter={StaticResource GamePhaseToVisibilityConverter}, ConverterParameter=Tematical }"/>
                         <Button Grid.Column="1" Content="E" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                     </Grid>
 

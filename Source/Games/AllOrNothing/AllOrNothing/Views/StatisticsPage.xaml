@@ -9,7 +9,7 @@
     xmlns:helpers="using:AllOrNothing.Helpers"
     xmlns:oxy="using:OxyPlot"
     mc:Ignorable="d"
-    Background="{ThemeResource GreyBrush}"
+    Background="Black"
     >
 
 

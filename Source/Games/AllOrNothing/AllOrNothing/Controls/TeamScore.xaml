@@ -43,8 +43,8 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <TextBlock x:Name="TeamNameBlock" Grid.Row="0" Text="{x:Bind Team.TeamName, Mode=OneWay}" HorizontalAlignment="Stretch"/>
-            <TextBox x:Name="ScoreBox" Grid.Row="1" Text="{x:Bind Score, Mode=TwoWay}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+            <TextBlock x:Name="TeamNameBlock" Grid.Row="0" Text="{x:Bind Standing.Team.TeamName, Mode=OneWay}" HorizontalAlignment="Stretch"/>
+            <TextBox x:Name="ScoreBox" Grid.Row="1" Text="{x:Bind Standing.Score, Mode=TwoWay}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
                      TextAlignment="Center" TextWrapping="Wrap" TextChanged="On_TextChanged"/>
 
             <Grid Grid.Row="2">

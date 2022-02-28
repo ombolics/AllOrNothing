@@ -29,23 +29,34 @@ namespace AllOrNothing.Controls
         }
 
 
-        public static readonly DependencyProperty ScoreProperty = DependencyProperty.Register(
-        "Score", typeof(int),
-        typeof(TeamScore),
-        null
-        );
 
-
-
-        public Team Team
+        public Standing Standing
         {
-            get { return (Team)GetValue(TeamProperty); }
-            set { SetValue(TeamProperty, value); }
+            get { return (Standing)GetValue(StandingProperty); }
+            set { SetValue(StandingProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for Team.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty TeamProperty =
-            DependencyProperty.Register("Team", typeof(Team), typeof(TeamScore), null);
+        // Using a DependencyProperty as the backing store for Standing.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty StandingProperty =
+            DependencyProperty.Register("Standing", typeof(Standing), typeof(TeamScore), null);
+
+
+
+        //public static readonly DependencyProperty ScoreProperty = DependencyProperty.Register(
+        //"Score", typeof(int),
+        //typeof(TeamScore),
+        //null
+        //);
+
+        //public Team Team
+        //{
+        //    get { return (Team)GetValue(TeamProperty); }
+        //    set { SetValue(TeamProperty, value); }
+        //}
+
+        //// Using a DependencyProperty as the backing store for Team.  This enables animation, styling, binding, etc...
+        //public static readonly DependencyProperty TeamProperty =
+        //    DependencyProperty.Register("Team", typeof(Team), typeof(TeamScore), null);
 
 
 
@@ -61,11 +72,11 @@ namespace AllOrNothing.Controls
 
 
 
-        public int Score
-        {
-            get { return (int)GetValue(ScoreProperty); }
-            set { SetValue(ScoreProperty, value); }
-        }
+        //public int Score
+        //{
+        //    get { return (int)GetValue(ScoreProperty); }
+        //    set { SetValue(ScoreProperty, value); }
+        //}
 
         private void On_ButtonPressed(object sender, RoutedEventArgs e)
         {
@@ -73,9 +84,9 @@ namespace AllOrNothing.Controls
                 return;
 
             if((sender as Button).Name == "PlusButton")
-                Score += CurrentQuestion.Value;
+                Standing.Score += CurrentQuestion.Value;
             else
-                Score -= CurrentQuestion.Value;
+                Standing.Score -= CurrentQuestion.Value;
 
             CurrentQuestion = null;
         }

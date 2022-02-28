@@ -13,68 +13,136 @@ using System.Threading;
 using Microsoft.UI.Xaml;
 using System.Collections.ObjectModel;
 using Microsoft.UI.Xaml.Controls;
+using AllOrNothing.Services;
+using Windows.Storage.Pickers;
+using System.Runtime.InteropServices;
+using AllOrNothing.Contracts.ViewModels;
+using AllOrNothing.Helpers;
 
 namespace AllOrNothing.ViewModels
 {
-    public class AllOrNothingGameViewModel : ObservableRecipient
+    public enum GamePhase
     {
+        TEMATICAL,
+        LIGHTNING
+    }
+
+    public class AllOrNothingGameViewModel : ObservableRecipient, INavigationAware
+    {
+        [DllImport("user32.dll", ExactSpelling = true, CharSet = CharSet.Auto, PreserveSig = true, SetLastError = false)]
+        public static extern IntPtr GetActiveWindow();
 
         public AllOrNothingGameViewModel()
         {
             ScoreTest = 3000;
-            IsRoundSettingsVisible = true;
-            IsTematicalVisible = false;
             _gameTimer = new DispatcherTimer();
             _gameTimer.Interval = TimeSpan.FromSeconds(1);
             _gameTimer.Tick += _gameTimer_Tick;
+            _qsLoader = new QuestionSerieLoader();
+
+            _currentStandings = new ObservableCollection<Standing>();
+        }
+        private GamePhase _gamePhase;
+
+        public void SetupRound(RoundSettingsModel m)
+        {
+            m.TematicalTime = m.TematicalTime.ShiftToRight();
+            m.LightningTime = m.LightningTime.ShiftToRight();
+
+            SelectedRound = m;
+
+            if(SelectedRound.IsTematicalAllowed)
+            {
+                GamePhase = GamePhase.TEMATICAL;
+            }
+            else
+            {
+                GamePhase = GamePhase.LIGHTNING;
+            }
+
+            CurrentStandings = new ObservableCollection<Standing>();
+            foreach (var team in m.Teams)
+            {
+                CurrentStandings.Add(new Standing
+                {
+                    Team = team,
+                    Score = 0
+                });
+            }
         }
 
-        public void RoundSelected(object sender, ItemClickEventArgs e)
+        private ObservableCollection<Standing> _currentStandings;
+        public ObservableCollection<Standing> CurrentStandings
         {
-            SelectedRound = e.ClickedItem as RoundSettingsModel;
+            get => _currentStandings;
+            set => SetProperty(ref _currentStandings, value);
         }
+
+
+        private QuestionSerieLoader _qsLoader;
+        
 
         private void _gameTimer_Tick(object sender, object e)
         {
             //var asd = SelectedRound.TematicalTime.ToString();
             
-            if(IsTematicalVisible)
+            if(GamePhase == GamePhase.TEMATICAL)
             {
-                if(SelectedRound.TematicalTime.TotalSeconds == 0)
+                SelectedRound.TematicalTime = SelectedRound.TematicalTime.Subtract(TimeSpan.FromSeconds(1));
+                if (SelectedRound.TematicalTime.TotalSeconds == 0)
                 {
                     _gameTimer.Stop();
-                }
-                SelectedRound.TematicalTime = SelectedRound.TematicalTime.Subtract(TimeSpan.FromSeconds(1));
+                }              
             }
             else
             {
+                SelectedRound.LightningTime = SelectedRound.LightningTime.Subtract(TimeSpan.FromSeconds(1));
                 if (SelectedRound.LightningTime.TotalSeconds == 0)
                 {
                     _gameTimer.Stop();
-                }
-                SelectedRound.LightningTime = SelectedRound.LightningTime.Subtract(TimeSpan.FromSeconds(1));
+                }               
             }
         }
 
-        private bool _isTematicalVisible;
 
         private RoundSettingsModel _selectedRound;
 
-        
 
         private ICommand _toggleTimerCommand;
-
         public ICommand ToggleTimerCommand => _toggleTimerCommand ??= new RelayCommand(ToggleTimer);
+
+
+        private ICommand _showLightningCommand;
+        public ICommand ShowLightningCommand => _showLightningCommand ??= new RelayCommand(ShowLightning);
+
+        private void ShowLightning()
+        {
+            
+        }
+
+        private ICommand _loadFromFileCommand;
+        public ICommand LoadFromFileCommand => _loadFromFileCommand ??= new RelayCommand(LoadFromFileClicked);
+
+        public async void LoadFromFileClicked()
+        {
+            FileOpenPicker picker = new FileOpenPicker();
+
+            var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(MainWindow.Current);
+
+            // Associate the HWND with the file picker
+            WinRT.Interop.InitializeWithWindow.Initialize(picker, hwnd);
+
+            var file = await picker.PickSingleFileAsync();
+
+        }
 
         private DispatcherTimer _gameTimer;
 
 
-        public ObservableCollection<QuestionSerie> TestSeries => new ObservableCollection<QuestionSerie> { DummyData.DummyData.QS1 };
-
         private void ToggleTimer()
         {
-            if ( (SelectedRound.IsTematicalAllowed && SelectedRound.TematicalTime.TotalSeconds == 0) ||
-                (SelectedRound.IsLightningAllowed && SelectedRound.LightningTime.TotalSeconds == 0))
+            if ((GamePhase == GamePhase.TEMATICAL && SelectedRound.TematicalTime.TotalSeconds == 0) ||
+                (GamePhase == GamePhase.LIGHTNING && SelectedRound.LightningTime.TotalSeconds == 0))
                 return;
 
             if(_gameTimer.IsEnabled)
@@ -94,20 +162,28 @@ namespace AllOrNothing.ViewModels
             set => SetProperty(ref _scoreTest, value);
         }
 
-        private ICommand _startGameCommand;
 
-        public ICommand StartGameCommand => _startGameCommand ??= new RelayCommand(On_StartGame);
+        private readonly List<string> _enabledPages = new List<string> { "Beállítások", "Játék" };
 
-        private void On_StartGame()
+        /// <summary>
+        /// <param>
+        /// The members of the parameter are enabled
+        /// </param>
+        /// </summary>
+        public event EventHandler<List<string>> HidePages;
+        public void OnNavigatedTo(object parameter)
         {
-            IsRoundSettingsVisible = false;
-            IsTematicalVisible = true;
+            HidePages?.Invoke(this, _enabledPages);
+        }
+
+        public void OnNavigatedFrom()
+        {
+            
         }
 
         private Question _currentQuestion;
-        public QuestionSerie Serie => QuestionSerieDummyData.QS1;
+        public QuestionSerie Serie => DummyData.DummyData.QS1;
 
-        private bool _isRoundSettingsVisible;
 
         public Question CurrentQuestion 
         {
@@ -117,32 +193,15 @@ namespace AllOrNothing.ViewModels
                 SetProperty(ref _currentQuestion, value);
             } 
         }
-
-        public bool IsRoundSettingsVisible 
-        { 
-            get => _isRoundSettingsVisible;
-            set => SetProperty(ref _isRoundSettingsVisible, value); 
-        }
-        public bool IsTematicalVisible 
-        { 
-            get => _isTematicalVisible; 
-            set => SetProperty(ref _isTematicalVisible, value); 
-        }
         public RoundSettingsModel SelectedRound 
         { 
             get => _selectedRound; 
             set => SetProperty(ref _selectedRound, value); 
         }
-        public ObservableCollection<RoundSettingsModel> Rounds 
-        { 
-            get => _rounds;
-            set 
-            {
-                SetProperty(ref _rounds, value);
-                SelectedRound = _rounds[0];
-            }
+        public GamePhase GamePhase 
+        {
+            get => _gamePhase; 
+            set => SetProperty(ref _gamePhase, value); 
         }
-
-        private ObservableCollection<RoundSettingsModel> _rounds;
     }
 }

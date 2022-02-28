@@ -20,7 +20,7 @@
         IsSettingsVisible="True"
         IsPaneToggleButtonVisible="True"
         ExpandedModeThresholdWidth="1280"
-        Background="{ThemeResource SystemControlAccentAcrylicElementAccentMediumHighBrush}"
+        Background="{ThemeResource SystemAccentColorDark1}"
         PaneDisplayMode="Top">
         <NavigationView.MenuItems>
             <!--
@@ -30,25 +30,25 @@
             Edit String/en-US/Resources.resw: Add a menu item title for each page
             -->
             <NavigationViewItem x:Uid="Shell_Menu" Icon="Home" helpers:NavHelper.NavigateTo="AllOrNothing.ViewModels.AllOrNothingViewModel" />
-            <NavigationViewItem>
+            <!--<NavigationViewItem>
                 <NavigationViewItem.Content>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Menüpont"/>
 
                         <Button Width="15" Height="15" Margin ="10,0,0,0" Padding="0,0,0,0"  Background="{ThemeResource SystemControlAccentAcrylicElementAccentMediumHighBrush}">
-                            <!--<StackPanel>
+                            --><!--<StackPanel>
                                 <Border/>
                                 --><!--<SymbolIcon Symbol="Go"/>--><!--s
                                 
-                            </StackPanel>-->
+                            </StackPanel>--><!--
                             <Image  Source="/Assests/cross3.png" Width="10" Height="10" Stretch="UniformToFill" />
-                            <!--<TextBlock Text="X"/>-->
+                            --><!--<TextBlock Text="X"/>--><!--
 
                         </Button>
                        
                     </StackPanel>
                 </NavigationViewItem.Content>
-            </NavigationViewItem>
+            </NavigationViewItem>-->
         </NavigationView.MenuItems>
         <!--<NavigationView.HeaderTemplate>
             <DataTemplate>

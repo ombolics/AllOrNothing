@@ -35,6 +35,25 @@ namespace AllOrNothing.Services
             _navigationView.ItemInvoked += OnItemInvoked;
         }
 
+        public void ShowAllPage()
+        {
+            foreach (NavigationViewItem navItem in _navigationView.MenuItems)
+            {
+                navItem.Visibility = Visibility.Visible;
+            }
+        }
+
+        public void HideAllPageExcept(List<string> itemContents)
+        {
+            foreach (NavigationViewItem navItem in _navigationView.MenuItems)
+            {
+                if (!itemContents.Contains(navItem.Content.ToString())) 
+                {
+                    navItem.Visibility = Visibility.Collapsed;
+                }
+            }
+        }
+
         public void SetNavItemVisibility(string itemContent, bool value)
         {
             var item = _navigationView.MenuItems
@@ -56,7 +75,7 @@ namespace AllOrNothing.Services
         public void AddNavItem(NavigationViewItem item, Type vmType)
         {
             string pageKey = vmType.FullName;
-            var result = 0;//_navigationView.MenuItems.Count(i => (i as NavigationViewItem).Content == item.Content);
+            var result = _navigationView.MenuItems.Count(i => (i as NavigationViewItem).Content == item.Content);
             //dont want to add an element multiple times
             if (result == 0 && _pageService.IsPageKey(pageKey))
             {

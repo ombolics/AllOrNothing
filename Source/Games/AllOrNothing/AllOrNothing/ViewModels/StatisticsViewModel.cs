@@ -50,7 +50,7 @@ namespace AllOrNothing.ViewModels
                 Color = OxyPlot.OxyColors.Blue,
                 StrokeThickness = 1,
                 MarkerSize = 2,
-                MarkerType = OxyPlot.MarkerType.Circle
+                MarkerType = OxyPlot.MarkerType.Cross
             };
 
             var line2 = new OxyPlot.Series.LineSeries()
@@ -67,6 +67,7 @@ namespace AllOrNothing.ViewModels
                 line1.Points.Add(new OxyPlot.DataPoint(xs1[i], ys1[i]));
                 line2.Points.Add(new OxyPlot.DataPoint(xs2[i], ys2[i]));
             }
+
 
             _plotModel.Title = $"Scatter Plot ({pointCount:N0} points each)";
             _plotModel.Series.Add(line1);

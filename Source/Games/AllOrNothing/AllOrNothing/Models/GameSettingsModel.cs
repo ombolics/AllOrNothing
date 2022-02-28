@@ -77,8 +77,8 @@ namespace AllOrNothing.Models
         private TimeSpan _generalTematicalTime;
         public TimeSpan GeneralTematicalTime 
         {
-            get => _generalTematicalTime; 
-            set => SetProperty(ref _generalTematicalTime, value); 
+            get => _generalTematicalTime;
+            set => SetProperty(ref _generalTematicalTime, value);
         }
 
         private TimeSpan _generalLightningTime;

@@ -1,4 +1,5 @@
-﻿using AllOrNothing.Data;
+﻿using AllOrNothing.Contracts.ViewModels;
+using AllOrNothing.Data;
 using AllOrNothing.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -13,10 +14,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.Storage.Pickers;
 
 namespace AllOrNothing.ViewModels
 {
-    public class AllOrNothingSettingsViewModel : ObservableRecipient
+    public class AllOrNothingSettingsViewModel : ObservableRecipient, INavigationAware
     {
 
         public AllOrNothingSettingsViewModel()
@@ -27,6 +29,8 @@ namespace AllOrNothing.ViewModels
             _playerTest = new ObservableCollection<Player>();
 
             _gameSettingsModel = new GameSettingsModel();
+            _isRoundSettingsVisible = false;
+            _selectedRound = null;
 
 
             for (int i = 0; i < 10; i++)
@@ -61,6 +65,53 @@ namespace AllOrNothing.ViewModels
             }
 
         }
+        private ICommand _loadFromFileCommand;
+        public ICommand LoadFromFileCommand => _loadFromFileCommand ??= new RelayCommand(LoadFromFileClicked);
+
+        public async void LoadFromFileClicked()
+        {
+            FileOpenPicker picker = new FileOpenPicker();
+
+            var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(MainWindow.Current);
+
+            // Associate the HWND with the file picker
+            WinRT.Interop.InitializeWithWindow.Initialize(picker, hwnd);
+
+            var file = await picker.PickSingleFileAsync();
+
+        }
+        public ObservableCollection<QuestionSerie> TestSeries => new ObservableCollection<QuestionSerie>(DummyData.DummyData.TestSeries);
+        public void RoundSelected(object sender, ItemClickEventArgs e)
+        {
+            SelectedRound = e.ClickedItem as RoundSettingsModel;
+        }
+
+        private RoundSettingsModel _selectedRound;
+        public RoundSettingsModel SelectedRound
+        {
+            get => _selectedRound;
+            set => SetProperty(ref _selectedRound, value);
+        }
+
+        public ObservableCollection<RoundSettingsModel> Rounds
+        {
+            get => _rounds;
+            set
+            {
+                SetProperty(ref _rounds, value);
+                //SelectedRound = _rounds[0];
+            }
+        }
+
+        private bool _isRoundSettingsVisible;
+        public bool IsRoundSettingsVisible
+        {
+            get => _isRoundSettingsVisible;
+            set => SetProperty(ref _isRoundSettingsVisible, value);
+        }
+        private ObservableCollection<RoundSettingsModel> _rounds;
+
+
         private GameSettingsModel _gameSettingsModel;
         public GameSettingsModel GameSettingsModel 
         {
@@ -193,22 +244,16 @@ namespace AllOrNothing.ViewModels
 
         private void ShowRoundSettingsClicked()
         {
+            GenerateSchedule();
+            Rounds = new ObservableCollection<RoundSettingsModel>(RoundSettingsModel.FromGameSettingsModel(GameSettingsModel));
+            SelectedRound = Rounds?[0];
+
             GameSettingsVisible = Visibility.Collapsed;
-            RoundSettingsVisible = Visibility.Visible;
+            IsRoundSettingsVisible = true;         
         }
-
-        private ICommand _showGameSettingsCommand;
-
-        public ICommand ShowGameSettingsCommand => _showGameSettingsCommand ?? (_showGameSettingsCommand = new RelayCommand(ShowGameSettingsClicked));
-
-        private void ShowGameSettingsClicked()
-        {
-            RoundSettingsVisible = Visibility.Collapsed;
-            GameSettingsVisible = Visibility.Visible;
-        }
+   
 
         private ICommand _startGameCommand;
-
         public ICommand StartGameCommand => _startGameCommand ??= new RelayCommand(StartGameClicked);
 
         public int TeamSize 
@@ -218,27 +263,6 @@ namespace AllOrNothing.ViewModels
         }
 
         private int _teamSize;
-
-
-        private void BackgroundColor_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (sender is RadioButtons rb)
-            {
-                string selectedValue;
-
-                if(rb.SelectedItem is TextBox tb)
-                {
-                    //not validated
-                    selectedValue = tb.Text;
-                }
-                else
-                {
-                    selectedValue = rb.SelectedItem as string;
-                }
-
-                TeamSize = int.Parse(selectedValue);              
-            }
-        }
 
         private ICommand _teamGameCheckBoxCommand;
 
@@ -266,6 +290,8 @@ namespace AllOrNothing.ViewModels
 
         public ICommand TematicalCheckBoxCommand => _tematicalCheckBoxCommand ??= new RelayCommand(() => HasTematical = !HasTematical);
 
+      
+
         public bool TeamGame 
         { 
             get => _teamGame; 
@@ -273,14 +299,16 @@ namespace AllOrNothing.ViewModels
         }
         
 
+
         private bool _teamGame;
 
         
         private void StartGameClicked()
         {
-            GenerateSchedule();
             var vm = Ioc.Default.GetService<AllOrNothingGameViewModel>();
-            vm.Rounds = new ObservableCollection<RoundSettingsModel>(RoundSettingsModel.FromGameSettingsModel(GameSettingsModel));
+            vm.SetupRound(SelectedRound);
+
+
 
             NavigateTo?.Invoke(this, new NavigateToEventargs { PageVM = typeof(AllOrNothingGameViewModel), PageName = "Játék" });
             //TODO close this page
@@ -289,6 +317,18 @@ namespace AllOrNothing.ViewModels
         public void ResetReachablePages()
         {
             throw new NotImplementedException();
+        }
+
+        public event EventHandler<List<string>> HidePages;
+
+        public void OnNavigatedTo(object parameter)
+        {
+            HidePages?.Invoke(this, null);
+        }
+
+        public void OnNavigatedFrom()
+        {
+
         }
     }
 }

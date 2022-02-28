@@ -22,6 +22,8 @@ namespace AllOrNothing.ViewModels
             set { SetProperty(ref _selected, value); }
         }
 
+        private AllOrNothingGameViewModel _gameViewModel;
+
         private AllOrNothingSettingsViewModel _allOrNothingSettingsViewModel;
         public AllOrNothingSettingsViewModel AllOrNothingSettingsViewModel 
         { 
@@ -46,7 +48,11 @@ namespace AllOrNothing.ViewModels
             set { SetProperty(ref _isBackEnabled, value); }
         }
 
-   
+        public AllOrNothingGameViewModel GameViewModel 
+        {
+            get => _gameViewModel;
+            set => SetProperty(ref _gameViewModel, value);
+        }
 
         public ShellViewModel(INavigationService navigationService, INavigationViewService navigationViewService)
         {
@@ -59,6 +65,22 @@ namespace AllOrNothing.ViewModels
 
             AllOrNothingSettingsViewModel = Ioc.Default.GetService<AllOrNothingSettingsViewModel>();
             AllOrNothingSettingsViewModel.NavigateTo += On_NavigateTo;
+            AllOrNothingSettingsViewModel.HidePages += On_HidePages;
+
+            GameViewModel = Ioc.Default.GetRequiredService<AllOrNothingGameViewModel>();
+            GameViewModel.HidePages += On_HidePages;
+        }
+
+        private void On_HidePages(object sender, System.Collections.Generic.List<string> e)
+        {
+            if(e is null || e.Count == 0)
+            {
+                NavigationViewService.ShowAllPage();
+            }
+            else
+            {
+                NavigationViewService.HideAllPageExcept(e);
+            }
         }
 
         private void On_NavigateTo(object sender, NavigateToEventargs e)
