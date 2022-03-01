@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0-windows10.0.19041.0</TargetFramework>
@@ -6,7 +6,7 @@
     <RootNamespace>AllOrNothing</RootNamespace>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <Platforms>x86;x64;arm64</Platforms>
-    <RuntimeIdentifiers>win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
+    <RuntimeIdentifier>win10-x86</RuntimeIdentifier>
     <PublishProfile>win10-$(Platform).pubxml</PublishProfile>
     <UseWinUI>true</UseWinUI>
     <EnablePreviewMsixTooling>true</EnablePreviewMsixTooling>
@@ -26,9 +26,9 @@
     <PackageReference Include="CommunityToolkit.Mvvm" Version="7.1.2" />
     <PackageReference Include="CommunityToolkit.WinUI.UI.Controls" Version="7.1.2" />
     <PackageReference Include="H.OxyPlot.WinUI" Version="0.9.19" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.2" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0-preview.5.21301.5" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22000.194" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.0.0" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.8" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <Manifest Include="$(ApplicationManifest)" />
@@ -41,6 +41,8 @@
     <ProjectCapability Include="Msix" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AllOrNothing.AutoMapper\AllOrNothing.AutoMapper.csproj" />
     <ProjectReference Include="..\AllOrNothing.Data\AllOrNothing.Data.csproj" />
+    <ProjectReference Include="..\AllOrNothing.Repository\AllOrNothing.Repository.csproj" />
   </ItemGroup>
 </Project>

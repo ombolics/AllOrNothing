@@ -1,6 +1,8 @@
-﻿using AllOrNothing.Contracts.ViewModels;
+﻿using AllOrNothing.AutoMapper.Dto;
+using AllOrNothing.Contracts.ViewModels;
 using AllOrNothing.Data;
 using AllOrNothing.Models;
+using AutoMapper;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
@@ -21,8 +23,12 @@ namespace AllOrNothing.ViewModels
     public class AllOrNothingSettingsViewModel : ObservableRecipient, INavigationAware
     {
 
-        public AllOrNothingSettingsViewModel()
+        public AllOrNothingSettingsViewModel( IMapper mapper)
         {
+            _mapper = mapper;
+
+
+
             _gameSettingsVisible = Visibility.Visible;
             _roundSettingsVisible = Visibility.Collapsed;
             _listViewItemSource = new ObservableCollection<Team>();
@@ -31,6 +37,9 @@ namespace AllOrNothing.ViewModels
             _gameSettingsModel = new GameSettingsModel();
             _isRoundSettingsVisible = false;
             _selectedRound = null;
+
+            _teams = new();
+            _selectedPlayers = new();
 
 
             for (int i = 0; i < 10; i++)
@@ -44,19 +53,19 @@ namespace AllOrNothing.ViewModels
                                 {
                                     Institue = "Bonyhád",
                                     Name = "Z. András",
-                                    NickNames =new List<string> {"Bandi", "Zarkó"}
+                                    NickName = "Lajos",
                                 },
                                 new Player
                                 {
                                     Institue = "Bonyhád",
                                     Name = "G. Botond",
-                                    NickNames = new List<string>{"Boti"}
+                                    NickName = "Lajos",
                                 },
                                 new Player
                                 {
                                     Institue = "Budapest",
                                     Name = "K. Fülöp",
-                                    NickNames =new List<string> {}
+                                    NickName = "Lajos",
                                 },
                         },
                          TeamName = $"Csapat{i}",
@@ -64,7 +73,21 @@ namespace AllOrNothing.ViewModels
                      });
             }
 
+
+            Player p = new Player
+            {
+                Id = 0,
+                Institue = "PSEG",
+                Name = "Csabi",
+                NickName = "Lajos",
+            };
+
+            var mapped = Ioc.Default.GetService<IMapper>().Map<PlayerDto>(p);
+
         }
+
+        private IMapper _mapper;
+
         private ICommand _loadFromFileCommand;
         public ICommand LoadFromFileCommand => _loadFromFileCommand ??= new RelayCommand(LoadFromFileClicked);
 
@@ -128,6 +151,35 @@ namespace AllOrNothing.ViewModels
 
         }
 
+        private ObservableCollection<TeamDto> GenerateTeams(ICollection<PlayerDto> players, int maxTeamSize)
+        {
+            var value = new ObservableCollection<TeamDto>();
+
+            List<PlayerDto> helper = new List<PlayerDto>(players);
+            Random r = new Random();
+            while(helper.Count > 0)
+            {
+                var team = new TeamDto
+                {
+                    Players = new(),
+                };
+                for (int i = 0; i < maxTeamSize && helper.Count > 0; i++)
+                {
+                    var plyr = helper[r.Next(0, helper.Count)];
+                    helper.Remove(plyr);
+                    team.Players.Add(plyr);
+                    team.TeamName += plyr.NickName + " - "; 
+                }
+                value.Add(team);           
+            }
+            return value;
+        }
+
+        public void TeamsAllowedChecked(object sender , RoutedEventArgs e)
+        {
+            Teams = GenerateTeams(SelectedPlayers, GameSettingsModel.MaxTeamSize);
+        }
+
         public void GenerateSchedule()
         {
             var Schedues = new List<Schedule>();
@@ -162,10 +214,17 @@ namespace AllOrNothing.ViewModels
         private ICommand _removePlayerCommand;
         public ICommand RemovePlayerCommand => _removePlayerCommand ??= new RelayCommand<object>(On_RemovePlayer);
 
+        private ObservableCollection<TeamDto> _teams;
+        public ObservableCollection<TeamDto> Teams
+        {
+            get => _teams;
+            set => SetProperty(ref _teams, value);
+        }
+
         public void On_RemovePlayer(object param)
         {
-            var player = param as Player;
-            PlayerTest.Remove(player);
+            var player = param as PlayerDto;
+            SelectedPlayers.Remove(player);
         }
 
         public void ItemDragStarting(UIElement sender, DragStartingEventArgs e)
@@ -173,7 +232,7 @@ namespace AllOrNothing.ViewModels
             e.AllowedOperations = DataPackageOperation.Move;
             var asd = e.Data;
         }
-       
+      
         public void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
             // Since selecting an item will also change the text,
@@ -182,6 +241,9 @@ namespace AllOrNothing.ViewModels
             {
                 var suitableItems = new List<Player>();
                 var splitText = sender.Text.ToLower().Split(" ");
+
+                //TODO Search for players in database
+
                 foreach (var player in DummyData.DummyData.PLayers)
                 {
                     var found = splitText.All((key) =>
@@ -197,15 +259,29 @@ namespace AllOrNothing.ViewModels
                 {
                     suitableItems.Add( new Player { Name = "Nem található játékos" });
                 }
+
                 sender.ItemsSource = suitableItems;
             }
         }
 
+        private ObservableCollection<PlayerDto> _selectedPlayers;
+        public ObservableCollection<PlayerDto> SelectedPlayers
+        {
+            get => _selectedPlayers;
+            set => SetProperty(ref _selectedPlayers, value);
+        }
+
+
         public void AutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
+
+            //TODO Convert players to playerDTo
             var p = args.SelectedItem as Player;
-            p.RemoveCommand = RemovePlayerCommand;
-            PlayerTest.Add(p);
+
+            var dto = _mapper.Map<PlayerDto>(p);
+
+            dto.RemoveCommand = RemovePlayerCommand;
+            SelectedPlayers.Add(dto);
             sender.Text = string.Empty;
         }
 

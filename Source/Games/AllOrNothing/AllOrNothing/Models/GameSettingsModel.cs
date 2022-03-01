@@ -9,6 +9,11 @@ namespace AllOrNothing.Models
 {
     public class GameSettingsModel : ObservableRecipient
     {
+        public GameSettingsModel()
+        {
+            MaxTeamSize = 2;
+        }
+
         private List<Schedule> _schedules;
 
         public List<Schedule> Schedules
@@ -51,7 +56,16 @@ namespace AllOrNothing.Models
         public int MaxTeamSize 
         { 
             get => _maxTeamSize;
-            set => SetProperty(ref _maxTeamSize, value); 
+            set
+            {   
+                if (value < 2)
+                {
+                    value = 2;
+                }
+                _maxTeamSize = value;
+                OnPropertyChanged(nameof(MaxTeamSize));
+                //SetProperty(ref _maxTeamSize, value);
+            }
         }
         private bool _generateTeams;
         public bool GenerateTeams 

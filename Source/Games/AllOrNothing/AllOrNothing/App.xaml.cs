@@ -1,10 +1,11 @@
 ﻿using AllOrNothing.Activation;
+using AllOrNothing.AutoMapper;
 using AllOrNothing.Contracts.Services;
 using AllOrNothing.Helpers;
 using AllOrNothing.Services;
 using AllOrNothing.ViewModels;
 using AllOrNothing.Views;
-
+using AutoMapper;
 using CommunityToolkit.Mvvm.DependencyInjection;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -60,6 +61,17 @@ namespace AllOrNothing
             services.AddSingleton<INavigationService, NavigationService>();
 
             // Core Services
+
+            //Mapping
+
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
 
             // Views and ViewModels
             services.AddTransient<ShellPage>();

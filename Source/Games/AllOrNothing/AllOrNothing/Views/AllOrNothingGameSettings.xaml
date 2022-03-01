@@ -36,15 +36,26 @@
                         <ColumnDefinition Width="3*"/>
                     </Grid.ColumnDefinitions>
 
-                    <!--Plyer adding area-->
+                    <!--Player adding area-->
                     <StackPanel Grid.Column="0" Orientation="Vertical" CornerRadius="30" Background="White" Margin="15,15,15,15"
                                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+
                         <AutoSuggestBox PlaceholderText="Játékos keresése" QueryIcon="Find" Margin="15,15,15,15" 
                                         TextChanged="{x:Bind ViewModel.AutoSuggestBox_TextChanged}"
-                                        SuggestionChosen="{x:Bind ViewModel.AutoSuggestBox_SuggestionChosen}"/>
-
+                                        SuggestionChosen="{x:Bind ViewModel.AutoSuggestBox_SuggestionChosen}">
+                            <AutoSuggestBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Name}"/>
+                                        <TextBlock Text="{Binding Nickname}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </AutoSuggestBox.ItemTemplate>
+                        </AutoSuggestBox>
+                        
+                        <!-- Player display area-->
                         <Border  Background="White" CornerRadius="30" Margin="15,15,15,15">
-                            <ItemsControl ItemsSource="{x:Bind ViewModel.PlayerTest}" AllowDrop="True" Background="Transparent">
+                            <ItemsControl ItemsSource="{x:Bind ViewModel.SelectedPlayers, Mode=OneWay}" AllowDrop="True" Background="Transparent">
 
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
@@ -103,7 +114,9 @@
                                     <TextBlock Text="Csapatokkal kapcsolatos adatok" HorizontalAlignment="Stretch" Margin="20,0,10,3"/>
                                 </Border>
 
-                                <CheckBox Content="Csapatos játék" Margin="20,10,10,5" IsChecked="{x:Bind ViewModel.GameSettingsModel.TeamsAllowed, Mode=TwoWay}"/>
+                                <CheckBox Content="Csapatos játék" Margin="20,10,10,5" 
+                                          IsChecked="{x:Bind ViewModel.GameSettingsModel.TeamsAllowed, Mode=TwoWay}"
+                                          Checked="{x:Bind ViewModel.TeamsAllowedChecked}"/>
 
                                 <StackPanel Orientation="Horizontal" Margin="50,5,10,5" >
                                     <TextBox Height="30" Text="{x:Bind ViewModel.GameSettingsModel.MaxTeamSize, Mode=TwoWay}" 
@@ -149,7 +162,7 @@
                 <!--Teams-->
                 <Border Name="teamsLayoutOuterBorder" Grid.Row="1" Background="White" CornerRadius="30" Margin="15,15,15,15"
                         Visibility="{x:Bind ViewModel.GameSettingsModel.TeamsAllowed,Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
-                    <ItemsControl ItemsSource="{x:Bind ViewModel.TeamTest}" >
+                    <ItemsControl ItemsSource="{x:Bind ViewModel.Teams, Mode=OneWay}" >
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <cc:WrapPanel>
