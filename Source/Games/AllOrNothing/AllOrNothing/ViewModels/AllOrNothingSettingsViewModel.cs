@@ -3,6 +3,7 @@ using AllOrNothing.Contracts.ViewModels;
 using AllOrNothing.Controls;
 using AllOrNothing.Data;
 using AllOrNothing.Models;
+using AllOrNothing.Repository;
 using AutoMapper;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -24,12 +25,10 @@ namespace AllOrNothing.ViewModels
     public class AllOrNothingSettingsViewModel : ObservableRecipient, INavigationAware
     {
 
-        public AllOrNothingSettingsViewModel( IMapper mapper)
+        public AllOrNothingSettingsViewModel(IMapper mapper, IUnitOfWork unitOfWork)
         {
             _mapper = mapper;
-
-
-
+            _unitOfWork = unitOfWork;
             _gameSettingsVisible = Visibility.Visible;
             _roundSettingsVisible = Visibility.Collapsed;
             _listViewItemSource = new ObservableCollection<Team>();
@@ -88,7 +87,7 @@ namespace AllOrNothing.ViewModels
         }
 
         private IMapper _mapper;
-
+        private readonly IUnitOfWork _unitOfWork;
         private ICommand _loadFromFileCommand;
         public ICommand LoadFromFileCommand => _loadFromFileCommand ??= new RelayCommand(LoadFromFileClicked);
 

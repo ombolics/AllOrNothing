@@ -2,13 +2,15 @@
 using AllOrNothing.AutoMapper;
 using AllOrNothing.Contracts.Services;
 using AllOrNothing.Helpers;
+using AllOrNothing.Repository;
 using AllOrNothing.Services;
 using AllOrNothing.ViewModels;
 using AllOrNothing.Views;
 using AutoMapper;
 using CommunityToolkit.Mvvm.DependencyInjection;
-
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
 
 // To learn more about WinUI3, see: https://docs.microsoft.com/windows/apps/winui/winui3/.
@@ -61,6 +63,10 @@ namespace AllOrNothing
             services.AddSingleton<INavigationService, NavigationService>();
 
             // Core Services
+            //services.AddTransient<IAllOrNothingDbContext, AllOrNothingDbContext>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddDbContext<AllOrNothingDbContext>(optionsBuilder => optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=AllOrNothingDb;Trusted_Connection=True;"));
+
 
             //Mapping
 

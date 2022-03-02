@@ -20,7 +20,7 @@ namespace AllOrNothing.Data
         public int Id { get; set; }
         public QuestionResourceType ResourceType { get; set; }
         public QuestionType Type { get; set; }
-        public object Resource { get; set; }
+        public byte[] Resource { get; set; }
         [Required]
         public string Text { get; set; }
         [Required]

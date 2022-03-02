@@ -4,13 +4,27 @@ using AllOrNothing.Data;
 
 namespace AllOrNothing.Repository
 {
-    public class AllOrNothingDbContext : DbContext
+    public class AllOrNothingDbContext : DbContext, IAllOrNothingDbContext
     {
+        //The parameterless contstructor ALWAYS should be the first among the constructors
+        //This is to avoid the following error from EF Core at runtime:
+        //
+        // Unable to create an object of type 'AllOrNothingDbContext'. For the different patterns supported at design time, see https://go.microsoft.com/fwlink/?linkid=851728
+        //
+        //***************************************************************
         public AllOrNothingDbContext()
             : base()
         {
 
         }
+
+        public AllOrNothingDbContext(DbContextOptions<AllOrNothingDbContext> options)
+            : base(options)
+        {
+
+        }
+        //*************************************************************
+
         public DbSet<QuestionSerie> QuestionSeries { get; set; }
         public DbSet<Competence> Competences { get; set; }
         public DbSet<Player> Players { get; set; }
@@ -21,8 +35,10 @@ namespace AllOrNothing.Repository
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                
                 optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=AllOrNothingDb;Trusted_Connection=True;");
             }
+
         }
     }
 }
