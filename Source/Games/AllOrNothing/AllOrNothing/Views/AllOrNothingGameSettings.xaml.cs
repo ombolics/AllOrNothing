@@ -30,7 +30,6 @@ namespace AllOrNothing.Views
         public AllOrNothingGameSettings()
         {
             this.InitializeComponent();
-            DataContext = ViewModel;
         }        
 
         public void teamPanel_PlayerDropped(object sender, Player p)

@@ -1,4 +1,5 @@
-﻿using AllOrNothing.Data;
+﻿using AllOrNothing.AutoMapper.Dto;
+using AllOrNothing.Data;
 using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
@@ -155,9 +156,9 @@ namespace AllOrNothing.Services.DragAndDrop
             {
                 string text = await dataview.GetTextAsync();
 
-                //var obj = JsonSerializer.Deserialize<Player>(text);
+                var obj = JsonSerializer.Deserialize<PlayerDto>(text);
 
-                DropTextCommand.Execute(new Player());
+                DropTextCommand.Execute(obj);
             }
 
             if (dataview.Contains(StandardDataFormats.WebLink) && DropWebLinkCommand != null)

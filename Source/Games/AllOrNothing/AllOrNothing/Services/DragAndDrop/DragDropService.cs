@@ -6,6 +6,7 @@ using System.Runtime.Serialization;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage.Streams;
 using System.Text.Json;
+using AllOrNothing.Controls;
 
 namespace AllOrNothing.Services.DragAndDrop
 {
@@ -132,8 +133,14 @@ namespace AllOrNothing.Services.DragAndDrop
 
             element.DragStarting += (sender, args) =>
             {
+
+                if(sender is PlayerTextBlock tb)
+                {
+                    args.Data.SetText(JsonSerializer.Serialize(tb.Player));
+                }
+
                 //args.AllowedOperations = DataPackageOperation.Move;
-                args.Data.SetText(JsonSerializer.Serialize(new TestData { val = 11}));
+                
                 //var asd = RandomAccessStream.
                 //args.Data.SetData("TestData", RandomAccessStreamReference.Cre);
                 //sender.StartDragAsync()

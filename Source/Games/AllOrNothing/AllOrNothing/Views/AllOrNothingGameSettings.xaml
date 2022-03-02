@@ -10,9 +10,12 @@
     xmlns:winui="using:Microsoft.UI.Xaml.Controls"
     xmlns:con="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:conv="using:AllOrNothing.Converters"
+    xmlns:local="using:AllOrNothing.Views"
     mc:Ignorable="d"
     Background="{ThemeResource GradientBrush5}"
-    Name="gameSettingsPage">
+    x:Name="gameSettingsPage"
+    DataContext="{x:Bind ViewModel}">
+    
     <Page.Resources>
         <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
     </Page.Resources>
@@ -42,7 +45,8 @@
 
                         <AutoSuggestBox PlaceholderText="Játékos keresése" QueryIcon="Find" Margin="15,15,15,15" 
                                         TextChanged="{x:Bind ViewModel.AutoSuggestBox_TextChanged}"
-                                        SuggestionChosen="{x:Bind ViewModel.AutoSuggestBox_SuggestionChosen}">
+                                        SuggestionChosen="{x:Bind ViewModel.AutoSuggestBox_SuggestionChosen}"
+                                        Background="{ThemeResource GreyBrush}">
                             <AutoSuggestBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
@@ -173,26 +177,18 @@
 
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <cc:TeamStackPanel Name="teamPanel" Orientation="Vertical" Spacing="5" Background="{ThemeResource GreyBrush}" CornerRadius="30" Margin="10,10,10,10"
-                                                >
-
-
-                                    <!--AllowDrop="True" PlayerDropped="{Binding teamPanel_PlayerDropped, ElementName=teamsLayoutOuterBorder}"-->
-
-
-
-                                    <!--<dd:DragDropService.VisualConfiguration>
-                                        <dd:VisualDropConfiguration
-                                                Caption="Csapattag áthelyezése"
-                                                IsContentVisible="True"
-                                                IsGlyphVisible="False"/>
-                                    </dd:DragDropService.VisualConfiguration>-->
-
+                                <StackPanel Name="teamPanel" 
+                                            Orientation="Vertical" 
+                                            Spacing="5" Background="{ThemeResource GreyBrush}" 
+                                            CornerRadius="30" Margin="10,10,10,10"
+                                            AllowDrop="True">
+                                    
                                     <dd:DragDropService.Configuration>
-                                        <dd:DropConfiguration DropTextCommand="{Binding PlayerDroppedCommand, ElementName=teamPanel}"/>
+                                        <dd:DropConfiguration DropTextCommand="{Binding AddPlayerCommand}"/>
+                                        
                                     </dd:DragDropService.Configuration>
 
-                                    <TextBlock Text="{Binding TeamName}" Margin="10,10,0,10" HorizontalAlignment="Center" />
+                                    <TextBox Text="{Binding TeamName, Mode=TwoWay}" Margin="10,10,0,10" HorizontalAlignment="Center" />
 
                                     <ItemsControl ItemsSource="{Binding Players}" AllowDrop="True" Background="Transparent">
                                         <ItemsControl.ItemsPanel>
@@ -203,7 +199,10 @@
 
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="{Binding Name}" Margin="10,10,10,10" CanDrag="True" >
+                                                <cc:PlayerTextBlock 
+                                                                    Player="{Binding}"
+                                                                    Margin="10,10,10,10" 
+                                                                    CanDrag="True" >
 
                                                     <dd:DragDropService.VisualConfiguration>
                                                         <dd:VisualDropConfiguration
@@ -213,22 +212,15 @@
                                                     </dd:DragDropService.VisualConfiguration>
 
                                                     <dd:DragDropService.Configuration>
-                                                        <dd:DropConfiguration 
-                                                            DropApplicationLinkCommand="{Binding TestCommand}"
-                                                            DropBitmapCommand="{Binding TestCommand}"
-                                                            DropDataViewCommand="{Binding TestCommand}"
-                                                            DropHtmlCommand="{Binding TestCommand}"
-                                                            DropRtfCommand="{Binding TestCommand}"
-                                                            DropStorageItemsCommand="{Binding TestCommand}"
-                                                            DropTextCommand="{Binding TestCommand}"
-                                                            DropWebLinkCommand="{Binding TestCommand}"/>
+                                                        <dd:DropConfiguration                                                            
+                                                            DropTextCommand="{Binding DropPlayerCommand}"/>
                                                     </dd:DragDropService.Configuration>
 
-                                                </TextBlock>
+                                                </cc:PlayerTextBlock>
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
                                     </ItemsControl>
-                                </cc:TeamStackPanel>
+                                </StackPanel>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>

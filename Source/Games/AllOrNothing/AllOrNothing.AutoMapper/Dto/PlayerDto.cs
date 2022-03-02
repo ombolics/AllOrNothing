@@ -1,8 +1,10 @@
 ﻿using AllOrNothing.Data;
 using AutoMapper;
 using AutoMapper.Configuration.Annotations;
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,10 +19,13 @@ namespace AllOrNothing.AutoMapper.Dto
         public string Name { get; set; }
         public string Institue { get; set; }
         public string NickName { get; set; }
+
+       // public ObservableCollection<PlayerDto> OriginalTeam { get; set; }
+
+        //RelayCommand because interface types's serialisation is not allowed
         [Ignore]
-        public ICommand RemoveCommand { get; set; }
-        [Ignore]
-        public ICommand TestCommand { get; set; }
+        public RelayCommand<object> RemoveCommand { get; set; }
+
         public override string ToString()
         {
             return Name;

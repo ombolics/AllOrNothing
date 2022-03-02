@@ -1,5 +1,6 @@
 ﻿using AllOrNothing.AutoMapper.Dto;
 using AllOrNothing.Contracts.ViewModels;
+using AllOrNothing.Controls;
 using AllOrNothing.Data;
 using AllOrNothing.Models;
 using AutoMapper;
@@ -142,6 +143,8 @@ namespace AllOrNothing.ViewModels
             set => SetProperty(ref _gameSettingsModel, value);
         }
 
+        //private ICommand _dropPlayerCommand;
+        //public ICommand DropPlayerCommand => _dropPlayerCommand ??= new RelayCommand<PlayerDto>(OnPlayerDropped);
 
         public void FinalizeSettings()
         {
@@ -166,14 +169,21 @@ namespace AllOrNothing.ViewModels
                 for (int i = 0; i < maxTeamSize && helper.Count > 0; i++)
                 {
                     var plyr = helper[r.Next(0, helper.Count)];
+
+                    //plyr.OriginalTeam = team.Players;
+                    
                     helper.Remove(plyr);
                     team.Players.Add(plyr);
-                    team.TeamName += plyr.NickName + " - "; 
+                    team.TeamName += plyr.NickName + " - ";
+
+                    team.PlayerDrop += On_PlayerDropped;
                 }
                 value.Add(team);           
             }
             return value;
         }
+
+       
 
         public void TeamsAllowedChecked(object sender , RoutedEventArgs e)
         {
@@ -199,9 +209,26 @@ namespace AllOrNothing.ViewModels
             
         }
 
-        public void teamPanel_PlayerDropped(object sender, Player e)
+        public void On_PlayerDropped(object sender, PlayerDto player)
         {
+            if(sender is TeamDto senderTeam)
+            {
+                var originalTeam = Teams
+                    .Where(t => t.Players
+                                    .Where(p => p.Id ==player.Id)
+                                    .ToList().Count>0)
+                    .ToList();
 
+                foreach (var team in originalTeam)
+                {
+                    var removable = team.Players
+                        .Where(p => p.Id == player.Id)
+                        .FirstOrDefault();
+
+                    team.Players.Remove(removable);
+                }
+                senderTeam.Players.Add(player);
+            }
         }
 
         private ObservableCollection<Team> _listViewItemSource;
@@ -280,7 +307,7 @@ namespace AllOrNothing.ViewModels
 
             var dto = _mapper.Map<PlayerDto>(p);
 
-            dto.RemoveCommand = RemovePlayerCommand;
+            dto.RemoveCommand = RemovePlayerCommand as RelayCommand<object>;
             SelectedPlayers.Add(dto);
             sender.Text = string.Empty;
         }
