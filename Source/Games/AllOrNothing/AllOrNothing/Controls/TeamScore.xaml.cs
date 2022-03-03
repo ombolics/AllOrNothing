@@ -1,4 +1,5 @@
-﻿using AllOrNothing.Data;
+﻿using AllOrNothing.AutoMapper.Dto;
+using AllOrNothing.Data;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -30,15 +31,15 @@ namespace AllOrNothing.Controls
 
 
 
-        public Standing Standing
+        public StandingDto Standing
         {
-            get { return (Standing)GetValue(StandingProperty); }
+            get { return (StandingDto)GetValue(StandingProperty); }
             set { SetValue(StandingProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for Standing.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty StandingProperty =
-            DependencyProperty.Register("Standing", typeof(Standing), typeof(TeamScore), null);
+            DependencyProperty.Register("Standing", typeof(StandingDto), typeof(TeamScore), null);
 
 
 
@@ -60,15 +61,15 @@ namespace AllOrNothing.Controls
 
 
 
-        public Question CurrentQuestion
+        public QuestionDto CurrentQuestion
         {
-            get { return (Question)GetValue(CurrentQuestionProperty); }
+            get { return (QuestionDto)GetValue(CurrentQuestionProperty); }
             set { SetValue(CurrentQuestionProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for CurrentQuestion.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty CurrentQuestionProperty =
-            DependencyProperty.Register("CurrentQuestion", typeof(Question), typeof(TeamScore), null);
+            DependencyProperty.Register("CurrentQuestion", typeof(QuestionDto), typeof(TeamScore), null);
 
 
 

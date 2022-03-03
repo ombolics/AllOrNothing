@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -24,6 +25,7 @@ namespace AllOrNothing.AutoMapper.Dto
 
         //RelayCommand because interface types's serialisation is not allowed
         [Ignore]
+        
         public RelayCommand<object> RemoveCommand { get; set; }
 
         public override string ToString()

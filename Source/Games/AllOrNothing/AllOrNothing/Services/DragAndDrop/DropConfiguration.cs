@@ -156,7 +156,7 @@ namespace AllOrNothing.Services.DragAndDrop
             {
                 string text = await dataview.GetTextAsync();
 
-                var obj = JsonSerializer.Deserialize<PlayerDto>(text);
+                var obj = JsonSerializer.Deserialize<Player>(text);
 
                 DropTextCommand.Execute(obj);
             }

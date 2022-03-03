@@ -2,6 +2,7 @@
 using AllOrNothing.Contracts.ViewModels;
 using AllOrNothing.Controls;
 using AllOrNothing.Data;
+using AllOrNothing.Helpers;
 using AllOrNothing.Models;
 using AllOrNothing.Repository;
 using AutoMapper;
@@ -38,6 +39,8 @@ namespace AllOrNothing.ViewModels
             _isRoundSettingsVisible = false;
             _selectedRound = null;
 
+            _avaiblePlayers = new SortedSet<Player>(new PlayerComparer());
+            _avaiblePlayers.UnionWith(_unitOfWork.Players.GetAll()); 
             _teams = new();
             _selectedPlayers = new();
 
@@ -91,16 +94,21 @@ namespace AllOrNothing.ViewModels
         private ICommand _loadFromFileCommand;
         public ICommand LoadFromFileCommand => _loadFromFileCommand ??= new RelayCommand(LoadFromFileClicked);
 
+        public void AutoSuggestBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            (sender as AutoSuggestBox).ItemsSource = null;
+        }
+
         public async void LoadFromFileClicked()
         {
-            FileOpenPicker picker = new FileOpenPicker();
+            //FileOpenPicker picker = new FileOpenPicker();
 
-            var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(MainWindow.Current);
+            ////var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(MainWindow.Current);
 
-            // Associate the HWND with the file picker
-            WinRT.Interop.InitializeWithWindow.Initialize(picker, hwnd);
+            //// Associate the HWND with the file picker
+            //WinRT.Interop.InitializeWithWindow.Initialize(picker, hwnd);
 
-            var file = await picker.PickSingleFileAsync();
+            //var file = await picker.PickSingleFileAsync();
 
         }
         public ObservableCollection<QuestionSerie> TestSeries => new ObservableCollection<QuestionSerie>(DummyData.DummyData.TestSeries);
@@ -157,7 +165,7 @@ namespace AllOrNothing.ViewModels
         {
             var value = new ObservableCollection<TeamDto>();
 
-            List<PlayerDto> helper = new List<PlayerDto>(players);
+            List<Player> helper = _mapper.Map<ICollection<PlayerDto>, List<Player>>(players);
             Random r = new Random();
             while(helper.Count > 0)
             {
@@ -194,10 +202,10 @@ namespace AllOrNothing.ViewModels
             var Schedues = new List<Schedule>();
             var sch = new Schedule();
             //TODO generálási algoritmus
-            for (int i = 0; i < TeamTest.Count; i++)
+            for (int i = 0; i < Teams.Count; i++)
             {
-                sch.Teams.Add(TeamTest[i]);
-                if(i % 4 == 3 || i == TeamTest.Count-1)
+                sch.Teams.Add(Teams[i]);
+                if(i % 4 == 3 || i == Teams.Count-1)
                 {
                     Schedues.Add(sch);
                     sch = new Schedule();
@@ -208,7 +216,7 @@ namespace AllOrNothing.ViewModels
             
         }
 
-        public void On_PlayerDropped(object sender, PlayerDto player)
+        public void On_PlayerDropped(object sender, Player player)
         {
             if(sender is TeamDto senderTeam)
             {
@@ -249,8 +257,11 @@ namespace AllOrNothing.ViewModels
 
         public void On_RemovePlayer(object param)
         {
-            var player = param as PlayerDto;
-            SelectedPlayers.Remove(player);
+            var playerDto = param as PlayerDto;
+            SelectedPlayers.Remove(playerDto);
+
+            var player = _mapper.Map<Player>(playerDto);
+            _avaiblePlayers.Add(player);
         }
 
         public void ItemDragStarting(UIElement sender, DragStartingEventArgs e)
@@ -258,7 +269,9 @@ namespace AllOrNothing.ViewModels
             e.AllowedOperations = DataPackageOperation.Move;
             var asd = e.Data;
         }
-      
+
+        private SortedSet<Player> _avaiblePlayers;
+
         public void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
             // Since selecting an item will also change the text,
@@ -267,10 +280,10 @@ namespace AllOrNothing.ViewModels
             {
                 var suitableItems = new List<Player>();
                 var splitText = sender.Text.ToLower().Split(" ");
-
+                
                 //TODO Search for players in database
 
-                foreach (var player in DummyData.DummyData.PLayers)
+                foreach (var player in _avaiblePlayers)
                 {
                     var found = splitText.All((key) =>
                     {
@@ -287,6 +300,7 @@ namespace AllOrNothing.ViewModels
                 }
 
                 sender.ItemsSource = suitableItems;
+
             }
         }
 
@@ -303,6 +317,7 @@ namespace AllOrNothing.ViewModels
 
             //TODO Convert players to playerDTo
             var p = args.SelectedItem as Player;
+            _avaiblePlayers.Remove(p);
 
             var dto = _mapper.Map<PlayerDto>(p);
 

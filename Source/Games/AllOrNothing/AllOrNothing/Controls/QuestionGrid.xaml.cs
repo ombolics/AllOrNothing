@@ -13,6 +13,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using AllOrNothing.AutoMapper.Dto;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -21,8 +22,8 @@ namespace AllOrNothing.Controls
 {
     public sealed partial class QuestionGrid : UserControl
     {      
-        private QuestionSerie _questionSerie;
-        public QuestionSerie QuestionSerie
+        private QuestionSerieDto _questionSerie;
+        public QuestionSerieDto QuestionSerie
         {
             get => _questionSerie;
             set
@@ -37,17 +38,33 @@ namespace AllOrNothing.Controls
             this.InitializeComponent();
         }
 
-        public string QuestionText { get; set; }
 
-        public Question CurrentQuestion
+
+        public string QuestionDisplay
         {
-            get { return (Question)GetValue(CurrentQuestionProperty); }
-            set { SetValue(CurrentQuestionProperty, value); QuestionText = CurrentQuestion == null ? "" : CurrentQuestion.Text; }
+            get { return (string)GetValue(QuestionDisplayProperty); }
+            set { SetValue(QuestionDisplayProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for QuestionDisplay.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty QuestionDisplayProperty =
+            DependencyProperty.Register("QuestionDisplay", typeof(string), typeof(QuestionGrid), null);
+
+
+
+        public QuestionDto CurrentQuestion
+        {
+            get { return (QuestionDto)GetValue(CurrentQuestionProperty); }
+            set 
+            { 
+                SetValue(CurrentQuestionProperty, value);
+                QuestionDisplay = CurrentQuestion == null ? "" : CurrentQuestion.Text; 
+            }
         }
 
         // Using a DependencyProperty as the backing store for CurrentQuestion.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty CurrentQuestionProperty =
-            DependencyProperty.Register("CurrentQuestion", typeof(Question), typeof(QuestionGrid), null);
+            DependencyProperty.Register("CurrentQuestion", typeof(QuestionDto), typeof(QuestionGrid), null);
 
 
 

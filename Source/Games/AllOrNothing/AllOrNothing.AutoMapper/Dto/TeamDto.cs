@@ -15,15 +15,15 @@ namespace AllOrNothing.AutoMapper.Dto
     public class TeamDto
     {
         public int Id { get; set; }
-        public ObservableCollection<PlayerDto> Players 
+        public ObservableCollection<Player> Players 
         { 
             get;
             set;
         }
         private ICommand _addPlayerCommand;
-        public ICommand AddPlayerCommand => _addPlayerCommand ??= new RelayCommand<PlayerDto>(DropPlayer);
-        public event EventHandler<PlayerDto> PlayerDrop;
-        public void DropPlayer(PlayerDto player)
+        public ICommand AddPlayerCommand => _addPlayerCommand ??= new RelayCommand<Player>(DropPlayer);
+        public event EventHandler<Player> PlayerDrop;
+        public void DropPlayer(Player player)
         {
 
             PlayerDrop?.Invoke(this, player);

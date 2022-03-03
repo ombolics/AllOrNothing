@@ -18,6 +18,12 @@ using Windows.Storage.Pickers;
 using System.Runtime.InteropServices;
 using AllOrNothing.Contracts.ViewModels;
 using AllOrNothing.Helpers;
+using AllOrNothing.AutoMapper.Dto;
+using AutoMapper;
+using AllOrNothing.Controls;
+using Windows.ApplicationModel.Core;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using AllOrNothing.Views;
 
 namespace AllOrNothing.ViewModels
 {
@@ -32,15 +38,17 @@ namespace AllOrNothing.ViewModels
         [DllImport("user32.dll", ExactSpelling = true, CharSet = CharSet.Auto, PreserveSig = true, SetLastError = false)]
         public static extern IntPtr GetActiveWindow();
 
-        public AllOrNothingGameViewModel()
+        public AllOrNothingGameViewModel( IMapper mapper)
         {
             ScoreTest = 3000;
+
             _gameTimer = new DispatcherTimer();
             _gameTimer.Interval = TimeSpan.FromSeconds(1);
             _gameTimer.Tick += _gameTimer_Tick;
             _qsLoader = new QuestionSerieLoader();
 
-            _currentStandings = new ObservableCollection<Standing>();
+            _currentStandings = new ObservableCollection<StandingDto>();
+            _mapper = mapper;
         }
         private GamePhase _gamePhase;
 
@@ -60,10 +68,10 @@ namespace AllOrNothing.ViewModels
                 GamePhase = GamePhase.LIGHTNING;
             }
 
-            CurrentStandings = new ObservableCollection<Standing>();
+            CurrentStandings = new ObservableCollection<StandingDto>();
             foreach (var team in m.Teams)
             {
-                CurrentStandings.Add(new Standing
+                CurrentStandings.Add(new StandingDto
                 {
                     Team = team,
                     Score = 0
@@ -71,8 +79,8 @@ namespace AllOrNothing.ViewModels
             }
         }
 
-        private ObservableCollection<Standing> _currentStandings;
-        public ObservableCollection<Standing> CurrentStandings
+        private ObservableCollection<StandingDto> _currentStandings;
+        public ObservableCollection<StandingDto> CurrentStandings
         {
             get => _currentStandings;
             set => SetProperty(ref _currentStandings, value);
@@ -115,9 +123,18 @@ namespace AllOrNothing.ViewModels
         private ICommand _showLightningCommand;
         public ICommand ShowLightningCommand => _showLightningCommand ??= new RelayCommand(ShowLightning);
 
-        private void ShowLightning()
+        private async void ShowLightning()
         {
-            
+            ContentDialog dialog = new ContentDialog();
+            dialog.XamlRoot = PageXamlRoot;
+            dialog.Title = "Villám?";
+            dialog.PrimaryButtonText = "Villám!";
+            dialog.CloseButtonText = "Mégse";
+            dialog.DefaultButton = ContentDialogButton.Primary;
+            dialog.Content = new LightningDialog();
+
+            var result = await dialog.ShowAsync(ContentDialogPlacement.Popup);
+
         }
 
         private ICommand _loadFromFileCommand;
@@ -125,19 +142,25 @@ namespace AllOrNothing.ViewModels
 
         public async void LoadFromFileClicked()
         {
-            FileOpenPicker picker = new FileOpenPicker();
+            //FileOpenPicker picker = new FileOpenPicker();
 
-            var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(MainWindow.Current);
+            //var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(MainWindow.Current);
 
-            // Associate the HWND with the file picker
-            WinRT.Interop.InitializeWithWindow.Initialize(picker, hwnd);
+            //// Associate the HWND with the file picker
+            //WinRT.Interop.InitializeWithWindow.Initialize(picker, hwnd);
 
-            var file = await picker.PickSingleFileAsync();
+            //var file = await picker.PickSingleFileAsync();
 
         }
 
         private DispatcherTimer _gameTimer;
 
+        private XamlRoot _pageXamlRoot;
+        public XamlRoot PageXamlRoot
+        {
+            get => _pageXamlRoot;
+            set => SetProperty(ref _pageXamlRoot, value);
+        }
 
         private void ToggleTimer()
         {
@@ -164,6 +187,7 @@ namespace AllOrNothing.ViewModels
 
 
         private readonly List<string> _enabledPages = new List<string> { "Beállítások", "Játék" };
+        private readonly IMapper _mapper;
 
         /// <summary>
         /// <param>
@@ -181,11 +205,11 @@ namespace AllOrNothing.ViewModels
             
         }
 
-        private Question _currentQuestion;
-        public QuestionSerie Serie => DummyData.DummyData.QS1;
+        private QuestionDto _currentQuestion;
+        public QuestionSerieDto Serie => _mapper.Map< QuestionSerieDto>( DummyData.DummyData.QS1);
 
 
-        public Question CurrentQuestion 
+        public QuestionDto CurrentQuestion 
         {
             get => _currentQuestion;
             set

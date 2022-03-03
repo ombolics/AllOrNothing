@@ -1,4 +1,5 @@
 ﻿using AllOrNothing.AutoMapper.Dto;
+using AllOrNothing.Data;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Data;
@@ -24,7 +25,7 @@ namespace AllOrNothing.Controls
             Binding b = new Binding
             {
                 Source = this,
-                Path = new PropertyPath(nameof(Player)),
+                Path = new PropertyPath($"{nameof(Player)}.{nameof(Player.Name)}"),
                 Mode = BindingMode.OneWay,
                 UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
             };
@@ -34,9 +35,9 @@ namespace AllOrNothing.Controls
             Children.Add(Display);
         }
 
-        public PlayerDto Player
+        public Player Player
         {
-            get { return (PlayerDto)GetValue(PlayerProperty); }
+            get { return (Player)GetValue(PlayerProperty); }
             set 
             {             
                 SetValue(PlayerProperty, value);     

@@ -31,13 +31,12 @@ namespace AllOrNothing.Views
         public GamePage()
         {
             NavigationCacheMode = NavigationCacheMode.Enabled;
-            this.InitializeComponent();
+            this.InitializeComponent();       
         }
 
-
-        private void On_QuestionPicked(object sender, QuestionPickedEventArgs e)
+        private void gamePage_Loaded(object sender, RoutedEventArgs e)
         {
-            
+            ViewModel.PageXamlRoot = this.Content.XamlRoot;
         }
     }
 }

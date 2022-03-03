@@ -7,11 +7,14 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:dd="using:AllOrNothing.Services.DragAndDrop"
     xmlns:cc="using:AllOrNothing.Controls"
-    xmlns:winui="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:con="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:winui="using:Microsoft.UI.Xaml.Controls"
     xmlns:conv="using:AllOrNothing.Converters"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-    Name="gamePage">
+    Name="gamePage"
+    Loaded="gamePage_Loaded"
+    >
 
     <Page.Resources>
         <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
@@ -21,7 +24,7 @@
 
 
     <Grid>
-       
+
         <!-- Tematical-->
         <Grid x:Name="MainGrid" Background="{ ThemeResource GradientBrush4}">
 
@@ -104,9 +107,12 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
+                        
                         <Button Grid.Column="0" Content="V" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
                                 Command="{x:Bind ViewModel.ShowLightningCommand}"
                                  Visibility="{x:Bind ViewModel.GamePhase, Converter={StaticResource GamePhaseToVisibilityConverter}, ConverterParameter=Tematical }"/>
+                       
+                        
                         <Button Grid.Column="1" Content="E" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                     </Grid>
 

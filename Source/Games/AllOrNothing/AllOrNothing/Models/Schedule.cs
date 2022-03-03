@@ -1,4 +1,5 @@
-﻿using AllOrNothing.Data;
+﻿using AllOrNothing.AutoMapper.Dto;
+using AllOrNothing.Data;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace AllOrNothing.Models
     {
         public Schedule()
         {
-            _teams = new List<Team>();
+            _teams = new List<TeamDto>();
         }
         private QuestionSerie _serie;
         public QuestionSerie Serie 
@@ -21,8 +22,8 @@ namespace AllOrNothing.Models
             set => SetProperty(ref _serie, value);
         }
 
-        private List<Team> _teams;
-        public List<Team> Teams 
+        private List<TeamDto> _teams;
+        public List<TeamDto> Teams 
         {
             get => _teams;
             set => SetProperty(ref _teams, value);

@@ -1,4 +1,5 @@
 ﻿
+using AllOrNothing.AutoMapper.Dto;
 using AllOrNothing.Data;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
@@ -11,9 +12,9 @@ namespace AllOrNothing.Models
 {
     public class RoundSettingsModel : ObservableRecipient
     {
-        private List<Team> _teams;
+        private List<TeamDto> _teams;
 
-        public List<Team> Teams
+        public List<TeamDto> Teams
         {
             get { return _teams; }
             set { SetProperty(ref _teams, value); }

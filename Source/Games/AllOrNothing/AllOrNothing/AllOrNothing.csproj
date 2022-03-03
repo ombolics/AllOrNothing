@@ -12,6 +12,9 @@
     <EnablePreviewMsixTooling>true</EnablePreviewMsixTooling>
 	<GenerateRuntimeConfigurationFiles>True</GenerateRuntimeConfigurationFiles>
   </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Controls\LightningDialog.xaml" />
+  </ItemGroup>
 
   <ItemGroup>
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -46,5 +49,10 @@
     <ProjectReference Include="..\AllOrNothing.AutoMapper\AllOrNothing.AutoMapper.csproj" />
     <ProjectReference Include="..\AllOrNothing.Data\AllOrNothing.Data.csproj" />
     <ProjectReference Include="..\AllOrNothing.Repository\AllOrNothing.Repository.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\LightningDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 </Project>
