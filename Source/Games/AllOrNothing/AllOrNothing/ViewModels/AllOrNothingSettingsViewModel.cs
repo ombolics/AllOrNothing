@@ -29,7 +29,8 @@ namespace AllOrNothing.ViewModels
         public AllOrNothingSettingsViewModel(IMapper mapper, IUnitOfWork unitOfWork)
         {
             _mapper = mapper;
-            _unitOfWork = unitOfWork;
+            _unitOfWork = unitOfWork;            
+
             _gameSettingsVisible = Visibility.Visible;
             _roundSettingsVisible = Visibility.Collapsed;
             _listViewItemSource = new ObservableCollection<Team>();
@@ -40,6 +41,11 @@ namespace AllOrNothing.ViewModels
             _selectedRound = null;
 
             _avaiblePlayers = new SortedSet<Player>(new PlayerComparer());
+
+            var allSeries =
+
+
+            AvaibleSeries = new ObservableCollection<QuestionSerieDto>(_mapper.Map<IEnumerable<QuestionSerie>, IEnumerable<QuestionSerieDto>>(_unitOfWork.QuestionSeries.GetAll()));
             _avaiblePlayers.UnionWith(_unitOfWork.Players.GetAll()); 
             _teams = new();
             _selectedPlayers = new();
@@ -111,7 +117,12 @@ namespace AllOrNothing.ViewModels
             //var file = await picker.PickSingleFileAsync();
 
         }
-        public ObservableCollection<QuestionSerie> TestSeries => new ObservableCollection<QuestionSerie>(DummyData.DummyData.TestSeries);
+        private ObservableCollection<QuestionSerieDto> _avaibleSeries;
+        public ObservableCollection<QuestionSerieDto> AvaibleSeries 
+        {
+            get => _avaibleSeries;
+            set => SetProperty(ref _avaibleSeries, value);
+        }
         public void RoundSelected(object sender, ItemClickEventArgs e)
         {
             SelectedRound = e.ClickedItem as RoundSettingsModel;

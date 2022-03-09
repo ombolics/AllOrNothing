@@ -241,6 +241,7 @@
 
                 <ListView Grid.Column="0" x:Name="ScheduleList" Header="Körök beosztása" 
                           ItemsSource="{x:Bind ViewModel.Rounds, Mode=OneWay}"
+                          SelectedItem="{x:Bind ViewModel.SelectedRound, Mode=OneWay}"
                           ScrollViewer.VerticalScrollMode="Auto"
                           ShowsScrollingPlaceholders="False"
                           IsItemClickEnabled="True"
@@ -328,7 +329,7 @@
 
                         <ScrollViewer>
                             <con:DataGrid 
-                            ItemsSource="{x:Bind ViewModel.TestSeries}"
+                            ItemsSource="{x:Bind ViewModel.AvaibleSeries}"
                             AutoGenerateColumns="False">
                                 <con:DataGrid.Columns>
                                     <con:DataGridTextColumn Header="Id" Binding="{Binding Id}" Tag="Id" />

@@ -15,19 +15,19 @@ namespace AllOrNothing.Data
         public List<Player> Authors { get; set; }
         public DateTime CreatedOn { get; set; }
 
-        private HashSet<Competence> GetCompetences()
-        {
-            var value = new HashSet<Competence>();
-            foreach (var topic in Topics)
-            {
-                foreach (var item in topic.Competences)
-                {
-                    value.Add(item);
-                }
-            }
-            return value;
-        }
+        //private HashSet<Competence> GetCompetences()
+        //{
+        //    var value = new HashSet<Competence>();
+        //    foreach (var topic in Topics)
+        //    {
+        //        foreach (var item in topic.Competences)
+        //        {
+        //            value.Add(item);
+        //        }
+        //    }
+        //    return value;
+        //}
 
-        public HashSet<Competence> Competences => GetCompetences();
+        public HashSet<Competence> Competences {get; set;}
     }
 }

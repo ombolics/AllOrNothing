@@ -9,6 +9,8 @@ using QuizLauncher.Helpers;
 using QuizLauncher.Services;
 using QuizLauncher.ViewModels;
 using QuizLauncher.Views;
+using System.IO;
+using System.Reflection;
 
 // To learn more about WinUI3, see: https://docs.microsoft.com/windows/apps/winui/winui3/.
 namespace QuizLauncher
@@ -22,6 +24,9 @@ namespace QuizLauncher
             InitializeComponent();
             UnhandledException += App_UnhandledException;
             Ioc.Default.ConfigureServices(ConfigureServices());
+
+            GameImportService.CreateConfigFolder();
+
         }
 
         private void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
@@ -56,6 +61,7 @@ namespace QuizLauncher
             services.AddSingleton<INavigationService, NavigationService>();
 
             // Core Services
+            services.AddTransient<GameImportService>();
 
             // Views and ViewModels
             services.AddTransient<ShellPage>();

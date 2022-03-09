@@ -20,7 +20,7 @@ namespace AllOrNothing.Models
             set { SetProperty(ref _teams, value); }
         }
 
-        public QuestionSerie QuestionSerie { get; set; }
+        public QuestionSerieDto QuestionSerie { get; set; }
         private bool _isTematicalAllowed;
         public bool IsTematicalAllowed
         {

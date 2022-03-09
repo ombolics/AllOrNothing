@@ -133,8 +133,11 @@ namespace AllOrNothing.ViewModels
             dialog.DefaultButton = ContentDialogButton.Primary;
             dialog.Content = new LightningDialog();
 
-            var result = await dialog.ShowAsync(ContentDialogPlacement.Popup);
-
+            if(await dialog.ShowAsync(ContentDialogPlacement.Popup) == ContentDialogResult.Primary)
+            {
+                GamePhase = GamePhase.LIGHTNING;
+                //CurrentQuestion
+            }
         }
 
         private ICommand _loadFromFileCommand;

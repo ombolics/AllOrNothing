@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AllOrNothing.Repository.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,9 +14,15 @@ namespace AllOrNothing.Repository
         {
             _context = context;
             Players = new PlayerRepository(context);
+            QuestionSeries = new QuestionSerieRepository(context);
         }
 
         public IPlayerRepository Players
+        {
+            get;
+            private set;
+        }
+        public IQuestionSerieRepository QuestionSeries
         {
             get;
             private set;

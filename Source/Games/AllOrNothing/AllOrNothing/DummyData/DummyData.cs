@@ -21,7 +21,7 @@ namespace AllOrNothing.DummyData
 
         private static Player _author = new Player
         {
-            Institue = "",
+            Institue = "PSEG",
             NickName = "Csabi",
             Name = " Ömböli Csaba",
         };
@@ -42,74 +42,65 @@ namespace AllOrNothing.DummyData
 
         public static QuestionSerie QS1 => new QuestionSerie
         {
-            Id = _currentId++,
             Topics = new List<Topic>
             {
                 new Topic
                 {
-                    Id = 0,
                     Author = _author,
-                    Name = "Matek",
+                    Name = "Egyiptomitológia",
                     Competences = new List<Competence>
                     {
                         new Competence
                         {
-                            Id = 0,
-                            Name = "Matematika",
+                            Name = "történelem",
                         },
                     },
                     Questions = new List<Question>
                     {
                         new Question
                         {
-                            Id = 0,
-                            Text = "A matematika, tárgyát és módszereit tekintve, sajátos tudomány, mely részben a többi tudomány által vizsgált, részben pedig a matematika „belső” fejlődéséből adódóan létrejött (felfedezett, ill. feltalált) rendszereket, struktúrákat, azok absztrakt, közösen meglévő tulajdonságait vizsgálja.Régebben a „mennyiség és a tér tudományaként” (vagyis a számok és geometriai alakzatok tanaként) határozták meg, a múlt század elejétől kezdve pedig a",
-                            Answer = "4",
+                            Text = "Az alvilág, és a holtak oltalmazója, a holttestek bebalzsamozóinak istene. Ozirisz kultusza előtt ő vezette a holtakat az alvilágba. Sakál fejjel ábrázolják.",
+                            Answer = "Anubis",
                             Resource = null,
                             Type = QuestionType.THEMATICAL,
                             Value = 1000
                         },
                         new Question
                         {
-                            Id = 0,
-                            Text = "Mennyi 4+4?",
-                            Answer = "8",
+                            Text = "Egyiptom egyik legfontosabb istene, a királyok isteni megszemélyesítője. Az idők során alakja egybeolvadt Ré-vel. Az ég sólyomfejű istene",
+                            Answer = "Hórusz",
                             Resource = null,
                             Type = QuestionType.THEMATICAL,
                             Value = 2000
                         },
                         new Question
                         {
-                            Id = 0,
-                            Text = "Mennyi 10+2?",
-                            Answer = "12",
+                            Text = "A sivatag a zűrzavar és a pusztítás istene. Geb és Nut fia, Ozirisz gyilkosa. Ember testtel és állati fejjel ábrázolják, de feje nem beazonosítható, leginkább hiénára hasonlít.",
+                            Answer = "Szeth",
                             Resource = null,
                             Type = QuestionType.THEMATICAL,
                             Value = 3000
                         },
                         new Question
                         {
-                            Id = 0,
-                            Text = "Mennyi 3-2?",
-                            Answer = "1",
+                            Text = "A sivatag a zűrzavar és a pusztítás istene. Geb és Nut fia, Ozirisz gyilkosa. Ember testtel és állati fejjel ábrázolják, de feje nem beazonosítható, leginkább hiénára hasonlít.",
+                            Answer = "Thot",
                             Resource = null,
                             Type = QuestionType.THEMATICAL,
                             Value = 4000
                         },
                         new Question
                         {
-                            Id = 0,
-                            Text = "Mennyi -5+4?",
-                            Answer = "-1",
+                            Text = "A Nílus krokodilfejű istene. Ő biztosította a rendszeres áradást. A fáraó hadseregének védelmezője. Egyes források az emberek és az istenek védelmezőjeként utalnak rá.",
+                            Answer = "Szobek",
                             Resource = null,
                             Type = QuestionType.THEMATICAL,
                             Value = 5000
                         },
                         new Question
                         {
-                            Id = 0,
-                            Text = "Mennyi 22+22?",
-                            Answer = "44",
+                            Text = "A termékenység, és a teremtés istene. A kosfejű lény másik neve a „nagy fazekas”, mert fazekaskorongján ő formázta meg az első embereket és a lelküket.",
+                            Answer = "Khnum",
                             Resource = null,
                             Type = QuestionType.THEMATICAL,
                             Value = 8000
@@ -118,15 +109,14 @@ namespace AllOrNothing.DummyData
                 },
                 new Topic
                 {
-                    Id = 0,
                     Author = _author,
-                    Name = "Lol",
+                    Name = "Kakukktojás",
                     Competences = new List<Competence>
                     {
                         new Competence
                         {
                             Id = 0,
-                            Name = "LOL",
+                            Name = "logika",
                         },
                     },
 
@@ -134,54 +124,48 @@ namespace AllOrNothing.DummyData
                     {
                         new Question
                         {
-                            Id = 0,
-                            Text = "Melyik champion a legjobb?",
-                            Answer = "AAtrox",
+                            Text = "Párizs, Róma, Budapest, London, Tunisz",
+                            Answer = "Tunisz nem európai főváros",
                             Resource = null,
                             Type = QuestionType.THEMATICAL,
                             Value = 1000
                         },
                         new Question
                         {
-                            Id = 0,
-                            Text = "Süt a nap?",
-                            Answer = "nem",
+                            Text = "128, 64, 254, 1024, 1",
+                            Answer = "A 254 nem 2 hatvány",
                             Resource = null,
                             Type = QuestionType.THEMATICAL,
                             Value = 2000
                         },
                         new Question
                         {
-                            Id = 0,
-                            Text = "Mit egyek ma?",
-                            Answer = "igen",
+                            Text = "Nagy Lajos, Luxemburgi Zsigmond, Hunyadi Mátyás, Szapolyai János, II. Ulászló",
+                            Answer = "Szapolyai csak magyar király volt",
                             Resource = null,
                             Type = QuestionType.THEMATICAL,
                             Value = 3000
                         },
                         new Question
                         {
-                            Id = 0,
-                            Text = "Mennyi a hidrogén atomtömege?",
-                            Answer = "1",
+                            Text = "lajbi, szedett ing, priccses nadrág, pendely, krecsány, rékli	",
+                            Answer = "a pendely nem felsőruházat",
                             Resource = null,
                             Type = QuestionType.THEMATICAL,
                             Value = 4000
                         },
                         new Question
                         {
-                            Id = 0,
-                            Text = "Kevés a minimálbér?",
-                            Answer = "túl sok",
+                            Text = "Ernest Rutherford, Niels Bohr, Lénárd Fülöp, Albert Einstein, Pierre Curie, Gábor Dénes",
+                            Answer = "Rutherford nem kapott fizikai Nobel-díjat",
                             Resource = null,
                             Type = QuestionType.THEMATICAL,
                             Value = 5000
                         },
                         new Question
                         {
-                            Id = 0,
-                            Text = "Szabolcs mondott egy kérdést vajon?",
-                            Answer = "",
+                            Text = "Apple, Disney, IBM, Nike, General Electric, McDonald’s, Coca-Cola, Boeing",
+                            Answer = "General Electric (nem része a Dow Jones indexnek) ",
                             Resource = null,
                             Type = QuestionType.THEMATICAL,
                             Value = 8000
@@ -190,15 +174,13 @@ namespace AllOrNothing.DummyData
                 },
                  new Topic
                 {
-                    Id = 0,
                     Author = _author,
-                    Name = "Matek",
+                    Name = "Csacsi-pacsi",
                     Competences = new List<Competence>
                     {
                         new Competence
                         {
-                            Id = 0,
-                            Name = "Matematika",
+                            Name = "logika",
                         },
                     },
 
@@ -206,54 +188,48 @@ namespace AllOrNothing.DummyData
                     {
                         new Question
                         {
-                            Id = 0,
-                            Text = "Mennyi 2+2?",
-                            Answer = "4",
+                            Text = "Keretbe foglalt dróthálóból készült használati tárgy, itt tudjuk feladni a leveleket ",
+                            Answer = "rosta-posta",
                             Resource = null,
                             Type = QuestionType.THEMATICAL,
                             Value = 1000
                         },
                         new Question
                         {
-                            Id = 0,
-                            Text = "Mennyi 4+4?",
-                            Answer = "8",
+                            Text = "Szavazati joggal rendelkező személy, egy balkáni országból származó",
+                            Answer = "polgár-bolgár",
                             Resource = null,
                             Type = QuestionType.THEMATICAL,
                             Value = 2000
                         },
                         new Question
                         {
-                            Id = 0,
-                            Text = "Mennyi 10+2?",
-                            Answer = "12",
+                            Text = "Ókori találmánnyal rendelkező, életkorát meghazudtolóan negatívan viselkedő",
+                            Answer = "kerekes-gyerekes",
                             Resource = null,
                             Type = QuestionType.THEMATICAL,
                             Value = 3000
                         },
                         new Question
                         {
-                            Id = 0,
-                            Text = "Mennyi 3-2?",
-                            Answer = "1",
+                            Text = "Börtön ”szobája”, fizetőeszköz szlenges neve ",
+                            Answer = "cella-della",
                             Resource = null,
                             Type = QuestionType.THEMATICAL,
                             Value = 4000
                         },
                         new Question
                         {
-                            Id = 0,
-                            Text = "Mennyi -5+4?",
-                            Answer = "-1",
+                            Text = "A Kárpátok legmagasabb hegyvonulata, szétszedhető ideiglenes lakása ",
+                            Answer = "Tátra-sátra",
                             Resource = null,
                             Type = QuestionType.THEMATICAL,
                             Value = 5000
                         },
                         new Question
                         {
-                            Id = 0,
-                            Text = "Mennyi 22+22?",
-                            Answer = "44",
+                            Text = "Magánál értéktelenebbnek, alacsonyabb rendűnek tart, a betelepítéseket irányító közösségi vezető a középkori Magyarországon",
+                            Answer = "lenéz-kenéz",
                             Resource = null,
                             Type = QuestionType.THEMATICAL,
                             Value = 8000
@@ -262,15 +238,13 @@ namespace AllOrNothing.DummyData
                 },
                 new Topic
                 {
-                    Id = 0,
                     Author = _author,
-                    Name = "Lol",
+                    Name = "Orosz irodalom",
                     Competences = new List<Competence>
                     {
                         new Competence
                         {
-                            Id = 0,
-                            Name = "LOL",
+                            Name = "irodalom",
                         },
                     },
 
@@ -278,54 +252,48 @@ namespace AllOrNothing.DummyData
                     {
                         new Question
                         {
-                            Id = 0,
-                            Text = "Melyik champion a legjobb?",
-                            Answer = "AAtrox",
+                            Text = "Mely ruhadarab szerepel Gogol egy művének a címében?",
+                            Answer = "köpönyeg",
                             Resource = null,
                             Type = QuestionType.THEMATICAL,
                             Value = 1000
                         },
                         new Question
                         {
-                            Id = 0,
-                            Text = "Süt a nap?",
-                            Answer = "nem",
+                            Text = "Hány könyvből áll a Háború és béke? ",
+                            Answer = "4",
                             Resource = null,
                             Type = QuestionType.THEMATICAL,
                             Value = 2000
                         },
                         new Question
                         {
-                            Id = 0,
-                            Text = "Mit egyek ma?",
-                            Answer = "igen",
+                            Text = "Ki írt levelet Anyeginnek?",
+                            Answer = "Tatjána",
                             Resource = null,
                             Type = QuestionType.THEMATICAL,
                             Value = 3000
                         },
                         new Question
                         {
-                            Id = 0,
-                            Text = "Mennyi a hidrogén atomtömege?",
-                            Answer = "1",
+                            Text = "Hogy hívják a Bűn és bűnhődés főszereplőjét?",
+                            Answer = "Rogyion Romanovics Raszkolnyikov",
                             Resource = null,
                             Type = QuestionType.THEMATICAL,
                             Value = 4000
                         },
                         new Question
                         {
-                            Id = 0,
-                            Text = "Kevés a minimálbér?",
-                            Answer = "túl sok",
+                            Text = "A lónevű, Ellenségek, Kaméleon, Vologya, A tokba bújt ember, A 6-os számú kórterem. Ki a novellák szerzője?",
+                            Answer = "Anton Pavlovics Csehov",
                             Resource = null,
                             Type = QuestionType.THEMATICAL,
                             Value = 5000
                         },
                         new Question
                         {
-                            Id = 0,
-                            Text = "Szabolcs mondott egy kérdést vajon?",
-                            Answer = "",
+                            Text = "Nobeldíjas orosz író. Az 1973-ban írt A Gulag szigetvilág című regénye miatt a Legfelsőbb Tanács megfosztotta szovjet állampolgárságától és kiutasította az országból.",
+                            Answer = "Alekszandr Iszajevics Szolzsenyicin",
                             Resource = null,
                             Type = QuestionType.THEMATICAL,
                             Value = 8000
@@ -334,15 +302,13 @@ namespace AllOrNothing.DummyData
                 },
                 new Topic
                 {
-                    Id = 0,
                     Author = _author,
-                    Name = "Matek",
+                    Name = "Anyag",
                     Competences = new List<Competence>
                     {
                         new Competence
                         {
-                            Id = 0,
-                            Name = "Matematika",
+                            Name = "orvosi",
                         },
                     },
 
@@ -350,54 +316,48 @@ namespace AllOrNothing.DummyData
                     {
                         new Question
                         {
-                            Id = 0,
-                            Text = "Mennyi 2+2?",
-                            Answer = "4",
+                            Text = "Mi a kokain alapanyaga?",
+                            Answer = "kokacserje",
                             Resource = null,
                             Type = QuestionType.THEMATICAL,
                             Value = 1000
                         },
                         new Question
                         {
-                            Id = 0,
-                            Text = "Mennyi 4+4?",
-                            Answer = "8",
+                            Text = "Minek a rövidítése az LSD?",
+                            Answer = "lizergsav-dietilamid",
                             Resource = null,
                             Type = QuestionType.THEMATICAL,
                             Value = 2000
                         },
                         new Question
                         {
-                            Id = 0,
-                            Text = "Mennyi 10+2?",
-                            Answer = "12",
+                            Text = "Hol fordul elő a természetben a mescalin?",
+                            Answer = "kaktuszfélékben",
                             Resource = null,
                             Type = QuestionType.THEMATICAL,
                             Value = 3000
                         },
                         new Question
                         {
-                            Id = 0,
-                            Text = "Mennyi 3-2?",
-                            Answer = "1",
+                            Text = "Miből készül a heroin?",
+                            Answer = "mák, ópium",
                             Resource = null,
                             Type = QuestionType.THEMATICAL,
                             Value = 4000
                         },
                         new Question
                         {
-                            Id = 0,
-                            Text = "Mennyi -5+4?",
-                            Answer = "-1",
+                            Text = "Milyen drogot hívnak kristálynak?",
+                            Answer = "metamfetamin",
                             Resource = null,
                             Type = QuestionType.THEMATICAL,
                             Value = 5000
                         },
                         new Question
                         {
-                            Id = 0,
-                            Text = "Mennyi 22+22?",
-                            Answer = "44",
+                            Text = "A dél-amerikai őserdőkben honos indákat felaprítva lassú tűzön főzik. Az így kapott hallucinogén italt bennszülöttek sámán szertartásaihoz használták fel. Mi az ital neve?",
+                            Answer = "ayahusca",
                             Resource = null,
                             Type = QuestionType.THEMATICAL,
                             Value = 8000
@@ -406,15 +366,8 @@ namespace AllOrNothing.DummyData
                 },
             },
             Authors = new List<Player> 
-            { _author,
-                new Player 
-                {
-                    Id = ++_currentId,
-                    Institue = "ELTE",
-                    Name = "Kiss András Lajos Géza",
-                    NickName = "Lajos",                   
-
-                } 
+            { 
+                _author,              
             },
             CreatedOn = DateTime.Now,
         };

@@ -15,8 +15,8 @@ namespace AllOrNothing.Models
         {
             _teams = new List<TeamDto>();
         }
-        private QuestionSerie _serie;
-        public QuestionSerie Serie 
+        private QuestionSerieDto _serie;
+        public QuestionSerieDto Serie 
         {
             get => _serie;
             set => SetProperty(ref _serie, value);
