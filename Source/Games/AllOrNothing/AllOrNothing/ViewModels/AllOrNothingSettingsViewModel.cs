@@ -14,12 +14,14 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage.Pickers;
+
 
 namespace AllOrNothing.ViewModels
 {
@@ -208,22 +210,120 @@ namespace AllOrNothing.ViewModels
             Teams = GenerateTeams(SelectedPlayers, GameSettingsModel.MaxTeamSize);
         }
 
+        private int RoundsAgainstEachOther(int ind1, int ind2, int [,] matrix)
+        {
+            if (matrix[ind1, ind2] != matrix[ind2, ind1])
+                throw new ArgumentException("The matrix must be symmetrical!");
+            return matrix[ind1, ind2];
+        }
+
+        private int SumOfPlayedAgainstTeamsInRound(int teamIndex, List<int> round, int[,] matrix)
+        {
+            int value = 0;
+            int i = 0;
+
+            while (i < round.Count && round[i] > 0)
+            {
+                value += RoundsAgainstEachOther(teamIndex, round[i], matrix);
+                i++;
+            }
+            return value;
+        }
+
+        private void UpdateMatrix(ref int [,] matrix, List<int> teams)
+        {
+        }
+
+        private void PrintMatrix(int[,] matrix)
+        {
+            for (int i = 0; i < matrix.GetLength(0); i++)
+            {
+                Debug.Write("[");
+                for (int j = 0; j < matrix.GetLength(1); j++)
+                {
+                    Debug.Write(matrix[i, j] + "|");
+                }
+                Debug.WriteLine("]");
+            }
+        }
+
         public void GenerateSchedule()
         {
-            var Schedues = new List<Schedule>();
-            var sch = new Schedule();
-            //TODO generálási algoritmus
+            var Schedules = new List<Schedule>();
+
+            var matrix = new int[Teams.Count, Teams.Count];
+            var occurrences = new Dictionary<int, int>();
+
             for (int i = 0; i < Teams.Count; i++)
             {
-                sch.Teams.Add(Teams[i]);
-                if(i % 4 == 3 || i == Teams.Count-1)
-                {
-                    Schedues.Add(sch);
-                    sch = new Schedule();
-                }
+                occurrences.Add(i, 0);
             }
 
-            GameSettingsModel.Schedules = Schedues;
+            while(occurrences.Any(p=>p.Value < GameSettingsModel.NumberOfRounds))
+            {
+                
+                var round = new List<int>();
+
+                for (int i = 0; i < 4; i++)
+                {
+                    if(i == 0)
+                    {
+                        int teamIndex = occurrences.Where(p => p.Value == occurrences.Min(p => p.Value)).ElementAt(0).Key;
+                        round.Add(teamIndex);
+                        occurrences[teamIndex]++;
+                    }
+                    else
+                    {
+                        var minTeams = occurrences.Where(p => p.Value == occurrences.Min(p => p.Value)).ToList();
+
+                        int min = int.MaxValue;
+                        int minIndex = -1;
+                        for (int j = 0; j < minTeams.Count; j++)
+                        {
+                            var val = SumOfPlayedAgainstTeamsInRound(minTeams[j].Key, round, matrix);
+                            if (val < min)
+                            {
+                                min = val;
+                                minIndex = minTeams[j].Key;
+                            }
+                        }
+
+                        round.Add(minIndex);
+                        occurrences[minIndex]++;
+                        foreach (var item in round)
+                        {
+                            matrix[item, minIndex]++;
+                            matrix[minIndex, item]++;
+                        }
+                    }                  
+                }
+
+                var sch = new Schedule();
+                foreach (var item in round)
+                {
+                    sch.Teams.Add(Teams[item]);
+                }
+
+                Schedules.Add(sch);
+            }
+            PrintMatrix(matrix);
+            GameSettingsModel.Schedules = Schedules;
+
+
+            //var Schedues = new List<Schedule>();
+            //var sch = new Schedule();
+            ////TODO generálási algoritmus
+            //for (int i = 0; i < Teams.Count; i++)
+            //{
+            //    sch.Teams.Add(Teams[i]);
+            //    if(i % 4 == 3 || i == Teams.Count-1)
+            //    {
+            //        Schedues.Add(sch);
+            //        sch = new Schedule();
+            //    }
+            //}
+
+            //GameSettingsModel.Schedules = Schedues;
             
         }
 
