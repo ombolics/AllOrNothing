@@ -21,7 +21,8 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage.Pickers;
-
+using WinRT.Interop;
+using WinRT;
 
 namespace AllOrNothing.ViewModels
 {
@@ -99,26 +100,15 @@ namespace AllOrNothing.ViewModels
 
         private IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
-        private ICommand _loadFromFileCommand;
-        public ICommand LoadFromFileCommand => _loadFromFileCommand ??= new RelayCommand(LoadFromFileClicked);
+        //private ICommand _loadFromFileCommand;
+        //public ICommand LoadFromFileCommand => _loadFromFileCommand ??= new RelayCommand(LoadFromFileClicked);
 
         public void AutoSuggestBox_LostFocus(object sender, RoutedEventArgs e)
         {
             (sender as AutoSuggestBox).ItemsSource = null;
         }
 
-        public async void LoadFromFileClicked()
-        {
-            //FileOpenPicker picker = new FileOpenPicker();
-
-            ////var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(MainWindow.Current);
-
-            //// Associate the HWND with the file picker
-            //WinRT.Interop.InitializeWithWindow.Initialize(picker, hwnd);
-
-            //var file = await picker.PickSingleFileAsync();
-
-        }
+        
 
 
 

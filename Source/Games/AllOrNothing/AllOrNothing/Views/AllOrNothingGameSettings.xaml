@@ -325,7 +325,7 @@
 
                         <StackPanel Orientation="Horizontal" Spacing="20">
                             <TextBlock Text="Kiválasztott kérdéssor"/>
-                            <Button Content="Betöltés fájlból" Command="{x:Bind ViewModel.LoadFromFileCommand}"/>
+                            <Button Content="Betöltés fájlból" Click="Button_Click"/>
                         </StackPanel>
 
                         <ScrollViewer>

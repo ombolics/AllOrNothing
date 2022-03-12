@@ -15,6 +15,8 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage.Pickers;
+using WinRT.Interop;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -36,7 +38,25 @@ namespace AllOrNothing.Views
         {
 
         }
+
+        public async void LoadFromFileClicked()
+        {
             
 
+        }
+
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+            FileOpenPicker picker = new FileOpenPicker();
+
+            //var hwnd = this.As<IWindowNative>().WindowHandle;
+            var hwnd = WindowNative.GetWindowHandle(App.MainWindow);
+
+
+            WinRT.Interop.InitializeWithWindow.Initialize(picker, hwnd);
+
+            var file = await picker.PickSingleFileAsync();
+        }
     }
 }

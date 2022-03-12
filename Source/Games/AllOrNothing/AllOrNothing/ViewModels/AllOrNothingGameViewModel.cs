@@ -211,14 +211,14 @@ namespace AllOrNothing.ViewModels
 
         public async void LoadFromFileClicked()
         {
-            //FileOpenPicker picker = new FileOpenPicker();
+            FileOpenPicker picker = new FileOpenPicker();
 
-            //var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(MainWindow.Current);
+            var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(Window.Current);
 
-            //// Associate the HWND with the file picker
-            //WinRT.Interop.InitializeWithWindow.Initialize(picker, hwnd);
+            // Associate the HWND with the file picker
+            WinRT.Interop.InitializeWithWindow.Initialize(picker, hwnd);
 
-            //var file = await picker.PickSingleFileAsync();
+            var file = await picker.PickSingleFileAsync();
 
         }
 
