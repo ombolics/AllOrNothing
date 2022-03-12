@@ -58,7 +58,7 @@
                 </Grid>
 
                 <cc:QuestionGrid Grid.Row="2" Margin="15,15,15,15"
-                             QuestionSerie="{x:Bind ViewModel.Serie}" 
+                             QuestionSerie="{x:Bind ViewModel.SelectedRound.QuestionSerie, Mode=OneWay}" 
                              CurrentQuestion="{x:Bind ViewModel.CurrentQuestion, Mode=TwoWay}"
                              CornerRadius="30"
                              Visibility="{x:Bind ViewModel.GamePhase, Mode=OneWay, Converter={StaticResource GamePhaseToVisibilityConverter}, ConverterParameter=Tematical }"/>
@@ -72,6 +72,12 @@
                 </Grid.RowDefinitions>
 
                 <ListView Grid.Row="0"  ItemsSource="{x:Bind ViewModel.AnswerLog, Mode=OneWay}">
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel VerticalAlignment="Bottom"/>
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                    
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding}" HorizontalAlignment="Stretch"/>
@@ -214,7 +220,7 @@
                 </Grid>
 
                 <cc:QuestionGrid Grid.Row="2" Margin="15,15,15,15"
-                             QuestionSerie="{x:Bind ViewModel.Serie}" 
+                             QuestionSerie="{x:Bind ViewModel.SelectedRound.QuestionSerie, Mode=OneWay}" 
                              CurrentQuestion="{x:Bind ViewModel.CurrentQuestion, Mode=TwoWay}"
                              CornerRadius="30"
                              Visibility="{x:Bind ViewModel.GamePhase, Mode=OneWay, Converter={StaticResource GamePhaseToVisibilityConverter}, ConverterParameter=Tematical }"/>

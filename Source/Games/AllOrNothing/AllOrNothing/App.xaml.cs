@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
+using System.IO;
 
 // To learn more about WinUI3, see: https://docs.microsoft.com/windows/apps/winui/winui3/.
 namespace AllOrNothing
@@ -19,6 +20,7 @@ namespace AllOrNothing
     public partial class App : Application
     {
         public static Window MainWindow { get; set; } = new Window() { Title = "AppDisplayName".GetLocalized() };
+        public static readonly string QuestionSerieFolder = @$"{System.AppDomain.CurrentDomain.BaseDirectory}\Kérdéssorok";
 
         public App()
         {
@@ -28,6 +30,11 @@ namespace AllOrNothing
 
             //Borderless mode
             //MainWindow.ExtendsContentIntoTitleBar = true;
+
+            if (!Directory.Exists(QuestionSerieFolder))
+            {
+                Directory.CreateDirectory(QuestionSerieFolder);
+            }
 
         }
 

@@ -14,16 +14,28 @@ namespace AllOrNothing.Services
         {
 
         }
+        public List<QuestionSerie> LoadAllSeriesFromFolder(string folderPath)
+        {
+            var files = Directory.GetFiles(folderPath);
+            var result = new List<QuestionSerie>();
+            foreach (var file in files)
+            {
+                result.Add(LoadFromTxt(file));
+            }
+            return result;
+        }
 
         public  QuestionSerie LoadFromTxt(string path)
         {
             StreamReader sr = new StreamReader(path);
             QuestionSerie value = new QuestionSerie();
+            value.Topics = new List<Topic>();
             while(!sr.EndOfStream)
             {
-                Topic t = new Topic();
+                
                 for (int i = 0; i < 5; i++)
                 {
+                    Topic t = new Topic();
                     t.Name = sr.ReadLine();
                     t.Questions = new List<Question>();
 
@@ -36,9 +48,10 @@ namespace AllOrNothing.Services
                             ResourceType = QuestionResourceType.TEXT,
                         });
                     }
-
+                    sr.ReadLine();
+                    value.Topics.Add(t);
                 }
-                value.Topics.Add(t);
+                
             }
 
             return value;

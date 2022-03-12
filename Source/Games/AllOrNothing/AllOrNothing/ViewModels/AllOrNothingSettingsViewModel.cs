@@ -23,6 +23,7 @@ using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage.Pickers;
 using WinRT.Interop;
 using WinRT;
+using AllOrNothing.Services;
 
 namespace AllOrNothing.ViewModels
 {
@@ -32,7 +33,7 @@ namespace AllOrNothing.ViewModels
         public AllOrNothingSettingsViewModel(IMapper mapper, IUnitOfWork unitOfWork)
         {
             _mapper = mapper;
-            _unitOfWork = unitOfWork;            
+            _unitOfWork = unitOfWork;
 
             _gameSettingsVisible = Visibility.Visible;
             _roundSettingsVisible = Visibility.Collapsed;
@@ -49,59 +50,28 @@ namespace AllOrNothing.ViewModels
 
 
             AvaibleSeries = new ObservableCollection<QuestionSerieDto>(_mapper.Map<IEnumerable<QuestionSerie>, IEnumerable<QuestionSerieDto>>(_unitOfWork.QuestionSeries.GetAll()));
-            _avaiblePlayers.UnionWith(_unitOfWork.Players.GetAll()); 
+            _avaiblePlayers.UnionWith(_unitOfWork.Players.GetAll());
             _teams = new();
             _selectedPlayers = new();
-
-
-            for (int i = 0; i < 10; i++)
-            {
-                _listViewItemSource.Add(
-                     new Team
-                     {
-                         Players = new List<Player>
-                         {
-                                new Player
-                                {
-                                    Institue = "Bonyhád",
-                                    Name = "Z. András",
-                                    NickName = "Lajos",
-                                },
-                                new Player
-                                {
-                                    Institue = "Bonyhád",
-                                    Name = "G. Botond",
-                                    NickName = "Lajos",
-                                },
-                                new Player
-                                {
-                                    Institue = "Budapest",
-                                    Name = "K. Fülöp",
-                                    NickName = "Lajos",
-                                },
-                        },
-                         TeamName = $"Csapat{i}",
-
-                     });
-            }
-
-
-            Player p = new Player
-            {
-                Id = 0,
-                Institue = "PSEG",
-                Name = "Csabi",
-                NickName = "Lajos",
-            };
-
-            var mapped = Ioc.Default.GetService<IMapper>().Map<PlayerDto>(p);
-
         }
 
         private IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
-        //private ICommand _loadFromFileCommand;
-        //public ICommand LoadFromFileCommand => _loadFromFileCommand ??= new RelayCommand(LoadFromFileClicked);
+
+        private ICommand _loadFromFileCommand;
+        public ICommand LoadFromFileCommand => _loadFromFileCommand ??= new RelayCommand(LoadFromFileClicked);
+
+        private void LoadFromFileClicked()
+        {
+            var questionSerieLoader = new QuestionSerieLoader();
+
+            var series = questionSerieLoader.LoadAllSeriesFromFolder(App.QuestionSerieFolder);
+            foreach (var serie in series)
+            {
+                AvaibleSeries.Add(_mapper.Map<QuestionSerieDto>(serie));
+            }
+            
+        }
 
         public void AutoSuggestBox_LostFocus(object sender, RoutedEventArgs e)
         {
