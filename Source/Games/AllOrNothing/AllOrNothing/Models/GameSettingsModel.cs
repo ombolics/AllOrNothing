@@ -100,6 +100,13 @@ namespace AllOrNothing.Models
         { 
             get => _generalLightningTime;
             set => SetProperty(ref _generalLightningTime, value); 
-        }        
+        }
+
+        private bool _isGameWithoutButtonsEnabled;
+        public bool IsGameWithoutButtonsEnabled 
+        { 
+            get => _isGameWithoutButtonsEnabled; 
+            set => SetProperty(ref _isGameWithoutButtonsEnabled, value); 
+        }
     }
 }

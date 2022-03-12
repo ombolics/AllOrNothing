@@ -49,9 +49,17 @@ namespace AllOrNothing.ViewModels
 
             _currentStandings = new ObservableCollection<StandingDto>();
             _mapper = mapper;
+            
+            
         }
         private GamePhase _gamePhase;
 
+        private ObservableCollection<AnswerLogModel> _answerLog;
+        public ObservableCollection<AnswerLogModel> AnswerLog
+        {
+            get => _answerLog;
+            set => SetProperty(ref _answerLog, value);
+        }
         public void SetupRound(RoundSettingsModel m)
         {
             m.TematicalTime = m.TematicalTime.ShiftToRight();
@@ -77,6 +85,13 @@ namespace AllOrNothing.ViewModels
                     Score = 0
                 });
             }
+
+            if(SelectedRound.IsGameWithoutButtonsEnabled)
+            {
+                AnswerLog = new ObservableCollection<AnswerLogModel>();
+            }
+            _pickingIndex = 0;
+            PickingTeam = CurrentStandings[_pickingIndex];
         }
 
         private ObservableCollection<StandingDto> _currentStandings;
@@ -119,6 +134,57 @@ namespace AllOrNothing.ViewModels
         private ICommand _toggleTimerCommand;
         public ICommand ToggleTimerCommand => _toggleTimerCommand ??= new RelayCommand(ToggleTimer);
 
+        
+        private ICommand _skipAnswerCommand;
+        public ICommand SkipAnswerCommand => _skipAnswerCommand ??= new RelayCommand(SkipAnswer);
+
+        public void SkipAnswer()
+        {
+            if (CurrentQuestion != null)
+            {
+                AnswerText = string.Empty;
+                CurrentQuestion = null;
+                PickingTeam = CurrentStandings[++_pickingIndex % CurrentStandings.Count];
+            }
+        }
+
+        private ICommand _submitAnswerCommand;
+        public ICommand SubmitAnswerCommand => _submitAnswerCommand ??= new RelayCommand(SubmitAnser);
+
+        private string _answerText;
+        public string AnswerText 
+        { 
+            get => _answerText;
+            set => SetProperty(ref _answerText, value);
+        }
+
+        private StandingDto _pickingTeam;
+        public StandingDto PickingTeam 
+        {
+            get => _pickingTeam;
+            set => SetProperty(ref _pickingTeam, value);
+        }
+        private int _pickingIndex;
+        private void SubmitAnser()
+        {
+            if(CurrentQuestion != null)
+            {
+                var gainedScore = AnswerText.ToLower() == CurrentQuestion.Answer.ToLower() ? CurrentQuestion.Value : -CurrentQuestion.Value;
+                PickingTeam.Score += gainedScore;
+
+                var answ = new AnswerLogModel
+                {
+                    TopicName = "yikes",
+                    TeamName = PickingTeam.Team.TeamName,
+                    QuestionValue = gainedScore,
+                };
+
+                AnswerLog.Add(answ);
+                PickingTeam = CurrentStandings[++_pickingIndex % CurrentStandings.Count];
+                AnswerText = string.Empty;
+                CurrentQuestion = null;
+            }
+        }
 
         private ICommand _showLightningCommand;
         public ICommand ShowLightningCommand => _showLightningCommand ??= new RelayCommand(ShowLightning);

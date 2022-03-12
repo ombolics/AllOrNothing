@@ -157,11 +157,11 @@
                                             IsEnabled="{x:Bind ViewModel.GameSettingsModel.IsLightningAllowed, Mode=TwoWay}"/>
                             </StackPanel>
 
+                            <CheckBox Content="Gombok nélüli játék" Margin="20,5,10,5" 
+                                      IsChecked="{x:Bind ViewModel.GameSettingsModel.IsGameWithoutButtonsEnabled, Mode=TwoWay}"/>
+
                         </StackPanel>
                     </Grid>
-
-
-
                 </Grid>
 
                 <!--Teams-->
@@ -288,6 +288,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
+                        <!-- Gamemode related stuff-->
                         <StackPanel Grid.Column="0" CornerRadius="30" Background="{ThemeResource GreyBrush}" Margin="15,0,15,15" 
                                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
@@ -297,7 +298,8 @@
 
                             <StackPanel Orientation="Horizontal">
                                 <CheckBox Content="Tematikus" Margin="20,10,10,5" 
-                                          IsChecked="{x:Bind ViewModel.SelectedRound.IsTematicalAllowed, Mode=TwoWay}"/>
+                                          IsChecked="{x:Bind ViewModel.SelectedRound.IsTematicalAllowed, Mode=TwoWay}"
+                                          />
                                 <TimePicker ClockIdentifier="24HourClock" Time="7:00"
                                             IsEnabled="{x:Bind ViewModel.SelectedRound.IsTematicalAllowed, Mode=TwoWay}"
                                             SelectedTime="{x:Bind ViewModel.SelectedRound.TematicalTime, Mode=TwoWay}"/>
@@ -310,7 +312,6 @@
                                             IsEnabled="{x:Bind ViewModel.SelectedRound.IsLightningAllowed, Mode=TwoWay}"
                                             Time="3:00" SelectedTime="{x:Bind ViewModel.SelectedRound.LightningTime, Mode=TwoWay}"/>
                             </StackPanel>
-
                         </StackPanel>
 
                         <Button Grid.Column="1" Content="Indítás" FontSize="{ThemeResource LargeFontSize}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"

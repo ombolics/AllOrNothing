@@ -119,6 +119,13 @@ namespace AllOrNothing.ViewModels
             //var file = await picker.PickSingleFileAsync();
 
         }
+
+
+
+
+        
+
+
         private ObservableCollection<QuestionSerieDto> _avaibleSeries;
         public ObservableCollection<QuestionSerieDto> AvaibleSeries 
         {
@@ -307,25 +314,9 @@ namespace AllOrNothing.ViewModels
                 Schedules.Add(sch);
             }
             PrintMatrix(matrix);
-            GameSettingsModel.Schedules = Schedules;
-
-
-            //var Schedues = new List<Schedule>();
-            //var sch = new Schedule();
-            ////TODO generálási algoritmus
-            //for (int i = 0; i < Teams.Count; i++)
-            //{
-            //    sch.Teams.Add(Teams[i]);
-            //    if(i % 4 == 3 || i == Teams.Count-1)
-            //    {
-            //        Schedues.Add(sch);
-            //        sch = new Schedule();
-            //    }
-            //}
-
-            //GameSettingsModel.Schedules = Schedues;
-            
+            GameSettingsModel.Schedules = Schedules;            
         }
+
 
         public void On_PlayerDropped(object sender, Player player)
         {

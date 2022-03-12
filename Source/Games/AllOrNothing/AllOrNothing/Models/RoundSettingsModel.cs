@@ -49,6 +49,13 @@ namespace AllOrNothing.Models
             set => SetProperty(ref _lightningTime, value);
         }
 
+        private bool _isGameWithoutButtonsEnabled;
+        public bool IsGameWithoutButtonsEnabled
+        {
+            get => _isGameWithoutButtonsEnabled;
+            set => SetProperty(ref _isGameWithoutButtonsEnabled, value);
+        }
+
         public static List<RoundSettingsModel> FromGameSettingsModel(GameSettingsModel m)
         {
             var value = new List<RoundSettingsModel>();
@@ -62,6 +69,7 @@ namespace AllOrNothing.Models
                     TematicalTime = m.GeneralTematicalTime,
                     IsLightningAllowed = m.IsLightningAllowed,
                     LightningTime = m.GeneralLightningTime,
+                    IsGameWithoutButtonsEnabled = m.IsGameWithoutButtonsEnabled,
                 };
 
                 value.Add(roundSettings);

@@ -24,9 +24,167 @@
 
 
     <Grid>
+        <!--Game without buttons-->
+        <Grid x:Name="buttonlessMainGrid" Background="{ ThemeResource GradientBrush4}"
+              Visibility="{x:Bind ViewModel.SelectedRound.IsGameWithoutButtonsEnabled, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
 
-        <!-- Tematical-->
-        <Grid x:Name="MainGrid" Background="{ ThemeResource GradientBrush4}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="8*"/>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="5*"/>
+                </Grid.RowDefinitions>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="1" Text="Kvíztábor 2022 13. forduló" FontSize="{StaticResource LargeFontSize}" Margin="10,10,10,10"/>
+
+                    <Button Grid.Row="1" Grid.Column="1" 
+                            Content="{x:Bind ViewModel.SelectedRound.TematicalTime, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}" 
+                            CornerRadius="10" 
+                            HorizontalAlignment="Right" 
+                            VerticalAlignment="Stretch" 
+                            FontSize="{StaticResource LargeFontSize}"
+                            Command="{x:Bind ViewModel.ToggleTimerCommand}"/>
+
+                </Grid>
+
+                <cc:QuestionGrid Grid.Row="2" Margin="15,15,15,15"
+                             QuestionSerie="{x:Bind ViewModel.Serie}" 
+                             CurrentQuestion="{x:Bind ViewModel.CurrentQuestion, Mode=TwoWay}"
+                             CornerRadius="30"
+                             Visibility="{x:Bind ViewModel.GamePhase, Mode=OneWay, Converter={StaticResource GamePhaseToVisibilityConverter}, ConverterParameter=Tematical }"/>
+
+            </Grid>
+
+            <Grid Grid.Column="1" Background="BurlyWood">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="8*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+
+                <ListView Grid.Row="0"  ItemsSource="{x:Bind ViewModel.AnswerLog, Mode=OneWay}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}" HorizontalAlignment="Stretch"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+
+
+                <Grid Grid.Row="2">
+                    
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="2*"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="10">
+                        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Text="Válaszasdó csapat:">
+                            <TextBlock.ContextFlyout>
+                                <Flyout>
+                                    <StackPanel>
+                                        <TextBlock Style="{ThemeResource BaseTextBlockStyle}" Text="All items will be removed. Do you want to continue?" Margin="0,0,0,12" />
+                                        <Button  Content="Yes, empty my cart" />
+                                    </StackPanel>
+                                </Flyout>
+
+                            </TextBlock.ContextFlyout>
+                        </TextBlock>
+                            
+                        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Text="{x:Bind ViewModel.PickingTeam.Team.TeamName, Mode=OneWay}"/>
+                    </StackPanel>
+                    
+
+                    <TextBox Grid.Row="1"  PlaceholderText="Válasz..." VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
+                             Text="{x:Bind ViewModel.AnswerText, Mode=TwoWay}"/>
+
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Button Grid.Column="0" Content="Válasz!" VerticalAlignment="Center" IsEnabled="True" 
+                                Command="{x:Bind ViewModel.SubmitAnswerCommand}"/>
+                        <Button Grid.Column="1" Content="Passz" VerticalAlignment="Center"
+                                Command="{x:Bind ViewModel.SkipAnswerCommand}"/>
+                    </Grid>
+                </Grid>
+
+            </Grid>
+
+            <Grid Grid.Column="2" Margin="10,0,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="4*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <ListBox Grid.Row="0" 
+                          ItemsSource="{x:Bind ViewModel.CurrentStandings, Mode=OneWay}"                         
+                          HorizontalContentAlignment="Stretch"
+                          VerticalContentAlignment="Stretch"
+                          SelectedItem="{x:Bind ViewModel.PickingTeam, Mode=TwoWay}"
+                          Background="White"
+                          CornerRadius="20">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <cc:TeamScore Standing="{Binding}" CurrentQuestion="{Binding ViewModel.CurrentQuestion, Mode=TwoWay, ElementName=gamePage}"
+                                          HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="HorizontalContentAlignment"  Value="Stretch"></Setter>
+                            <Setter Property="VerticalContentAlignment"  Value="Stretch"></Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                </ListBox>
+
+                <!--<cc:TeamScore Grid.Row="0" Grid.Column="0" Score="{x:Bind ViewModel.ScoreTest, Mode=TwoWay}" CurrentQuestion="{x:Bind ViewModel.CurrentQuestion, Mode=TwoWay}" />-->
+
+
+                <Grid Grid.Row="1" Background="white" CornerRadius="20" Margin="10,10,10,10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Button Grid.Row="0" Content="Nincs válasz" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+
+                    <Grid Grid.Row="1" Margin="10,10,10,10" ColumnSpacing="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Button Grid.Column="0" Content="V" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                                Command="{x:Bind ViewModel.ShowLightningCommand}"
+                                Visibility="{x:Bind ViewModel.GamePhase, Mode=OneWay, Converter={StaticResource GamePhaseToVisibilityConverter}, ConverterParameter=Tematical }"/>
+
+
+                        <Button Grid.Column="1" Content="E" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                    </Grid>
+
+
+                </Grid>
+            </Grid>
+
+        </Grid>
+
+        <!-- GameWithButtons-->
+        <Grid x:Name="MainGrid" Background="{ ThemeResource GradientBrush4}"
+              Visibility="{x:Bind ViewModel.SelectedRound.IsGameWithoutButtonsEnabled, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=negate}">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="8*"/>
@@ -121,5 +279,6 @@
             </Grid>
 
         </Grid>
+        
     </Grid>
 </Page>

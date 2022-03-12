@@ -110,16 +110,23 @@ namespace AllOrNothing.Controls
 
             for (int i = 0; i < _questionSerie.Topics.Count; i++)
             {
-                TextBlock tb = new TextBlock()
+
+                Button headerButton = new Button()
                 {
-                    Text = _questionSerie.Topics[i].Name,
+                    Content = _questionSerie.Topics[i].Name,
+                    Flyout = !string.IsNullOrEmpty(_questionSerie.Topics[i].Description)
+                    ? new Flyout()
+                    {
+                        Content = new TextBlock { Text = _questionSerie.Topics[i].Description },
+                    }
+                    : null,
                     VerticalAlignment = VerticalAlignment.Center,
                     HorizontalAlignment = HorizontalAlignment.Center,
                 };
 
-                buttonGrid.Children.Add(tb);
-                Grid.SetColumn(tb, i);
-                Grid.SetRow(tb, 0);
+                buttonGrid.Children.Add(headerButton);
+                Grid.SetColumn(headerButton, i);
+                Grid.SetRow(headerButton, 0);
                 for (int j = 1; j < _questionSerie.Topics[i].Questions.Count + 1; j++)
                 {
                     QuestionButton b = new QuestionButton(_questionSerie.Topics[i].Questions[j - 1])
