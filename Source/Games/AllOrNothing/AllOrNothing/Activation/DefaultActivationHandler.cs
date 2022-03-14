@@ -1,10 +1,8 @@
-﻿using System;
-using System.Threading.Tasks;
-
-using AllOrNothing.Contracts.Services;
+﻿using AllOrNothing.Contracts.Services;
 using AllOrNothing.ViewModels;
-
 using Microsoft.UI.Xaml;
+using System;
+using System.Threading.Tasks;
 
 namespace AllOrNothing.Activation
 {

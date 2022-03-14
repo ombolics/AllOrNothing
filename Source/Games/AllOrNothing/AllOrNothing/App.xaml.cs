@@ -10,7 +10,6 @@ using AutoMapper;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
 using System.IO;
 

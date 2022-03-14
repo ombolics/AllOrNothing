@@ -1,11 +1,8 @@
-﻿using System;
-using System.Threading.Tasks;
-
-using AllOrNothing.Contracts.Services;
+﻿using AllOrNothing.Contracts.Services;
 using AllOrNothing.Helpers;
-
 using Microsoft.UI.Xaml;
-
+using System;
+using System.Threading.Tasks;
 using Windows.Storage;
 
 namespace AllOrNothing.Services

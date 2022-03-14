@@ -1,10 +1,6 @@
 ﻿using AllOrNothing.Data;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AllOrNothing.Services
 {
@@ -25,14 +21,14 @@ namespace AllOrNothing.Services
             return result;
         }
 
-        public  QuestionSerie LoadFromTxt(string path)
+        public QuestionSerie LoadFromTxt(string path)
         {
             StreamReader sr = new StreamReader(path);
             QuestionSerie value = new QuestionSerie();
             value.Topics = new List<Topic>();
-            while(!sr.EndOfStream)
+            while (!sr.EndOfStream)
             {
-                
+
                 for (int i = 0; i < 5; i++)
                 {
                     Topic t = new Topic();
@@ -51,7 +47,7 @@ namespace AllOrNothing.Services
                     sr.ReadLine();
                     value.Topics.Add(t);
                 }
-                
+
             }
 
             return value;

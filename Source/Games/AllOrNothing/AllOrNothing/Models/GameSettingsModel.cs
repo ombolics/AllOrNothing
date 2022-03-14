@@ -1,9 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AllOrNothing.Models
 {
@@ -25,39 +22,39 @@ namespace AllOrNothing.Models
 
         private int _numberOfRounds;
 
-        public int NumberOfRounds 
-        { 
-            get => _numberOfRounds; 
-            set => SetProperty(ref _numberOfRounds, value); 
+        public int NumberOfRounds
+        {
+            get => _numberOfRounds;
+            set => SetProperty(ref _numberOfRounds, value);
         }
 
         private bool _generateSchedule;
-        public bool GenerateSchedule 
-        { 
-            get => _generateSchedule; 
-            set => SetProperty(ref _generateSchedule, value); 
+        public bool GenerateSchedule
+        {
+            get => _generateSchedule;
+            set => SetProperty(ref _generateSchedule, value);
         }
 
         private bool _assignSeriesForAllGame;
-        public bool AssignSeriesForAllGame 
-        { 
-            get => _assignSeriesForAllGame; 
-            set => SetProperty(ref _assignSeriesForAllGame, value); 
+        public bool AssignSeriesForAllGame
+        {
+            get => _assignSeriesForAllGame;
+            set => SetProperty(ref _assignSeriesForAllGame, value);
         }
 
         private bool _teamsAllowed;
-        public bool TeamsAllowed 
-        { 
-            get => _teamsAllowed; 
-            set => SetProperty(ref _teamsAllowed, value); 
+        public bool TeamsAllowed
+        {
+            get => _teamsAllowed;
+            set => SetProperty(ref _teamsAllowed, value);
         }
 
         private int _maxTeamSize;
-        public int MaxTeamSize 
-        { 
+        public int MaxTeamSize
+        {
             get => _maxTeamSize;
             set
-            {   
+            {
                 if (value < 2)
                 {
                     value = 2;
@@ -68,45 +65,45 @@ namespace AllOrNothing.Models
             }
         }
         private bool _generateTeams;
-        public bool GenerateTeams 
-        { 
+        public bool GenerateTeams
+        {
             get => _generateTeams;
-            set => SetProperty(ref _generateTeams, value); 
+            set => SetProperty(ref _generateTeams, value);
         }
 
         private bool _isTematicalAllowed;
-        public bool IsTematicalAllowed 
-        { 
-            get => _isTematicalAllowed; 
-            set => SetProperty(ref _isTematicalAllowed, value); 
+        public bool IsTematicalAllowed
+        {
+            get => _isTematicalAllowed;
+            set => SetProperty(ref _isTematicalAllowed, value);
         }
 
         private bool _isLightningAllowed;
-        public bool IsLightningAllowed 
-        { 
-            get => _isLightningAllowed; 
-            set => SetProperty(ref _isLightningAllowed, value); 
+        public bool IsLightningAllowed
+        {
+            get => _isLightningAllowed;
+            set => SetProperty(ref _isLightningAllowed, value);
         }
 
         private TimeSpan _generalTematicalTime;
-        public TimeSpan GeneralTematicalTime 
+        public TimeSpan GeneralTematicalTime
         {
             get => _generalTematicalTime;
             set => SetProperty(ref _generalTematicalTime, value);
         }
 
         private TimeSpan _generalLightningTime;
-        public TimeSpan GeneralLightningTime 
-        { 
+        public TimeSpan GeneralLightningTime
+        {
             get => _generalLightningTime;
-            set => SetProperty(ref _generalLightningTime, value); 
+            set => SetProperty(ref _generalLightningTime, value);
         }
 
         private bool _isGameWithoutButtonsEnabled;
-        public bool IsGameWithoutButtonsEnabled 
-        { 
-            get => _isGameWithoutButtonsEnabled; 
-            set => SetProperty(ref _isGameWithoutButtonsEnabled, value); 
+        public bool IsGameWithoutButtonsEnabled
+        {
+            get => _isGameWithoutButtonsEnabled;
+            set => SetProperty(ref _isGameWithoutButtonsEnabled, value);
         }
     }
 }

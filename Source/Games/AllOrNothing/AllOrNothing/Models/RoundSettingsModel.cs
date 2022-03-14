@@ -1,12 +1,8 @@
 ﻿
 using AllOrNothing.AutoMapper.Dto;
-using AllOrNothing.Data;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AllOrNothing.Models
 {
@@ -21,7 +17,7 @@ namespace AllOrNothing.Models
         }
 
         private QuestionSerieDto _questionSerie;
-        public QuestionSerieDto QuestionSerie 
+        public QuestionSerieDto QuestionSerie
         {
             get => _questionSerie;
             set => SetProperty(ref _questionSerie, value);

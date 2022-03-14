@@ -2,14 +2,10 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Data;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AllOrNothing.Converters
 {
-    public class GamePhaseToVisibilityConverter: IValueConverter
+    public class GamePhaseToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
@@ -19,7 +15,7 @@ namespace AllOrNothing.Converters
             var gP = (GamePhase)value;
             string param = parameter as string;
 
-            if((param == "Tematical" && gP == GamePhase.TEMATICAL) ||
+            if ((param == "Tematical" && gP == GamePhase.TEMATICAL) ||
                 (param == "Lightning" && gP == GamePhase.LIGHTNING))
             {
                 return Visibility.Visible;

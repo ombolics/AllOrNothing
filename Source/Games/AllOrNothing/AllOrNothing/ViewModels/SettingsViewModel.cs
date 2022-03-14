@@ -1,14 +1,9 @@
-﻿using System;
-using System.Windows.Input;
-
-using AllOrNothing.Contracts.Services;
+﻿using AllOrNothing.Contracts.Services;
 using AllOrNothing.Helpers;
-
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-
 using Microsoft.UI.Xaml;
-
+using System.Windows.Input;
 using Windows.ApplicationModel;
 
 namespace AllOrNothing.ViewModels

@@ -2,8 +2,6 @@
 using System.IO;
 using System.Threading.Tasks;
 
-using AllOrNothing.Helpers;
-
 using Windows.Storage;
 using Windows.Storage.Streams;
 

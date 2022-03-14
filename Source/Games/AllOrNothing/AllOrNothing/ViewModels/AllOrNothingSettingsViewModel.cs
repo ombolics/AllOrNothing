@@ -1,10 +1,10 @@
 ﻿using AllOrNothing.AutoMapper.Dto;
 using AllOrNothing.Contracts.ViewModels;
-using AllOrNothing.Controls;
 using AllOrNothing.Data;
 using AllOrNothing.Helpers;
 using AllOrNothing.Models;
 using AllOrNothing.Repository;
+using AllOrNothing.Services;
 using AutoMapper;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -16,14 +16,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.ApplicationModel.DataTransfer;
-using Windows.Storage.Pickers;
-using WinRT.Interop;
-using WinRT;
-using AllOrNothing.Services;
 
 namespace AllOrNothing.ViewModels
 {
@@ -70,7 +64,7 @@ namespace AllOrNothing.ViewModels
             {
                 AvaibleSeries.Add(_mapper.Map<QuestionSerieDto>(serie));
             }
-            
+
         }
 
         public void AutoSuggestBox_LostFocus(object sender, RoutedEventArgs e)
@@ -78,16 +72,16 @@ namespace AllOrNothing.ViewModels
             (sender as AutoSuggestBox).ItemsSource = null;
         }
 
-        
 
 
 
 
-        
+
+
 
 
         private ObservableCollection<QuestionSerieDto> _avaibleSeries;
-        public ObservableCollection<QuestionSerieDto> AvaibleSeries 
+        public ObservableCollection<QuestionSerieDto> AvaibleSeries
         {
             get => _avaibleSeries;
             set => SetProperty(ref _avaibleSeries, value);
@@ -124,7 +118,7 @@ namespace AllOrNothing.ViewModels
 
 
         private GameSettingsModel _gameSettingsModel;
-        public GameSettingsModel GameSettingsModel 
+        public GameSettingsModel GameSettingsModel
         {
             get => _gameSettingsModel;
             set => SetProperty(ref _gameSettingsModel, value);
@@ -147,7 +141,7 @@ namespace AllOrNothing.ViewModels
 
             List<Player> helper = _mapper.Map<ICollection<PlayerDto>, List<Player>>(players);
             Random r = new Random();
-            while(helper.Count > 0)
+            while (helper.Count > 0)
             {
                 var team = new TeamDto
                 {
@@ -158,26 +152,26 @@ namespace AllOrNothing.ViewModels
                     var plyr = helper[r.Next(0, helper.Count)];
 
                     //plyr.OriginalTeam = team.Players;
-                    
+
                     helper.Remove(plyr);
                     team.Players.Add(plyr);
                     team.TeamName += plyr.NickName + " - ";
 
                     team.PlayerDrop += On_PlayerDropped;
                 }
-                value.Add(team);           
+                value.Add(team);
             }
             return value;
         }
 
-       
 
-        public void TeamsAllowedChecked(object sender , RoutedEventArgs e)
+
+        public void TeamsAllowedChecked(object sender, RoutedEventArgs e)
         {
             Teams = GenerateTeams(SelectedPlayers, GameSettingsModel.MaxTeamSize);
         }
 
-        private int RoundsAgainstEachOther(int ind1, int ind2, int [,] matrix)
+        private int RoundsAgainstEachOther(int ind1, int ind2, int[,] matrix)
         {
             if (matrix[ind1, ind2] != matrix[ind2, ind1])
                 throw new ArgumentException("The matrix must be symmetrical!");
@@ -197,7 +191,7 @@ namespace AllOrNothing.ViewModels
             return value;
         }
 
-        private void UpdateMatrix(ref int [,] matrix, List<int> teams)
+        private void UpdateMatrix(ref int[,] matrix, List<int> teams)
         {
         }
 
@@ -226,14 +220,14 @@ namespace AllOrNothing.ViewModels
                 occurrences.Add(i, 0);
             }
 
-            while(occurrences.Any(p=>p.Value < GameSettingsModel.NumberOfRounds))
+            while (occurrences.Any(p => p.Value < GameSettingsModel.NumberOfRounds))
             {
-                
+
                 var round = new List<int>();
 
                 for (int i = 0; i < 4; i++)
                 {
-                    if(i == 0)
+                    if (i == 0)
                     {
                         int teamIndex = occurrences.Where(p => p.Value == occurrences.Min(p => p.Value)).ElementAt(0).Key;
                         round.Add(teamIndex);
@@ -262,7 +256,7 @@ namespace AllOrNothing.ViewModels
                             matrix[item, minIndex]++;
                             matrix[minIndex, item]++;
                         }
-                    }                  
+                    }
                 }
 
                 var sch = new Schedule();
@@ -274,18 +268,18 @@ namespace AllOrNothing.ViewModels
                 Schedules.Add(sch);
             }
             PrintMatrix(matrix);
-            GameSettingsModel.Schedules = Schedules;            
+            GameSettingsModel.Schedules = Schedules;
         }
 
 
         public void On_PlayerDropped(object sender, Player player)
         {
-            if(sender is TeamDto senderTeam)
+            if (sender is TeamDto senderTeam)
             {
                 var originalTeam = Teams
                     .Where(t => t.Players
-                                    .Where(p => p.Id ==player.Id)
-                                    .ToList().Count>0)
+                                    .Where(p => p.Id == player.Id)
+                                    .ToList().Count > 0)
                     .ToList();
 
                 foreach (var team in originalTeam)
@@ -342,7 +336,7 @@ namespace AllOrNothing.ViewModels
             {
                 var suitableItems = new List<Player>();
                 var splitText = sender.Text.ToLower().Split(" ");
-                
+
                 //TODO Search for players in database
 
                 foreach (var player in _avaiblePlayers)
@@ -358,7 +352,7 @@ namespace AllOrNothing.ViewModels
                 }
                 if (suitableItems.Count == 0)
                 {
-                    suitableItems.Add( new Player { Name = "Nem található játékos" });
+                    suitableItems.Add(new Player { Name = "Nem található játékos" });
                 }
 
                 sender.ItemsSource = suitableItems;
@@ -428,30 +422,30 @@ namespace AllOrNothing.ViewModels
             SelectedRound = Rounds?[0];
 
             GameSettingsVisible = Visibility.Collapsed;
-            IsRoundSettingsVisible = true;         
+            IsRoundSettingsVisible = true;
         }
-   
+
 
         private ICommand _startGameCommand;
         public ICommand StartGameCommand => _startGameCommand ??= new RelayCommand(StartGameClicked);
 
-        public int TeamSize 
-        { 
-            get => _teamSize; 
-            set => SetProperty(ref _teamSize, value); 
+        public int TeamSize
+        {
+            get => _teamSize;
+            set => SetProperty(ref _teamSize, value);
         }
 
         private int _teamSize;
 
         private ICommand _teamGameCheckBoxCommand;
 
-        public ICommand TeamGameCheckBoxCommand => _teamGameCheckBoxCommand ??= new RelayCommand( () => TeamGame = !TeamGame);
+        public ICommand TeamGameCheckBoxCommand => _teamGameCheckBoxCommand ??= new RelayCommand(() => TeamGame = !TeamGame);
 
         private bool _hasTematical;
-        public bool HasTematical 
-        { 
-            get => _hasTematical; 
-            set => SetProperty( ref _hasTematical, value); 
+        public bool HasTematical
+        {
+            get => _hasTematical;
+            set => SetProperty(ref _hasTematical, value);
         }
 
         private bool _hasLightning;
@@ -469,19 +463,19 @@ namespace AllOrNothing.ViewModels
 
         public ICommand TematicalCheckBoxCommand => _tematicalCheckBoxCommand ??= new RelayCommand(() => HasTematical = !HasTematical);
 
-      
 
-        public bool TeamGame 
-        { 
-            get => _teamGame; 
-            set => SetProperty(ref _teamGame, value); 
+
+        public bool TeamGame
+        {
+            get => _teamGame;
+            set => SetProperty(ref _teamGame, value);
         }
-        
+
 
 
         private bool _teamGame;
 
-        
+
         private void StartGameClicked()
         {
             var vm = Ioc.Default.GetService<AllOrNothingGameViewModel>();

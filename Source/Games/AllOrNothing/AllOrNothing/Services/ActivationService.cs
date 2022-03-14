@@ -1,15 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-using AllOrNothing.Activation;
+﻿using AllOrNothing.Activation;
 using AllOrNothing.Contracts.Services;
 using AllOrNothing.Views;
-
 using CommunityToolkit.Mvvm.DependencyInjection;
-
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AllOrNothing.Services
 {

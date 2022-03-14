@@ -12,7 +12,7 @@ namespace AllOrNothing.Converters
                 throw new ArgumentException();
 
             var param = parameter?.ToString().ToLower();
-            if(parameter == null)
+            if (parameter == null)
             {
                 bool objValue = (bool)value;
                 if (objValue)

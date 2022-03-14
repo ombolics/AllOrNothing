@@ -1,11 +1,5 @@
-﻿using Microsoft.UI.Xaml.Controls;
-using AllOrNothing.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AllOrNothing.AutoMapper.Dto;
+﻿using AllOrNothing.AutoMapper.Dto;
+using Microsoft.UI.Xaml.Controls;
 
 namespace AllOrNothing.Controls
 {

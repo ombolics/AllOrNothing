@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AllOrNothing.Data
 {
@@ -28,6 +25,6 @@ namespace AllOrNothing.Data
         //    return value;
         //}
 
-        public HashSet<Competence> Competences {get; set;}
+        public HashSet<Competence> Competences { get; set; }
     }
 }

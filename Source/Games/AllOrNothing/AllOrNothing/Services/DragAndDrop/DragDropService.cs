@@ -1,12 +1,11 @@
-﻿using AllOrNothing.Models;
+﻿using AllOrNothing.Controls;
+using AllOrNothing.Models;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System.Runtime.Serialization;
-using Windows.ApplicationModel.DataTransfer;
-using Windows.Storage.Streams;
 using System.Text.Json;
-using AllOrNothing.Controls;
+using Windows.ApplicationModel.DataTransfer;
 
 namespace AllOrNothing.Services.DragAndDrop
 {
@@ -15,7 +14,7 @@ namespace AllOrNothing.Services.DragAndDrop
         public int val { get; set; }
         public TestData()
         {
-           
+
         }
 
         public void GetObjectData(SerializationInfo info, StreamingContext context)
@@ -134,13 +133,13 @@ namespace AllOrNothing.Services.DragAndDrop
             element.DragStarting += (sender, args) =>
             {
 
-                if(sender is PlayerTextBlock tb)
+                if (sender is PlayerTextBlock tb)
                 {
                     args.Data.SetText(JsonSerializer.Serialize(tb.Player));
                 }
 
                 //args.AllowedOperations = DataPackageOperation.Move;
-                
+
                 //var asd = RandomAccessStream.
                 //args.Data.SetData("TestData", RandomAccessStreamReference.Cre);
                 //sender.StartDragAsync()

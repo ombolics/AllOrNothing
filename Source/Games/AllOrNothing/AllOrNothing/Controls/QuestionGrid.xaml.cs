@@ -1,19 +1,6 @@
-﻿using Microsoft.UI.Xaml;
+﻿using AllOrNothing.AutoMapper.Dto;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
-using AllOrNothing.Data;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using AllOrNothing.AutoMapper.Dto;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -21,7 +8,7 @@ using AllOrNothing.AutoMapper.Dto;
 namespace AllOrNothing.Controls
 {
     public sealed partial class QuestionGrid : UserControl
-    {      
+    {
         private QuestionSerieDto _questionSerie;
         public QuestionSerieDto QuestionSerie
         {
@@ -55,10 +42,10 @@ namespace AllOrNothing.Controls
         public QuestionDto CurrentQuestion
         {
             get { return (QuestionDto)GetValue(CurrentQuestionProperty); }
-            set 
-            { 
+            set
+            {
                 SetValue(CurrentQuestionProperty, value);
-                QuestionDisplay = CurrentQuestion == null ? "" : CurrentQuestion.Text; 
+                QuestionDisplay = CurrentQuestion == null ? "" : CurrentQuestion.Text;
             }
         }
 
@@ -71,10 +58,10 @@ namespace AllOrNothing.Controls
         public bool IsAnswered
         {
             get { return (bool)GetValue(IsAnsweredProperty); }
-            set 
-            { 
-                SetValue(IsAnsweredProperty, value); 
-                if(value)
+            set
+            {
+                SetValue(IsAnsweredProperty, value);
+                if (value)
                 {
                     //QuestionText.Text = "";
                     CurrentQuestion = null;

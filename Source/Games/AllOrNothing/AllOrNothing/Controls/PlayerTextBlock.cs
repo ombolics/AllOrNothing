@@ -3,21 +3,16 @@ using AllOrNothing.Data;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AllOrNothing.Controls
 {
     class PlayerTextBlock : StackPanel
     {
         private TextBlock _display;
-        public TextBlock Display 
+        public TextBlock Display
         {
             get => _display;
-            set => _display = value; 
+            set => _display = value;
         }
         public PlayerTextBlock()
         {
@@ -30,7 +25,7 @@ namespace AllOrNothing.Controls
                 UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
             };
 
-            _display.SetBinding(TextBlock.TextProperty,b);
+            _display.SetBinding(TextBlock.TextProperty, b);
 
             Children.Add(Display);
         }
@@ -38,9 +33,9 @@ namespace AllOrNothing.Controls
         public Player Player
         {
             get { return (Player)GetValue(PlayerProperty); }
-            set 
-            {             
-                SetValue(PlayerProperty, value);     
+            set
+            {
+                SetValue(PlayerProperty, value);
             }
         }
 

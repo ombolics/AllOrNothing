@@ -1,13 +1,9 @@
-﻿using System;
-using Microsoft.UI.Xaml.Controls;
-using AllOrNothing.Contracts.Services;
+﻿using AllOrNothing.Contracts.Services;
 using AllOrNothing.Views;
-
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
-using Microsoft.UI.Xaml.Media.Imaging;
-using Microsoft.UI.Xaml.Media;
 
 namespace AllOrNothing.ViewModels
 {
@@ -25,10 +21,10 @@ namespace AllOrNothing.ViewModels
         private AllOrNothingGameViewModel _gameViewModel;
 
         private AllOrNothingSettingsViewModel _allOrNothingSettingsViewModel;
-        public AllOrNothingSettingsViewModel AllOrNothingSettingsViewModel 
-        { 
-            get => _allOrNothingSettingsViewModel; 
-            set => SetProperty(ref _allOrNothingSettingsViewModel, value); 
+        public AllOrNothingSettingsViewModel AllOrNothingSettingsViewModel
+        {
+            get => _allOrNothingSettingsViewModel;
+            set => SetProperty(ref _allOrNothingSettingsViewModel, value);
         }
 
         private AllOrNothingViewModel _allOrNothingViewModel;
@@ -48,7 +44,7 @@ namespace AllOrNothing.ViewModels
             set { SetProperty(ref _isBackEnabled, value); }
         }
 
-        public AllOrNothingGameViewModel GameViewModel 
+        public AllOrNothingGameViewModel GameViewModel
         {
             get => _gameViewModel;
             set => SetProperty(ref _gameViewModel, value);
@@ -74,7 +70,7 @@ namespace AllOrNothing.ViewModels
 
         private void On_HidePage(object sender, string e)
         {
-            if(!string.IsNullOrEmpty(e))
+            if (!string.IsNullOrEmpty(e))
             {
                 NavigationViewService.SetNavItemVisibility(e, false);
             }
@@ -82,7 +78,7 @@ namespace AllOrNothing.ViewModels
 
         private void On_HidePages(object sender, System.Collections.Generic.List<string> e)
         {
-            if(e is null || e.Count == 0)
+            if (e is null || e.Count == 0)
             {
                 NavigationViewService.ShowAllPage();
             }

@@ -1,5 +1,4 @@
-﻿using AllOrNothing.AutoMapper.Dto;
-using AllOrNothing.Data;
+﻿using AllOrNothing.Data;
 using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,6 @@ using System.Windows.Input;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
 using Windows.Storage.Streams;
-using Windows.UI.Xaml;
 
 namespace AllOrNothing.Services.DragAndDrop
 {
@@ -169,7 +167,7 @@ namespace AllOrNothing.Services.DragAndDrop
 
             if (dataview.Contains("TestData"))
             {
-               
+
             }
             var asd = dataview.AvailableFormats as List<string>;
             var asd1 = dataview.AvailableFormats.Count;

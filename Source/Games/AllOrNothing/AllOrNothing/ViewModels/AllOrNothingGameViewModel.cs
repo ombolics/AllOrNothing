@@ -1,29 +1,20 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using AllOrNothing.Data;
+﻿using AllOrNothing.AutoMapper.Dto;
+using AllOrNothing.Contracts.ViewModels;
+using AllOrNothing.Controls;
+using AllOrNothing.Helpers;
+using AllOrNothing.Models;
+using AllOrNothing.Services;
+using AutoMapper;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AllOrNothing.DummyData;
-using System.Windows.Input;
-using CommunityToolkit.Mvvm.Input;
-using AllOrNothing.Models;
-using System.Threading;
-using Microsoft.UI.Xaml;
 using System.Collections.ObjectModel;
-using Microsoft.UI.Xaml.Controls;
-using AllOrNothing.Services;
-using Windows.Storage.Pickers;
 using System.Runtime.InteropServices;
-using AllOrNothing.Contracts.ViewModels;
-using AllOrNothing.Helpers;
-using AllOrNothing.AutoMapper.Dto;
-using AutoMapper;
-using AllOrNothing.Controls;
-using Windows.ApplicationModel.Core;
-using CommunityToolkit.Mvvm.DependencyInjection;
-using AllOrNothing.Views;
+using System.Windows.Input;
+using Windows.Storage.Pickers;
 
 namespace AllOrNothing.ViewModels
 {
@@ -38,7 +29,7 @@ namespace AllOrNothing.ViewModels
         [DllImport("user32.dll", ExactSpelling = true, CharSet = CharSet.Auto, PreserveSig = true, SetLastError = false)]
         public static extern IntPtr GetActiveWindow();
 
-        public AllOrNothingGameViewModel( IMapper mapper)
+        public AllOrNothingGameViewModel(IMapper mapper)
         {
             ScoreTest = 3000;
 
@@ -49,8 +40,8 @@ namespace AllOrNothing.ViewModels
 
             _currentStandings = new ObservableCollection<StandingDto>();
             _mapper = mapper;
-            
-            
+
+
         }
         private GamePhase _gamePhase;
 
@@ -71,7 +62,7 @@ namespace AllOrNothing.ViewModels
 
             SelectedRound = m;
 
-            if(SelectedRound.IsTematicalAllowed)
+            if (SelectedRound.IsTematicalAllowed)
             {
                 GamePhase = GamePhase.TEMATICAL;
             }
@@ -90,7 +81,7 @@ namespace AllOrNothing.ViewModels
                 });
             }
 
-            if(SelectedRound.IsGameWithoutButtonsEnabled)
+            if (SelectedRound.IsGameWithoutButtonsEnabled)
             {
                 AnswerLog = new ObservableCollection<AnswerLogModel>();
             }
@@ -107,19 +98,19 @@ namespace AllOrNothing.ViewModels
 
 
         private QuestionSerieLoader _qsLoader;
-        
+
 
         private void _gameTimer_Tick(object sender, object e)
         {
             //var asd = SelectedRound.TematicalTime.ToString();
-            
-            if(GamePhase == GamePhase.TEMATICAL)
+
+            if (GamePhase == GamePhase.TEMATICAL)
             {
                 SelectedRound.TematicalTime = SelectedRound.TematicalTime.Subtract(TimeSpan.FromSeconds(1));
                 if (SelectedRound.TematicalTime.TotalSeconds == 0)
                 {
                     _gameTimer.Stop();
-                }              
+                }
             }
             else
             {
@@ -127,7 +118,7 @@ namespace AllOrNothing.ViewModels
                 if (SelectedRound.LightningTime.TotalSeconds == 0)
                 {
                     _gameTimer.Stop();
-                }               
+                }
             }
         }
 
@@ -147,7 +138,7 @@ namespace AllOrNothing.ViewModels
             SelectedRound.RoundEnded = true;
             //TODO create game history
             _gameTimer.Stop();
-            HidePage?.Invoke(this,"Játék");
+            HidePage?.Invoke(this, "Játék");
             GameOver?.Invoke(this, CurrentStandings);
         }
 
@@ -168,14 +159,14 @@ namespace AllOrNothing.ViewModels
         public ICommand SubmitAnswerCommand => _submitAnswerCommand ??= new RelayCommand(SubmitAnser);
 
         private string _answerText;
-        public string AnswerText 
-        { 
+        public string AnswerText
+        {
             get => _answerText;
             set => SetProperty(ref _answerText, value);
         }
 
         private StandingDto _pickingTeam;
-        public StandingDto PickingTeam 
+        public StandingDto PickingTeam
         {
             get => _pickingTeam;
             set => SetProperty(ref _pickingTeam, value);
@@ -183,7 +174,7 @@ namespace AllOrNothing.ViewModels
         private int _pickingIndex;
         private void SubmitAnser()
         {
-            if(CurrentQuestion != null)
+            if (CurrentQuestion != null)
             {
                 var gainedScore = AnswerText.ToLower() == CurrentQuestion.Answer.ToLower() ? CurrentQuestion.Value : -CurrentQuestion.Value;
                 PickingTeam.Score += gainedScore;
@@ -215,7 +206,7 @@ namespace AllOrNothing.ViewModels
             dialog.DefaultButton = ContentDialogButton.Primary;
             dialog.Content = new LightningDialog();
 
-            if(await dialog.ShowAsync(ContentDialogPlacement.Popup) == ContentDialogResult.Primary)
+            if (await dialog.ShowAsync(ContentDialogPlacement.Popup) == ContentDialogResult.Primary)
             {
                 GamePhase = GamePhase.LIGHTNING;
                 //CurrentQuestion
@@ -253,7 +244,7 @@ namespace AllOrNothing.ViewModels
                 (GamePhase == GamePhase.LIGHTNING && SelectedRound.LightningTime.TotalSeconds == 0))
                 return;
 
-            if(_gameTimer.IsEnabled)
+            if (_gameTimer.IsEnabled)
             {
                 _gameTimer.Stop();
             }
@@ -264,7 +255,7 @@ namespace AllOrNothing.ViewModels
         }
 
         private int _scoreTest;
-        public int ScoreTest 
+        public int ScoreTest
         {
             get => _scoreTest;
             set => SetProperty(ref _scoreTest, value);
@@ -287,30 +278,30 @@ namespace AllOrNothing.ViewModels
 
         public void OnNavigatedFrom()
         {
-            
+
         }
 
         private QuestionDto _currentQuestion;
-        public QuestionSerieDto Serie => _mapper.Map< QuestionSerieDto>( DummyData.DummyData.QS1);
+        public QuestionSerieDto Serie => _mapper.Map<QuestionSerieDto>(DummyData.DummyData.QS1);
 
 
-        public QuestionDto CurrentQuestion 
+        public QuestionDto CurrentQuestion
         {
             get => _currentQuestion;
             set
             {
                 SetProperty(ref _currentQuestion, value);
-            } 
+            }
         }
-        public RoundSettingsModel SelectedRound 
-        { 
-            get => _selectedRound; 
-            set => SetProperty(ref _selectedRound, value); 
-        }
-        public GamePhase GamePhase 
+        public RoundSettingsModel SelectedRound
         {
-            get => _gamePhase; 
-            set => SetProperty(ref _gamePhase, value); 
+            get => _selectedRound;
+            set => SetProperty(ref _selectedRound, value);
+        }
+        public GamePhase GamePhase
+        {
+            get => _gamePhase;
+            set => SetProperty(ref _gamePhase, value);
         }
     }
 }

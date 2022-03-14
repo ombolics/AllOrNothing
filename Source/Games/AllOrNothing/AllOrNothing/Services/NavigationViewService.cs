@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using AllOrNothing.Contracts.Services;
+﻿using AllOrNothing.Contracts.Services;
 using AllOrNothing.Helpers;
 using AllOrNothing.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AllOrNothing.Services
 {
@@ -47,7 +46,7 @@ namespace AllOrNothing.Services
         {
             foreach (NavigationViewItem navItem in _navigationView.MenuItems)
             {
-                if (!itemContents.Contains(navItem.Content.ToString())) 
+                if (!itemContents.Contains(navItem.Content.ToString()))
                 {
                     navItem.Visibility = Visibility.Collapsed;
                 }

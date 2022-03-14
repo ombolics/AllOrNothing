@@ -1,6 +1,5 @@
 ﻿using Microsoft.UI.Xaml;
 using System.Windows.Input;
-using Windows.UI.Xaml;
 
 namespace AllOrNothing.Services.DragAndDrop
 {

@@ -1,8 +1,6 @@
 ﻿using AllOrNothing.Contracts.Services;
 using AllOrNothing.Contracts.ViewModels;
 using AllOrNothing.Helpers;
-
-using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 

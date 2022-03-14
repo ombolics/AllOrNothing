@@ -1,14 +1,9 @@
 ﻿using AllOrNothing.Contracts.Services;
 using AllOrNothing.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml.Navigation;
 using OxyPlot;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AllOrNothing.ViewModels
 {
@@ -90,7 +85,7 @@ namespace AllOrNothing.ViewModels
             SetupModel();
 
         }
-        
+
         private void OnNavigated(object sender, NavigationEventArgs e)
         {
 
@@ -101,6 +96,6 @@ namespace AllOrNothing.ViewModels
             }
         }
 
-        
+
     }
 }

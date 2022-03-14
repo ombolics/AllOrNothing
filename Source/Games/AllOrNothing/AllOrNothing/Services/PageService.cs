@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using AllOrNothing.Contracts.Services;
+﻿using AllOrNothing.Contracts.Services;
 using AllOrNothing.ViewModels;
 using AllOrNothing.Views;
-
 using CommunityToolkit.Mvvm.ComponentModel;
-
 using Microsoft.UI.Xaml.Controls;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AllOrNothing.Services
 {
@@ -27,7 +24,7 @@ namespace AllOrNothing.Services
             Configure<PlayerStatViewModel, PlayerStatPage>();
             Configure<QuestionSeriesViewModel, QuestionSeriesPage>();
             Configure<ScoreBoardPageViewModel, ScoreBoardPage>();
-            
+
         }
 
         public Type GetPageType(string key)

@@ -3,8 +3,6 @@ using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Windows.Input;
-using AutoMapper;
-using AllOrNothing.AutoMapper.Dto;
 
 namespace AllOrNothing.DummyData
 {
@@ -365,9 +363,9 @@ namespace AllOrNothing.DummyData
                     }
                 },
             },
-            Authors = new List<Player> 
-            { 
-                _author,              
+            Authors = new List<Player>
+            {
+                _author,
             },
             CreatedOn = DateTime.Now,
         };
@@ -506,6 +504,6 @@ namespace AllOrNothing.DummyData
                 TeamName = "Csapat9",
             },
         };
-        
+
     }
 }
