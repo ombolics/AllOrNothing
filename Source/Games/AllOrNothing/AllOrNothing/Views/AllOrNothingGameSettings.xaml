@@ -18,6 +18,7 @@
     
     <Page.Resources>
         <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <conv:RoundStateToColorConverter x:Key="RoundStateToColorConverter"/>
     </Page.Resources>
 
 
@@ -256,7 +257,7 @@
 
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <ItemsControl ItemsSource="{Binding Teams }">
+                            <ItemsControl ItemsSource="{Binding Teams }" Background="{Binding RoundEnded, Converter={StaticResource RoundStateToColorConverter}}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <cc:WrapPanel/>

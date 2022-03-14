@@ -166,7 +166,8 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <Button Grid.Row="0" Content="Nincs válasz" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                    <Button Grid.Row="0" Content="Nincs válasz" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                            Command="{x:Bind ViewModel.SkipAnswerCommand}"/>
 
                     <Grid Grid.Row="1" Margin="10,10,10,10" ColumnSpacing="5">
                         <Grid.ColumnDefinitions>
@@ -174,12 +175,13 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Button Grid.Column="0" Content="V" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                        <Button Grid.Column="0" Content="Villám" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
                                 Command="{x:Bind ViewModel.ShowLightningCommand}"
                                 Visibility="{x:Bind ViewModel.GamePhase, Mode=OneWay, Converter={StaticResource GamePhaseToVisibilityConverter}, ConverterParameter=Tematical }"/>
 
 
-                        <Button Grid.Column="1" Content="E" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                        <Button Grid.Column="1" Content="GameOver" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                Command="{x:Bind ViewModel.GameOverCommand}"/>
                     </Grid>
 
 
@@ -277,7 +279,8 @@
                                 Visibility="{x:Bind ViewModel.GamePhase, Mode=OneWay, Converter={StaticResource GamePhaseToVisibilityConverter}, ConverterParameter=Tematical }"/>
                        
                         
-                        <Button Grid.Column="1" Content="E" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                        <Button Grid.Column="1" Content="E" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                Command="{x:Bind ViewModel.GameOverCommand}"/>
                     </Grid>
 
 

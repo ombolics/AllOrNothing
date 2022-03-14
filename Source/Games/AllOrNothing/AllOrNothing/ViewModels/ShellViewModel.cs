@@ -69,6 +69,15 @@ namespace AllOrNothing.ViewModels
 
             GameViewModel = Ioc.Default.GetRequiredService<AllOrNothingGameViewModel>();
             GameViewModel.HidePages += On_HidePages;
+            GameViewModel.HidePage += On_HidePage;
+        }
+
+        private void On_HidePage(object sender, string e)
+        {
+            if(!string.IsNullOrEmpty(e))
+            {
+                NavigationViewService.SetNavItemVisibility(e, false);
+            }
         }
 
         private void On_HidePages(object sender, System.Collections.Generic.List<string> e)

@@ -75,9 +75,14 @@ namespace AllOrNothing.Services
         public void AddNavItem(NavigationViewItem item, Type vmType)
         {
             string pageKey = vmType.FullName;
-            var result = _navigationView.MenuItems.Count(i => (i as NavigationViewItem).Content == item.Content);
+            var result = _navigationView.MenuItems.SingleOrDefault(i => (i as NavigationViewItem).Content == item.Content) as NavigationViewItem;
+
+
+            if (result != null)
+                (result as NavigationViewItem).Visibility = Visibility.Visible;
+
             //dont want to add an element multiple times
-            if (result == 0 && _pageService.IsPageKey(pageKey))
+            if (result == null && _pageService.IsPageKey(pageKey))
             {
                 NavHelper.SetNavigateTo(item, pageKey);
                 _navigationView.MenuItems.Add(item);

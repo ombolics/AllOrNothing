@@ -60,6 +60,10 @@ namespace AllOrNothing.ViewModels
             get => _answerLog;
             set => SetProperty(ref _answerLog, value);
         }
+
+
+        public event EventHandler<string> HidePage;
+
         public void SetupRound(RoundSettingsModel m)
         {
             m.TematicalTime = m.TematicalTime.ShiftToRight();
@@ -134,7 +138,19 @@ namespace AllOrNothing.ViewModels
         private ICommand _toggleTimerCommand;
         public ICommand ToggleTimerCommand => _toggleTimerCommand ??= new RelayCommand(ToggleTimer);
 
-        
+        private ICommand _gameOverCommand;
+        public ICommand GameOverCommand => _gameOverCommand ??= new RelayCommand(On_GameOver);
+
+        public event EventHandler<ObservableCollection<StandingDto>> GameOver;
+        private void On_GameOver()
+        {
+            SelectedRound.RoundEnded = true;
+            //TODO create game history
+            _gameTimer.Stop();
+            HidePage?.Invoke(this,"Játék");
+            GameOver?.Invoke(this, CurrentStandings);
+        }
+
         private ICommand _skipAnswerCommand;
         public ICommand SkipAnswerCommand => _skipAnswerCommand ??= new RelayCommand(SkipAnswer);
 

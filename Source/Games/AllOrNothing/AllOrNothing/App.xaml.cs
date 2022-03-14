@@ -111,6 +111,9 @@ namespace AllOrNothing
             services.AddTransient<QuestionSeriesViewModel>();
             services.AddTransient<QuestionSeriesPage>();
 
+            services.AddSingleton<ScoreBoardPageViewModel>();
+            services.AddSingleton<ScoreBoardPage>();
+
             return services.BuildServiceProvider();
         }
     }

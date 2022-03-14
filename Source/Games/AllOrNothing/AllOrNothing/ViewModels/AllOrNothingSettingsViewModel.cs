@@ -486,11 +486,20 @@ namespace AllOrNothing.ViewModels
         {
             var vm = Ioc.Default.GetService<AllOrNothingGameViewModel>();
             vm.SetupRound(SelectedRound);
+            vm.GameOver += GameVM_GameOver;
 
 
 
             NavigateTo?.Invoke(this, new NavigateToEventargs { PageVM = typeof(AllOrNothingGameViewModel), PageName = "Játék" });
             //TODO close this page
+        }
+
+        private void GameVM_GameOver(object sender, ObservableCollection<StandingDto> e)
+        {
+            var vm = Ioc.Default.GetService<ScoreBoardPageViewModel>();
+            vm.Setup(e);
+
+            NavigateTo?.Invoke(this, new NavigateToEventargs { PageVM = typeof(ScoreBoardPageViewModel), PageName = "Eredmények" });
         }
 
         public void ResetReachablePages()
