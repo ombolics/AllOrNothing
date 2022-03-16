@@ -74,14 +74,16 @@ namespace AllOrNothing.Controls
             DependencyProperty.Register("IsAnswered", typeof(bool), typeof(QuestionGrid), null);
 
 
-
+        private Grid _buttonGrid;
         private void CreateGrid()
         {
+            MainGrid.Children.Remove(_buttonGrid);
+            CurrentQuestion = null;
 
-            var buttonGrid = new Grid();
+            _buttonGrid = new Grid();
             for (int i = 0; i < _questionSerie.Topics.Count; i++)
             {
-                buttonGrid.ColumnDefinitions.Add(new ColumnDefinition
+                _buttonGrid.ColumnDefinitions.Add(new ColumnDefinition
                 {
                     Width = new GridLength(1.0, GridUnitType.Star)
                 });
@@ -89,7 +91,7 @@ namespace AllOrNothing.Controls
 
             for (int i = 0; i < _questionSerie.Topics[0].Questions.Count + 1; i++)
             {
-                buttonGrid.RowDefinitions.Add(new RowDefinition
+                _buttonGrid.RowDefinitions.Add(new RowDefinition
                 {
                     Height = new GridLength(1.0, GridUnitType.Star)
                 });
@@ -111,7 +113,7 @@ namespace AllOrNothing.Controls
                     HorizontalAlignment = HorizontalAlignment.Center,
                 };
 
-                buttonGrid.Children.Add(headerButton);
+                _buttonGrid.Children.Add(headerButton);
                 Grid.SetColumn(headerButton, i);
                 Grid.SetRow(headerButton, 0);
                 for (int j = 1; j < _questionSerie.Topics[i].Questions.Count + 1; j++)
@@ -126,14 +128,13 @@ namespace AllOrNothing.Controls
                         UseLayoutRounding = true,
                     };
                     b.Click += B_Click;
-                    buttonGrid.Children.Add(b);
+                    _buttonGrid.Children.Add(b);
                     Grid.SetColumn(b, i);
                     Grid.SetRow(b, j);
                 }
             }
-            MainGrid.Children.Add(buttonGrid);
-            Grid.SetRow(buttonGrid, 0);
-
+            MainGrid.Children.Add(_buttonGrid);
+            Grid.SetRow(_buttonGrid, 0);
         }
         private void B_Click(object sender, RoutedEventArgs e)
         {

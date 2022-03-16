@@ -26,7 +26,7 @@
     <Grid>
         <!--Game without buttons-->
         <Grid x:Name="buttonlessMainGrid" Background="{ ThemeResource GradientBrush4}"
-              Visibility="{x:Bind ViewModel.SelectedRound.IsGameWithoutButtonsEnabled, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+              Visibility="{x:Bind ViewModel.SelectedRound.RoundSettings.IsGameWithoutButtonsEnabled, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="8*"/>
@@ -48,7 +48,7 @@
                     <TextBlock Grid.Row="1" Text="Kvíztábor 2022 13. forduló" FontSize="{StaticResource LargeFontSize}" Margin="10,10,10,10"/>
 
                     <Button Grid.Row="1" Grid.Column="1" 
-                            Content="{x:Bind ViewModel.SelectedRound.TematicalTime, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}" 
+                            Content="{x:Bind ViewModel.SelectedRound.RoundSettings.TematicalTime, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}" 
                             CornerRadius="10" 
                             HorizontalAlignment="Right" 
                             VerticalAlignment="Stretch" 
@@ -58,7 +58,7 @@
                 </Grid>
 
                 <cc:QuestionGrid Grid.Row="2" Margin="15,15,15,15"
-                             QuestionSerie="{x:Bind ViewModel.SelectedRound.QuestionSerie, Mode=OneWay}" 
+                             QuestionSerie="{x:Bind ViewModel.SelectedRound.RoundSettings.QuestionSerie, Mode=OneWay}" 
                              CurrentQuestion="{x:Bind ViewModel.CurrentQuestion, Mode=TwoWay}"
                              CornerRadius="30"
                              Visibility="{x:Bind ViewModel.GamePhase, Mode=OneWay, Converter={StaticResource GamePhaseToVisibilityConverter}, ConverterParameter=Tematical }"/>
@@ -67,7 +67,7 @@
 
             <Grid Grid.Column="1" Background="BurlyWood">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="8*"/>
+                    <RowDefinition Height="5*"/>
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
 
@@ -121,9 +121,15 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Button Grid.Column="0" Content="Válasz!" VerticalAlignment="Center" IsEnabled="True" 
+                        <Button Grid.Column="0" Content="Válasz!"
+                                IsEnabled="True" 
+                                VerticalAlignment="Stretch"
+                                HorizontalAlignment="Stretch"
                                 Command="{x:Bind ViewModel.SubmitAnswerCommand}"/>
-                        <Button Grid.Column="1" Content="Passz" VerticalAlignment="Center"
+                        
+                        <Button Grid.Column="1" Content="Passz"
+                                VerticalAlignment="Stretch"
+                                HorizontalAlignment="Stretch"
                                 Command="{x:Bind ViewModel.SkipAnswerCommand}"/>
                     </Grid>
                 </Grid>
@@ -137,7 +143,7 @@
                 </Grid.RowDefinitions>
 
                 <ListBox Grid.Row="0" 
-                          ItemsSource="{x:Bind ViewModel.CurrentStandings, Mode=OneWay}"                         
+                          ItemsSource="{x:Bind ViewModel.SelectedRound.RoundStandings, Mode=OneWay}"                         
                           HorizontalContentAlignment="Stretch"
                           VerticalContentAlignment="Stretch"
                           SelectedItem="{x:Bind ViewModel.PickingTeam, Mode=TwoWay}"
@@ -192,7 +198,7 @@
 
         <!-- GameWithButtons-->
         <Grid x:Name="MainGrid" Background="{ ThemeResource GradientBrush4}"
-              Visibility="{x:Bind ViewModel.SelectedRound.IsGameWithoutButtonsEnabled, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=negate}">
+              Visibility="{x:Bind ViewModel.SelectedRound.RoundSettings.IsGameWithoutButtonsEnabled, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=negate}">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="8*"/>
@@ -212,7 +218,7 @@
                     <TextBlock Grid.Row="1" Text="Kvíztábor 2022 13. forduló" FontSize="{StaticResource LargeFontSize}" Margin="10,10,10,10"/>
 
                     <Button Grid.Row="1" Grid.Column="1" 
-                            Content="{x:Bind ViewModel.SelectedRound.TematicalTime, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}" 
+                            Content="{x:Bind ViewModel.SelectedRound.RoundSettings.TematicalTime, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}" 
                             CornerRadius="10" 
                             HorizontalAlignment="Right" 
                             VerticalAlignment="Stretch" 
@@ -222,7 +228,7 @@
                 </Grid>
 
                 <cc:QuestionGrid Grid.Row="2" Margin="15,15,15,15"
-                             QuestionSerie="{x:Bind ViewModel.SelectedRound.QuestionSerie, Mode=OneWay}" 
+                             QuestionSerie="{x:Bind ViewModel.SelectedRound.RoundSettings.QuestionSerie, Mode=OneWay}" 
                              CurrentQuestion="{x:Bind ViewModel.CurrentQuestion, Mode=TwoWay}"
                              CornerRadius="30"
                              Visibility="{x:Bind ViewModel.GamePhase, Mode=OneWay, Converter={StaticResource GamePhaseToVisibilityConverter}, ConverterParameter=Tematical }"/>
@@ -236,7 +242,7 @@
                 </Grid.RowDefinitions>
                
                 <ListBox Grid.Row="0" 
-                          ItemsSource="{x:Bind ViewModel.CurrentStandings, Mode=OneWay}"
+                          ItemsSource="{x:Bind ViewModel.SelectedRound.RoundStandings, Mode=OneWay}"
 
                           HorizontalContentAlignment="Stretch"
                           VerticalContentAlignment="Stretch"

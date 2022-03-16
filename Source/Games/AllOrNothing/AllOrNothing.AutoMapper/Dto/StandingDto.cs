@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System.Linq;
 
 namespace AllOrNothing.AutoMapper.Dto
 {
@@ -18,5 +19,12 @@ namespace AllOrNothing.AutoMapper.Dto
             get => _score;
             set => SetProperty(ref _score, value);
         }
+        public int MatchPlayed 
+        { 
+            get => _matchPlayed; 
+            set => SetProperty(ref _matchPlayed, value); 
+        }
+
+        private int _matchPlayed;
     }
 }

@@ -34,16 +34,19 @@ namespace AllOrNothing.ViewModels
             _listViewItemSource = new ObservableCollection<Team>();
             _playerTest = new ObservableCollection<Player>();
 
-            _gameSettingsModel = new GameSettingsModel();
+            _gameModel = new GameModel(new GameSettingsModel(), new ObservableCollection<StandingDto>());
             _isRoundSettingsVisible = false;
             _selectedRound = null;
 
+            //_unitOfWork.QuestionSeries.Add(DummyData.DummyData.QS1);
+            //_unitOfWork.Complete();
+
             _avaiblePlayers = new SortedSet<Player>(new PlayerComparer());
 
-            var allSeries =
+            var all = _unitOfWork.QuestionSeries.GetAll();
+            var tmp = _mapper.Map<IEnumerable<QuestionSerie>, IEnumerable<QuestionSerieDto>>(all);
 
-
-            AvaibleSeries = new ObservableCollection<QuestionSerieDto>(_mapper.Map<IEnumerable<QuestionSerie>, IEnumerable<QuestionSerieDto>>(_unitOfWork.QuestionSeries.GetAll()));
+            AvaibleSeries = new ObservableCollection<QuestionSerieDto>(tmp);
             _avaiblePlayers.UnionWith(_unitOfWork.Players.GetAll());
             _teams = new();
             _selectedPlayers = new();
@@ -51,6 +54,16 @@ namespace AllOrNothing.ViewModels
 
         private IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
+
+        
+
+        private ICommand _generateTeamsCommand;
+        public ICommand GenerateTeamsCommand => _generateTeamsCommand ??= new RelayCommand(GenerateTeamsClicked);
+
+        private void GenerateTeamsClicked()
+        {
+            Teams = GenerateTeams(SelectedPlayers, GameModel.GameSettings.MaxTeamSize);
+        }
 
         private ICommand _loadFromFileCommand;
         public ICommand LoadFromFileCommand => _loadFromFileCommand ??= new RelayCommand(LoadFromFileClicked);
@@ -88,17 +101,17 @@ namespace AllOrNothing.ViewModels
         }
         public void RoundSelected(object sender, ItemClickEventArgs e)
         {
-            SelectedRound = e.ClickedItem as RoundSettingsModel;
+            SelectedRound = e.ClickedItem as RoundModel;
         }
 
-        private RoundSettingsModel _selectedRound;
-        public RoundSettingsModel SelectedRound
+        private RoundModel _selectedRound;
+        public RoundModel SelectedRound
         {
             get => _selectedRound;
             set => SetProperty(ref _selectedRound, value);
         }
 
-        public ObservableCollection<RoundSettingsModel> Rounds
+        public ObservableCollection<RoundModel> Rounds
         {
             get => _rounds;
             set
@@ -114,14 +127,14 @@ namespace AllOrNothing.ViewModels
             get => _isRoundSettingsVisible;
             set => SetProperty(ref _isRoundSettingsVisible, value);
         }
-        private ObservableCollection<RoundSettingsModel> _rounds;
+        private ObservableCollection<RoundModel> _rounds;
 
 
-        private GameSettingsModel _gameSettingsModel;
-        public GameSettingsModel GameSettingsModel
+        private GameModel _gameModel;
+        public GameModel GameModel
         {
-            get => _gameSettingsModel;
-            set => SetProperty(ref _gameSettingsModel, value);
+            get => _gameModel;
+            set => SetProperty(ref _gameModel, value);
         }
 
         //private ICommand _dropPlayerCommand;
@@ -158,6 +171,8 @@ namespace AllOrNothing.ViewModels
                     team.TeamName += plyr.NickName + " - ";
 
                     team.PlayerDrop += On_PlayerDropped;
+
+                    team.UpdateTeamName();
                 }
                 value.Add(team);
             }
@@ -166,10 +181,10 @@ namespace AllOrNothing.ViewModels
 
 
 
-        public void TeamsAllowedChecked(object sender, RoutedEventArgs e)
-        {
-            Teams = GenerateTeams(SelectedPlayers, GameSettingsModel.MaxTeamSize);
-        }
+        //public void TeamsAllowedChecked(object sender, RoutedEventArgs e)
+        //{
+        //    Teams = GenerateTeams(SelectedPlayers, GameModel.GameSettings.MaxTeamSize);
+        //}
 
         private int RoundsAgainstEachOther(int ind1, int ind2, int[,] matrix)
         {
@@ -220,7 +235,7 @@ namespace AllOrNothing.ViewModels
                 occurrences.Add(i, 0);
             }
 
-            while (occurrences.Any(p => p.Value < GameSettingsModel.NumberOfRounds))
+            while (occurrences.Any(p => p.Value < GameModel.GameSettings.NumberOfRounds))
             {
 
                 var round = new List<int>();
@@ -268,9 +283,23 @@ namespace AllOrNothing.ViewModels
                 Schedules.Add(sch);
             }
             PrintMatrix(matrix);
-            GameSettingsModel.Schedules = Schedules;
+            GameModel.GameSettings.Schedules = Schedules;
         }
 
+        public IList<StandingDto> CreateStandingFromGameModel(GameModel model)
+        {
+            var val = new List<StandingDto>();
+            foreach (var item in Teams)
+            {
+                val.Add(new StandingDto
+                {
+                    Team = item,
+                    MatchPlayed = 0,
+                    Score = 0,
+                }) ;
+            }
+            return val;
+        }
 
         public void On_PlayerDropped(object sender, Player player)
         {
@@ -289,8 +318,12 @@ namespace AllOrNothing.ViewModels
                         .FirstOrDefault();
 
                     team.Players.Remove(removable);
+                    team.UpdateTeamName();
                 }
                 senderTeam.Players.Add(player);
+                senderTeam.UpdateTeamName();
+
+
             }
         }
 
@@ -380,6 +413,7 @@ namespace AllOrNothing.ViewModels
             dto.RemoveCommand = RemovePlayerCommand as RelayCommand<object>;
             SelectedPlayers.Add(dto);
             sender.Text = string.Empty;
+            sender.ItemsSource = null;
         }
 
 
@@ -394,8 +428,6 @@ namespace AllOrNothing.ViewModels
             get { return _playerTest; }
             set { SetProperty(ref _playerTest, value); }
         }
-
-        public List<Team> TeamTest => DummyData.DummyData.Teams;
 
         private Visibility _gameSettingsVisible;
         public Visibility GameSettingsVisible
@@ -417,14 +449,20 @@ namespace AllOrNothing.ViewModels
 
         private void ShowRoundSettingsClicked()
         {
+            //TODO validáció
             GenerateSchedule();
-            Rounds = new ObservableCollection<RoundSettingsModel>(RoundSettingsModel.FromGameSettingsModel(GameSettingsModel));
+            GameModel.GameStandings = new ObservableCollection<StandingDto>(CreateStandingFromGameModel(GameModel));
+
+            Rounds = new ObservableCollection<RoundModel>(RoundModel.FromGameModel(GameModel));
             SelectedRound = Rounds?[0];
+
+            var vm = Ioc.Default.GetService<ScoreBoardPageViewModel>();
+
+            vm.GameStandings = new List<StandingDto>(GameModel.GameStandings);
 
             GameSettingsVisible = Visibility.Collapsed;
             IsRoundSettingsVisible = true;
         }
-
 
         private ICommand _startGameCommand;
         public ICommand StartGameCommand => _startGameCommand ??= new RelayCommand(StartGameClicked);
@@ -480,7 +518,7 @@ namespace AllOrNothing.ViewModels
         {
             var vm = Ioc.Default.GetService<AllOrNothingGameViewModel>();
             vm.SetupRound(SelectedRound);
-            vm.GameOver += GameVM_GameOver;
+            vm.RoundOver += GameVM_RoundOver;
 
 
 
@@ -488,7 +526,7 @@ namespace AllOrNothing.ViewModels
             //TODO close this page
         }
 
-        private void GameVM_GameOver(object sender, ObservableCollection<StandingDto> e)
+        private void GameVM_RoundOver(object sender, RoundModel e)
         {
             var vm = Ioc.Default.GetService<ScoreBoardPageViewModel>();
             vm.Setup(e);

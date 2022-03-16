@@ -37,11 +37,7 @@ namespace AllOrNothing.ViewModels
             _gameTimer.Interval = TimeSpan.FromSeconds(1);
             _gameTimer.Tick += _gameTimer_Tick;
             _qsLoader = new QuestionSerieLoader();
-
-            _currentStandings = new ObservableCollection<StandingDto>();
             _mapper = mapper;
-
-
         }
         private GamePhase _gamePhase;
 
@@ -55,14 +51,14 @@ namespace AllOrNothing.ViewModels
 
         public event EventHandler<string> HidePage;
 
-        public void SetupRound(RoundSettingsModel m)
+        public void SetupRound(RoundModel m)
         {
-            m.TematicalTime = m.TematicalTime.ShiftToRight();
-            m.LightningTime = m.LightningTime.ShiftToRight();
+            m.RoundSettings.TematicalTime = m.RoundSettings.TematicalTime.ShiftToRight();
+            m.RoundSettings.LightningTime = m.RoundSettings.LightningTime.ShiftToRight();
 
             SelectedRound = m;
 
-            if (SelectedRound.IsTematicalAllowed)
+            if (SelectedRound.RoundSettings.IsTematicalAllowed)
             {
                 GamePhase = GamePhase.TEMATICAL;
             }
@@ -70,30 +66,14 @@ namespace AllOrNothing.ViewModels
             {
                 GamePhase = GamePhase.LIGHTNING;
             }
+  
 
-            CurrentStandings = new ObservableCollection<StandingDto>();
-            foreach (var team in m.Teams)
-            {
-                CurrentStandings.Add(new StandingDto
-                {
-                    Team = team,
-                    Score = 0
-                });
-            }
-
-            if (SelectedRound.IsGameWithoutButtonsEnabled)
+            if (SelectedRound.RoundSettings.IsGameWithoutButtonsEnabled)
             {
                 AnswerLog = new ObservableCollection<AnswerLogModel>();
             }
             _pickingIndex = 0;
-            PickingTeam = CurrentStandings[_pickingIndex];
-        }
-
-        private ObservableCollection<StandingDto> _currentStandings;
-        public ObservableCollection<StandingDto> CurrentStandings
-        {
-            get => _currentStandings;
-            set => SetProperty(ref _currentStandings, value);
+            PickingTeam = SelectedRound.RoundStandings[_pickingIndex];
         }
 
 
@@ -106,16 +86,16 @@ namespace AllOrNothing.ViewModels
 
             if (GamePhase == GamePhase.TEMATICAL)
             {
-                SelectedRound.TematicalTime = SelectedRound.TematicalTime.Subtract(TimeSpan.FromSeconds(1));
-                if (SelectedRound.TematicalTime.TotalSeconds == 0)
+                SelectedRound.RoundSettings.TematicalTime = SelectedRound.RoundSettings.TematicalTime.Subtract(TimeSpan.FromSeconds(1));
+                if (SelectedRound.RoundSettings.TematicalTime.TotalSeconds == 0)
                 {
                     _gameTimer.Stop();
                 }
             }
             else
             {
-                SelectedRound.LightningTime = SelectedRound.LightningTime.Subtract(TimeSpan.FromSeconds(1));
-                if (SelectedRound.LightningTime.TotalSeconds == 0)
+                SelectedRound.RoundSettings.LightningTime = SelectedRound.RoundSettings.LightningTime.Subtract(TimeSpan.FromSeconds(1));
+                if (SelectedRound.RoundSettings.LightningTime.TotalSeconds == 0)
                 {
                     _gameTimer.Stop();
                 }
@@ -123,23 +103,23 @@ namespace AllOrNothing.ViewModels
         }
 
 
-        private RoundSettingsModel _selectedRound;
+        private RoundModel _selectedRound;
 
 
         private ICommand _toggleTimerCommand;
         public ICommand ToggleTimerCommand => _toggleTimerCommand ??= new RelayCommand(ToggleTimer);
 
         private ICommand _gameOverCommand;
-        public ICommand GameOverCommand => _gameOverCommand ??= new RelayCommand(On_GameOver);
+        public ICommand GameOverCommand => _gameOverCommand ??= new RelayCommand(On_RoundOver);
 
-        public event EventHandler<ObservableCollection<StandingDto>> GameOver;
-        private void On_GameOver()
+        public event EventHandler<RoundModel> RoundOver;
+        private void On_RoundOver()
         {
             SelectedRound.RoundEnded = true;
             //TODO create game history
             _gameTimer.Stop();
             HidePage?.Invoke(this, "Játék");
-            GameOver?.Invoke(this, CurrentStandings);
+            RoundOver?.Invoke(this, SelectedRound);
         }
 
         private ICommand _skipAnswerCommand;
@@ -151,7 +131,7 @@ namespace AllOrNothing.ViewModels
             {
                 AnswerText = string.Empty;
                 CurrentQuestion = null;
-                PickingTeam = CurrentStandings[++_pickingIndex % CurrentStandings.Count];
+                PickingTeam = SelectedRound.RoundStandings[++_pickingIndex % SelectedRound.RoundStandings.Count];
             }
         }
 
@@ -187,7 +167,7 @@ namespace AllOrNothing.ViewModels
                 };
 
                 AnswerLog.Add(answ);
-                PickingTeam = CurrentStandings[++_pickingIndex % CurrentStandings.Count];
+                PickingTeam = SelectedRound.RoundStandings[++_pickingIndex % SelectedRound.RoundStandings.Count];
                 AnswerText = string.Empty;
                 CurrentQuestion = null;
             }
@@ -240,8 +220,8 @@ namespace AllOrNothing.ViewModels
 
         private void ToggleTimer()
         {
-            if ((GamePhase == GamePhase.TEMATICAL && SelectedRound.TematicalTime.TotalSeconds == 0) ||
-                (GamePhase == GamePhase.LIGHTNING && SelectedRound.LightningTime.TotalSeconds == 0))
+            if ((GamePhase == GamePhase.TEMATICAL && SelectedRound.RoundSettings.TematicalTime.TotalSeconds == 0) ||
+                (GamePhase == GamePhase.LIGHTNING && SelectedRound.RoundSettings.LightningTime.TotalSeconds == 0))
                 return;
 
             if (_gameTimer.IsEnabled)
@@ -293,7 +273,7 @@ namespace AllOrNothing.ViewModels
                 SetProperty(ref _currentQuestion, value);
             }
         }
-        public RoundSettingsModel SelectedRound
+        public RoundModel SelectedRound
         {
             get => _selectedRound;
             set => SetProperty(ref _selectedRound, value);

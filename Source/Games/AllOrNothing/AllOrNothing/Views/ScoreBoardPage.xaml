@@ -15,10 +15,24 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Orientation="Vertical" 
+                    Grid.Column="0">
+
+            <TextBlock Text="Összesített eredmények:"/>
+            <controls:DataGrid ItemsSource="{x:Bind ViewModel.GameStandings}"
+                               AutoGenerateColumns="False">
+                <controls:DataGrid.Columns>
+                    <controls:DataGridTextColumn Header="Pontszám" Binding="{Binding Score}" Tag="Score" />
+                    <controls:DataGridTextColumn Header="Csapat" Binding="{Binding Team.TeamName}" Tag="TeamName" />
+                </controls:DataGrid.Columns>
+
+            </controls:DataGrid>
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" 
                     Grid.Column="1">
             
-            <TextBlock Text=" legutábbi kör:"/>
-            <controls:DataGrid ItemsSource="{x:Bind ViewModel.LastGameStandings}"
+            <TextBlock Text="Legutóbbi kör:"/>
+            <controls:DataGrid ItemsSource="{x:Bind ViewModel.LastRoundStandings}"
                                AutoGenerateColumns="False">
                 <controls:DataGrid.Columns>
                     <controls:DataGridTextColumn Header="Pontszám" Binding="{Binding Score}" Tag="Score" />

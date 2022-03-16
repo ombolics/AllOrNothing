@@ -9,6 +9,7 @@ namespace AllOrNothing.Models
         public GameSettingsModel()
         {
             MaxTeamSize = 2;
+            NumberOfRounds = 1;
         }
 
         private List<Schedule> _schedules;
@@ -25,7 +26,15 @@ namespace AllOrNothing.Models
         public int NumberOfRounds
         {
             get => _numberOfRounds;
-            set => SetProperty(ref _numberOfRounds, value);
+            set
+            {
+                if (value < 1)
+                {
+                    value = 1;
+                }
+                _numberOfRounds = value;
+                OnPropertyChanged(nameof(NumberOfRounds));
+            }
         }
 
         private bool _generateSchedule;
@@ -55,9 +64,9 @@ namespace AllOrNothing.Models
             get => _maxTeamSize;
             set
             {
-                if (value < 2)
+                if (value < 1)
                 {
-                    value = 2;
+                    value = 1;
                 }
                 _maxTeamSize = value;
                 OnPropertyChanged(nameof(MaxTeamSize));

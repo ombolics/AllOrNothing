@@ -1,7 +1,9 @@
 ﻿using AllOrNothing.AutoMapper.Dto;
 using AllOrNothing.Helpers;
+using AllOrNothing.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AllOrNothing.ViewModels
 {
@@ -12,20 +14,47 @@ namespace AllOrNothing.ViewModels
 
         }
 
-        private IList<StandingDto> _lastGameStandings;
+        private List<StandingDto> _gameStandings;
 
-        public IList<StandingDto> LastGameStandings
+        public List<StandingDto> GameStandings
         {
-            get => _lastGameStandings;
-            set => SetProperty(ref _lastGameStandings, value);
+            get => _gameStandings;
+            set => SetProperty(ref _gameStandings, value);
         }
 
-        public void Setup(IList<StandingDto> lastGameStandings)
+        private IList<StandingDto> _lastRoundStandings;
+
+        public IList<StandingDto> LastRoundStandings
         {
-            var ls = new List<StandingDto>(lastGameStandings);
+            get => _lastRoundStandings;
+            set => SetProperty(ref _lastRoundStandings, value);
+        }
+
+        public void Setup(RoundModel m)
+        {
+            var ls = new List<StandingDto>(m.RoundStandings);
             ls.Sort(new StandingDtoComparer());
             ls.Reverse();
-            LastGameStandings = ls;
+            LastRoundStandings = ls;
+
+            //Sync the game standings with the last round's result
+
+            
+
+            foreach (var teamInStandings in GameStandings)
+            {
+                foreach (var teamFromModel in m.RoundStandings)
+                {
+                    if (teamInStandings.Team.Players.Select(x => x.Id).SequenceEqual(teamFromModel.Team.Players.Select(x => x.Id)))
+                    {
+                        teamInStandings.Score += teamFromModel.Score;
+                        teamInStandings.MatchPlayed++;
+                    }
+                }
+            }
+
+            GameStandings.Sort(new StandingDtoComparer());
+            GameStandings.Reverse();
 
         }
     }

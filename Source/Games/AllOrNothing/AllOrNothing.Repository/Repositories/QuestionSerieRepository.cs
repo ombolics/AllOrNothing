@@ -30,5 +30,15 @@ namespace AllOrNothing.Repository.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public override IEnumerable<QuestionSerie> GetAll()
+        {
+            return Context.Set<QuestionSerie>()
+                .Include(x => x.Topics)
+                    .ThenInclude(x => x.Questions)
+                .Include(x => x.Competences)
+                .Include(x => x.Authors)
+                .ToList();
+        }
     }
 }
