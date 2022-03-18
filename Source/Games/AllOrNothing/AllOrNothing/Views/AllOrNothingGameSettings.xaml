@@ -11,14 +11,28 @@
     xmlns:con="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:conv="using:AllOrNothing.Converters"
     xmlns:local="using:AllOrNothing.Views"
+    xmlns:wctprimitives="using:CommunityToolkit.WinUI.UI.Controls.Primitives"
     mc:Ignorable="d"
     Background="{ThemeResource GradientBrush5}"
     x:Name="gameSettingsPage"
-    DataContext="{x:Bind ViewModel}">
+    DataContext="{x:Bind ViewModel}"
+    Loaded="Page_Loaded">
     
     <Page.Resources>
         <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
         <conv:RoundStateToColorConverter x:Key="RoundStateToColorConverter"/>
+
+        <Style TargetType="wctprimitives:DataGridRowHeader">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="wctprimitives:DataGridRowHeader">
+                        <Grid Background="Red">
+                            <TextBlock Text="{Binding Name}" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Page.Resources>
 
 
@@ -160,7 +174,7 @@
                                             IsEnabled="{x:Bind ViewModel.GameModel.GameSettings.IsLightningAllowed, Mode=TwoWay}"/>
                             </StackPanel>
 
-                            <CheckBox Content="Gombok nélüli játék" Margin="20,5,10,5" 
+                            <CheckBox Content="Gombok nélüli játék" Margin="20,0,0,0" 
                                       IsChecked="{x:Bind ViewModel.GameModel.GameSettings.IsGameWithoutButtonsEnabled, Mode=TwoWay}"/>
 
                         </StackPanel>
@@ -230,8 +244,14 @@
                     </ItemsControl>
                 </Border>
 
-                <Button Grid.Row="2"  Content="Tovább" FontSize="{ThemeResource LargeFontSize}" VerticalAlignment="Center"
+                <StackPanel Grid.Row="2"   Orientation="Vertical">
+                    <Button Content="Tovább" FontSize="{ThemeResource LargeFontSize}" VerticalAlignment="Center"
                         HorizontalAlignment="Right" Command="{x:Bind ViewModel.ShowRoundSettingsCommand}"/>
+
+                    <Button Content="Kilépés" FontSize="{ThemeResource LargeFontSize}" VerticalAlignment="Center"
+                        HorizontalAlignment="Right" Command="{x:Bind ViewModel.ExitCommand}"/>
+                </StackPanel>
+                
 
             </Grid>
 
@@ -258,8 +278,7 @@
                           ItemClick="{x:Bind ViewModel.RoundSelected}">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
-                            <Setter Property="IsEnabled" 
-                            Value="{Binding RoundEnded}"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                         </Style>
                     </ListView.ItemContainerStyle>
                     
@@ -272,7 +291,7 @@
                                 <ItemsControl ItemsSource="{Binding RoundSettings.Teams }" IsEnabled="{Binding RoundEnded}">
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>
-                                            <cc:WrapPanel/>
+                                            <cc:WrapPanel HorizontalAlignment="Stretch"/>
                                         </ItemsPanelTemplate>
                                     </ItemsControl.ItemsPanel>
 
@@ -382,23 +401,26 @@
                                     <con:DataGridTemplateColumn Header="Ismeretkör" Tag="Competences">
                                         <con:DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <ItemsControl ItemsSource="{Binding Competences}" >
+                                                <Border>
+                                                    <ItemsControl ItemsSource="{Binding Competences}">
 
-                                                    <ItemsControl.ItemsPanel>
-                                                        <ItemsPanelTemplate>
-                                                            <cc:WrapPanel/>
-                                                        </ItemsPanelTemplate>
-                                                    </ItemsControl.ItemsPanel>
+                                                        <ItemsControl.ItemsPanel>
+                                                            <ItemsPanelTemplate>
+                                                                <cc:WrapPanel/>
+                                                            </ItemsPanelTemplate>
+                                                        </ItemsControl.ItemsPanel>
 
-                                                    <ItemsControl.ItemTemplate>
-                                                        <DataTemplate>
-                                                            <Border Background="{ThemeResource GreyBrush}" Margin="10,10,10,10" CornerRadius="5">
-                                                                <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
-                                                            </Border>
+                                                        <ItemsControl.ItemTemplate>
+                                                            <DataTemplate>
+                                                                <Border Background="{ThemeResource GreyBrush}" Margin="10,10,10,10" CornerRadius="5">
+                                                                    <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+                                                                </Border>
 
-                                                        </DataTemplate>
-                                                    </ItemsControl.ItemTemplate>
-                                                </ItemsControl>
+                                                            </DataTemplate>
+                                                        </ItemsControl.ItemTemplate>
+                                                    </ItemsControl>
+                                                </Border>
+                                                
                                             </DataTemplate>
                                         </con:DataGridTemplateColumn.CellTemplate>
 
@@ -406,6 +428,7 @@
 
                                     <con:DataGridTextColumn Header="Dátum" Binding="{Binding CreatedOn}" Tag="CreatedOn" />
                                 </con:DataGrid.Columns>
+                                
                             </con:DataGrid>
                         </ScrollViewer>
                        

@@ -75,7 +75,7 @@ namespace AllOrNothing.Services
         {
             string pageKey = vmType.FullName;
             var result = _navigationView.MenuItems.SingleOrDefault(i => (i as NavigationViewItem).Content == item.Content) as NavigationViewItem;
-
+            var dbg = _navigationView.MenuItems.ToList();
 
             if (result != null)
                 (result as NavigationViewItem).Visibility = Visibility.Visible;
@@ -88,6 +88,10 @@ namespace AllOrNothing.Services
             }
         }
 
+        public bool MenuPointExists(object content)
+        {
+            return _navigationView.MenuItems.Count(i => (i as NavigationViewItem).Content.ToString() == content.ToString()) > 0;
+        }
 
         public void UnregisterEvents()
         {

@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Windows.Input;
@@ -34,6 +35,8 @@ namespace AllOrNothing.ViewModels
         }
         private void NewGameClicked()
         {
+            var vm = Ioc.Default.GetService<AllOrNothingSettingsViewModel>();
+            vm.ResetSettings();
             NavigateTo?.Invoke(this, new NavigateToEventargs { PageVM = typeof(AllOrNothingSettingsViewModel), PageName = "Beállítások" });
         }
     }

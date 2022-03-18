@@ -14,11 +14,12 @@ namespace AllOrNothing.Repository.Repositories
 
         public IEnumerable<QuestionSerie> GetAllByAuthor(int authorId)
         {
-            return Context.Set<QuestionSerie>()
-                .Where(q => q.Authors
-                    .Where(p => p.Id == authorId)
-                    .ToList().Count > 0)
-                .ToList();
+            //return Context.Set<QuestionSerie>()
+            //    .Where(q => q.Authors
+            //        .Where(p => p.Id == authorId)
+            //        .ToList().Count > 0)
+            //    .ToList();
+            return null;
         }
 
         public IEnumerable<QuestionSerie> GetAllByAuthorInstitute(int instituteId)
@@ -36,8 +37,8 @@ namespace AllOrNothing.Repository.Repositories
             return Context.Set<QuestionSerie>()
                 .Include(x => x.Topics)
                     .ThenInclude(x => x.Questions)
-                .Include(x => x.Competences)
-                .Include(x => x.Authors)
+                .Include(x => x.Topics)
+                    .ThenInclude(x => x.Competences)
                 .ToList();
         }
     }

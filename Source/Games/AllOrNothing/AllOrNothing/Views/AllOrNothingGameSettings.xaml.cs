@@ -22,6 +22,10 @@ namespace AllOrNothing.Views
         {
             this.InitializeComponent();
         }
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            ViewModel.PageXamlRoot = this.Content.XamlRoot;
+        }
 
         public void teamPanel_PlayerDropped(object sender, Player p)
         {
@@ -34,18 +38,18 @@ namespace AllOrNothing.Views
 
         }
 
-        private async void Button_Click(object sender, RoutedEventArgs e)
-        {
+        //private async void Button_Click(object sender, RoutedEventArgs e)
+        //{
 
-            FileOpenPicker picker = new FileOpenPicker();
+        //    FileOpenPicker picker = new FileOpenPicker();
 
-            //var hwnd = this.As<IWindowNative>().WindowHandle;
-            var hwnd = WindowNative.GetWindowHandle(App.MainWindow);
+        //    //var hwnd = this.As<IWindowNative>().WindowHandle;
+        //    var hwnd = WindowNative.GetWindowHandle(App.MainWindow);
 
 
-            WinRT.Interop.InitializeWithWindow.Initialize(picker, hwnd);
+        //    WinRT.Interop.InitializeWithWindow.Initialize(picker, hwnd);
 
-            var file = await picker.PickSingleFileAsync();
-        }
+        //    var file = await picker.PickSingleFileAsync();
+        //}
     }
 }

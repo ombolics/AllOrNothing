@@ -362,11 +362,7 @@ namespace AllOrNothing.DummyData
                         },
                     }
                 },
-            },
-            Authors = new List<Player>
-            {
-                _author,
-            },
+            },         
             CreatedOn = DateTime.Now,
         };
 

@@ -62,6 +62,7 @@ namespace AllOrNothing.ViewModels
             AllOrNothingSettingsViewModel = Ioc.Default.GetService<AllOrNothingSettingsViewModel>();
             AllOrNothingSettingsViewModel.NavigateTo += On_NavigateTo;
             AllOrNothingSettingsViewModel.HidePages += On_HidePages;
+            AllOrNothingSettingsViewModel.HidePage += On_HidePage;
 
             GameViewModel = Ioc.Default.GetRequiredService<AllOrNothingGameViewModel>();
             GameViewModel.HidePages += On_HidePages;
@@ -104,8 +105,9 @@ namespace AllOrNothing.ViewModels
 
             //p.Children.Add(b);
 
+            if(!NavigationViewService.MenuPointExists(e.PageName))
+                NavigationViewService.AddNavItem(new NavigationViewItem { Content = e.PageName }, e.PageVM);
 
-            NavigationViewService.AddNavItem(new NavigationViewItem { Content = e.PageName }, e.PageVM);
             NavigationService.NavigateTo(e.PageVM.FullName);
         }
 

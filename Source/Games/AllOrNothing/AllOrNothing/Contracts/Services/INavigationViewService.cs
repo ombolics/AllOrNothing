@@ -17,6 +17,7 @@ namespace AllOrNothing.Contracts.Services
         NavigationViewItem GetSelectedItem(Type pageType);
         void SetNavItemVisibility(string itemContent, bool value);
         void AddNavItem(NavigationViewItem item, Type vmType);
+        bool MenuPointExists(object content);
         void HideAllPageExcept(List<string> itemContents);
         void ShowAllPage();
     }

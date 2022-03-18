@@ -40,7 +40,7 @@ namespace AllOrNothing.ViewModels
             //Sync the game standings with the last round's result
 
             
-
+            //TODO optimize this
             foreach (var teamInStandings in GameStandings)
             {
                 foreach (var teamFromModel in m.RoundStandings)

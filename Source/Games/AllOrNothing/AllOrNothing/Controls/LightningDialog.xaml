@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="AllOrNothing.Controls.LightningDialog"
+    x:Class="AllOrNothing.Controls.CustomDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:AllOrNothing.Controls"
@@ -10,7 +10,7 @@
 
     <Grid>
         <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-            <TextBlock Text="Biztos, hogy továbblép a villámra?" />
+            <TextBlock Text="{x:Bind Text, Mode=OneWay}" />
         </StackPanel>
 
     </Grid>

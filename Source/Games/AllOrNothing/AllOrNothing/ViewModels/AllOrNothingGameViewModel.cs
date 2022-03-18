@@ -36,7 +36,6 @@ namespace AllOrNothing.ViewModels
             _gameTimer = new DispatcherTimer();
             _gameTimer.Interval = TimeSpan.FromSeconds(1);
             _gameTimer.Tick += _gameTimer_Tick;
-            _qsLoader = new QuestionSerieLoader();
             _mapper = mapper;
         }
         private GamePhase _gamePhase;
@@ -75,10 +74,6 @@ namespace AllOrNothing.ViewModels
             _pickingIndex = 0;
             PickingTeam = SelectedRound.RoundStandings[_pickingIndex];
         }
-
-
-        private QuestionSerieLoader _qsLoader;
-
 
         private void _gameTimer_Tick(object sender, object e)
         {
@@ -184,7 +179,7 @@ namespace AllOrNothing.ViewModels
             dialog.PrimaryButtonText = "Villám!";
             dialog.CloseButtonText = "Mégse";
             dialog.DefaultButton = ContentDialogButton.Primary;
-            dialog.Content = new LightningDialog();
+            dialog.Content = new CustomDialog("Biztosan továbblép a villámra?");
 
             if (await dialog.ShowAsync(ContentDialogPlacement.Popup) == ContentDialogResult.Primary)
             {

@@ -1,4 +1,5 @@
 ﻿using AllOrNothing.Data;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -21,36 +22,86 @@ namespace AllOrNothing.Services
             return result;
         }
 
+        public QuestionSerie LoadOldFormatFromTxt(string path = null, string content = null)
+        {
+            QuestionSerie value = new QuestionSerie()
+            {
+                CreatedOn = DateTime.Now,
+            };
+            value.Topics = new List<Topic>();
+            var topicArray = content.Split("\r\n\r\n");
+            foreach (var pack in topicArray)
+            {
+                var line = pack.Split("\r\n");
+                Topic topic = new Topic()
+                {
+                    Name = line[0],
+                    Author = null,
+                    Competences = null,
+                    Description = null,
+                };
+
+                for (int i = 1; i < line.Length; i++)
+                {
+                    topic.Questions.Add(new Question
+                    {
+                        Text = line[i],
+                        Type = QuestionType.THEMATICAL,
+                        Resource = null,
+                        Answer = null,
+                        ResourceType = QuestionResourceType.TEXT,
+                        Value = i < 6 ? i * 1000 : 8000,
+                    });
+                }
+                value.Topics.Add(topic);
+            }
+            //StreamReader sr = new StreamReader(new Stream())
+            //value.Topics = new List<Topic>();
+            //while (!sr.EndOfStream)
+            //{
+
+            //    for (int i = 0; i < 5; i++)
+            //    {
+            //        Topic t = new Topic();
+            //        t.Name = sr.ReadLine();
+            //        t.Questions = new List<Question>();
+
+            //        for (int j = 0; j < 6; j++)
+            //        {
+            //            t.Questions.Add(new Question
+            //            {
+            //                Text = sr.ReadLine(),
+            //                Type = QuestionType.THEMATICAL,
+            //                ResourceType = QuestionResourceType.TEXT,
+            //            });
+            //        }
+            //        sr.ReadLine();
+            //        value.Topics.Add(t);
+            //    }
+
+            //}
+
+            return value;
+        }
+
+        public QuestionSerie LoadNewFormatFromTxt(string path = null, string content = null)
+        {
+            throw new NotImplementedException();
+        }
+
         public QuestionSerie LoadFromTxt(string path)
         {
             StreamReader sr = new StreamReader(path);
-            QuestionSerie value = new QuestionSerie();
-            value.Topics = new List<Topic>();
-            while (!sr.EndOfStream)
+            var fileContent = sr.ReadToEnd();
+
+            if(fileContent.Split("\r\n")[0].Split(':')[0].ToLower() != "szerző")
             {
-
-                for (int i = 0; i < 5; i++)
-                {
-                    Topic t = new Topic();
-                    t.Name = sr.ReadLine();
-                    t.Questions = new List<Question>();
-
-                    for (int j = 0; j < 6; j++)
-                    {
-                        t.Questions.Add(new Question
-                        {
-                            Text = sr.ReadLine(),
-                            Type = QuestionType.THEMATICAL,
-                            ResourceType = QuestionResourceType.TEXT,
-                        });
-                    }
-                    sr.ReadLine();
-                    value.Topics.Add(t);
-                }
-
+                return LoadOldFormatFromTxt(null, fileContent);
             }
-
-            return value;
+            else
+            {
+                return LoadNewFormatFromTxt(null, fileContent);
+            }           
         }
     }
 }

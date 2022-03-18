@@ -12,6 +12,6 @@ namespace AllOrNothing.AutoMapper.Dto
         public string Description { get; set; }
         public List<QuestionDto> Questions { get; set; }
         public List<CompetenceDto> Competences { get; set; }
-        public Player Author { get; set; }
+        public PlayerDto Author { get; set; }
     }
 }

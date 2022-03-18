@@ -1,5 +1,6 @@
 ﻿using AllOrNothing.AutoMapper.Dto;
 using AllOrNothing.Contracts.ViewModels;
+using AllOrNothing.Controls;
 using AllOrNothing.Data;
 using AllOrNothing.Helpers;
 using AllOrNothing.Models;
@@ -29,13 +30,18 @@ namespace AllOrNothing.ViewModels
             _mapper = mapper;
             _unitOfWork = unitOfWork;
 
+            ResetSettings();
+        }
+
+        public void ResetSettings()
+        {
             _gameSettingsVisible = Visibility.Visible;
             _roundSettingsVisible = Visibility.Collapsed;
-            _listViewItemSource = new ObservableCollection<Team>();
             _playerTest = new ObservableCollection<Player>();
 
             _gameModel = new GameModel(new GameSettingsModel(), new ObservableCollection<StandingDto>());
             _isRoundSettingsVisible = false;
+            _rounds = null;
             _selectedRound = null;
 
             //_unitOfWork.QuestionSeries.Add(DummyData.DummyData.QS1);
@@ -57,6 +63,36 @@ namespace AllOrNothing.ViewModels
 
         
 
+        private ICommand _exitCommand;
+        public ICommand ExitCommand => _exitCommand ??= new RelayCommand(Exit);
+
+        private XamlRoot _pageXamlRoot;
+        public XamlRoot PageXamlRoot
+        {
+            get => _pageXamlRoot;
+            set => SetProperty(ref _pageXamlRoot, value);
+        }
+        public event EventHandler<string> HidePage;
+        private async void Exit()
+        {
+
+            ContentDialog dialog = new ContentDialog();
+            dialog.XamlRoot = PageXamlRoot;
+            dialog.Title = "Kilépés?";
+            dialog.PrimaryButtonText = "Igen";
+            dialog.CloseButtonText = "Mégse";
+            dialog.DefaultButton = ContentDialogButton.Primary;
+            dialog.Content = new CustomDialog("Biztosan kilép?");
+
+            if (await dialog.ShowAsync(ContentDialogPlacement.Popup) == ContentDialogResult.Primary)
+            {
+                ResetSettings();
+                HidePage?.Invoke(this, "Beállítások");
+                NavigateTo(this, new NavigateToEventargs { PageName = "Menu", PageVM = typeof(AllOrNothingViewModel) });
+            }
+            
+        }
+
         private ICommand _generateTeamsCommand;
         public ICommand GenerateTeamsCommand => _generateTeamsCommand ??= new RelayCommand(GenerateTeamsClicked);
 
@@ -73,9 +109,28 @@ namespace AllOrNothing.ViewModels
             var questionSerieLoader = new QuestionSerieLoader();
 
             var series = questionSerieLoader.LoadAllSeriesFromFolder(App.QuestionSerieFolder);
+
             foreach (var serie in series)
             {
-                AvaibleSeries.Add(_mapper.Map<QuestionSerieDto>(serie));
+                var dto = _mapper.Map<QuestionSerieDto>(serie);
+                dto.FromFile = true;
+                if(dto.Competences.Count == 0)
+                {
+                    dto.Topics[0].Competences = new List<CompetenceDto>{new CompetenceDto
+                    {
+                        Name = "Nem ismert",
+                    }};
+                }
+
+                if (dto.Authors.Count == 0)
+                {
+                    dto.Topics[0].Author = new PlayerDto
+                    {
+                        Name = "Nem ismert",
+                    };
+                }
+
+                AvaibleSeries.Add(dto);
             }
 
         }
@@ -84,14 +139,6 @@ namespace AllOrNothing.ViewModels
         {
             (sender as AutoSuggestBox).ItemsSource = null;
         }
-
-
-
-
-
-
-
-
 
         private ObservableCollection<QuestionSerieDto> _avaibleSeries;
         public ObservableCollection<QuestionSerieDto> AvaibleSeries
@@ -204,10 +251,6 @@ namespace AllOrNothing.ViewModels
                 i++;
             }
             return value;
-        }
-
-        private void UpdateMatrix(ref int[,] matrix, List<int> teams)
-        {
         }
 
         private void PrintMatrix(int[,] matrix)
@@ -325,13 +368,6 @@ namespace AllOrNothing.ViewModels
 
 
             }
-        }
-
-        private ObservableCollection<Team> _listViewItemSource;
-        public ObservableCollection<Team> ListViewItemSource
-        {
-            get => _listViewItemSource;
-            set => SetProperty(ref _listViewItemSource, value);
         }
 
         private ICommand _removePlayerCommand;
@@ -467,60 +503,11 @@ namespace AllOrNothing.ViewModels
         private ICommand _startGameCommand;
         public ICommand StartGameCommand => _startGameCommand ??= new RelayCommand(StartGameClicked);
 
-        public int TeamSize
-        {
-            get => _teamSize;
-            set => SetProperty(ref _teamSize, value);
-        }
-
-        private int _teamSize;
-
-        private ICommand _teamGameCheckBoxCommand;
-
-        public ICommand TeamGameCheckBoxCommand => _teamGameCheckBoxCommand ??= new RelayCommand(() => TeamGame = !TeamGame);
-
-        private bool _hasTematical;
-        public bool HasTematical
-        {
-            get => _hasTematical;
-            set => SetProperty(ref _hasTematical, value);
-        }
-
-        private bool _hasLightning;
-        public bool HasLightning
-        {
-            get => _hasLightning;
-            set => SetProperty(ref _hasLightning, value);
-        }
-
-        private ICommand _lightningCheckBoxCommand;
-
-        public ICommand LightningCheckBoxCommand => _lightningCheckBoxCommand ??= new RelayCommand(() => HasLightning = !HasLightning);
-
-        private ICommand _tematicalCheckBoxCommand;
-
-        public ICommand TematicalCheckBoxCommand => _tematicalCheckBoxCommand ??= new RelayCommand(() => HasTematical = !HasTematical);
-
-
-
-        public bool TeamGame
-        {
-            get => _teamGame;
-            set => SetProperty(ref _teamGame, value);
-        }
-
-
-
-        private bool _teamGame;
-
-
         private void StartGameClicked()
         {
             var vm = Ioc.Default.GetService<AllOrNothingGameViewModel>();
             vm.SetupRound(SelectedRound);
             vm.RoundOver += GameVM_RoundOver;
-
-
 
             NavigateTo?.Invoke(this, new NavigateToEventargs { PageVM = typeof(AllOrNothingGameViewModel), PageName = "Játék" });
             //TODO close this page
