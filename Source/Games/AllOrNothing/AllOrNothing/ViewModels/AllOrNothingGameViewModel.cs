@@ -26,7 +26,6 @@ namespace AllOrNothing.ViewModels
 
     public class AllOrNothingGameViewModel : ObservableRecipient, INavigationAware
     {
-        [DllImport("user32.dll", ExactSpelling = true, CharSet = CharSet.Auto, PreserveSig = true, SetLastError = false)]
         public static extern IntPtr GetActiveWindow();
 
         public AllOrNothingGameViewModel(IMapper mapper)
