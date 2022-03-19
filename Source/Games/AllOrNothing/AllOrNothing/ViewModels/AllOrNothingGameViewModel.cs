@@ -26,7 +26,6 @@ namespace AllOrNothing.ViewModels
 
     public class AllOrNothingGameViewModel : ObservableRecipient, INavigationAware
     {
-        public static extern IntPtr GetActiveWindow();
 
         public AllOrNothingGameViewModel(IMapper mapper)
         {

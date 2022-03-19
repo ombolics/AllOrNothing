@@ -47,13 +47,14 @@ namespace AllOrNothing.ViewModels
             //_unitOfWork.QuestionSeries.Add(DummyData.DummyData.QS1);
             //_unitOfWork.Complete();
 
-            _avaiblePlayers = new SortedSet<Player>(new PlayerComparer());
+            _avaiblePlayers = new SortedSet<PlayerDto>(new PlayerDtoComparer());
+            _avaiblePlayers.UnionWith(_mapper.Map<IEnumerable<PlayerDto>>(_unitOfWork.Players.GetAll()));
 
             var all = _unitOfWork.QuestionSeries.GetAll();
             var tmp = _mapper.Map<IEnumerable<QuestionSerie>, IEnumerable<QuestionSerieDto>>(all);
 
             AvaibleSeries = new ObservableCollection<QuestionSerieDto>(tmp);
-            _avaiblePlayers.UnionWith(_unitOfWork.Players.GetAll());
+           
             _teams = new();
             _selectedPlayers = new();
         }
@@ -373,6 +374,14 @@ namespace AllOrNothing.ViewModels
         private ICommand _removePlayerCommand;
         public ICommand RemovePlayerCommand => _removePlayerCommand ??= new RelayCommand<object>(On_RemovePlayer);
 
+        private ICommand _navigateToNewPlayerPageCommand;
+        public ICommand NavigateToNewPlayerPageCommand => _navigateToNewPlayerPageCommand ??= new RelayCommand(NavigateToNewPlayerPage);
+
+        private void NavigateToNewPlayerPage()
+        {
+            NavigateTo?.Invoke(this, new NavigateToEventargs { PageName = "Új játékos", PageVM = typeof(PlayerAddingViewModel) });
+        }
+
         private ObservableCollection<TeamDto> _teams;
         public ObservableCollection<TeamDto> Teams
         {
@@ -384,9 +393,7 @@ namespace AllOrNothing.ViewModels
         {
             var playerDto = param as PlayerDto;
             SelectedPlayers.Remove(playerDto);
-
-            var player = _mapper.Map<Player>(playerDto);
-            _avaiblePlayers.Add(player);
+            _avaiblePlayers.Add(playerDto);
         }
 
         public void ItemDragStarting(UIElement sender, DragStartingEventArgs e)
@@ -395,7 +402,7 @@ namespace AllOrNothing.ViewModels
             var asd = e.Data;
         }
 
-        private SortedSet<Player> _avaiblePlayers;
+        private SortedSet<PlayerDto> _avaiblePlayers;
 
         public void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
@@ -403,29 +410,49 @@ namespace AllOrNothing.ViewModels
             // only listen to changes caused by user entering text.
             if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
             {
-                var suitableItems = new List<Player>();
+                var suitableItems = new List<object>();
                 var splitText = sender.Text.ToLower().Split(" ");
 
                 //TODO Search for players in database
 
                 foreach (var player in _avaiblePlayers)
                 {
-                    var found = splitText.All((key) =>
+                    //var found = splitText.All((key) =>
+                    //{
+                    //    return player.Name.ToLower().Contains(key);
+                    //});
+
+                    //found
+                    if (splitText.All((key) => player.Name.ToLower().Contains(key)))
                     {
-                        return player.Name.ToLower().Contains(key);
-                    });
-                    if (found)
-                    {
-                        suitableItems.Add(player);
+                        suitableItems.Add(_mapper.Map<PlayerDto>(player));
                     }
                 }
+
                 if (suitableItems.Count == 0)
                 {
-                    suitableItems.Add(new Player { Name = "Nem található játékos" });
+                    var notfoundDisplay = new StackPanel
+                    {
+                        Orientation = Orientation.Horizontal,
+                        Spacing = 30.0,
+                    };
+
+                    notfoundDisplay.Children.Add(new TextBlock
+                    {
+                        Text = "Nincs ilyen játkos!",
+                    });
+
+                    notfoundDisplay.Children.Add(new Button
+                    {
+                        Content = new TextBlock
+                        {
+                            Text = "Új játékos",
+                        },
+                        Command = NavigateToNewPlayerPageCommand,
+                    });
+                    suitableItems.Add(notfoundDisplay);
                 }
-
                 sender.ItemsSource = suitableItems;
-
             }
         }
 
@@ -439,17 +466,21 @@ namespace AllOrNothing.ViewModels
 
         public void AutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
+            if(args.SelectedItem is PlayerDto player)
+            {
+                _avaiblePlayers.Remove(player);
+                player.RemoveCommand = RemovePlayerCommand as RelayCommand<object>;
+                SelectedPlayers.Add(player);
+                sender.Text = string.Empty;
+                sender.ItemsSource = null;
+                return;
+            }
 
-            //TODO Convert players to playerDTo
-            var p = args.SelectedItem as Player;
-            _avaiblePlayers.Remove(p);
-
-            var dto = _mapper.Map<PlayerDto>(p);
-
-            dto.RemoveCommand = RemovePlayerCommand as RelayCommand<object>;
-            SelectedPlayers.Add(dto);
-            sender.Text = string.Empty;
-            sender.ItemsSource = null;
+            if(args.SelectedItem is StackPanel notFoundDisplay)
+            {
+                NavigateTo?.Invoke(this, new NavigateToEventargs { PageName = "Új játékos", PageVM = typeof(PlayerAddingViewModel) });
+            }
+          
         }
 
 

@@ -24,6 +24,14 @@ namespace AllOrNothing.ViewModels
         private ICommand _openQuestionSeriesCommand;
         public ICommand OpenQuestionSeriesCommand => _openQuestionSeriesCommand ?? (_openQuestionSeriesCommand = new RelayCommand(OpenQuestionSeries));
 
+        private ICommand _openPlayeraddingPageCommand;
+        public ICommand OpenPlayeraddingPageCommand => _openPlayeraddingPageCommand ?? (_openQuestionSeriesCommand = new RelayCommand(OpenPlayeraddingPage));
+
+        private void OpenPlayeraddingPage()
+        {
+            NavigateTo?.Invoke(this, new NavigateToEventargs { PageVM = typeof(PlayerAddingViewModel), PageName = "Új játákos" });
+        }
+
         private void OpenQuestionSeries()
         {
             NavigateTo?.Invoke(this, new NavigateToEventargs { PageVM = typeof(QuestionSeriesViewModel), PageName = "Kérdéssorok" });

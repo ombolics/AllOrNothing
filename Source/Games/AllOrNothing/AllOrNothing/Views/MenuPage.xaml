@@ -34,6 +34,7 @@
                 VerticalAlignment="Stretch" MaxWidth="300" Margin="10,10,10,10"/>
 
         <Button Grid.Row="5" Content="Játékos bevitele" HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch" MaxWidth="300" Margin="10,10,10,10"/>
+                VerticalAlignment="Stretch" MaxWidth="300" Margin="10,10,10,10"
+                Command="{x:Bind ViewModel.OpenPlayeraddingPageCommand}"/>
     </Grid>
 </Page>

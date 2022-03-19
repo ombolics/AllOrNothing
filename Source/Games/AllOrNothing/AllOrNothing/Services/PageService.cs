@@ -24,6 +24,7 @@ namespace AllOrNothing.Services
             Configure<PlayerStatViewModel, PlayerStatPage>();
             Configure<QuestionSeriesViewModel, QuestionSeriesPage>();
             Configure<ScoreBoardPageViewModel, ScoreBoardPage>();
+            Configure<PlayerAddingViewModel, PlayerAddingPage>();
 
         }
 

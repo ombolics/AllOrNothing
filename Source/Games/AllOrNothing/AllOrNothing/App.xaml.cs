@@ -113,6 +113,8 @@ namespace AllOrNothing
             services.AddSingleton<ScoreBoardPageViewModel>();
             services.AddSingleton<ScoreBoardPage>();
 
+            services.AddSingleton<PlayerAddingViewModel>();
+            services.AddSingleton<PlayerAddingPage>();
             return services.BuildServiceProvider();
         }
     }
