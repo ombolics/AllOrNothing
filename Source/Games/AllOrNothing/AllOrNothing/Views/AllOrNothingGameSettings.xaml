@@ -262,7 +262,8 @@
                     <ColumnDefinition Width="5*"/>
                 </Grid.ColumnDefinitions>
 
-                <ListView Grid.Column="0" x:Name="ScheduleList" Header="Körök beosztása" 
+                <ListView Grid.Column="0" x:Name="ScheduleList" Header="Körök beosztása"
+                          Visibility="{x:Bind ViewModel.IsFinalRound, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=negate}"
                           ItemsSource="{x:Bind ViewModel.Rounds, Mode=OneWay}"
                           SelectedItem="{x:Bind ViewModel.SelectedRound, Mode=OneWay}"
                           ScrollViewer.VerticalScrollMode="Auto"
@@ -284,10 +285,11 @@
                     
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <Border Background="{Binding RoundEnded, Converter={StaticResource RoundStateToColorConverter}}"
+                            
+                            <Border >
+                                <!--Background="{Binding RoundEnded, Converter={StaticResource RoundStateToColorConverter}}"
                                     HorizontalAlignment="Stretch"
-                                    VerticalAlignment="Stretch">
-                                
+                                    VerticalAlignment="Stretch"-->
                                 <ItemsControl ItemsSource="{Binding RoundSettings.Teams }" IsEnabled="{Binding RoundEnded}">
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>
@@ -310,6 +312,28 @@
                     </ListView.ItemTemplate>
                     
                 </ListView>
+
+                <StackPanel Grid.Column="0" 
+                            Orientation="Vertical"
+                            Visibility="{x:Bind ViewModel.IsFinalRound, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <TextBlock Text="Döntő"
+                               HorizontalAlignment="Center"/>
+                    <ItemsControl ItemsSource="{x:Bind ViewModel.FinalRound.RoundSettings.Teams, Mode=OneWay}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <cc:WrapPanel/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Background="{ThemeResource GreyBrush}" Margin="10,10,10,10" CornerRadius="5">
+                                    <TextBlock Text="{Binding TeamName}"/>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
 
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>

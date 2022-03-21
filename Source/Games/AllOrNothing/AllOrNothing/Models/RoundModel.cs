@@ -17,6 +17,15 @@ namespace AllOrNothing.Models
             RoundStandings = standings;
         }
 
+        /// <summary>
+        /// Creates a default instance, with a given collection of teams
+        /// </summary>
+        /// <param name="teams"> Collection of teams</param>
+        public RoundModel(IList<TeamDto> teams, GameSettingsModel globalSettings)
+        {
+            RoundStandings = new ObservableCollection<StandingDto>(StandingDto.DefaultStaningsFromTeams(teams));
+            RoundSettings = new RoundSettingsModel(teams, globalSettings);
+        }
 
         private ObservableCollection<StandingDto> _roundStandings;
         public ObservableCollection<StandingDto> RoundStandings

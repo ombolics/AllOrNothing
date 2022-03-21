@@ -15,9 +15,15 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Orientation="Vertical" 
-                    Grid.Column="0">
+                    Grid.Column="0"
+                    Background="{ThemeResource GradientBrush7}"
+                    Margin=" 30, 10,10,10"
+                    >
 
-            <TextBlock Text="Összesített eredmények:"/>
+            <TextBlock Text="Összesített eredmények:" 
+                       Margin="30,10,10,10"
+                       FontSize="{ThemeResource LargeFontSize}"/>
+
             <controls:DataGrid ItemsSource="{x:Bind ViewModel.GameStandings}"
                                AutoGenerateColumns="False">
                 <controls:DataGrid.Columns>
@@ -29,18 +35,32 @@
         </StackPanel>
 
         <StackPanel Orientation="Vertical" 
-                    Grid.Column="1">
-            
-            <TextBlock Text="Legutóbbi kör:"/>
+                    Grid.Column="1"
+                    Background="{ThemeResource GradientBrush6}"
+                    Margin=" 30, 10,10,10">
+
+            <TextBlock Text="Legutóbbi kör:"
+                       Margin="30,10,10,10"
+                       FontSize="{ThemeResource LargeFontSize}"
+                       />
             <controls:DataGrid ItemsSource="{x:Bind ViewModel.LastRoundStandings}"
                                AutoGenerateColumns="False">
                 <controls:DataGrid.Columns>
-                    <controls:DataGridTextColumn Header="Pontszám" Binding="{Binding Score}" Tag="Score" />
-                    <controls:DataGridTextColumn Header="Csapat" Binding="{Binding Team.TeamName}" Tag="TeamName" />
+                    <controls:DataGridTextColumn Header="Pontszám" Binding="{Binding Score}" Tag="Score"
+                                                 FontSize="20"/>
+                    <controls:DataGridTextColumn Header="Csapat" Binding="{Binding Team.TeamName}" Tag="TeamName"
+                                                 FontSize="20"/>
                 </controls:DataGrid.Columns>
 
             </controls:DataGrid>
+
+            <Button HorizontalAlignment="Stretch"
+                    MinHeight="100"
+                    Content="Tovább a következő körre"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontSize="{ThemeResource MediumFontSize}"
+                    Margin="10,10,10,10"/>
         </StackPanel>
-        
     </Grid>
 </Page>

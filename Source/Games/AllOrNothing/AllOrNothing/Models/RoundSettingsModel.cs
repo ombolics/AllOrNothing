@@ -8,9 +8,23 @@ namespace AllOrNothing.Models
 {
     public class RoundSettingsModel : ObservableRecipient
     {
-        private List<TeamDto> _teams;
+        public RoundSettingsModel(IList<TeamDto> teams, GameSettingsModel globalSettings)
+        {
+            Teams = teams;
+            QuestionSerie = null;
+            IsTematicalAllowed = globalSettings.IsTematicalAllowed;
+            TematicalTime = globalSettings.GeneralTematicalTime;
+            IsLightningAllowed = globalSettings.IsLightningAllowed;
+            LightningTime = globalSettings.GeneralLightningTime;
+            IsGameWithoutButtonsEnabled = globalSettings.IsGameWithoutButtonsEnabled;
+        }
+        public RoundSettingsModel()
+        {
 
-        public List<TeamDto> Teams
+        }
+        private IList<TeamDto> _teams;
+
+        public IList<TeamDto> Teams
         {
             get { return _teams; }
             set { SetProperty(ref _teams, value); }

@@ -114,5 +114,12 @@ namespace AllOrNothing.Models
             get => _isGameWithoutButtonsEnabled;
             set => SetProperty(ref _isGameWithoutButtonsEnabled, value);
         }
+
+        private bool _gameEnded;
+        public bool GameEnded
+        {
+            get => _gameEnded;
+            set => SetProperty(ref _gameEnded, value);
+        }
     }
 }

@@ -559,9 +559,27 @@ namespace AllOrNothing.ViewModels
 
         public event EventHandler<List<string>> HidePages;
 
+        private RoundModel _finalRound;
+        public RoundModel FinalRound
+        {
+            get => _finalRound;
+            set => SetProperty(ref _finalRound, value);
+        }
+        public bool IsFinalRound => FinalRound != null;
         public void OnNavigatedTo(object parameter)
         {
             HidePages?.Invoke(this, null);
+
+            if(FinalRound == null && Rounds != null && Rounds.All(r => r.RoundEnded))
+            {
+                var teams = GameModel.GameStandings
+                    .OrderByDescending(s => s.Score)
+                    .Take(4)
+                    .Select(s => s.Team)
+                    .ToList();
+                FinalRound = new RoundModel(teams, GameModel.GameSettings);
+                SelectedRound = FinalRound;
+            }
         }
 
         public void OnNavigatedFrom()

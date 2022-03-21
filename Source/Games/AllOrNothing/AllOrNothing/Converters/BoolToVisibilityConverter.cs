@@ -12,7 +12,7 @@ namespace AllOrNothing.Converters
                 throw new ArgumentException();
 
             var param = parameter?.ToString().ToLower();
-            if (parameter == null)
+            if (string.IsNullOrEmpty(param))
             {
                 bool objValue = (bool)value;
                 if (objValue)
@@ -21,7 +21,7 @@ namespace AllOrNothing.Converters
                 }
                 return Visibility.Collapsed;
             }
-            else
+            else if(param.Equals("negate"))
             {
                 bool objValue = (bool)value;
                 if (!objValue)
@@ -30,6 +30,7 @@ namespace AllOrNothing.Converters
                 }
                 return Visibility.Collapsed;
             }
+            return Visibility.Collapsed;
         }
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {

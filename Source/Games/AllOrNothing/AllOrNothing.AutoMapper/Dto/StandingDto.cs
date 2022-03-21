@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace AllOrNothing.AutoMapper.Dto
@@ -26,5 +27,20 @@ namespace AllOrNothing.AutoMapper.Dto
         }
 
         private int _matchPlayed;
+
+        public static ICollection<StandingDto> DefaultStaningsFromTeams(ICollection<TeamDto> teams)
+        {
+            var value = new List<StandingDto>();
+            foreach (var item in teams)
+            {
+                value.Add(new StandingDto
+                {
+                    MatchPlayed = 0,
+                    Team = item,
+                    Score = 0,
+                }) ;
+            }
+            return value;
+        }
     }
 }
