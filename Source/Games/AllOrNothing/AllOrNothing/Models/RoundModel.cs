@@ -49,6 +49,12 @@ namespace AllOrNothing.Models
             set => SetProperty(ref _roundEnded, value);
         }
 
+        private bool _isFinalRound;
+        public bool IsFinalRound
+        {
+            get => _isFinalRound;
+            set => SetProperty(ref _isFinalRound, value);
+        }
         public static List<RoundModel> FromGameModel(GameModel gameModel)
         {
             List<RoundModel> collection = new List<RoundModel>();

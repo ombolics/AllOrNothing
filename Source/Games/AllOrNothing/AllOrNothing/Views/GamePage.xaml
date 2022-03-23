@@ -65,7 +65,7 @@
 
             </Grid>
 
-            <Grid Grid.Column="1" Background="BurlyWood">
+            <Grid Grid.Column="1" Background="{ThemeResource GradientBrush6}" CornerRadius="30" Margin="10,10,10,10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="5*"/>
                     <RowDefinition Height="1*"/>
@@ -80,7 +80,7 @@
                     
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding}" HorizontalAlignment="Stretch"/>
+                            <TextBlock Text="{Binding}" HorizontalAlignment="Stretch" FontSize="{StaticResource MediumFontSize}"/>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
@@ -96,8 +96,8 @@
                     </Grid.RowDefinitions>
 
                     <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="10">
-                        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Text="Válaszasdó csapat:">
-                            <TextBlock.ContextFlyout>
+                        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Text="Válaszadó csapat:" FontSize="{StaticResource MediumFontSize}">
+                            <!--<TextBlock.ContextFlyout>
                                 <Flyout>
                                     <StackPanel>
                                         <TextBlock Style="{ThemeResource BaseTextBlockStyle}" Text="All items will be removed. Do you want to continue?" Margin="0,0,0,12" />
@@ -105,10 +105,10 @@
                                     </StackPanel>
                                 </Flyout>
 
-                            </TextBlock.ContextFlyout>
+                            </TextBlock.ContextFlyout>-->
                         </TextBlock>
-                            
-                        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Text="{x:Bind ViewModel.PickingTeam.Team.TeamName, Mode=OneWay}"/>
+
+                        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Text="{x:Bind ViewModel.PickingTeam.Team.TeamName, Mode=OneWay}" FontSize="{StaticResource MediumFontSize}"/>
                     </StackPanel>
                     
 

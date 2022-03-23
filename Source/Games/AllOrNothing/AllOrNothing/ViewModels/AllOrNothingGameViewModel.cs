@@ -101,7 +101,8 @@ namespace AllOrNothing.ViewModels
 
         private ICommand _toggleTimerCommand;
         public ICommand ToggleTimerCommand => _toggleTimerCommand ??= new RelayCommand(ToggleTimer);
-
+        
+        //TODO: egységesíteni a neveket (game over vs round over)
         private ICommand _gameOverCommand;
         public ICommand GameOverCommand => _gameOverCommand ??= new RelayCommand(On_RoundOver);
 

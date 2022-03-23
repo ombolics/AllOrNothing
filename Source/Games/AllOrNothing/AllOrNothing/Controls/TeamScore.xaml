@@ -15,7 +15,7 @@
             <ColumnDefinition Width="9*"/>
         </Grid.ColumnDefinitions>
 
-        <Grid Grid.Column="0">
+        <!--<Grid Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="3*"/>
                 <RowDefinition Height="2*"/>
@@ -34,7 +34,7 @@
                     <TextBlock Text="7" Grid.Column="1" TextAlignment="Center" />
                 </Border>
             </Grid>
-        </Grid>
+        </Grid>-->
 
         <Grid Grid.Column="1" Background="#99A799">
             <Grid.RowDefinitions>

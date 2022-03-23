@@ -53,6 +53,14 @@ namespace AllOrNothing.ViewModels
             var all = _unitOfWork.QuestionSeries.GetAll();
             var tmp = _mapper.Map<IEnumerable<QuestionSerie>, IEnumerable<QuestionSerieDto>>(all);
 
+            foreach (var serie in tmp)
+            {
+                foreach (var topic in serie.Topics)
+                {
+                    topic.Questions.Sort(new QuestionDtoComparer());
+                }
+            }
+
             AvaibleSeries = new ObservableCollection<QuestionSerieDto>(tmp);
            
             _teams = new();
@@ -546,9 +554,14 @@ namespace AllOrNothing.ViewModels
 
         private void GameVM_RoundOver(object sender, RoundModel e)
         {
+            //TODO: ténylege kell ez ide? nem elég csak az eredmények oldalában kezelni az eventet?
             var vm = Ioc.Default.GetService<ScoreBoardPageViewModel>();
             vm.Setup(e);
-
+            if(e.IsFinalRound)
+            {
+                //TODO: az oldal eltűnést és megjelenést rendbrakni
+                HidePage?.Invoke(this, "Beállítások");
+            }
             NavigateTo?.Invoke(this, new NavigateToEventargs { PageVM = typeof(ScoreBoardPageViewModel), PageName = "Eredmények" });
         }
 
@@ -578,6 +591,7 @@ namespace AllOrNothing.ViewModels
                     .Select(s => s.Team)
                     .ToList();
                 FinalRound = new RoundModel(teams, GameModel.GameSettings);
+                FinalRound.IsFinalRound = true;
                 SelectedRound = FinalRound;
             }
         }

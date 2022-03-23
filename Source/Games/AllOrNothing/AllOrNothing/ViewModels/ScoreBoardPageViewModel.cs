@@ -2,6 +2,7 @@
 using AllOrNothing.Helpers;
 using AllOrNothing.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.WinUI.UI.Controls;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -12,6 +13,11 @@ namespace AllOrNothing.ViewModels
         public ScoreBoardPageViewModel()
         {
 
+        }
+
+        public void DataGridRowLoading(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = e.Row.GetIndex().ToString();
         }
 
         private List<StandingDto> _gameStandings;

@@ -45,7 +45,15 @@
                        />
             <controls:DataGrid ItemsSource="{x:Bind ViewModel.LastRoundStandings}"
                                AutoGenerateColumns="False">
+                
                 <controls:DataGrid.Columns>
+                    <!--<controls:DataGridTextColumn Header="Helyezés" Tag="Order" x:Name="orderColumn"
+                                                 Binding="{Binding ElementName=orderColumn, Converter=}"
+                                                 FontSize="20">
+
+                        
+                    </controls:DataGridTextColumn>-->
+                    
                     <controls:DataGridTextColumn Header="Pontszám" Binding="{Binding Score}" Tag="Score"
                                                  FontSize="20"/>
                     <controls:DataGridTextColumn Header="Csapat" Binding="{Binding Team.TeamName}" Tag="TeamName"
