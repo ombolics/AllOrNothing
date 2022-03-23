@@ -388,10 +388,11 @@
                         </StackPanel>
 
                         <ScrollViewer>
-                            <con:DataGrid 
-                            ItemsSource="{x:Bind ViewModel.AvaibleSeries}"
-                            AutoGenerateColumns="False"
-                            SelectedItem="{x:Bind ViewModel.SelectedRound.RoundSettings.QuestionSerie, Mode=TwoWay}">
+                            <con:DataGrid ItemsSource="{x:Bind ViewModel.AvaibleSeries}"
+                                          AutoGenerateColumns="False"
+                                          SelectedItem="{x:Bind ViewModel.SelectedRound.RoundSettings.QuestionSerie, Mode=TwoWay}"
+                                          IsReadOnly="True">
+                                
                                 <con:DataGrid.Columns>
                                     <con:DataGridTextColumn Header="Id" Binding="{Binding Id}" Tag="Id" />
 
