@@ -19,7 +19,7 @@ namespace AllOrNothing.DummyData
 
         private static Player _author = new Player
         {
-            Institue = "PSEG",
+            Institute = "PSEG",
             NickName = "Csabi",
             Name = " Ömböli Csaba",
         };
@@ -371,7 +371,7 @@ namespace AllOrNothing.DummyData
             new Player
             {
                 Id = 0,
-                Institue = "PSEG",
+                Institute = "PSEG",
                 Name = "Ömböli Csaba",
                 NickName = "Lajos",
                 //TestCommand = TestCommand,
@@ -379,7 +379,7 @@ namespace AllOrNothing.DummyData
             new Player
             {
                 Id = 1,
-                Institue = "PSEG",
+                Institute = "PSEG",
                 Name = "Zareczky András",
                 NickName = "Lajos",
                 //TestCommand = TestCommand,
@@ -387,7 +387,7 @@ namespace AllOrNothing.DummyData
             new Player
             {
                 Id = 2,
-                Institue = "PSEG",
+                Institute = "PSEG",
                 Name = "Zell Julian Maxim",
                 NickName = "Lajos",
                 //TestCommand = TestCommand,
@@ -396,7 +396,7 @@ namespace AllOrNothing.DummyData
             new Player
             {
                 Id = 3,
-                Institue = "PSEG",
+                Institute = "PSEG",
                 Name = "Kiss Géza Ferenc Péter János",
                 NickName = "Lajos",
                 //TestCommand = TestCommand,
@@ -404,7 +404,7 @@ namespace AllOrNothing.DummyData
             new Player
             {
                 Id = 4,
-                Institue = "PSEG",
+                Institute = "PSEG",
                 Name = "Németh Zoltán",
                 NickName = "Lajos",
                 //TestCommand = TestCommand,
@@ -412,7 +412,7 @@ namespace AllOrNothing.DummyData
             new Player
             {
                 Id = 5,
-                Institue = "PSEG",
+                Institute = "PSEG",
                 Name = "Nagy Lajos",
                 NickName = "Lajos",
                 //TestCommand = TestCommand,
@@ -420,7 +420,7 @@ namespace AllOrNothing.DummyData
             new Player
             {
                 Id = 6,
-                Institue = "PSEG",
+                Institute = "PSEG",
                 Name = "Kis Pippin",
                 NickName = "Lajos",
                 //TestCommand = TestCommand,
@@ -428,7 +428,7 @@ namespace AllOrNothing.DummyData
             new Player
             {
                 Id = 7,
-                Institue = "PSEG",
+                Institute = "PSEG",
                 Name = "XVII. Lajos",
                 NickName = "Lajos",
                 //TestCommand = TestCommand,
@@ -436,7 +436,7 @@ namespace AllOrNothing.DummyData
             new Player
             {
                 Id = 8,
-                Institue = "PSEG",
+                Institute = "PSEG",
                 Name = "Loius Bonaparte",
                 NickName = "Lajos",
                 //TestCommand = TestCommand,

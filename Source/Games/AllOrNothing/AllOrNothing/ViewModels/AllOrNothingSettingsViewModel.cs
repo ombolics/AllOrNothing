@@ -48,7 +48,7 @@ namespace AllOrNothing.ViewModels
             //_unitOfWork.Complete();
 
             _avaiblePlayers = new SortedSet<PlayerDto>(new PlayerDtoComparer());
-            _avaiblePlayers.UnionWith(_mapper.Map<IEnumerable<PlayerDto>>(_unitOfWork.Players.GetAll()));
+            _avaiblePlayers.UnionWith(_mapper.Map<IEnumerable<PlayerDto>>(_unitOfWork.Players.GetAllAvaible()));
 
             var all = _unitOfWork.QuestionSeries.GetAll();
             var tmp = _mapper.Map<IEnumerable<QuestionSerie>, IEnumerable<QuestionSerieDto>>(all);

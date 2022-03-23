@@ -14,7 +14,7 @@
     >
     <NavigationView
         x:Name="navigationView"
-        IsBackButtonVisible="Visible"
+        IsBackButtonVisible="Collapsed"
         IsBackEnabled="{x:Bind ViewModel.IsBackEnabled, Mode=OneWay}"
         SelectedItem="{x:Bind ViewModel.Selected, Mode=OneWay}"
         IsSettingsVisible="True"
@@ -76,7 +76,7 @@
             </behaviors:NavigationViewHeaderBehavior>
         </i:Interaction.Behaviors>-->
         <Grid>
-            <Frame x:Name="shellFrame" BorderThickness="0"/>
+            <Frame x:Name="shellFrame" BorderThickness="0" IsNavigationStackEnabled="False"/>
         </Grid>
     </NavigationView>
 </Page>

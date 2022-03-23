@@ -12,10 +12,17 @@ namespace AllOrNothing.Repository
 
         public IAllOrNothingDbContext AllOrNothingDbContext => Context as AllOrNothingDbContext;
 
-        public IEnumerable<Player> GetAllByInstitue(string Institue)
+        public IEnumerable<Player> GetAllAvaible()
         {
             return Context.Set<Player>()
-                .Where(p => p.Institue == Institue)
+                .Where(p => !p.IsDeleted)
+                .ToList(); ;
+        }
+
+        public IEnumerable<Player> GetAllAvaibleByInstitue(string Institue)
+        {
+            return Context.Set<Player>()
+                .Where(p => !p.IsDeleted && p.Institute == Institue)
                 .ToList();
         }
     }

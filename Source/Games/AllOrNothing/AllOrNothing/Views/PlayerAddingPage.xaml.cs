@@ -30,5 +30,15 @@ namespace AllOrNothing.Views
         {
             this.InitializeComponent();
         }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            ViewModel.PageXamlRoot = this.Content.XamlRoot;
+        }
+
+        private void  OnNavigatedFrom(NavigatingCancelEventArgs e)
+        {
+
+        }
     }
 }

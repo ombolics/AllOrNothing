@@ -10,8 +10,9 @@ namespace AllOrNothing.AutoMapper.Dto
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Institue { get; set; }
+        public string Institute { get; set; }
         public string NickName { get; set; }
+        public bool IsDeleted { get; set; }
 
         // public ObservableCollection<PlayerDto> OriginalTeam { get; set; }
 
