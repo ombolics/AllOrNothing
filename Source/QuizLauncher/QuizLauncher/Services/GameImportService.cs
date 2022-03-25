@@ -15,12 +15,12 @@ namespace QuizLauncher.Services
         public static void CreateConfigFolder()
         {
             var rootLocation = AppDomain.CurrentDomain.BaseDirectory;//Assembly.GetExecutingAssembly().Location.;
-            _configPath = @$"{rootLocation}\Config";
+            _configPath = @$"{rootLocation}Config\";
             if (!Directory.Exists(_configPath))
             {
                 Directory.CreateDirectory(_configPath);
             }
-
+            
             if (!File.Exists($"{ConfigPath}\\launcherSettings.json"))
             {
                 File.Create($"{ConfigPath}\\launcherSettings.json");

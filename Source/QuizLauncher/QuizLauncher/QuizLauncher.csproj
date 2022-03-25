@@ -14,6 +14,14 @@
   <PropertyGroup>
     <NoWarn>CA1416, $(NoWarn)</NoWarn>
   </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Config\launcherSettings.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Config\launcherSettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 
   <ItemGroup>
     <Manifest Include="$(ApplicationManifest)" />
@@ -30,5 +38,8 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\QuizLauncher.Core\QuizLauncher.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Config\Resources\" />
   </ItemGroup>
 </Project>

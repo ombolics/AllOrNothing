@@ -1,0 +1,10 @@
+﻿C:\Szakdolgozat\Szakdolgozat\QuizProgram_LauncherConcept\Source\Games\AllOrNothing\AllOrNothing.Data\GameHistory\Answer.cs
+C:\Szakdolgozat\Szakdolgozat\QuizProgram_LauncherConcept\Source\Games\AllOrNothing\AllOrNothing.Data\GameHistory\GameHistory.cs
+C:\Szakdolgozat\Szakdolgozat\QuizProgram_LauncherConcept\Source\Games\AllOrNothing\AllOrNothing.Data\GameHistory\RoundHistory.cs
+C:\Szakdolgozat\Szakdolgozat\QuizProgram_LauncherConcept\Source\Games\AllOrNothing\AllOrNothing.Data\GameHistory\Standing.cs
+C:\Szakdolgozat\Szakdolgozat\QuizProgram_LauncherConcept\Source\Games\AllOrNothing\AllOrNothing.Data\Player\Player.cs
+C:\Szakdolgozat\Szakdolgozat\QuizProgram_LauncherConcept\Source\Games\AllOrNothing\AllOrNothing.Data\Player\Team.cs
+C:\Szakdolgozat\Szakdolgozat\QuizProgram_LauncherConcept\Source\Games\AllOrNothing\AllOrNothing.Data\QuestionSerie\Competence.cs
+C:\Szakdolgozat\Szakdolgozat\QuizProgram_LauncherConcept\Source\Games\AllOrNothing\AllOrNothing.Data\QuestionSerie\Question.cs
+C:\Szakdolgozat\Szakdolgozat\QuizProgram_LauncherConcept\Source\Games\AllOrNothing\AllOrNothing.Data\QuestionSerie\QuestionSerie.cs
+C:\Szakdolgozat\Szakdolgozat\QuizProgram_LauncherConcept\Source\Games\AllOrNothing\AllOrNothing.Data\QuestionSerie\Topic.cs

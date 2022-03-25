@@ -11,6 +11,13 @@
     <UseWinUI>true</UseWinUI>
     <EnablePreviewMsixTooling>true</EnablePreviewMsixTooling>
 	<GenerateRuntimeConfigurationFiles>True</GenerateRuntimeConfigurationFiles>
+	<DefaultLanguage>hu-hu</DefaultLanguage>
+	<GenerateAppInstallerFile>False</GenerateAppInstallerFile>
+	<AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+	<AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
+	<GenerateTestArtifacts>True</GenerateTestArtifacts>
+	<AppxBundle>Never</AppxBundle>
+	<HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Controls\LightningDialog.xaml" />

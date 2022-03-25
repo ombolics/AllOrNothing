@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AllOrNothing.Repository", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AllOrNothing", "AllOrNothing\AllOrNothing.csproj", "{84F1B19C-D22A-4555-A9A0-CF6608EBE2DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AllOrNothing.AutoMapper", "AllOrNothing.AutoMapper\AllOrNothing.AutoMapper.csproj", "{1B6FDB20-46ED-4906-BE30-6B624CBB7965}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AllOrNothing.AutoMapper", "AllOrNothing.AutoMapper\AllOrNothing.AutoMapper.csproj", "{1B6FDB20-46ED-4906-BE30-6B624CBB7965}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -68,6 +68,8 @@ Global
 		{84F1B19C-D22A-4555-A9A0-CF6608EBE2DF}.Debug|x86.Build.0 = Debug|x86
 		{84F1B19C-D22A-4555-A9A0-CF6608EBE2DF}.Debug|x86.Deploy.0 = Debug|x86
 		{84F1B19C-D22A-4555-A9A0-CF6608EBE2DF}.Release|Any CPU.ActiveCfg = Release|x86
+		{84F1B19C-D22A-4555-A9A0-CF6608EBE2DF}.Release|Any CPU.Build.0 = Release|x86
+		{84F1B19C-D22A-4555-A9A0-CF6608EBE2DF}.Release|Any CPU.Deploy.0 = Release|x86
 		{84F1B19C-D22A-4555-A9A0-CF6608EBE2DF}.Release|arm64.ActiveCfg = Release|arm64
 		{84F1B19C-D22A-4555-A9A0-CF6608EBE2DF}.Release|arm64.Build.0 = Release|arm64
 		{84F1B19C-D22A-4555-A9A0-CF6608EBE2DF}.Release|arm64.Deploy.0 = Release|arm64

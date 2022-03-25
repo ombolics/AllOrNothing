@@ -1,0 +1,8 @@
+﻿C:\Szakdolgozat\Szakdolgozat\QuizProgram_LauncherConcept\Source\Games\AllOrNothing\AllOrNothing.AutoMapper\Dto\CompetenceDto.cs
+C:\Szakdolgozat\Szakdolgozat\QuizProgram_LauncherConcept\Source\Games\AllOrNothing\AllOrNothing.AutoMapper\Dto\PlayerDto.cs
+C:\Szakdolgozat\Szakdolgozat\QuizProgram_LauncherConcept\Source\Games\AllOrNothing\AllOrNothing.AutoMapper\Dto\QuestionDto.cs
+C:\Szakdolgozat\Szakdolgozat\QuizProgram_LauncherConcept\Source\Games\AllOrNothing\AllOrNothing.AutoMapper\Dto\QuestionSerieDto.cs
+C:\Szakdolgozat\Szakdolgozat\QuizProgram_LauncherConcept\Source\Games\AllOrNothing\AllOrNothing.AutoMapper\Dto\StandingDto.cs
+C:\Szakdolgozat\Szakdolgozat\QuizProgram_LauncherConcept\Source\Games\AllOrNothing\AllOrNothing.AutoMapper\Dto\TeamDto.cs
+C:\Szakdolgozat\Szakdolgozat\QuizProgram_LauncherConcept\Source\Games\AllOrNothing\AllOrNothing.AutoMapper\Dto\TopicDto.cs
+C:\Szakdolgozat\Szakdolgozat\QuizProgram_LauncherConcept\Source\Games\AllOrNothing\AllOrNothing.AutoMapper\MappingProfile.cs

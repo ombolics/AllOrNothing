@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml.Media.Imaging;
+using QuizLauncher.Services;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -18,15 +19,20 @@ namespace QuizLauncher.Models
         private BitmapImage _previewImage;
         private string _entryPointLocation;
         private string _previewImageLocation;
-
+        private bool _isRelativePath;
 
         private ICommand _launchGameCommand;
         public ICommand LaunchGameCommand => _launchGameCommand ??= new RelayCommand(LaunchGame);
 
         private void LaunchGame()
         {
-            if(!string.IsNullOrEmpty(EntryPointLocation) && File.Exists(EntryPointLocation))
-                Process.Start(EntryPointLocation);
+            var actualPath = EntryPointLocation;
+            if(IsRelativePath)
+            {
+                actualPath = GameImportService.ConfigPath + EntryPointLocation;
+            }
+            if(!string.IsNullOrEmpty(actualPath) && File.Exists(actualPath))
+                Process.Start(actualPath);
         }
 
         public string Description { get => _description; set => _description = value; }
@@ -34,5 +40,6 @@ namespace QuizLauncher.Models
         public string EntryPointLocation { get => _entryPointLocation; set => _entryPointLocation = value; }
         public string Name { get => _name; set => _name = value; }
         public string PreviewImageLocation { get => _previewImageLocation; set => _previewImageLocation = value; }
+        public bool IsRelativePath { get => _isRelativePath; set => _isRelativePath = value; }
     }
 }
