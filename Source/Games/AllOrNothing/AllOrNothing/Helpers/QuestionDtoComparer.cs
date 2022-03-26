@@ -1,5 +1,6 @@
-﻿using AllOrNothing.AutoMapper.Dto;
+﻿using AllOrNothing.Mapping;
 using AllOrNothing.Data;
+using AllOrNothing.Mapping;
 using System;
 using System.Collections.Generic;
 using System.Linq;

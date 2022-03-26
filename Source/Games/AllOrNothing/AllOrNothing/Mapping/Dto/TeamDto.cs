@@ -6,7 +6,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
-namespace AllOrNothing.AutoMapper.Dto
+namespace AllOrNothing.Mapping
 {
     [AutoMap(typeof(Team), ReverseMap = true)]
     public class TeamDto : ObservableRecipient

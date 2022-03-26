@@ -1,4 +1,4 @@
-﻿using AllOrNothing.AutoMapper.Dto;
+﻿using AllOrNothing.Mapping;
 using AllOrNothing.Helpers;
 using AllOrNothing.Models;
 using CommunityToolkit.Mvvm.ComponentModel;

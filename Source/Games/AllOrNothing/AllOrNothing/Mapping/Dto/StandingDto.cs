@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AllOrNothing.AutoMapper.Dto
+namespace AllOrNothing.Mapping
 {
     public class StandingDto : ObservableRecipient
 

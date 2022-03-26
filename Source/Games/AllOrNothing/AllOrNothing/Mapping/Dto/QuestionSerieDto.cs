@@ -3,8 +3,9 @@ using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.UI.Xaml.Controls;
 
-namespace AllOrNothing.AutoMapper.Dto
+namespace AllOrNothing.Mapping
 {
     [AutoMap(typeof(QuestionSerie), ReverseMap = true)]
     public class QuestionSerieDto
@@ -16,6 +17,8 @@ namespace AllOrNothing.AutoMapper.Dto
             get => GetAuthors();
         }
         public bool FromFile { get; set; }
+        public string Name { get; set; }
+        public bool IsDeleted { get; set; }
         private HashSet<PlayerDto> GetAuthors()
         {
             var value = new HashSet<PlayerDto>();
@@ -50,6 +53,19 @@ namespace AllOrNothing.AutoMapper.Dto
         public HashSet<CompetenceDto> Competences
         {
             get => GetCompetences();
+        }
+
+
+        public event EventHandler UnderEdit;
+        //Used in the question serie page
+        public void TextBoxChanged(object sender, TextChangedEventArgs e)
+        {
+            //TODO validálás
+            if (sender is TextBox textBox && textBox.Name == "serieNameTextBox" && Name != textBox.Text.Trim())
+            {
+                Name = textBox.Text.Trim();
+                //UnderEdit?.Invoke(this, null);
+            }           
         }
     }
 }

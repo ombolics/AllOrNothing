@@ -4,14 +4,16 @@ using AllOrNothing.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AllOrNothing.Repository.Migrations
 {
     [DbContext(typeof(AllOrNothingDbContext))]
-    partial class AllOrNothingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220325192106_QuestionSerie_update")]
+    partial class QuestionSerie_update
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

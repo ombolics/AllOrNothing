@@ -1,4 +1,4 @@
-﻿using AllOrNothing.AutoMapper.Dto;
+﻿using AllOrNothing.Mapping;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.Generic;
 

@@ -1,5 +1,6 @@
 ﻿using AllOrNothing.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -12,10 +13,15 @@ namespace AllOrNothing.Views
     /// </summary>
     public sealed partial class QuestionSeriesPage : Page
     {
-        public QuestionSeriesViewModel ViewModel { get; set; } = Ioc.Default.GetService<QuestionSeriesViewModel>();
+        public QuestionSeriesPageViewModel ViewModel { get; set; } = Ioc.Default.GetService<QuestionSeriesPageViewModel>();
         public QuestionSeriesPage()
         {
             this.InitializeComponent();
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            ViewModel.PageXamlRoot = this.Content.XamlRoot;
         }
     }
 }

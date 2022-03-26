@@ -12,7 +12,7 @@ namespace AllOrNothing.Repository.Repositories
         {
         }
 
-        public IEnumerable<QuestionSerie> GetAllByAuthor(int authorId)
+        public IEnumerable<QuestionSerie> GetAllAvaibleByAuthor(int authorId)
         {
             //return Context.Set<QuestionSerie>()
             //    .Where(q => q.Authors
@@ -22,12 +22,12 @@ namespace AllOrNothing.Repository.Repositories
             return null;
         }
 
-        public IEnumerable<QuestionSerie> GetAllByAuthorInstitute(int instituteId)
+        public IEnumerable<QuestionSerie> GetAllAvaibleByAuthorInstitute(int instituteId)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<QuestionSerie> GetAllByCompetence(int topicId)
+        public IEnumerable<QuestionSerie> GetAllAvaibleByCompetence(int topicId)
         {
             throw new NotImplementedException();
         }
@@ -39,6 +39,17 @@ namespace AllOrNothing.Repository.Repositories
                     .ThenInclude(x => x.Questions)
                 .Include(x => x.Topics)
                     .ThenInclude(x => x.Competences)
+                .ToList();
+        }
+
+        public IEnumerable<QuestionSerie> GetAllAvaible()
+        {
+            return Context.Set<QuestionSerie>()
+                .Include(x => x.Topics)
+                    .ThenInclude(x => x.Questions)
+                .Include(x => x.Topics)
+                    .ThenInclude(x => x.Competences)
+                .Where(q => !q.IsDeleted)
                 .ToList();
         }
     }

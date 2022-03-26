@@ -1,4 +1,4 @@
-﻿using AllOrNothing.AutoMapper.Dto;
+﻿using AllOrNothing.Mapping;
 using System.Collections;
 using System.Collections.Generic;
 

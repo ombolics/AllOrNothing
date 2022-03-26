@@ -1,4 +1,4 @@
-﻿using AllOrNothing.AutoMapper.Dto;
+﻿using AllOrNothing.Mapping;
 using Microsoft.UI.Xaml.Controls;
 
 namespace AllOrNothing.Controls

@@ -5,8 +5,9 @@ namespace AllOrNothing.Repository.Repositories
 {
     public interface IQuestionSerieRepository : IRepository<QuestionSerie>
     {
-        IEnumerable<QuestionSerie> GetAllByCompetence(int topicId);
-        IEnumerable<QuestionSerie> GetAllByAuthor(int authorId);
-        IEnumerable<QuestionSerie> GetAllByAuthorInstitute(int instituteId);
+        IEnumerable<QuestionSerie> GetAllAvaibleByCompetence(int topicId);
+        IEnumerable<QuestionSerie> GetAllAvaibleByAuthor(int authorId);
+        IEnumerable<QuestionSerie> GetAllAvaibleByAuthorInstitute(int instituteId);
+        IEnumerable<QuestionSerie> GetAllAvaible();
     }
 }

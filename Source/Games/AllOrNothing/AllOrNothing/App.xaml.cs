@@ -1,5 +1,5 @@
 ﻿using AllOrNothing.Activation;
-using AllOrNothing.AutoMapper;
+using AllOrNothing.Mapping;
 using AllOrNothing.Contracts.Services;
 using AllOrNothing.Helpers;
 using AllOrNothing.Repository;
@@ -47,6 +47,7 @@ namespace AllOrNothing
         {
             base.OnLaunched(args);
             var activationService = Ioc.Default.GetService<IActivationService>();
+            MainWindow = new Window() { Title = "AppDisplayName".GetLocalized() };
             await activationService.ActivateAsync(args);
         }
 
@@ -107,7 +108,7 @@ namespace AllOrNothing
             services.AddTransient<PlayerStatViewModel>();
             services.AddTransient<PlayerStatPage>();
 
-            services.AddTransient<QuestionSeriesViewModel>();
+            services.AddTransient<QuestionSeriesPageViewModel>();
             services.AddTransient<QuestionSeriesPage>();
 
             services.AddSingleton<ScoreBoardPageViewModel>();

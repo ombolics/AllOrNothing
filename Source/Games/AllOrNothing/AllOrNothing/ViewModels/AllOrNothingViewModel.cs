@@ -34,7 +34,7 @@ namespace AllOrNothing.ViewModels
 
         private void OpenQuestionSeries()
         {
-            NavigateTo?.Invoke(this, new NavigateToEventargs { PageVM = typeof(QuestionSeriesViewModel), PageName = "Kérdéssorok" });
+            NavigateTo?.Invoke(this, new NavigateToEventargs { PageVM = typeof(QuestionSeriesPageViewModel), PageName = "Kérdéssorok" });
         }
 
         private void OpenStatsPage()

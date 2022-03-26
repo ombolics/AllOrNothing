@@ -1,8 +1,7 @@
-﻿using AllOrNothing.AutoMapper.Dto;
-using AllOrNothing.Data;
+﻿using AllOrNothing.Data;
 using AutoMapper;
 
-namespace AllOrNothing.AutoMapper
+namespace AllOrNothing.Mapping
 {
     public class MappingProfile : Profile
     {
@@ -19,7 +18,8 @@ namespace AllOrNothing.AutoMapper
 
             CreateMap<Question, QuestionDto>();
             CreateMap<QuestionSerie, QuestionSerieDto>();
-            CreateMap<Topic, TopicDto>();
+            CreateMap<Topic, TopicDto>()
+                .ForMember(dest => dest.OriginalName, opt => opt.MapFrom(src => src.Name));
             CreateMap<Competence, CompetenceDto>();
         }
 

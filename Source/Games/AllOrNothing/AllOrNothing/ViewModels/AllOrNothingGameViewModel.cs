@@ -1,4 +1,4 @@
-﻿using AllOrNothing.AutoMapper.Dto;
+﻿using AllOrNothing.Mapping;
 using AllOrNothing.Contracts.ViewModels;
 using AllOrNothing.Controls;
 using AllOrNothing.Helpers;

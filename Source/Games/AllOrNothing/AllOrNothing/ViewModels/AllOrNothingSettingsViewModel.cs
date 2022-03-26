@@ -1,8 +1,9 @@
-﻿using AllOrNothing.AutoMapper.Dto;
+﻿using AllOrNothing.Mapping;
 using AllOrNothing.Contracts.ViewModels;
 using AllOrNothing.Controls;
 using AllOrNothing.Data;
 using AllOrNothing.Helpers;
+using AllOrNothing.Mapping;
 using AllOrNothing.Models;
 using AllOrNothing.Repository;
 using AllOrNothing.Services;
@@ -50,7 +51,7 @@ namespace AllOrNothing.ViewModels
             _avaiblePlayers = new SortedSet<PlayerDto>(new PlayerDtoComparer());
             _avaiblePlayers.UnionWith(_mapper.Map<IEnumerable<PlayerDto>>(_unitOfWork.Players.GetAllAvaible()));
 
-            var all = _unitOfWork.QuestionSeries.GetAll();
+            var all = _unitOfWork.QuestionSeries.GetAllAvaible();
             var tmp = _mapper.Map<IEnumerable<QuestionSerie>, IEnumerable<QuestionSerieDto>>(all);
 
             foreach (var serie in tmp)

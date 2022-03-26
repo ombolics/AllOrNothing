@@ -36,6 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="11.0.1" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="7.1.2" />
     <PackageReference Include="CommunityToolkit.WinUI.UI.Controls" Version="7.1.2" />
     <PackageReference Include="H.OxyPlot.WinUI" Version="0.9.19" />
@@ -55,7 +56,6 @@
     <ProjectCapability Include="Msix" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AllOrNothing.AutoMapper\AllOrNothing.AutoMapper.csproj" />
     <ProjectReference Include="..\AllOrNothing.Data\AllOrNothing.Data.csproj" />
     <ProjectReference Include="..\AllOrNothing.Repository\AllOrNothing.Repository.csproj" />
   </ItemGroup>

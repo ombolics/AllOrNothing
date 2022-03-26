@@ -3,7 +3,7 @@ using AutoMapper;
 using AutoMapper.Configuration.Annotations;
 using CommunityToolkit.Mvvm.Input;
 
-namespace AllOrNothing.AutoMapper.Dto
+namespace AllOrNothing.Mapping
 {
     [AutoMap(typeof(Player), ReverseMap = true)]
     public class PlayerDto
