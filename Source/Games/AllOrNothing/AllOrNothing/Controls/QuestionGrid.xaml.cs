@@ -106,7 +106,11 @@ namespace AllOrNothing.Controls
                     Flyout = !string.IsNullOrEmpty(_questionSerie.Topics[i].Description)
                     ? new Flyout()
                     {
-                        Content = new TextBlock { Text = _questionSerie.Topics[i].Description },
+                        Content = new TextBlock
+                        {
+                            Text = _questionSerie.Topics[i].Description,
+                            TextWrapping = TextWrapping.WrapWholeWords,
+                        },
                     }
                     : null,
                     VerticalAlignment = VerticalAlignment.Center,

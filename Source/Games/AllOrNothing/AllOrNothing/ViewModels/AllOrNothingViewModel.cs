@@ -25,7 +25,7 @@ namespace AllOrNothing.ViewModels
         public ICommand OpenQuestionSeriesCommand => _openQuestionSeriesCommand ?? (_openQuestionSeriesCommand = new RelayCommand(OpenQuestionSeries));
 
         private ICommand _openPlayeraddingPageCommand;
-        public ICommand OpenPlayeraddingPageCommand => _openPlayeraddingPageCommand ?? (_openQuestionSeriesCommand = new RelayCommand(OpenPlayeraddingPage));
+        public ICommand OpenPlayeraddingPageCommand => _openPlayeraddingPageCommand ?? (_openPlayeraddingPageCommand = new RelayCommand(OpenPlayeraddingPage));
 
         private void OpenPlayeraddingPage()
         {

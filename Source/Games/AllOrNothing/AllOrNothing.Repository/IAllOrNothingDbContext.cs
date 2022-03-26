@@ -10,5 +10,7 @@ namespace AllOrNothing.Repository
         DbSet<Competence> Competences { get; set; }
         DbSet<Player> Players { get; set; }
         DbSet<Team> Teams { get; set; }
+        DbSet<Topic> Topics { get; set; }
+        DbSet<Question> Questions { get; set; }
     }
 }

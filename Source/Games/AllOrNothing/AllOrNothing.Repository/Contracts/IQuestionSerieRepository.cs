@@ -1,7 +1,7 @@
 ﻿using AllOrNothing.Data;
 using System.Collections.Generic;
 
-namespace AllOrNothing.Repository.Repositories
+namespace AllOrNothing.Repository.Contracts
 {
     public interface IQuestionSerieRepository : IRepository<QuestionSerie>
     {

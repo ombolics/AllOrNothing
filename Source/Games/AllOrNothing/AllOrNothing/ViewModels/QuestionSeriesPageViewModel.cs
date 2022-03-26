@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using AllOrNothing.Data.DataExtensions;
 
 namespace AllOrNothing.ViewModels
 {
@@ -41,9 +42,18 @@ namespace AllOrNothing.ViewModels
             {
                 SetProperty(ref _selectedSerie, value);
                 if (value != null)
+                {
                     EditingSerie = value;
+                    _originalSerie = new QuestionSerieDto(value); 
+                }
+                  
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>true if the original and the editing serie contains the same data</returns>     
 
         private int _itemsUnderEdit;
         private QuestionSerieDto _originalSerie;
@@ -109,16 +119,39 @@ namespace AllOrNothing.ViewModels
                 EditingSerie.Id = 0;
                 _unitOfWork.QuestionSeries.Add(_mapper.Map<QuestionSerie>(EditingSerie));
             }
+            else if(!EditingSerie.HasTheSameValue(_originalSerie))
+            {
+                var serie = _unitOfWork.QuestionSeries.Get(EditingSerie.Id);
+                //serie.SetValue(_mapper.Map<QuestionSerie>(EditingSerie));
 
+                serie.Name = EditingSerie.Name;
+                foreach (var item in EditingSerie.Topics)
+                {
+                    var data = _unitOfWork.Topics.Get(item.Id);
+                    data.Name = item.Name;
+                    data.Description = item.Description;
+                    //data.Author = //_mapper.Map<Player>(item.Author);
+                    foreach (var question in item.Questions)
+                    {
+                        var dbQuestion = _unitOfWork.Questions.Get(question.Id);
+                        dbQuestion.Resource = question.Resource;
+                        dbQuestion.ResourceType = question.ResourceType;
+                        dbQuestion.Text = question.Text;
+                        dbQuestion.Type = question.Type;
+                        dbQuestion.Value = question.Value;
+                    }
+                }
+
+                //_unitOfWork.Complete();
+                //_unitOfWork.QuestionSeries.Add( _mapper.Map<QuestionSerie>(EditingSerie));
+                //serie.IsDeleted = EditingSerie.IsDeleted;
+                //serie.Name = EditingSerie.Name;
+                //serie.Topics = _mapper.Map<ICollection<Topic>>(EditingSerie.Topics);
+            }
             ContentDialog dialog = new ContentDialog();
             dialog.XamlRoot = PageXamlRoot;
             dialog.CloseButtonText = "Ok";
             dialog.DefaultButton = ContentDialogButton.Close;
-
-            var serie = _unitOfWork.QuestionSeries.Get(EditingSerie.Id);
-            serie.IsDeleted = EditingSerie.IsDeleted;
-            serie.Name = EditingSerie.Name;
-            serie.Topics = _mapper.Map<ICollection<Topic>>(EditingSerie.Topics);
 
             var result = _unitOfWork.Complete() > 0;
             if (result)
@@ -190,7 +223,6 @@ namespace AllOrNothing.ViewModels
             {
                 SetProperty(ref _editingSerie, value);
 
-                _originalSerie = value;
                 FormEnabled = value != null;
                 IsNewSerieSelected = value?.Id == -1;
             }
@@ -201,16 +233,19 @@ namespace AllOrNothing.ViewModels
 
         private void AddNewSerie()
         {
-            EditingSerie = new QuestionSerieDto
+            var serie = new QuestionSerieDto
             {
                 Id = -1,
                 Name = "Új kérdéssor",
             };
-            EditingSerie.Topics = new List<TopicDto>();
+            serie.Topics = new List<TopicDto>();
             for (int i = 0; i < 5; i++)
             {
-                EditingSerie.Topics.Add(new TopicDto());
+                serie.Topics.Add(new TopicDto());
             }
+
+            EditingSerie = serie;
+            _originalSerie = new QuestionSerieDto(serie);
         }
     }
 }

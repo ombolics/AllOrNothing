@@ -11,6 +11,12 @@ namespace AllOrNothing.Mapping
             FromDtoToData();
         }
 
+        private void ForomDtoToDto()
+        {
+            //CreateMap<QuestionSerieDto, QuestionSerieDto>();
+            //CreateMap<TopicDto, TopicDto>();
+            //CreateMap<QuestionSerieDto, QuestionSerieDto>();
+        }
         private void FromDataToDto()
         {
             CreateMap<Player, PlayerDto>();

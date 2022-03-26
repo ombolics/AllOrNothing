@@ -1,4 +1,5 @@
 ﻿using AllOrNothing.Data;
+using AllOrNothing.Repository.Contracts;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

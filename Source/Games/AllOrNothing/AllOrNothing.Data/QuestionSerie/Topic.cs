@@ -14,7 +14,7 @@ namespace AllOrNothing.Data
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public ICollection<Question> Questions { get; set; }
+        public IList<Question> Questions { get; set; }
         public ICollection<Competence> Competences { get; set; }
         public Player Author { get; set; }
     }

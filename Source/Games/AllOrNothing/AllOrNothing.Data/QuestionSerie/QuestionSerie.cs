@@ -14,7 +14,7 @@ namespace AllOrNothing.Data
         public int Id { get; set; }
         public string Name { get; set; }
         public bool IsDeleted { get; set; }
-        public ICollection<Topic> Topics 
+        public List<Topic> Topics 
         {
             get; 
             set;

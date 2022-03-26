@@ -1,4 +1,5 @@
-﻿using AllOrNothing.Repository.Repositories;
+﻿using AllOrNothing.Repository.Contracts;
+using AllOrNothing.Repository.Repositories;
 
 namespace AllOrNothing.Repository
 {
@@ -10,6 +11,8 @@ namespace AllOrNothing.Repository
             _context = context;
             Players = new PlayerRepository(context);
             QuestionSeries = new QuestionSerieRepository(context);
+            Topics = new TopicRepository(context);
+            Questions = new QuestionRepository(context);
         }
 
         public IPlayerRepository Players
@@ -18,6 +21,18 @@ namespace AllOrNothing.Repository
             private set;
         }
         public IQuestionSerieRepository QuestionSeries
+        {
+            get;
+            private set;
+        }
+
+        public ITopicRepository Topics
+        {
+            get;
+            private set;
+        }
+
+        public IQuestionRepository Questions
         {
             get;
             private set;

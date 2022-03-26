@@ -1,7 +1,7 @@
 ﻿using AllOrNothing.Data;
 using System.Collections.Generic;
 
-namespace AllOrNothing.Repository
+namespace AllOrNothing.Repository.Contracts
 {
     public interface IPlayerRepository : IRepository<Player>
     {

@@ -1,4 +1,5 @@
 ﻿using AllOrNothing.Data;
+using AllOrNothing.Repository.Contracts;
 using System.Collections.Generic;
 using System.Linq;
 

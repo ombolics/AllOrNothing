@@ -26,23 +26,16 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         
-        <!-- SearchBar + add button + list of series-->
+        <!-- add button + list of series-->
         <StackPanel Orientation="Vertical"
                     Grid.Column="0"
                     Margin="10,10,10,10">
 
-            <StackPanel Orientation="Horizontal" 
-                        Spacing="8">
-                <!--Implement some functionality-->
-                <AutoSuggestBox PlaceholderText="Kérdéssor keresése..."
-                            QueryIcon="Find"
-                            Margin="10,10,10,10"/>
-
-                <Button Content="Új kérdéssor"
+            <Button Content="Új kérdéssor"
                     FontSize="{ThemeResource MediumFontSize}"
                     Margin="10,10,10,10"
+                    HorizontalAlignment="Stretch"
                     Command="{x:Bind ViewModel.NewSerieCommand}"/>
-            </StackPanel>
             
             <ScrollViewer MaxHeight="500">
                 <toolkit:DataGrid ItemsSource="{x:Bind ViewModel.AllSerie}"
@@ -116,17 +109,18 @@
             </ScrollViewer>
         </StackPanel>
 
-        <!-- Form area-->
-
+        <!-- Form area-->        
         <ScrollViewer Grid.Column="1" Background="White" CornerRadius="30" Margin="10,10,10,10">
+
             <StackPanel Orientation="Vertical">
+
                 <StackPanel>
                     <TextBlock Text="Név" Margin="10,10,10,10" 
                            FontSize="{ThemeResource MediumFontSize}"/>
-                    <TextBox Text="{x:Bind ViewModel.EditingSerie.Name, Mode=OneWay}" 
+                    <TextBox Text="{x:Bind ViewModel.EditingSerie.Name, Mode=TwoWay}" 
                          Margin="10,10,10,10" FontSize="{ThemeResource MediumFontSize}" 
                          x:Name="serieNameTextbox"
-                         TextChanged="{x:Bind ViewModel.EditingSerie.TextBoxChanged}"/>
+                        />
                 </StackPanel>
 
                 <ItemsControl ItemsSource="{x:Bind ViewModel.EditingSerie.Topics, Mode=OneWay}">
@@ -138,22 +132,22 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Vertical" Background="{ThemeResource GreyBrush}">
-                                 <!--név-->
+                                <!--név-->
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Név" 
                                            Margin="10,10,10,10" FontSize="{ThemeResource MediumFontSize}"/>
-                                    <TextBox Text="{Binding Name}" 
+                                    <TextBox Text="{Binding Name, Mode=TwoWay}" 
                                          Margin="10,10,10,10" FontSize="{ThemeResource MediumFontSize}"
                                          x:Name="topicNameTextbox"
                                         />
                                     <!--TextChanged="{Binding TextBoxChanged}"-->
                                     <!--TextChanged="{Binding ViewModel.TextBoxChanged, ElementName=questionSeriePage}"-->
                                 </StackPanel>
-                                 <!--leírás-->
+                                <!--leírás-->
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Leírás" 
                                        Margin="10,10,10,10" FontSize="{ThemeResource MediumFontSize}"/>
-                                    <TextBox Text="{Binding Description}" 
+                                    <TextBox Text="{Binding Description, Mode=TwoWay}" 
                                          Margin="10,10,10,10" FontSize="{ThemeResource MediumFontSize}" 
                                          TextWrapping="Wrap"
                                          x:Name="topicDescriptionTextbox"/>
@@ -162,13 +156,21 @@
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Szerző" 
                                        Margin="10,10,10,10" FontSize="{ThemeResource MediumFontSize}"/>
-                                    <TextBox Text="{Binding Author}" 
+                                    <TextBlock Text="{Binding Author.Name}" 
                                        Margin="10,10,10,10" FontSize="{ThemeResource MediumFontSize}" />
+                                    <TextBlock Text="-" 
+                                       Margin="10,10,10,10" FontSize="{ThemeResource MediumFontSize}" />
+                                    <TextBlock Text="{Binding Author.Id}" 
+                                       Margin="10,10,10,10" FontSize="{ThemeResource MediumFontSize}" />
+
+                                    <!--<AutoSuggestBox PlaceholderText="Játékos keresése..."
+                                                    QueryIcon="Find"
+                                                    Margin="10,10,10,10"/>-->
 
                                 </StackPanel>
                                 <!--kérdések-->
                                 <TextBlock Text="Kérdések" FontSize="{ThemeResource LargeFontSize}"/>
-                                
+
                                 <ItemsControl ItemsSource="{Binding Questions}">
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>
@@ -181,7 +183,7 @@
                                             <StackPanel Orientation="Vertical" Background="{ThemeResource GreyBrush}" CornerRadius="30">
                                                 <StackPanel Orientation="Horizontal">
                                                     <TextBlock Text="Kérdés"  Margin="10,10,10,5" FontSize="{ThemeResource MediumFontSize}"/>
-                                                    <TextBox Text="{Binding Text}" 
+                                                    <TextBox Text="{Binding Text, Mode=TwoWay}" 
                                                              Margin="10,0,10,5" 
                                                              FontSize="{ThemeResource MediumFontSize}" 
                                                              TextWrapping="Wrap" 
@@ -192,7 +194,7 @@
 
                                                 <StackPanel Orientation="Horizontal">
                                                     <TextBlock Text="Válasz"  Margin="10,0,10,5" FontSize="{ThemeResource MediumFontSize}"/>
-                                                    <TextBox Text="{Binding Answer}" 
+                                                    <TextBox Text="{Binding Answer, Mode=TwoWay}" 
                                                              Margin="10,0,10,5" 
                                                              FontSize="{ThemeResource MediumFontSize}" 
                                                              TextWrapping="Wrap"
@@ -202,7 +204,7 @@
 
                                                 <StackPanel Orientation="Horizontal">
                                                     <TextBlock Text="Érték"  Margin="10,0,10,5" FontSize="{ThemeResource MediumFontSize}"/>
-                                                    <TextBox Text="{Binding Value}" 
+                                                    <TextBox Text="{Binding Value, Mode=TwoWay}" 
                                                              Margin="10,0,10,5" 
                                                              FontSize="{ThemeResource MediumFontSize}"
                                                              
@@ -217,15 +219,26 @@
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-                
-                <Button Content="Mentés"
-                        Command="{x:Bind ViewModel.SaveCommand}"/>
 
-                <Button Content="Játékos törlése"
-                        Command="{x:Bind ViewModel.DeleteCommand}"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Content="Mentés"
+                    Grid.Column="0"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Command="{x:Bind ViewModel.SaveCommand}"/>
+
+                    <Button Content="Játékos törlése"
+                    Grid.Column="1"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Command="{x:Bind ViewModel.DeleteCommand}"/>
+                </Grid>
+
             </StackPanel>
         </ScrollViewer>
-
-
     </Grid>
 </Page>

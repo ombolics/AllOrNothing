@@ -29,9 +29,12 @@ namespace AllOrNothing.Repository
         public DbSet<Competence> Competences { get; set; }
         public DbSet<Player> Players { get; set; }
         public DbSet<Team> Teams { get; set; }
+        public DbSet<Topic> Topics { get; set; }
+        public DbSet<Question> Questions { get ; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            optionsBuilder.EnableSensitiveDataLogging(true);
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.

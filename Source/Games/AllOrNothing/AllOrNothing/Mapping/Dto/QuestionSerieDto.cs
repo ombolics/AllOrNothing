@@ -4,21 +4,61 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.UI.Xaml.Controls;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace AllOrNothing.Mapping
 {
     [AutoMap(typeof(QuestionSerie), ReverseMap = true)]
-    public class QuestionSerieDto
+    public class QuestionSerieDto : ObservableRecipient
     {
+        public QuestionSerieDto()
+        {
+
+        }
+        public QuestionSerieDto(QuestionSerieDto dto)
+        {
+            Id = dto.Id;
+            Name = dto.Name;
+            FromFile = dto.FromFile;
+            IsDeleted = dto.IsDeleted;
+            CreatedOn = dto.CreatedOn;
+            var topics = new List<TopicDto>();
+
+            foreach (var topic in dto.Topics)
+            {
+                topics.Add(new TopicDto(topic));
+            }
+            Topics = topics;
+        }
         public int Id { get; set; }
-        public List<TopicDto> Topics { get; set; }
+        private List<TopicDto> _topics;
+        public List<TopicDto> Topics 
+        {
+            get => _topics;
+            set => SetProperty(ref _topics, value);
+        }
         public HashSet<PlayerDto> Authors 
         {
             get => GetAuthors();
         }
-        public bool FromFile { get; set; }
-        public string Name { get; set; }
-        public bool IsDeleted { get; set; }
+        private bool _fromFile;
+        public bool FromFile 
+        {
+            get => _fromFile;
+            set => SetProperty(ref _fromFile, value);
+        }
+        private string _name;
+        public string Name 
+        {
+            get => _name;
+            set => SetProperty(ref _name, value);
+        }
+        private bool _isDeleted;
+        public bool IsDeleted 
+        {
+            get => _isDeleted;
+            set => SetProperty(ref _isDeleted, value);
+        }
         private HashSet<PlayerDto> GetAuthors()
         {
             var value = new HashSet<PlayerDto>();
@@ -54,6 +94,25 @@ namespace AllOrNothing.Mapping
         {
             get => GetCompetences();
         }
+
+        public bool HasTheSameValue(QuestionSerieDto dto)
+        {
+            bool val =
+                Name == dto.Name &&
+                CreatedOn == dto.CreatedOn &&
+                FromFile == dto.FromFile &&
+                IsDeleted == dto.IsDeleted;
+
+            for (int i = 0; i < Topics.Count; i++)
+            {
+                val = val && Topics[i].HasTheSameValue(dto.Topics[i]);
+            }
+
+            return val;
+        }
+
+
+
 
 
         public event EventHandler UnderEdit;

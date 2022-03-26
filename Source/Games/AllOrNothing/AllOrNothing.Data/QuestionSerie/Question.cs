@@ -23,7 +23,6 @@ namespace AllOrNothing.Data
         public byte[] Resource { get; set; }
         [Required]
         public string Text { get; set; }
-        [Required]
         public string Answer { get; set; }
         public int Value { get; set; }
     }
