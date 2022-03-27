@@ -3,6 +3,8 @@ using AllOrNothing.Data;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Data;
+using AllOrNothing.Models;
+using Microsoft.UI.Xaml.Media;
 
 namespace AllOrNothing.Controls
 {
@@ -13,6 +15,12 @@ namespace AllOrNothing.Controls
         {
             get => _display;
             set => _display = value;
+        }
+        private Border _border;
+        public Border Border
+        {
+            get => _border;
+            set => _border = value;
         }
         public PlayerTextBlock()
         {
@@ -27,12 +35,19 @@ namespace AllOrNothing.Controls
 
             _display.SetBinding(TextBlock.TextProperty, b);
 
-            Children.Add(Display);
+            Border = new Border
+            {
+                Background = (Brush)App.Current.Resources["GreyBrush"],
+                CornerRadius = new CornerRadius(10),
+            };
+
+            Border.Child = Display;
+            Children.Add(Border);
         }
 
-        public Player Player
+        public DragablePlayer Player
         {
-            get { return (Player)GetValue(PlayerProperty); }
+            get { return (DragablePlayer)GetValue(PlayerProperty); }
             set
             {
                 SetValue(PlayerProperty, value);
@@ -41,7 +56,7 @@ namespace AllOrNothing.Controls
 
         // Using a DependencyProperty as the backing store for Player.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty PlayerProperty =
-            DependencyProperty.Register("Player", typeof(PlayerDto), typeof(PlayerTextBlock), null);
+            DependencyProperty.Register("Player", typeof(DragablePlayer), typeof(PlayerTextBlock), null);
 
 
     }

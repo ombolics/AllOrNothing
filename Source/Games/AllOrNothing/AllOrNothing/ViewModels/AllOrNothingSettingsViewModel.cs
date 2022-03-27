@@ -71,7 +71,12 @@ namespace AllOrNothing.ViewModels
         private IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
 
-        
+        private bool _canGoToNextPage;
+        public bool CanGoToNextPage
+        {
+            get => _canGoToNextPage;
+            set => SetProperty(ref _canGoToNextPage, value);
+        }
 
         private ICommand _exitCommand;
         public ICommand ExitCommand => _exitCommand ??= new RelayCommand(Exit);
@@ -209,14 +214,18 @@ namespace AllOrNothing.ViewModels
         {
             var value = new ObservableCollection<TeamDto>();
 
-            List<Player> helper = _mapper.Map<ICollection<PlayerDto>, List<Player>>(players);
+            List<DragablePlayer> helper = _mapper.Map<ICollection<PlayerDto>, List<DragablePlayer>>(players);
             Random r = new Random();
             while (helper.Count > 0)
             {
                 var team = new TeamDto
                 {
                     Players = new(),
+                    MaxPlayerCount = GameModel.GameSettings.MaxTeamSize,
+                    MinPlayerCount = 1,
                 };
+                team.Players.CollectionChanged += team.CheckGuards;
+
                 for (int i = 0; i < maxTeamSize && helper.Count > 0; i++)
                 {
                     var plyr = helper[r.Next(0, helper.Count)];
@@ -231,6 +240,8 @@ namespace AllOrNothing.ViewModels
 
                     team.UpdateTeamName();
                 }
+
+                team.CheckGuards(this, null);
                 value.Add(team);
             }
             return value;
@@ -354,7 +365,7 @@ namespace AllOrNothing.ViewModels
             return val;
         }
 
-        public void On_PlayerDropped(object sender, Player player)
+        public void On_PlayerDropped(object sender, DragablePlayer player)
         {
             if (sender is TeamDto senderTeam)
             {
@@ -404,6 +415,8 @@ namespace AllOrNothing.ViewModels
             SelectedPlayers.Remove(playerDto);
             _avaiblePlayers.Add(playerDto);
         }
+
+        public bool Asd => false;
 
         public void ItemDragStarting(UIElement sender, DragStartingEventArgs e)
         {

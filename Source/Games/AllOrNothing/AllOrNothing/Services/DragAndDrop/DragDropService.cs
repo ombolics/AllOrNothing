@@ -11,12 +11,6 @@ namespace AllOrNothing.Services.DragAndDrop
 {
     public class TestData : ISerializable
     {
-        public int val { get; set; }
-        public TestData()
-        {
-
-        }
-
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             throw new System.NotImplementedException();

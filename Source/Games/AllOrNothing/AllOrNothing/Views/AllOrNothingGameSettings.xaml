@@ -12,9 +12,10 @@
     xmlns:conv="using:AllOrNothing.Converters"
     xmlns:local="using:AllOrNothing.Views"
     xmlns:wctprimitives="using:CommunityToolkit.WinUI.UI.Controls.Primitives"
+    xmlns:help="using:AllOrNothing.Helpers"
     mc:Ignorable="d"
     Background="{ThemeResource GradientBrush5}"
-    x:Name="gameSettingsPage"
+    Name="gameSettingsPage"
     DataContext="{x:Bind ViewModel}"
     Loaded="Page_Loaded">
     
@@ -195,57 +196,60 @@
 
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Name="teamPanel" 
+                                <StackPanel>
+                                    <TextBlock x:Name="proxy" help:AncestorHelper.AncestorType="Page" />
+                                    <StackPanel Name="teamPanel" 
                                             Orientation="Vertical" 
                                             Spacing="5" Background="{ThemeResource GreyBrush}" 
                                             CornerRadius="30" Margin="10,10,10,10"
-                                            AllowDrop="True">
-                                    
-                                    <dd:DragDropService.Configuration>
-                                        <dd:DropConfiguration DropTextCommand="{Binding AddPlayerCommand}"/>
-                                        
-                                    </dd:DragDropService.Configuration>
+                                            AllowDrop="{Binding AllowDrop}">
 
-                                    <TextBox Text="{Binding TeamName, Mode=TwoWay}" Margin="10,10,0,10" HorizontalAlignment="Center" />
+                                        <dd:DragDropService.Configuration>
+                                            <dd:DropConfiguration DropTextCommand="{Binding AddPlayerCommand}"/>
+                                        </dd:DragDropService.Configuration>
+                                        <dd:DragDropService.VisualConfiguration>
+                                            <dd:VisualDropConfiguration
+                                                            Caption="Csapattag áthelyezése"
+                                                            IsContentVisible="True"
+                                                            IsGlyphVisible="False"/>
+                                        </dd:DragDropService.VisualConfiguration>
 
-                                    <ItemsControl ItemsSource="{Binding Players}" AllowDrop="True" Background="Transparent">
-                                        <ItemsControl.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <cc:WrapPanel/>
-                                            </ItemsPanelTemplate>
-                                        </ItemsControl.ItemsPanel>
+                                        <TextBox Text="{Binding TeamName, Mode=TwoWay}" Margin="10,10,0,10" HorizontalAlignment="Center" />
 
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <cc:PlayerTextBlock 
+                                        <ItemsControl ItemsSource="{Binding Players}" Background="Transparent">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <cc:WrapPanel/>
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <cc:PlayerTextBlock 
                                                                     Player="{Binding}"
                                                                     Margin="10,10,10,10" 
-                                                                    CanDrag="True" >
+                                                                    CanDrag="{Binding CanDrag}" >
 
-                                                    <dd:DragDropService.VisualConfiguration>
-                                                        <dd:VisualDropConfiguration
-                                                        Caption="Csapattag áthelyezése"
-                                                        IsContentVisible="True"
-                                                        IsGlyphVisible="False"/>
-                                                    </dd:DragDropService.VisualConfiguration>
+                                                        <dd:DragDropService.VisualConfiguration>
+                                                            <dd:VisualDropConfiguration
+                                                            />
+                                                        </dd:DragDropService.VisualConfiguration>
 
-                                                    <dd:DragDropService.Configuration>
-                                                        <dd:DropConfiguration                                                            
-                                                            DropTextCommand="{Binding DropPlayerCommand}"/>
-                                                    </dd:DragDropService.Configuration>
 
-                                                </cc:PlayerTextBlock>
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
+                                                    </cc:PlayerTextBlock>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </StackPanel>
                                 </StackPanel>
+                                
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                 </Border>
 
                 <StackPanel Grid.Row="2"   Orientation="Vertical">
-                    <Button Content="Tovább" FontSize="{ThemeResource LargeFontSize}" VerticalAlignment="Center"
+                    <Button Visibility="{x:Bind ViewModel.CanGoToNextPage, Mode=OneWay, Converter = {StaticResource BoolToVisibilityConverter}}" Content="Tovább" FontSize="{ThemeResource LargeFontSize}" VerticalAlignment="Center"
                         HorizontalAlignment="Right" Command="{x:Bind ViewModel.ShowRoundSettingsCommand}"/>
 
                     <Button Content="Kilépés" FontSize="{ThemeResource LargeFontSize}" VerticalAlignment="Center"

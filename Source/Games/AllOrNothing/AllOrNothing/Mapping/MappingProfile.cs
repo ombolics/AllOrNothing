@@ -1,4 +1,5 @@
 ﻿using AllOrNothing.Data;
+using AllOrNothing.Models;
 using AutoMapper;
 
 namespace AllOrNothing.Mapping
@@ -9,13 +10,13 @@ namespace AllOrNothing.Mapping
         {
             FromDataToDto();
             FromDtoToData();
+            ForomModelToModel();
         }
 
-        private void ForomDtoToDto()
+        private void ForomModelToModel()
         {
-            //CreateMap<QuestionSerieDto, QuestionSerieDto>();
-            //CreateMap<TopicDto, TopicDto>();
-            //CreateMap<QuestionSerieDto, QuestionSerieDto>();
+            CreateMap<PlayerDto,DragablePlayer>();
+            CreateMap<DragablePlayer, PlayerDto>();
         }
         private void FromDataToDto()
         {

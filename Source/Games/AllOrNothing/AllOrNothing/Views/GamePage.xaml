@@ -80,7 +80,7 @@
                     
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding}" HorizontalAlignment="Stretch" FontSize="{StaticResource MediumFontSize}"/>
+                            <TextBlock Text="{Binding}" HorizontalAlignment="Stretch" FontSize="{StaticResource LargeFontSize   }"/>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
