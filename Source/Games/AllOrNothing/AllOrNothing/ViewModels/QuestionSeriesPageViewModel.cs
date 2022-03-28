@@ -22,6 +22,7 @@ namespace AllOrNothing.ViewModels
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             AllSerie = GetSeriesAsDto();
+            UnselectedTextVisible = true;
         }
 
         private ObservableCollection<QuestionSerieDto> GetSeriesAsDto()
@@ -89,48 +90,60 @@ namespace AllOrNothing.ViewModels
         private ICommand _deleteCommand;
         public ICommand DeleteCommand => _deleteCommand ??= new RelayCommand(Delete);
 
+        private bool _unselectedTextVisible;
+        public bool UnselectedTextVisible
+        {
+            get => _unselectedTextVisible;
+            set => SetProperty(ref _unselectedTextVisible, value);
+        }
         private async void Delete()
         {
-            ContentDialog dialog = new ContentDialog();
-            dialog.XamlRoot = PageXamlRoot;
-            dialog.Title = "Biztosan törli?";
-            dialog.PrimaryButtonText = "Igen";
-            dialog.CloseButtonText = "Mégse";
-            dialog.DefaultButton = ContentDialogButton.Primary;
-            dialog.Content = new CustomDialog("Biztosan törli a kérdéssort?");
+            ContentDialog dialog = new ContentDialog
+            {
+                XamlRoot = PageXamlRoot,
+                Title = "Biztosan törli?",
+                PrimaryButtonText = "Igen",
+                CloseButtonText = "Mégse",
+                DefaultButton = ContentDialogButton.Primary,
+                Content = new CustomDialog("Biztosan törli a kérdéssort?"),
+            };
 
             if (await dialog.ShowAsync(ContentDialogPlacement.Popup) == ContentDialogResult.Primary)
             {
                 if (!IsNewSerieSelected)
                 {
-                    EditingSerie.IsDeleted = true;
-                    _unitOfWork.Complete();
+                    var serie = _unitOfWork.QuestionSeries.Get(EditingSerie.Id);
+                    serie.IsDeleted = true;
+                    var result = _unitOfWork.Complete();
                     AllSerie = GetSeriesAsDto();
                 }
                 EditingSerie = null;
+                IsNewSerieSelected = false;
             }
-            IsNewSerieSelected = false;
+            
         }
+
+        //TODO mentés előtt ne lehessen másikat kiválasztani
 
         private async void Save()
         {
+            bool serieChanged = !EditingSerie.HasTheSameValue(_originalSerie);
             if (IsNewSerieSelected)
             {
                 EditingSerie.Id = 0;
                 _unitOfWork.QuestionSeries.Add(_mapper.Map<QuestionSerie>(EditingSerie));
             }
-            else if(!EditingSerie.HasTheSameValue(_originalSerie))
+            else if(!serieChanged)
             {
                 var serie = _unitOfWork.QuestionSeries.Get(EditingSerie.Id);
-                //serie.SetValue(_mapper.Map<QuestionSerie>(EditingSerie));
-
                 serie.Name = EditingSerie.Name;
+
                 foreach (var item in EditingSerie.Topics)
                 {
                     var data = _unitOfWork.Topics.Get(item.Id);
                     data.Name = item.Name;
                     data.Description = item.Description;
-                    //data.Author = //_mapper.Map<Player>(item.Author);
+
                     foreach (var question in item.Questions)
                     {
                         var dbQuestion = _unitOfWork.Questions.Get(question.Id);
@@ -141,20 +154,15 @@ namespace AllOrNothing.ViewModels
                         dbQuestion.Value = question.Value;
                     }
                 }
-
-                //_unitOfWork.Complete();
-                //_unitOfWork.QuestionSeries.Add( _mapper.Map<QuestionSerie>(EditingSerie));
-                //serie.IsDeleted = EditingSerie.IsDeleted;
-                //serie.Name = EditingSerie.Name;
-                //serie.Topics = _mapper.Map<ICollection<Topic>>(EditingSerie.Topics);
             }
-            ContentDialog dialog = new ContentDialog();
-            dialog.XamlRoot = PageXamlRoot;
-            dialog.CloseButtonText = "Ok";
-            dialog.DefaultButton = ContentDialogButton.Close;
+            ContentDialog dialog = new ContentDialog
+            {
+                XamlRoot = PageXamlRoot,
+                CloseButtonText = "Ok",
+                DefaultButton = ContentDialogButton.Close,
+            };
 
-            var result = _unitOfWork.Complete() > 0;
-            if (result)
+            if (_unitOfWork.Complete() > 0 || !serieChanged)
             {
                 AllSerie = GetSeriesAsDto();
                 dialog.Title = "Sikeres mentés";
@@ -222,8 +230,9 @@ namespace AllOrNothing.ViewModels
             set
             {
                 SetProperty(ref _editingSerie, value);
-
-                FormEnabled = value != null;
+                bool isValueNull = value == null;
+                UnselectedTextVisible = isValueNull;
+                FormEnabled = !isValueNull;
                 IsNewSerieSelected = value?.Id == -1;
             }
         }
@@ -241,9 +250,10 @@ namespace AllOrNothing.ViewModels
             serie.Topics = new List<TopicDto>();
             for (int i = 0; i < 5; i++)
             {
-                serie.Topics.Add(new TopicDto());
+                serie.Topics.Add(new TopicDto(6, _unitOfWork, _mapper));
             }
 
+            SelectedSerie = null;
             EditingSerie = serie;
             _originalSerie = new QuestionSerieDto(serie);
         }

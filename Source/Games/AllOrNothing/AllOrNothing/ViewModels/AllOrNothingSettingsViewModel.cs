@@ -131,7 +131,7 @@ namespace AllOrNothing.ViewModels
                 dto.FromFile = true;
                 if(dto.Competences.Count == 0)
                 {
-                    dto.Topics[0].Competences = new List<CompetenceDto>{new CompetenceDto
+                    dto.Topics[0].Competences = new ObservableCollection<CompetenceDto>{new CompetenceDto
                     {
                         Name = "Nem ismert",
                     }};

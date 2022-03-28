@@ -1,6 +1,7 @@
 ﻿using AllOrNothing.Data;
 using AutoMapper;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System;
 
 namespace AllOrNothing.Mapping
@@ -24,6 +25,13 @@ namespace AllOrNothing.Mapping
         {
             get => _name;
             set => SetProperty(ref _name, value); 
+        }
+
+        public RelayCommand<object> RemoveCommand { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
         }
 
         internal bool HasTheSameValue(CompetenceDto dto)

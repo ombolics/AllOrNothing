@@ -12,6 +12,7 @@
     xmlns:conv="using:AllOrNothing.Converters"
     xmlns:local="using:AllOrNothing.Views"
     xmlns:wctprimitives="using:CommunityToolkit.WinUI.UI.Controls.Primitives"
+    xmlns:animations="using:CommunityToolkit.WinUI.UI.Animations"
     xmlns:help="using:AllOrNothing.Helpers"
     mc:Ignorable="d"
     Background="{ThemeResource GradientBrush5}"
@@ -234,7 +235,6 @@
                                                             <dd:VisualDropConfiguration
                                                             />
                                                         </dd:DragDropService.VisualConfiguration>
-
 
                                                     </cc:PlayerTextBlock>
                                                 </DataTemplate>

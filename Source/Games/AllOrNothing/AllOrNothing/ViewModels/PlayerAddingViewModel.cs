@@ -1,6 +1,8 @@
 ﻿using AllOrNothing.Controls;
 using AllOrNothing.Data;
+using AllOrNothing.Mapping;
 using AllOrNothing.Repository;
+using AutoMapper;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
@@ -17,20 +19,21 @@ namespace AllOrNothing.ViewModels
 {
     public class PlayerAddingViewModel : ObservableRecipient
     {
-        public PlayerAddingViewModel(IUnitOfWork unitOfWork)
+        public PlayerAddingViewModel(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
-
-            AllPlayers = new ObservableCollection<Player>(_unitOfWork.Players.GetAllAvaible());
+            _mapper = mapper;
+            AllPlayers = new ObservableCollection<PlayerDto>(_mapper.Map<ICollection<PlayerDto>>(_unitOfWork.Players.GetAllAvaible()));
         }
 
+        private IMapper _mapper;
         public XamlRoot PageXamlRoot { get; set; }
 
-        private ObservableCollection<Player> _allPlayers;
+        private ObservableCollection<PlayerDto> _allPlayers;
         private readonly IUnitOfWork _unitOfWork;
 
-        private Player _selectedPlayer;
-        public Player SelectedPlayer
+        private PlayerDto _selectedPlayer;
+        public PlayerDto SelectedPlayer
         {
             get => _selectedPlayer;
             set
@@ -41,8 +44,8 @@ namespace AllOrNothing.ViewModels
             }
         }
 
-        private Player _originalPlayer;
-        public ObservableCollection<Player> AllPlayers 
+        private PlayerDto _originalPlayer;
+        public ObservableCollection<PlayerDto> AllPlayers 
         { 
             get => _allPlayers;
             set => SetProperty(ref _allPlayers, value); 
@@ -73,8 +76,8 @@ namespace AllOrNothing.ViewModels
                {
                     EditingPlayer.IsDeleted = true;
                     _unitOfWork.Complete();
-                    AllPlayers = new ObservableCollection<Player>(_unitOfWork.Players.GetAllAvaible()); 
-               }
+                    AllPlayers = new ObservableCollection<PlayerDto>(_mapper.Map<ICollection<PlayerDto>>(_unitOfWork.Players.GetAllAvaible()));
+                }
                 EditingPlayer = null;
             }
             IsNewPlayerSelected = false;
@@ -85,7 +88,7 @@ namespace AllOrNothing.ViewModels
             if(IsNewPlayerSelected)
             {
                 EditingPlayer.Id = 0;
-                _unitOfWork.Players.Add(EditingPlayer);
+                _unitOfWork.Players.Add(_mapper.Map<Player>(EditingPlayer));
             }
 
             ContentDialog dialog = new ContentDialog();
@@ -96,10 +99,11 @@ namespace AllOrNothing.ViewModels
 
             if (_unitOfWork.Complete() > 0)
             {
-                AllPlayers = new ObservableCollection<Player>(_unitOfWork.Players.GetAllAvaible());
+                AllPlayers = new ObservableCollection<PlayerDto>(_mapper.Map<ICollection<PlayerDto>>(_unitOfWork.Players.GetAllAvaible()));
                 dialog.Title = "Sikeres mentés";
                 dialog.Content = new CustomDialog("Sikeres mentés!");
                 IsNewPlayerSelected = false;
+                EditingPlayer = null;
             }
             else
             {
@@ -157,8 +161,8 @@ namespace AllOrNothing.ViewModels
         }
 
 
-        private Player _editingPlayer;
-        public Player EditingPlayer
+        private PlayerDto _editingPlayer;
+        public PlayerDto EditingPlayer
         {
             get => _editingPlayer;
             set
@@ -176,7 +180,8 @@ namespace AllOrNothing.ViewModels
         
         private void AddNewPlayer()
         {
-            EditingPlayer = new Player
+            SelectedPlayer = null;
+            EditingPlayer = new PlayerDto
             {
                 Id = -1,
                 Name = "Új játékos",

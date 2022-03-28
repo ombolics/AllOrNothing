@@ -21,17 +21,21 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Orientation="Vertical"
-                    Grid.Column="0"
-                    Margin="10,10,10,10">
-
-            <Button Content="Új játékos"
+        <Grid Grid.Column="0"
+              Margin="10,10,10,10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <Button Grid.Row="0"
+                    Content="Új játékos"
                     FontSize="{ThemeResource MediumFontSize}"
                     Margin="10,10,10,10"
                     HorizontalAlignment="Stretch"
                     Command="{x:Bind ViewModel.NewPlayerCommand}"/>
 
-            <ScrollViewer MaxHeight="500">
+            <ScrollViewer Grid.Row="1">
                 <toolkit:DataGrid ItemsSource="{x:Bind ViewModel.AllPlayers, Mode=OneWay}"
                               AutoGenerateColumns="False"
                               SelectedItem="{x:Bind ViewModel.SelectedPlayer, Mode=TwoWay}"
@@ -50,7 +54,7 @@
                     </toolkit:DataGrid.Columns>
                 </toolkit:DataGrid>
             </ScrollViewer>
-        </StackPanel>
+        </Grid>
 
         <!-- Form area-->
         <Grid Grid.Column="1" Background="{ThemeResource GreyBrush}" CornerRadius="30"
@@ -95,13 +99,23 @@
                              TextChanged="{x:Bind ViewModel.TextBoxChanged}"
                              IsEnabled="{x:Bind ViewModel.FormEnabled, Mode=OneWay}"/>
                 </StackPanel>
-                
-                <Button Visibility="{x:Bind ViewModel.IsPlayerUnderEdit, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" Content="Mentés"
-                        Command="{x:Bind ViewModel.SaveCommand}"/>
-                
-                <Button Content="Játékos törlése"
-                        Command="{x:Bind ViewModel.DeleteCommand}"/>
 
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <Button Grid.Column="0"
+                            Visibility="{x:Bind ViewModel.IsPlayerUnderEdit, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" Content="Mentés"
+                            Command="{x:Bind ViewModel.SaveCommand}"
+                            HorizontalAlignment="Stretch"/>
+
+                    <Button Grid.Column="1"
+                            Content="Játékos törlése"
+                            Command="{x:Bind ViewModel.DeleteCommand}"
+                            HorizontalAlignment="Stretch"/>
+                </Grid>
             </StackPanel>
             
         </Grid>

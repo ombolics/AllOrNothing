@@ -1,12 +1,13 @@
 ﻿using AllOrNothing.Data;
 using AutoMapper;
 using AutoMapper.Configuration.Annotations;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 namespace AllOrNothing.Mapping
 {
     [AutoMap(typeof(Player), ReverseMap = true)]
-    public class PlayerDto
+    public class PlayerDto : ObservableRecipient
     {
         public PlayerDto()
         {
@@ -23,11 +24,36 @@ namespace AllOrNothing.Mapping
                 IsDeleted = dto.IsDeleted;
             }        
         }
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Institute { get; set; }
-        public string NickName { get; set; }
-        public bool IsDeleted { get; set; }
+        private int _id;
+        public int Id 
+        {
+            get => _id;
+            set => SetProperty(ref _id, value); 
+        }
+        private string _name;
+        public string Name 
+        {
+            get => _name;
+            set => SetProperty(ref _name, value);
+        }
+        private string _institute;
+        public string Institute 
+        {
+            get => _institute;
+            set => SetProperty(ref _institute, value);
+        }
+        private string _nickName;
+        public string NickName 
+        {
+            get => _nickName;
+            set => SetProperty(ref _nickName, value);
+        }
+        private bool _isDeleted;
+        public bool IsDeleted 
+        {
+            get => _isDeleted;
+            set => SetProperty(ref _isDeleted, value);
+        }
 
         // public ObservableCollection<PlayerDto> OriginalTeam { get; set; }
 
