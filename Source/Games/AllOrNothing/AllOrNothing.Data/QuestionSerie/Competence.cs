@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace AllOrNothing.Data
 {
@@ -9,5 +10,6 @@ namespace AllOrNothing.Data
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
+        public ICollection<Topic> Topics { get; set; }
     }
 }

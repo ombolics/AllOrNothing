@@ -84,7 +84,8 @@ namespace AllOrNothing.Mapping
             {
                 foreach (var item in topic.Competences)
                 {
-                    value.Add(item);
+                    if(!value.Any(c => c.Id == item.Id))
+                        value.Add(item);
                 }
             }
             return value;

@@ -34,8 +34,6 @@ namespace AllOrNothing.Mapping
 
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-
-            AutosuggestBox_TextChanged_Handler = AutosuggestBox_TextChanged_Handler;
         }
 
 
@@ -96,7 +94,11 @@ namespace AllOrNothing.Mapping
         public PlayerDto Author 
         {
             get => _author;
-            set => SetProperty(ref _author, value);
+            set    
+            {
+                SetProperty(ref _author, value);
+                HasAuthor = value != null;
+            }
         }
 
         internal bool HasTheSameValue(TopicDto dto)
@@ -104,14 +106,15 @@ namespace AllOrNothing.Mapping
             bool val =
                 Name == dto.Name &&
                 Id == dto.Id &&
-                Description == dto.Description;
+                Description == dto.Description&&
+                Competences.Count == dto.Competences.Count;
 
             for (int i = 0; i < Questions.Count; i++)
             {
                 val = val && Questions[i].HasTheSameValue(dto.Questions[i]);
             }
 
-            for (int i = 0; i < Competences.Count; i++)
+            for (int i = 0; i < Competences.Count && i < dto.Competences.Count; i++)
             {
                 val = val && Competences[i].HasTheSameValue(dto.Competences[i]);
             }
@@ -123,6 +126,13 @@ namespace AllOrNothing.Mapping
 
 
         // used in the questionserie page
+
+        private bool _hasAuthor;
+        public bool HasAuthor
+        {
+            get => _hasAuthor;
+            set => SetProperty(ref _hasAuthor, value);
+        }
 
         public string OriginalName { get; set; }
         public string OriginalDescription { get; set; }
@@ -152,92 +162,7 @@ namespace AllOrNothing.Mapping
                         break;
                 }
             }
-        }
-
-        private ICommand _removeCompetenceCommand;
-        public ICommand RemoveCompetenceCommand => _removeCompetenceCommand ??= new RelayCommand<object>(RemoveCompetence);
-
-        private TypedEventHandler<AutoSuggestBox, AutoSuggestBoxTextChangedEventArgs> _autosuggestBox_TextChanged_Handler;
-        public  TypedEventHandler<AutoSuggestBox, AutoSuggestBoxTextChangedEventArgs> AutosuggestBox_TextChanged_Handler
-        {
-            get => _autosuggestBox_TextChanged_Handler;
-            set => SetProperty(ref _autosuggestBox_TextChanged_Handler, value);
-        }
-
-        private void RemoveCompetence(object param)
-        {
-            var dto = param as CompetenceDto;
-            Competences.Remove(dto);           
-        }
-
-        public void AutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
-        {
-            if(args.SelectedItem is CompetenceDto competence)
-            {
-                Competences.Add(competence);
-                sender.Text = string.Empty;
-                sender.ItemsSource = null;
-                return;
-            }
-
-            //if(args.SelectedItem is StackPanel notFoundDisplay)
-            //{
-            //    NavigateTo?.Invoke(this, new NavigateToEventargs { PageName = "Új játékos", PageVM = typeof(PlayerAddingViewModel) });
-            //}
-          
-        }
-        public void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
-        {
-            // Since selecting an item will also change the text,
-            // only listen to changes caused by user entering text.
-            if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
-            {
-                var suitableItems = new List<object>();
-                var splitText = sender.Text.ToLower().Split(" ");
-
-                //TODO Search for players in database
-
-                foreach (var competence in _unitOfWork.Topics.GetAll())
-                {
-                    //var found = splitText.All((key) =>
-                    //{
-                    //    return player.Name.ToLower().Contains(key);
-                    //});
-
-                    //found
-                    if (splitText.All((key) => competence.Name.ToLower().Contains(key)))
-                    {
-                        var dto = _mapper.Map<CompetenceDto>(competence);
-                        dto.RemoveCommand = (RelayCommand<object>)RemoveCompetenceCommand;
-                        suitableItems.Add(dto);
-                    }
-                }
-
-                //if (suitableItems.Count == 0)
-                //{
-                //    var notfoundDisplay = new StackPanel
-                //    {
-                //        Orientation = Orientation.Horizontal,
-                //        Spacing = 30.0,
-                //    };
-
-                //    notfoundDisplay.Children.Add(new TextBlock
-                //    {
-                //        Text = "Nincs ilyen játkos!",
-                //    });
-
-                //    notfoundDisplay.Children.Add(new Button
-                //    {
-                //        Content = new TextBlock
-                //        {
-                //            Text = "Új játékos",
-                //        },
-                //        Command = NavigateToNewPlayerPageCommand,
-                //    });
-                //    suitableItems.Add(notfoundDisplay);
-                //}
-                sender.ItemsSource = suitableItems;
-            }
+               
         }
     }
 }

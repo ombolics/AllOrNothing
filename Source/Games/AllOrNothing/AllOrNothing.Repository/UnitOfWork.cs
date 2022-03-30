@@ -1,5 +1,7 @@
-﻿using AllOrNothing.Repository.Contracts;
+﻿using AllOrNothing.Data;
+using AllOrNothing.Repository.Contracts;
 using AllOrNothing.Repository.Repositories;
+using System;
 
 namespace AllOrNothing.Repository
 {
@@ -13,8 +15,8 @@ namespace AllOrNothing.Repository
             QuestionSeries = new QuestionSerieRepository(context);
             Topics = new TopicRepository(context);
             Questions = new QuestionRepository(context);
+            Competences = new CompetenceRepository(context);
         }
-
         public IPlayerRepository Players
         {
             get;
@@ -38,6 +40,12 @@ namespace AllOrNothing.Repository
             private set;
         }
 
+        public ICompetenceRepository Competences
+        {
+            get;
+            private set;
+        }
+
         public int Complete()
         {
             return _context.SaveChanges();
@@ -46,6 +54,31 @@ namespace AllOrNothing.Repository
         public void Dispose()
         {
             _context.Dispose();
+        }
+
+        public string GetRepositoryNameForType(string typeName)
+        {
+            switch (typeName)
+            {
+                case nameof(Player):
+                    return nameof(Players);
+                    break;
+                case nameof(QuestionSerie):
+                    return nameof(QuestionSeries);
+                    break;
+                case nameof(Topic):
+                    return nameof(Topics);
+                    break;
+                case nameof(Question):  
+                    return nameof(Questions);
+                    break;
+                case nameof(Competence):
+                    return nameof(Competences);
+                    break;
+                default:
+                    return string.Empty;
+                    break;
+            }
         }
     }
 }

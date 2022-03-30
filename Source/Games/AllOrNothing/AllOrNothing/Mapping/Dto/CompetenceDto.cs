@@ -2,6 +2,7 @@
 using AutoMapper;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.UI.Xaml;
 using System;
 
 namespace AllOrNothing.Mapping
@@ -27,7 +28,12 @@ namespace AllOrNothing.Mapping
             set => SetProperty(ref _name, value); 
         }
 
-        public RelayCommand<object> RemoveCommand { get; set; }
+        private RelayCommand<object> relayCommand;
+        public RelayCommand<object> RemoveCommand 
+        {
+            get => relayCommand;
+            set => SetProperty(ref relayCommand, value);
+        }
 
         public override string ToString()
         {
@@ -37,6 +43,11 @@ namespace AllOrNothing.Mapping
         internal bool HasTheSameValue(CompetenceDto dto)
         {
             return Id == dto.Id && Name == dto.Name;
+        }
+
+        public  void Button_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

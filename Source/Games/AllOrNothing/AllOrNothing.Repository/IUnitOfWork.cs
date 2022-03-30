@@ -10,6 +10,8 @@ namespace AllOrNothing.Repository
         IQuestionSerieRepository QuestionSeries { get; }
         ITopicRepository Topics { get; }
         IQuestionRepository Questions { get; }
+        ICompetenceRepository Competences { get; }
+        string GetRepositoryNameForType(string typeName);
         int Complete();
     }
 }

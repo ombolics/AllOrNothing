@@ -28,7 +28,7 @@ namespace AllOrNothing.ViewModels
 
         public AllOrNothingSettingsViewModel(IMapper mapper, IUnitOfWork unitOfWork)
         {
-            _mapper = mapper;
+            Mapper = mapper;
             _unitOfWork = unitOfWork;
 
             ResetSettings();
@@ -49,10 +49,10 @@ namespace AllOrNothing.ViewModels
             //_unitOfWork.Complete();
 
             _avaiblePlayers = new SortedSet<PlayerDto>(new PlayerDtoComparer());
-            _avaiblePlayers.UnionWith(_mapper.Map<IEnumerable<PlayerDto>>(_unitOfWork.Players.GetAllAvaible()));
+            _avaiblePlayers.UnionWith(Mapper.Map<IEnumerable<PlayerDto>>(_unitOfWork.Players.GetAllAvaible()));
 
             var all = _unitOfWork.QuestionSeries.GetAllAvaible();
-            var tmp = _mapper.Map<IEnumerable<QuestionSerie>, IEnumerable<QuestionSerieDto>>(all);
+            var tmp = Mapper.Map<IEnumerable<QuestionSerie>, IEnumerable<QuestionSerieDto>>(all);
 
             foreach (var serie in tmp)
             {
@@ -66,6 +66,15 @@ namespace AllOrNothing.ViewModels
            
             _teams = new();
             _selectedPlayers = new();
+
+            AllCompetences = _unitOfWork.Competences.GetAll().ToList();
+        }
+
+        private List<Competence> _allCompetences;
+        public List<Competence> AllCompetences
+        {
+            get => _allCompetences;
+            set => SetProperty(ref _allCompetences, value);
         }
 
         private IMapper _mapper;
@@ -127,7 +136,7 @@ namespace AllOrNothing.ViewModels
 
             foreach (var serie in series)
             {
-                var dto = _mapper.Map<QuestionSerieDto>(serie);
+                var dto = Mapper.Map<QuestionSerieDto>(serie);
                 dto.FromFile = true;
                 if(dto.Competences.Count == 0)
                 {
@@ -214,7 +223,7 @@ namespace AllOrNothing.ViewModels
         {
             var value = new ObservableCollection<TeamDto>();
 
-            List<DragablePlayer> helper = _mapper.Map<ICollection<PlayerDto>, List<DragablePlayer>>(players);
+            List<DragablePlayer> helper = Mapper.Map<ICollection<PlayerDto>, List<DragablePlayer>>(players);
             Random r = new Random();
             while (helper.Count > 0)
             {
@@ -447,7 +456,7 @@ namespace AllOrNothing.ViewModels
                     //found
                     if (splitText.All((key) => player.Name.ToLower().Contains(key)))
                     {
-                        suitableItems.Add(_mapper.Map<PlayerDto>(player));
+                        suitableItems.Add(Mapper.Map<PlayerDto>(player));
                     }
                 }
 
@@ -593,6 +602,15 @@ namespace AllOrNothing.ViewModels
             set => SetProperty(ref _finalRound, value);
         }
         public bool IsFinalRound => FinalRound != null;
+
+        public IMapper Mapper 
+        { 
+            get => _mapper;
+            set => SetProperty(ref _mapper, value); 
+        }
+
+
+
         public void OnNavigatedTo(object parameter)
         {
             HidePages?.Invoke(this, null);

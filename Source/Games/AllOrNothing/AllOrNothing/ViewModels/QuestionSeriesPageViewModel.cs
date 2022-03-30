@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using AllOrNothing.Data.DataExtensions;
+using System.Linq;
 
 namespace AllOrNothing.ViewModels
 {
@@ -22,19 +23,25 @@ namespace AllOrNothing.ViewModels
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             AllSerie = GetSeriesAsDto();
+            AllCompetences = _unitOfWork.Competences.GetAll().ToList();
             UnselectedTextVisible = true;
         }
-
+        private List<Competence> _allCompetences;
+        public List<Competence> AllCompetences 
+        {
+            get => _allCompetences;
+            set => SetProperty(ref _allCompetences, value);
+        }
         private ObservableCollection<QuestionSerieDto> GetSeriesAsDto()
         {
-            var tmp = _mapper.Map<IEnumerable<QuestionSerieDto>>(_unitOfWork.QuestionSeries.GetAllAvaible());
+            var tmp = Mapper.Map<IEnumerable<QuestionSerieDto>>(_unitOfWork.QuestionSeries.GetAllAvaible());
             return new ObservableCollection<QuestionSerieDto>(tmp);
         }
 
         public XamlRoot PageXamlRoot { get; set; }
         private ObservableCollection<QuestionSerieDto> _allSerie;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
+        private  IMapper _mapper;
         private QuestionSerieDto _selectedSerie;
         public QuestionSerieDto SelectedSerie
         {
@@ -131,9 +138,18 @@ namespace AllOrNothing.ViewModels
             if (IsNewSerieSelected)
             {
                 EditingSerie.Id = 0;
-                _unitOfWork.QuestionSeries.Add(_mapper.Map<QuestionSerie>(EditingSerie));
+                EditingSerie.CreatedOn = DateTime.Now;
+                var mapped = Mapper.Map<QuestionSerie>(EditingSerie);
+                for (int i = 0; i < EditingSerie.Topics.Count; i++)
+                {
+                    for (int j = 0; j < EditingSerie.Topics[i].Competences.Count; j++)
+                    {
+                        mapped.Topics[i].Competences[j] = _unitOfWork.Competences.Get(EditingSerie.Topics[i].Competences[j].Id);
+                    }
+                }
+                _unitOfWork.QuestionSeries.Add(mapped);
             }
-            else if(!serieChanged)
+            else if(serieChanged)
             {
                 var serie = _unitOfWork.QuestionSeries.Get(EditingSerie.Id);
                 serie.Name = EditingSerie.Name;
@@ -141,7 +157,13 @@ namespace AllOrNothing.ViewModels
                 foreach (var item in EditingSerie.Topics)
                 {
                     var data = _unitOfWork.Topics.Get(item.Id);
-                    data.Name = item.Name;
+                    data.Name = item.Name;                 
+                    List<Competence> tmp = new List<Competence>();
+                    foreach (var comp in item.Competences)
+                    {
+                        tmp.Add(_unitOfWork.Competences.Get(comp.Id));
+                    }
+                    data.Competences = tmp;
                     data.Description = item.Description;
 
                     foreach (var question in item.Questions)
@@ -168,6 +190,7 @@ namespace AllOrNothing.ViewModels
                 dialog.Title = "Sikeres mentés";
                 dialog.Content = new CustomDialog("Sikeres mentés!");
                 IsNewSerieSelected = false;
+                EditingSerie = null;
             }
             else
             {
@@ -236,6 +259,13 @@ namespace AllOrNothing.ViewModels
                 IsNewSerieSelected = value?.Id == -1;
             }
         }
+
+        public IMapper Mapper
+        {
+            get => _mapper;
+            set => SetProperty(ref _mapper, value);
+        }
+
         private bool _isNewSerieSelected;
 
         private bool _isSerieUnderEdit;
@@ -250,7 +280,7 @@ namespace AllOrNothing.ViewModels
             serie.Topics = new List<TopicDto>();
             for (int i = 0; i < 5; i++)
             {
-                serie.Topics.Add(new TopicDto(6, _unitOfWork, _mapper));
+                serie.Topics.Add(new TopicDto(6, _unitOfWork, Mapper));
             }
 
             SelectedSerie = null;

@@ -45,7 +45,7 @@
             <ScrollViewer Grid.Row="1">
                 <toolkit:DataGrid ItemsSource="{x:Bind ViewModel.AllSerie, Mode=OneWay}"
                                   AutoGenerateColumns="False"
-                                  
+                                  MaxColumnWidth="200"
                                   SelectedItem="{x:Bind ViewModel.SelectedSerie, Mode=TwoWay}"
                                   IsReadOnly="True">
 
@@ -146,33 +146,59 @@
                           Margin="10,10,10,10"
                           Visibility="{x:Bind ViewModel.UnselectedTextVisible, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=negate}">
                 <StackPanel Orientation="Vertical">
-
                     <ListBox ItemsSource="{x:Bind ViewModel.EditingSerie.Topics, Mode=OneWay}">
                         <ListBox.ItemTemplate>
+                            
                             <DataTemplate>
                                 <StackPanel Orientation="Vertical" Background="{ThemeResource GreyBrush}">
-                                    <!--név-->
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="Név" 
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        
+                                        <Grid Grid.Column="0">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="*"/>
+                                            </Grid.RowDefinitions>
+                                            
+                                            <!--név-->
+                                            <StackPanel Orientation="Vertical" Grid.Row="0">
+                                                <TextBlock Text="Név" 
                                                Margin="10,10,10,10" FontSize="{ThemeResource MediumFontSize}"/>
-                                        <TextBox Text="{Binding Name, Mode=TwoWay}" 
-                                             Margin="10,10,10,10" FontSize="{ThemeResource MediumFontSize}"
-                                             x:Name="topicNameTextbox"
-                                            />
-                                        <!--TextChanged="{Binding TextBoxChanged}"-->
-                                        <!--TextChanged="{Binding ViewModel.TextBoxChanged, ElementName=questionSeriePage}"-->
-                                    </StackPanel>
-                                    <!--leírás-->
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="Leírás" 
-                                           Margin="10,10,10,10" FontSize="{ThemeResource MediumFontSize}"/>
-                                        <TextBox Text="{Binding Description, Mode=TwoWay}" 
-                                             Margin="10,10,10,10" FontSize="{ThemeResource MediumFontSize}" 
-                                             TextWrapping="Wrap"
-                                             x:Name="topicDescriptionTextbox"/>
-                                    </StackPanel>
+                                                <TextBox Text="{Binding Name, Mode=TwoWay}" 
+                                                         Margin="10,10,10,0" FontSize="{ThemeResource MediumFontSize}"
+                                                         HorizontalAlignment="Stretch"
+                                                         x:Name="topicNameTextbox"/>
+
+                                            </StackPanel>
+                                            <!--leírás-->
+                                            <StackPanel Orientation="Vertical" Grid.Row="1">
+                                                <TextBlock Text="Leírás" 
+                                                           Margin="10,10,10,0" FontSize="{ThemeResource MediumFontSize}"/>
+                                                <TextBox Text="{Binding Description, Mode=TwoWay}" 
+                                                         Margin="10,10,10,10" FontSize="{ThemeResource MediumFontSize}"
+                                                         HorizontalAlignment="Stretch"
+                                                         TextWrapping="Wrap"
+                                                         x:Name="topicDescriptionTextbox"/> 
+                                            </StackPanel>
+                                        </Grid>
+
+                                        <StackPanel Orientation="Vertical" Grid.Column="1">
+                                            <TextBlock Name="proxy" helpers:AncestorHelper.AncestorType="Page"/>
+                                            <TextBlock Text="Ismeretkör"/>
+                                            <!--Ismeretkör-->
+                                            <cc:CompetenceSearchPanel  SelectedCompetences="{Binding Competences}"
+                                                                  Mapper="{Binding DataContext.ViewModel.Mapper, ElementName=proxy}"
+                                                                  AllCompetences="{Binding DataContext.ViewModel.AllCompetences, ElementName=proxy}"/>
+                                        </StackPanel>
+                                        
+
+                                    </Grid>
+                                    
                                     <!--szerző-->
-                                    <StackPanel Orientation="Horizontal">
+                                    <StackPanel Orientation="Horizontal" Visibility="{Binding HasAuthor, Converter={StaticResource BoolToVisibilityConverter}}">
                                         <TextBlock Text="Szerző" 
                                            Margin="10,10,10,10" FontSize="{ThemeResource MediumFontSize}"/>
                                         <TextBlock Text="{Binding Author.Name}" 
@@ -184,9 +210,6 @@
 
                                     </StackPanel>
                                     
-                                    <!--Ismeretkör-->
-                                    
-
                                     <!--kérdések-->
                                     <TextBlock Text="Kérdések" FontSize="{ThemeResource LargeFontSize}"/>
                                     <ItemsControl ItemsSource="{Binding Questions}">
@@ -259,7 +282,7 @@
                     VerticalAlignment="Stretch"
                     Command="{x:Bind ViewModel.SaveCommand}"/>
 
-                <Button Content="Játékos törlése"
+                <Button Content="Kérdéssor törlése"
                     Grid.Column="1"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
