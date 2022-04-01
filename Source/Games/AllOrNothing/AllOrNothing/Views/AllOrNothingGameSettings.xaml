@@ -123,11 +123,19 @@
                                 </Border>
 
                                 <StackPanel Orientation="Horizontal" Margin="10,10,10,10">
+                                    <TextBlock Text="Alkalom neve"/>
+                                    <TextBox PlaceholderText="Pl.: Kvíztábor 2020" 
+                                             Text="{x:Bind ViewModel.GameModel.GameSettings.OccasionName, Mode=TwoWay}"/>
+                                </StackPanel>
+                                
+                                <StackPanel Orientation="Horizontal" Margin="10,10,10,10">
                                     <TextBox Text="{x:Bind ViewModel.GameModel.GameSettings.NumberOfRounds, Mode=TwoWay}"/>
                                     <TextBlock  Text="Kör döntő nélkül"/>
                                 </StackPanel>
-                                <CheckBox Content="Körök sorsolása" IsChecked="{x:Bind ViewModel.GameModel.GameSettings.GenerateSchedule, Mode=TwoWay}"/>
-                                <CheckBox Content="Kérdéssor beállítása előre" IsChecked="{x:Bind ViewModel.GameModel.GameSettings.AssignSeriesForAllGame, Mode=TwoWay}"/>
+                                
+                                <!--for later functions-->
+                                <!--<CheckBox Content="Körök sorsolása" IsChecked="{x:Bind ViewModel.GameModel.GameSettings.GenerateSchedule, Mode=TwoWay}"/>
+                                <CheckBox Content="Kérdéssor beállítása előre" IsChecked="{x:Bind ViewModel.GameModel.GameSettings.AssignSeriesForAllGame, Mode=TwoWay}"/>-->
                             </StackPanel>
 
                             <StackPanel Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{ThemeResource GreyBrush}"
@@ -209,10 +217,9 @@
                                             <dd:DropConfiguration DropTextCommand="{Binding AddPlayerCommand}"/>
                                         </dd:DragDropService.Configuration>
                                         <dd:DragDropService.VisualConfiguration>
-                                            <dd:VisualDropConfiguration
-                                                            Caption="Csapattag áthelyezése"
-                                                            IsContentVisible="True"
-                                                            IsGlyphVisible="False"/>
+                                            <dd:VisualDropConfiguration Caption="Csapattag áthelyezése"
+                                                                        IsContentVisible="True"
+                                                                        IsGlyphVisible="False"/>
                                         </dd:DragDropService.VisualConfiguration>
 
                                         <TextBox Text="{Binding TeamName, Mode=TwoWay}" Margin="10,10,0,10" HorizontalAlignment="Center" />
@@ -226,14 +233,17 @@
 
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
-                                                    <cc:PlayerTextBlock 
-                                                                    Player="{Binding}"
-                                                                    Margin="10,10,10,10" 
-                                                                    CanDrag="{Binding CanDrag}" >
-
+                                                    <cc:PlayerTextBlock Player="{Binding}"
+                                                                        Margin="10,10,10,10" 
+                                                                        CanDrag="{Binding CanDrag}"
+                                                                        AllowDrop="True">
+                                                        <dd:DragDropService.Configuration>
+                                                            <dd:DropConfiguration DropTextCommand="{Binding ChangePlayerCommand}"/>
+                                                        </dd:DragDropService.Configuration>
                                                         <dd:DragDropService.VisualConfiguration>
-                                                            <dd:VisualDropConfiguration
-                                                            />
+                                                            <dd:VisualDropConfiguration Caption="Csapattagok cseréje"
+                                                                                        IsContentVisible="True"
+                                                                                        IsGlyphVisible="False"/>
                                                         </dd:DragDropService.VisualConfiguration>
 
                                                     </cc:PlayerTextBlock>

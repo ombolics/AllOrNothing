@@ -21,6 +21,13 @@ namespace AllOrNothing.Models
         }
 
 
+        private string _occasionName;
+        public string OccasionName
+        {
+            get => _occasionName;
+            set => SetProperty(ref _occasionName, value);
+        }
+
         private int _numberOfRounds;
 
         public int NumberOfRounds

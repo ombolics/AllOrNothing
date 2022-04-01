@@ -83,7 +83,7 @@ namespace AllOrNothing.ViewModels
         private bool _canGoToNextPage;
         public bool CanGoToNextPage
         {
-            get => _canGoToNextPage;
+            get => true; //_canGoToNextPage;
             set => SetProperty(ref _canGoToNextPage, value);
         }
 
@@ -241,6 +241,7 @@ namespace AllOrNothing.ViewModels
 
                     //plyr.OriginalTeam = team.Players;
 
+                    plyr.SwitchPlayers += Plyr_SwitchPlayers;
                     helper.Remove(plyr);
                     team.Players.Add(plyr);
                     team.TeamName += plyr.NickName + " - ";
@@ -254,6 +255,26 @@ namespace AllOrNothing.ViewModels
                 value.Add(team);
             }
             return value;
+        }
+
+        private void Plyr_SwitchPlayers(object sender, DragablePlayer e)
+        {
+            var player1 = sender as DragablePlayer;
+            DragablePlayer player2 = null;
+            for (int i = 0; i < Teams.Count && player2 == null; i++)
+            {
+                player2 = Teams[i].TryGetPlayerById(e.Id);
+            }
+            var team1 = Teams.Single(t => t.Players.Any(p => p.Id == player1.Id));
+            var team2 = Teams.Single(t => t.Players.Any(p => p.Id == player2.Id));
+            
+            team1.Players.Remove(player1);
+            team1.Players.Add(player2);
+            team2.Players.Remove(player2);
+            team2.Players.Add(player1);
+
+            team1.UpdateTeamName();
+            team2.UpdateTeamName();
         }
 
 
@@ -411,6 +432,7 @@ namespace AllOrNothing.ViewModels
             NavigateTo?.Invoke(this, new NavigateToEventargs { PageName = "Új játékos", PageVM = typeof(PlayerAddingViewModel) });
         }
 
+       
         private ObservableCollection<TeamDto> _teams;
         public ObservableCollection<TeamDto> Teams
         {
@@ -568,6 +590,7 @@ namespace AllOrNothing.ViewModels
         private void StartGameClicked()
         {
             var vm = Ioc.Default.GetService<AllOrNothingGameViewModel>();
+            vm.OccasionName = GameModel.GameSettings.OccasionName;
             vm.SetupRound(SelectedRound);
             vm.RoundOver += GameVM_RoundOver;
 

@@ -30,7 +30,7 @@
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="8*"/>
-                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="3*"/>
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
             
@@ -45,16 +45,7 @@
                         <ColumnDefinition Width="4*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Row="1" Text="Kvíztábor 2022 13. forduló" FontSize="{StaticResource LargeFontSize}" Margin="10,10,10,10"/>
-
-                    <Button Grid.Row="1" Grid.Column="1" 
-                            Content="{x:Bind ViewModel.SelectedRound.RoundSettings.TematicalTime, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}" 
-                            CornerRadius="10" 
-                            HorizontalAlignment="Right" 
-                            VerticalAlignment="Stretch" 
-                            FontSize="{StaticResource LargeFontSize}"
-                            Command="{x:Bind ViewModel.ToggleTimerCommand}"/>
-
+                    <TextBlock Grid.Row="1" Text="{x:Bind ViewModel.OccasionName}" FontSize="{StaticResource LargeFontSize}" Margin="10,10,10,10"/>
                 </Grid>
 
                 <cc:QuestionGrid Grid.Row="2" Margin="15,15,15,15"
@@ -65,7 +56,7 @@
 
             </Grid>
 
-            <Grid Grid.Column="1" Background="{ThemeResource GradientBrush6}" CornerRadius="30" Margin="10,10,10,10">
+            <Grid Grid.Column="1" Background="{ThemeResource GradientBrush8}" CornerRadius="30" Margin="10,10,10,10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="5*"/>
                     <RowDefinition Height="1*"/>
@@ -90,25 +81,23 @@
                 <Grid Grid.Row="2">
                     
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="auto"/>
                         <RowDefinition Height="3*"/>
                         <RowDefinition Height="2*"/>
                     </Grid.RowDefinitions>
 
-                    <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="10">
-                        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Text="Válaszadó csapat:" FontSize="{StaticResource MediumFontSize}">
-                            <!--<TextBlock.ContextFlyout>
-                                <Flyout>
-                                    <StackPanel>
-                                        <TextBlock Style="{ThemeResource BaseTextBlockStyle}" Text="All items will be removed. Do you want to continue?" Margin="0,0,0,12" />
-                                        <Button  Content="Yes, empty my cart" />
-                                    </StackPanel>
-                                </Flyout>
+                    <StackPanel Grid.Row="0" Orientation="Vertical" Spacing="10">
+                        <TextBlock HorizontalAlignment="Center" 
+                                   VerticalAlignment="Center" 
+                                   Text="Válaszadó csapat:" 
+                                   FontSize="{StaticResource LargeFontSize}" 
+                                   Margin="10,10,10,10"/>
 
-                            </TextBlock.ContextFlyout>-->
-                        </TextBlock>
-
-                        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Text="{x:Bind ViewModel.PickingTeam.Team.TeamName, Mode=OneWay}" FontSize="{StaticResource MediumFontSize}"/>
+                        <TextBlock HorizontalAlignment="Center" 
+                                   VerticalAlignment="Center" 
+                                   Text="{x:Bind ViewModel.PickingTeam.Team.TeamName, Mode=OneWay}" 
+                                   FontSize="{StaticResource MediumFontSize}"
+                                   Margin="10,10,10,10"/>
                     </StackPanel>
                     
 
@@ -215,7 +204,7 @@
                         <ColumnDefinition Width="4*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Row="1" Text="Kvíztábor 2022 13. forduló" FontSize="{StaticResource LargeFontSize}" Margin="10,10,10,10"/>
+                    <TextBlock Grid.Row="1" Text="{x:Bind ViewModel.OccasionName}" FontSize="{StaticResource LargeFontSize}" Margin="10,10,10,10"/>
 
                     <Button Grid.Row="1" Grid.Column="1" 
                             Content="{x:Bind ViewModel.SelectedRound.RoundSettings.TematicalTime, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}" 
@@ -240,8 +229,21 @@
                     <RowDefinition Height="4*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-               
-                <ListBox Grid.Row="0" 
+
+                <ItemsControl ItemsSource="{x:Bind ViewModel.SelectedRound.RoundStandings}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <con:UniformGrid Columns="1"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <cc:TeamScore Standing="{Binding}" CurrentQuestion="{Binding ViewModel.CurrentQuestion, Mode=TwoWay, ElementName=gamePage}"
+                                          HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <!--<ListBox Grid.Row="0" 
                           ItemsSource="{x:Bind ViewModel.SelectedRound.RoundStandings, Mode=OneWay}"
 
                           HorizontalContentAlignment="Stretch"
@@ -261,7 +263,7 @@
                             <Setter Property="VerticalContentAlignment"  Value="Stretch"></Setter>
                         </Style>
                     </ListBox.ItemContainerStyle>
-                </ListBox>
+                </ListBox>-->
                 
                 <!--<cc:TeamScore Grid.Row="0" Grid.Column="0" Score="{x:Bind ViewModel.ScoreTest, Mode=TwoWay}" CurrentQuestion="{x:Bind ViewModel.CurrentQuestion, Mode=TwoWay}" />-->
 

@@ -7,9 +7,9 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <Platforms>x86;x64;arm64</Platforms>
     <RuntimeIdentifier>win10-x86</RuntimeIdentifier>
-    <PublishProfile>win10-$(Platform).pubxml</PublishProfile>
     <UseWinUI>true</UseWinUI>
-    <EnablePreviewMsixTooling>true</EnablePreviewMsixTooling>
+	<EnablePreviewMsixTooling>true</EnablePreviewMsixTooling>
+	<PublishProfile>Properties\PublishProfiles\win10-$(Platform).pubxml</PublishProfile>
 	<GenerateRuntimeConfigurationFiles>True</GenerateRuntimeConfigurationFiles>
 	<DefaultLanguage>hu-hu</DefaultLanguage>
 	<GenerateAppInstallerFile>False</GenerateAppInstallerFile>
@@ -18,6 +18,9 @@
 	<GenerateTestArtifacts>True</GenerateTestArtifacts>
 	<AppxBundle>Never</AppxBundle>
 	<HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
+	<AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
+	<PackageCertificateThumbprint>9E6091209346598FD4153943EDB143CA0AAB38FE</PackageCertificateThumbprint>
+	<AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Controls\CompetenceSearchPanel.xaml" />

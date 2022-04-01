@@ -33,6 +33,14 @@ namespace AllOrNothing.Mapping
             //player.OriginalTeam = Players;
         }
 
+        public DragablePlayer TryGetPlayerById(int id)
+        {
+            int i = 0;
+            while (i < Players.Count && Players[i].Id != id)
+                i++;
+            return i < Players.Count ? Players[i] : null;
+        }
+
         public void UpdateTeamName()
         {        
             if (Players.Count <= 0)

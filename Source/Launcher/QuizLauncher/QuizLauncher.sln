@@ -1,0 +1,56 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32106.194
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{C7167F0D-BC9F-4E6E-AFE1-012C56B48DB5}") = "QuizLauncher (Package)", "QuizLauncher\QuizLauncher (Package)\QuizLauncher (Package).wapproj", "{38F972A6-64D1-442D-9634-54CA9F90EB28}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuizLauncher", "QuizLauncher\QuizLauncher\QuizLauncher.csproj", "{61E8A8A6-E335-45BB-95E0-B76BA93C0104}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|arm64 = Debug|arm64
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|arm64 = Release|arm64
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{38F972A6-64D1-442D-9634-54CA9F90EB28}.Debug|arm64.ActiveCfg = Debug|arm64
+		{38F972A6-64D1-442D-9634-54CA9F90EB28}.Debug|arm64.Build.0 = Debug|arm64
+		{38F972A6-64D1-442D-9634-54CA9F90EB28}.Debug|arm64.Deploy.0 = Debug|arm64
+		{38F972A6-64D1-442D-9634-54CA9F90EB28}.Debug|x64.ActiveCfg = Debug|x64
+		{38F972A6-64D1-442D-9634-54CA9F90EB28}.Debug|x64.Build.0 = Debug|x64
+		{38F972A6-64D1-442D-9634-54CA9F90EB28}.Debug|x64.Deploy.0 = Debug|x64
+		{38F972A6-64D1-442D-9634-54CA9F90EB28}.Debug|x86.ActiveCfg = Debug|x86
+		{38F972A6-64D1-442D-9634-54CA9F90EB28}.Debug|x86.Build.0 = Debug|x86
+		{38F972A6-64D1-442D-9634-54CA9F90EB28}.Release|arm64.ActiveCfg = Release|arm64
+		{38F972A6-64D1-442D-9634-54CA9F90EB28}.Release|arm64.Build.0 = Release|arm64
+		{38F972A6-64D1-442D-9634-54CA9F90EB28}.Release|arm64.Deploy.0 = Release|arm64
+		{38F972A6-64D1-442D-9634-54CA9F90EB28}.Release|x64.ActiveCfg = Release|x64
+		{38F972A6-64D1-442D-9634-54CA9F90EB28}.Release|x64.Build.0 = Release|x64
+		{38F972A6-64D1-442D-9634-54CA9F90EB28}.Release|x64.Deploy.0 = Release|x64
+		{38F972A6-64D1-442D-9634-54CA9F90EB28}.Release|x86.ActiveCfg = Release|x86
+		{38F972A6-64D1-442D-9634-54CA9F90EB28}.Release|x86.Build.0 = Release|x86
+		{38F972A6-64D1-442D-9634-54CA9F90EB28}.Release|x86.Deploy.0 = Release|x86
+		{61E8A8A6-E335-45BB-95E0-B76BA93C0104}.Debug|arm64.ActiveCfg = Debug|arm64
+		{61E8A8A6-E335-45BB-95E0-B76BA93C0104}.Debug|arm64.Build.0 = Debug|arm64
+		{61E8A8A6-E335-45BB-95E0-B76BA93C0104}.Debug|x64.ActiveCfg = Debug|x64
+		{61E8A8A6-E335-45BB-95E0-B76BA93C0104}.Debug|x64.Build.0 = Debug|x64
+		{61E8A8A6-E335-45BB-95E0-B76BA93C0104}.Debug|x86.ActiveCfg = Debug|x86
+		{61E8A8A6-E335-45BB-95E0-B76BA93C0104}.Debug|x86.Build.0 = Debug|x86
+		{61E8A8A6-E335-45BB-95E0-B76BA93C0104}.Release|arm64.ActiveCfg = Release|arm64
+		{61E8A8A6-E335-45BB-95E0-B76BA93C0104}.Release|arm64.Build.0 = Release|arm64
+		{61E8A8A6-E335-45BB-95E0-B76BA93C0104}.Release|x64.ActiveCfg = Release|x64
+		{61E8A8A6-E335-45BB-95E0-B76BA93C0104}.Release|x64.Build.0 = Release|x64
+		{61E8A8A6-E335-45BB-95E0-B76BA93C0104}.Release|x86.ActiveCfg = Release|x86
+		{61E8A8A6-E335-45BB-95E0-B76BA93C0104}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {11AD3AB5-C4F8-42CE-93F7-5C5EDF9BE41E}
+	EndGlobalSection
+EndGlobal

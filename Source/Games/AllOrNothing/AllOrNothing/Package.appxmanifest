@@ -9,7 +9,7 @@
   <Identity
     Name="f4391cfb-2c5c-4457-b068-ab574b611f78"
     Publisher="CN=Csabi"
-    Version="1.0.0.0" />
+    Version="1.0.3.0" />
 
   <Properties>
     <DisplayName>AllOrNothing</DisplayName>

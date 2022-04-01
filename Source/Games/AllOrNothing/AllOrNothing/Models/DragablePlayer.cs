@@ -1,9 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace AllOrNothing.Models
 {
@@ -19,6 +21,15 @@ namespace AllOrNothing.Models
         {
             get => _canDrag;
             set => SetProperty(ref _canDrag, value);
+        }
+
+        private ICommand _changePlayerCommand;
+        public ICommand ChangePlayerCommand => _changePlayerCommand ??= new RelayCommand<DragablePlayer>(On_ChangePlayer);
+        public event EventHandler<DragablePlayer> SwitchPlayers;
+
+        private void On_ChangePlayer(DragablePlayer obj)
+        {
+            SwitchPlayers?.Invoke(this, obj);
         }
     }
 }
