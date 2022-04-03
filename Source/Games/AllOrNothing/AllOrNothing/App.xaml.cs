@@ -19,7 +19,7 @@ namespace AllOrNothing
     public partial class App : Application
     {
         public static Window MainWindow { get; set; } = new Window() { Title = "AppDisplayName".GetLocalized() };
-        public static readonly string QuestionSerieFolder = @$"{System.AppDomain.CurrentDomain.BaseDirectory}\Kérdéssorok";
+        public static readonly string QuestionSerieFolder = @$"{System.AppDomain.CurrentDomain.BaseDirectory}\QuestionSerieSamples";
 
         public App()
         {

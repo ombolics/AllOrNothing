@@ -34,13 +34,12 @@ namespace AllOrNothing.Models
         {
             get => _numberOfRounds;
             set
-            {
-                if (value < 1)
+            {              
+                if(value != _numberOfRounds)
                 {
-                    value = 1;
-                }
-                _numberOfRounds = value;
-                OnPropertyChanged(nameof(NumberOfRounds));
+                   _numberOfRounds = value < 1 ? 1 : value;
+                   OnPropertyChanged(nameof(NumberOfRounds));
+                }              
             }
         }
 

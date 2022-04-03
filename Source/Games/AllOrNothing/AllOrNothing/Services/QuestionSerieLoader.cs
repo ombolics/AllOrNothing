@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text;
 
 namespace AllOrNothing.Services
 {
@@ -22,11 +24,13 @@ namespace AllOrNothing.Services
             return result;
         }
 
-        public QuestionSerie LoadOldFormatFromTxt(string path = null, string content = null)
+        public QuestionSerie LoadOldFormatFromTxt(string name, string content = null)
         {
             QuestionSerie value = new QuestionSerie()
             {
                 CreatedOn = DateTime.Now,
+                Name = name,
+                
             };
             value.Topics = new List<Topic>();
             var topicArray = content.Split("\r\n\r\n");
@@ -91,12 +95,11 @@ namespace AllOrNothing.Services
 
         public QuestionSerie LoadFromTxt(string path)
         {
-            StreamReader sr = new StreamReader(path);
-            var fileContent = sr.ReadToEnd();
-
-            if(fileContent.Split("\r\n")[0].Split(':')[0].ToLower() != "szerző")
+            var fileContent = File.ReadAllText(path, Encoding.UTF8);
+            var name = path.Split(@"\").Last().Replace(".txt","");
+            if (fileContent.Split("\r\n")[0].Split(':')[0].ToLower() != "szerző")
             {
-                return LoadOldFormatFromTxt(null, fileContent);
+                return LoadOldFormatFromTxt(name, fileContent);
             }
             else
             {

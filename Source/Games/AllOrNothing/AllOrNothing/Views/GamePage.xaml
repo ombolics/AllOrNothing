@@ -274,7 +274,11 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <Button Grid.Row="0" Content="Nincs válasz" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                    <Button Grid.Row="0" 
+                            Content="Nincs válasz" 
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            Command="{x:Bind ViewModel.SkipAnswerCommand}"/>
                     
                     <Grid Grid.Row="1" Margin="10,10,10,10" ColumnSpacing="5">
                         <Grid.ColumnDefinitions>

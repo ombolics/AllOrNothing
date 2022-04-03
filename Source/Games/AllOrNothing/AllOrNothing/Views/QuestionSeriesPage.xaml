@@ -246,10 +246,10 @@
                                                     <StackPanel Orientation="Horizontal">
                                                         <TextBlock Text="Érték"  Margin="10,0,10,5" FontSize="{ThemeResource MediumFontSize}"/>
                                                         <TextBox Text="{Binding Value, Mode=TwoWay}" 
-                                                                 Margin="10,0,10,5" 
-                                                                 FontSize="{ThemeResource MediumFontSize}"
-                                                             
-                                                                 x:Name="valueTextBox"/>
+                                                                             Margin="10,0,10,5" 
+                                                                             FontSize="{ThemeResource MediumFontSize}"
+                                                                             
+                                                                             x:Name="valueTextBox"/>
                                                     </StackPanel>
                                                 </StackPanel>
                                             </DataTemplate>

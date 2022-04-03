@@ -25,6 +25,10 @@
   <ItemGroup>
     <None Remove="Controls\CompetenceSearchPanel.xaml" />
     <None Remove="Controls\LightningDialog.xaml" />
+    <None Remove="QuestionSerieSamples\Döntő 2011a.txt" />
+    <None Remove="QuestionSerieSamples\ÖCS_01.txt" />
+    <None Remove="QuestionSerieSamples\ÖCS_02.txt" />
+    <None Remove="QuestionSerieSamples\ÖCS_03.txt" />
     <None Remove="Views\PlayerAddingPage.xaml" />
     <None Remove="Views\ScoreBoardPage.xaml" />
   </ItemGroup>
@@ -37,6 +41,18 @@
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
     <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
+    <Content Include="QuestionSerieSamples\Döntő 2011a.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="QuestionSerieSamples\ÖCS_01.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="QuestionSerieSamples\ÖCS_02.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="QuestionSerieSamples\ÖCS_03.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

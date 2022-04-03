@@ -129,7 +129,8 @@
                                 </StackPanel>
                                 
                                 <StackPanel Orientation="Horizontal" Margin="10,10,10,10">
-                                    <TextBox Text="{x:Bind ViewModel.GameModel.GameSettings.NumberOfRounds, Mode=TwoWay}"/>
+                                    <cc:ValidatedTextBox ValidatedText="{x:Bind ViewModel.GameModel.GameSettings.NumberOfRounds, Mode=TwoWay}"
+                                                         ValidateNumbers="True"/>
                                     <TextBlock  Text="Kör döntő nélkül"/>
                                 </StackPanel>
                                 
@@ -150,7 +151,10 @@
                                           Checked="{x:Bind ViewModel.TeamsAllowedChecked}"/>-->
 
                                 <StackPanel Orientation="Horizontal" Margin="50,5,10,5" >
-                                    <TextBox Height="30" Text="{x:Bind ViewModel.GameModel.GameSettings.MaxTeamSize, Mode=TwoWay}" />
+                                    <cc:ValidatedTextBox Height="30" 
+                                                         ValidatedText="{x:Bind ViewModel.GameModel.GameSettings.MaxTeamSize, Mode=TwoWay}" 
+                                                         ValidateNumbers="True"
+                                                         />
                                     <TextBlock  Text="maximális csaptalétszám"/>
                                 </StackPanel>
 
@@ -171,17 +175,28 @@
 
                             <StackPanel Orientation="Horizontal">
                                 <CheckBox Content="Tematikus" Margin="20,10,10,5" 
-                                          IsChecked="{x:Bind ViewModel.GameModel.GameSettings.IsTematicalAllowed, Mode=TwoWay}"/>
+                                          x:Name="tematicalCheckBox"
+                                          IsChecked="{x:Bind ViewModel.GameModel.GameSettings.IsTematicalAllowed, Mode=TwoWay}"
+                                          Checked="{x:Bind ViewModel.TimeSelectionCheckBox_Checked, Mode=OneWay}"/>
+                                
                                 <TimePicker ClockIdentifier="24HourClock" Time="{x:Bind ViewModel.GameModel.GameSettings.GeneralTematicalTime, Mode=TwoWay}" 
+                                            x:Name="tematicalTimePicker"
                                             SelectedTime="7:00" 
-                                            IsEnabled="{x:Bind ViewModel.GameModel.GameSettings.IsTematicalAllowed, Mode=TwoWay}"/>
+                                            IsEnabled="{x:Bind ViewModel.GameModel.GameSettings.IsTematicalAllowed, Mode=TwoWay}"
+                                            SelectedTimeChanged="{x:Bind ViewModel.TimePicker_SelectedTimeChanged, Mode=OneWay}"/>
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal">
-                                <CheckBox Content="Villám" Margin="20,5,10,5" IsChecked="{x:Bind ViewModel.GameModel.GameSettings.IsLightningAllowed, Mode=TwoWay}"/>
+                                <CheckBox Content="Villám" Margin="20,5,10,5" 
+                                          x:Name="lightningCheckBox"
+                                          IsChecked="{x:Bind ViewModel.GameModel.GameSettings.IsLightningAllowed, Mode=TwoWay}"
+                                          Checked="{x:Bind ViewModel.TimeSelectionCheckBox_Checked, Mode=OneWay}"/>
+                                
                                 <TimePicker ClockIdentifier="24HourClock" Time="{x:Bind ViewModel.GameModel.GameSettings.GeneralLightningTime, Mode=TwoWay}" 
+                                            x:Name="lightningTimePicker"
                                             SelectedTime="3:00"
-                                            IsEnabled="{x:Bind ViewModel.GameModel.GameSettings.IsLightningAllowed, Mode=TwoWay}"/>
+                                            IsEnabled="{x:Bind ViewModel.GameModel.GameSettings.IsLightningAllowed, Mode=TwoWay}"
+                                            SelectedTimeChanged="{x:Bind ViewModel.TimePicker_SelectedTimeChanged, Mode=OneWay}"/>
                             </StackPanel>
 
                             <CheckBox Content="Gombok nélüli játék" Margin="20,0,0,0" 
@@ -259,8 +274,10 @@
                 </Border>
 
                 <StackPanel Grid.Row="2"   Orientation="Vertical">
-                    <Button Visibility="{x:Bind ViewModel.CanGoToNextPage, Mode=OneWay, Converter = {StaticResource BoolToVisibilityConverter}}" Content="Tovább" FontSize="{ThemeResource LargeFontSize}" VerticalAlignment="Center"
-                        HorizontalAlignment="Right" Command="{x:Bind ViewModel.ShowRoundSettingsCommand}"/>
+                    <Button Visibility="{x:Bind ViewModel.CanGoToNextPage, Mode=OneWay, Converter = {StaticResource BoolToVisibilityConverter}}" 
+                            Content="Tovább" FontSize="{ThemeResource LargeFontSize}" 
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Right" Command="{x:Bind ViewModel.ShowRoundSettingsCommand}"/>
 
                     <Button Content="Kilépés" FontSize="{ThemeResource LargeFontSize}" VerticalAlignment="Center"
                         HorizontalAlignment="Right" Command="{x:Bind ViewModel.ExitCommand}"/>
@@ -370,20 +387,28 @@
                             </Border>
 
                             <StackPanel Orientation="Horizontal">
-                                <CheckBox Content="Tematikus" Margin="20,10,10,5" 
+                                <CheckBox Content="Tematikus" Margin="20,10,10,5"
+                                          x:Name="roundTematicalCheckbox"
                                           IsChecked="{x:Bind ViewModel.SelectedRound.RoundSettings.IsTematicalAllowed, Mode=TwoWay}"
-                                          />
+                                          Checked="{x:Bind ViewModel.TimeSelectionCheckBox_Checked, Mode=OneWay}"/>
                                 <TimePicker ClockIdentifier="24HourClock" Time="7:00"
+                                            x:Name="roundTematicalTime"
                                             IsEnabled="{x:Bind ViewModel.SelectedRound.RoundSettings.IsTematicalAllowed, Mode=TwoWay}"
-                                            SelectedTime="{x:Bind ViewModel.SelectedRound.RoundSettings.TematicalTime, Mode=TwoWay}"/>
+                                            SelectedTime="{x:Bind ViewModel.SelectedRound.RoundSettings.TematicalTime, Mode=TwoWay}"
+                                            SelectedTimeChanged="{x:Bind ViewModel.TimePicker_SelectedTimeChanged, Mode=OneWay}"/>
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal">
-                                <CheckBox Content="Villám" Margin="20,5,10,5" 
-                                          IsChecked="{x:Bind ViewModel.SelectedRound.RoundSettings.IsLightningAllowed, Mode=TwoWay}"/>
+                                <CheckBox Content="Villám" Margin="20,5,10,5"
+                                          x:Name="roundLightningCheckBox"
+                                          IsChecked="{x:Bind ViewModel.SelectedRound.RoundSettings.IsLightningAllowed, Mode=TwoWay}"
+                                          Checked="{x:Bind ViewModel.TimeSelectionCheckBox_Checked, Mode=OneWay}"/>
+                                
                                 <TimePicker ClockIdentifier="24HourClock"
+                                            x:Name="roundLightningTime"
                                             IsEnabled="{x:Bind ViewModel.SelectedRound.RoundSettings.IsLightningAllowed, Mode=TwoWay}"
-                                            Time="3:00" SelectedTime="{x:Bind ViewModel.SelectedRound.RoundSettings.LightningTime, Mode=TwoWay}"/>
+                                            Time="3:00" SelectedTime="{x:Bind ViewModel.SelectedRound.RoundSettings.LightningTime, Mode=TwoWay}"
+                                            SelectedTimeChanged="{x:Bind ViewModel.TimePicker_SelectedTimeChanged, Mode=OneWay}"/>
                             </StackPanel>
                         </StackPanel>
 
@@ -409,6 +434,7 @@
                                 
                                 <con:DataGrid.Columns>
                                     <con:DataGridTextColumn Header="Id" Binding="{Binding Id}" Tag="Id" />
+                                    <con:DataGridTextColumn Header="Név" Binding="{Binding Name}" Tag="Name" />
 
                                     <!-- AUTHORS -->
                                     <con:DataGridTemplateColumn Header="Szerzők" Tag="Author">

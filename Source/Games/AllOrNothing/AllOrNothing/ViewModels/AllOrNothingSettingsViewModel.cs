@@ -20,6 +20,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows.Input;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.Foundation;
+using System.Threading.Tasks;
 
 namespace AllOrNothing.ViewModels
 {
@@ -97,24 +99,87 @@ namespace AllOrNothing.ViewModels
             set => SetProperty(ref _pageXamlRoot, value);
         }
         public event EventHandler<string> HidePage;
+        
+
+        private async Task<ContentDialogResult> ShowDialog(string title, string content, ContentDialogButton defaultButton, string primaryButtonText, string closeButtonText)
+        {
+            ContentDialog dialog = new ContentDialog
+            {
+                XamlRoot = PageXamlRoot,
+                Title = title,
+                Content = new CustomDialog(content),
+                DefaultButton = defaultButton,
+                PrimaryButtonText = primaryButtonText,
+                CloseButtonText = closeButtonText,
+            };
+            return await dialog.ShowAsync(ContentDialogPlacement.Popup);        
+        }
         private async void Exit()
         {
 
-            ContentDialog dialog = new ContentDialog();
-            dialog.XamlRoot = PageXamlRoot;
-            dialog.Title = "Kilépés?";
-            dialog.PrimaryButtonText = "Igen";
-            dialog.CloseButtonText = "Mégse";
-            dialog.DefaultButton = ContentDialogButton.Primary;
-            dialog.Content = new CustomDialog("Biztosan kilép?");
+            //ContentDialog dialog = new ContentDialog();
+            //dialog.XamlRoot = PageXamlRoot;
+            //dialog.Title = "Kilépés?";
+            //dialog.PrimaryButtonText = "Igen";
+            //dialog.CloseButtonText = "Mégse";
+            //dialog.DefaultButton = ContentDialogButton.Primary;
+            //dialog.Content = new CustomDialog("Biztosan kilép?");
 
-            if (await dialog.ShowAsync(ContentDialogPlacement.Popup) == ContentDialogResult.Primary)
+            if (await ShowDialog("Kilépés?", "Biztosan kilép?", ContentDialogButton.Primary, "Igen", "Mégse") == ContentDialogResult.Primary)
             {
                 ResetSettings();
                 HidePage?.Invoke(this, "Beállítások");
                 NavigateTo(this, new NavigateToEventargs { PageName = "Menu", PageVM = typeof(AllOrNothingViewModel) });
             }
             
+        }
+
+        public void TimePicker_SelectedTimeChanged(TimePicker sender, TimePickerSelectedValueChangedEventArgs e)
+        {
+            if (e.NewTime.Value.TotalSeconds != 0)
+                return;
+
+            if (sender.Name == "tematicalTimePicker")
+            {
+                GameModel.GameSettings.IsTematicalAllowed = false;
+            }
+            else if(sender.Name == "lightningTimePicker")
+            {
+                GameModel.GameSettings.IsLightningAllowed = false;
+            }
+            else if(sender.Name == "roundLightningTime")
+            {
+                SelectedRound.RoundSettings.IsLightningAllowed = false;
+            }
+            else if (sender.Name == "roundTematicalTime")
+            {
+                SelectedRound.RoundSettings.IsTematicalAllowed = false;
+            }
+        }
+
+        public void TimeSelectionCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            var checkBox = sender as CheckBox;
+            if (!checkBox.IsChecked.GetValueOrDefault(false))
+                return;
+
+
+            if (checkBox.Name == "tematicalCheckBox" && GameModel.GameSettings.GeneralTematicalTime.TotalSeconds == 0)
+            {
+                GameModel.GameSettings.GeneralTematicalTime = TimeSpan.FromHours(1);
+            }
+             else if (checkBox.Name == "lightningCheckBox" && GameModel.GameSettings.GeneralLightningTime.TotalSeconds == 0)
+            {
+                GameModel.GameSettings.GeneralLightningTime = TimeSpan.FromHours(1);
+            }              
+            else if (checkBox.Name == "roundTematicalCheckBox" && SelectedRound.RoundSettings.TematicalTime.TotalSeconds == 0)
+            {
+                SelectedRound.RoundSettings.TematicalTime = TimeSpan.FromHours(1);
+            }
+            else if (checkBox.Name == "roundLightningCheckBox" && SelectedRound.RoundSettings.LightningTime.TotalSeconds == 0)
+            {
+                SelectedRound.RoundSettings.LightningTime = TimeSpan.FromHours(1);
+            }
         }
 
         private ICommand _generateTeamsCommand;
@@ -567,21 +632,46 @@ namespace AllOrNothing.ViewModels
 
         public ICommand ShowRoundSettingsCommand => _showRoundSettingsCommand ?? (_showRoundSettingsCommand = new RelayCommand(ShowRoundSettingsClicked));
 
-        private void ShowRoundSettingsClicked()
+        private bool HasGameValidationErrors(out string message)
         {
-            //TODO validáció
-            GenerateSchedule();
-            GameModel.GameStandings = new ObservableCollection<StandingDto>(CreateStandingFromGameModel(GameModel));
+            message = "";
+            var result = false;
+            if(Teams.Count<2)
+            {
+                result = true;
+                message += "Legalább 2 csapatnak kell szerepelnie!\n";
+            }
 
-            Rounds = new ObservableCollection<RoundModel>(RoundModel.FromGameModel(GameModel));
-            SelectedRound = Rounds?[0];
+            if (!(GameModel.GameSettings.IsLightningAllowed || GameModel.GameSettings.IsTematicalAllowed))
+            {
+                result = true;
+                message += "Legalább egy játékmódot válasszon ki!\n";
+            }
+            return result;
+        }
 
-            var vm = Ioc.Default.GetService<ScoreBoardPageViewModel>();
+        private async void ShowRoundSettingsClicked()
+        {
+            var message = "";
+            if(HasGameValidationErrors(out message))
+            {
+                await ShowDialog("Hiba!", message, ContentDialogButton.Close, "", "Ok");
+            }
+            else
+            {
+                GenerateSchedule();
+                GameModel.GameStandings = new ObservableCollection<StandingDto>(CreateStandingFromGameModel(GameModel));
 
-            vm.GameStandings = new List<StandingDto>(GameModel.GameStandings);
+                Rounds = new ObservableCollection<RoundModel>(RoundModel.FromGameModel(GameModel));
+                SelectedRound = Rounds?[0];
 
-            GameSettingsVisible = Visibility.Collapsed;
-            IsRoundSettingsVisible = true;
+                var vm = Ioc.Default.GetService<ScoreBoardPageViewModel>();
+
+                vm.GameStandings = new List<StandingDto>(GameModel.GameStandings);
+
+                GameSettingsVisible = Visibility.Collapsed;
+                IsRoundSettingsVisible = true;
+            }   
         }
 
         private ICommand _startGameCommand;
