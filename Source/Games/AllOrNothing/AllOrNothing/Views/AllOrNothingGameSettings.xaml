@@ -348,18 +348,22 @@
                             Orientation="Vertical"
                             Visibility="{x:Bind ViewModel.IsFinalRound, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
                     <TextBlock Text="Döntő"
-                               HorizontalAlignment="Center"/>
-                    <ItemsControl ItemsSource="{x:Bind ViewModel.FinalRound.RoundSettings.Teams, Mode=OneWay}">
+                               HorizontalAlignment="Center"
+                               FontSize="40"/>
+                    <ItemsControl ItemsSource="{x:Bind ViewModel.FinalRound.RoundSettings.Teams, Mode=OneWay}"
+                                  VerticalAlignment="Center">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <cc:WrapPanel/>
+                                <tK:UniformGrid Rows="1"/>
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
 
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <Border Background="{ThemeResource GreyBrush}" Margin="10,10,10,10" CornerRadius="5">
-                                    <TextBlock Text="{Binding TeamName}"/>
+                                    <TextBlock Text="{Binding TeamName}" 
+                                               FontSize="20"
+                                               TextAlignment="Center"/>
                                 </Border>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
@@ -427,7 +431,7 @@
                         </StackPanel>
 
                         <ScrollViewer>
-                            <con:DataGrid ItemsSource="{x:Bind ViewModel.AvaibleSeries}"
+                            <con:DataGrid ItemsSource="{x:Bind ViewModel.AvaibleSeries, Mode=OneWay}"
                                           AutoGenerateColumns="False"
                                           SelectedItem="{x:Bind ViewModel.SelectedRound.RoundSettings.QuestionSerie, Mode=TwoWay}"
                                           IsReadOnly="True">

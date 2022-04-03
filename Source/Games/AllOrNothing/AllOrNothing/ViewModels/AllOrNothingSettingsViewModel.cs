@@ -1,5 +1,4 @@
-﻿using AllOrNothing.Mapping;
-using AllOrNothing.Contracts.ViewModels;
+﻿using AllOrNothing.Contracts.ViewModels;
 using AllOrNothing.Controls;
 using AllOrNothing.Data;
 using AllOrNothing.Helpers;
@@ -18,10 +17,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.ApplicationModel.DataTransfer;
-using Windows.Foundation;
-using System.Threading.Tasks;
 
 namespace AllOrNothing.ViewModels
 {
@@ -195,6 +193,9 @@ namespace AllOrNothing.ViewModels
 
         private void LoadFromFileClicked()
         {
+
+            AvaibleSeries = new ObservableCollection<QuestionSerieDto>(AvaibleSeries.Where(s => s.FromFile == false).ToList());
+
             var questionSerieLoader = new QuestionSerieLoader();
 
             var series = questionSerieLoader.LoadAllSeriesFromFolder(App.QuestionSerieFolder);
@@ -677,15 +678,46 @@ namespace AllOrNothing.ViewModels
         private ICommand _startGameCommand;
         public ICommand StartGameCommand => _startGameCommand ??= new RelayCommand(StartGameClicked);
 
-        private void StartGameClicked()
+        private bool HasRoundValidationErrors(out string message)
         {
-            var vm = Ioc.Default.GetService<AllOrNothingGameViewModel>();
-            vm.OccasionName = GameModel.GameSettings.OccasionName;
-            vm.SetupRound(SelectedRound);
-            vm.RoundOver += GameVM_RoundOver;
+            message = "";
+            var result = false;
+            if (SelectedRound == null)
+            {
+                result = true;
+                message += "Válasszon ki egy kört!\n";
+            }
 
-            NavigateTo?.Invoke(this, new NavigateToEventargs { PageVM = typeof(AllOrNothingGameViewModel), PageName = "Játék" });
-            //TODO close this page
+            if (SelectedRound != null && SelectedRound.RoundSettings.QuestionSerie == null)
+            {
+                result = true;
+                message += "Válasszon ki egy kérdéssort!\n";
+            }
+
+            if (SelectedRound != null && !(SelectedRound.RoundSettings.IsTematicalAllowed || SelectedRound.RoundSettings.IsLightningAllowed))
+            {
+                result = true;
+                message += "Legalább egy játékmódot válasszon ki!\n";
+            }
+            return result;
+        }
+        private async void StartGameClicked()
+        {
+            var message = "";
+            if(HasRoundValidationErrors(out message))
+            {
+                await ShowDialog("Hiba!", message, ContentDialogButton.Close, "", "Ok");
+            }
+            else
+            {
+                var vm = Ioc.Default.GetService<AllOrNothingGameViewModel>();
+                vm.OccasionName = GameModel.GameSettings.OccasionName;
+                vm.SetupRound(SelectedRound);
+                vm.RoundOver += GameVM_RoundOver;
+
+                NavigateTo?.Invoke(this, new NavigateToEventargs { PageVM = typeof(AllOrNothingGameViewModel), PageName = "Játék" });
+                //TODO close this page
+            }
         }
 
         private void GameVM_RoundOver(object sender, RoundModel e)

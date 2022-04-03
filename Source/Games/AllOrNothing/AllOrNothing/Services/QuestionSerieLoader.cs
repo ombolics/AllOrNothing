@@ -31,6 +31,7 @@ namespace AllOrNothing.Services
                 CreatedOn = DateTime.Now,
                 Name = name,
                 
+                
             };
             value.Topics = new List<Topic>();
             var topicArray = content.Split("\r\n\r\n");
