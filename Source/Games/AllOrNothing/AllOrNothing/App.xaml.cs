@@ -73,7 +73,7 @@ namespace AllOrNothing
             //services.AddTransient<IAllOrNothingDbContext, AllOrNothingDbContext>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddDbContext<AllOrNothingDbContext>(optionsBuilder => optionsBuilder.UseSqlServer(@"Server=DESKTOP-B5C457P\SQLEXPRESS;Database=AllOrNothingDb;Trusted_Connection=True;"));
-
+            services.AddTransient<QuestionSerieLoader>();
             //Mapping
 
             var mapperConfig = new MapperConfiguration(mc =>

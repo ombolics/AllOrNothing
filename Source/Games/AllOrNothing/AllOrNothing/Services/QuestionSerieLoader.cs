@@ -1,4 +1,5 @@
 ﻿using AllOrNothing.Data;
+using AllOrNothing.Repository;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,29 +10,43 @@ namespace AllOrNothing.Services
 {
     public class QuestionSerieLoader
     {
-        public QuestionSerieLoader()
+        public QuestionSerieLoader(IUnitOfWork unitOfWork)
         {
-
+            _unitOfWork = unitOfWork;
         }
-        public List<QuestionSerie> LoadAllSeriesFromFolder(string folderPath)
+        private IUnitOfWork _unitOfWork;
+        private List<Competence> _allCompetences;
+        public List<QuestionSerie> LoadAllSeriesFromFolder(string folderPath, out string errorMessage)
         {
+            errorMessage = "";
+            _allCompetences = _unitOfWork.Competences.GetAll().ToList();
             var files = Directory.GetFiles(folderPath);
             var result = new List<QuestionSerie>();
+            
             foreach (var file in files)
             {
-                result.Add(LoadFromTxt(file));
+                string error = "";
+                var serie = LoadFromTxt(file, out error);
+                if(error != "")
+                {
+                    errorMessage += errorMessage == "" ? "Probléma lépett fel a következő fájlok beolvasása során:\n" + error : error;
+                }
+                if(serie != null)
+                    result.Add(serie);
+            }
+            if(errorMessage != "")
+            {
+                errorMessage += "Ellenőrizze hogy nem sérültek-e a fájlok!";
             }
             return result;
         }
 
-        public QuestionSerie LoadOldFormatFromTxt(string name, string content = null)
+        public QuestionSerie LoadOldFormatFromTxt(string name, string content)
         {
             QuestionSerie value = new QuestionSerie()
             {
                 CreatedOn = DateTime.Now,
-                Name = name,
-                
-                
+                Name = name,                
             };
             value.Topics = new List<Topic>();
             var topicArray = content.Split("\r\n\r\n");
@@ -59,53 +74,104 @@ namespace AllOrNothing.Services
                     });
                 }
                 value.Topics.Add(topic);
-            }
-            //StreamReader sr = new StreamReader(new Stream())
-            //value.Topics = new List<Topic>();
-            //while (!sr.EndOfStream)
-            //{
-
-            //    for (int i = 0; i < 5; i++)
-            //    {
-            //        Topic t = new Topic();
-            //        t.Name = sr.ReadLine();
-            //        t.Questions = new List<Question>();
-
-            //        for (int j = 0; j < 6; j++)
-            //        {
-            //            t.Questions.Add(new Question
-            //            {
-            //                Text = sr.ReadLine(),
-            //                Type = QuestionType.THEMATICAL,
-            //                ResourceType = QuestionResourceType.TEXT,
-            //            });
-            //        }
-            //        sr.ReadLine();
-            //        value.Topics.Add(t);
-            //    }
-
-            //}
+            }       
 
             return value;
         }
 
-        public QuestionSerie LoadNewFormatFromTxt(string path = null, string content = null)
+        public QuestionSerie LoadNewFormatFromTxt(string name, string content)
         {
-            throw new NotImplementedException();
+            if (content == null || string.IsNullOrWhiteSpace(content))
+                return null;
+
+            var splitedContent = content.Split("\r\r\n");
+            QuestionSerie value = new QuestionSerie()
+            {
+                CreatedOn = DateTime.Now,
+                Name = name,
+            };
+            value.Topics = new List<Topic>();
+            var authorData = splitedContent[0].Split("\r\n")[1].Split("\r");
+            
+            var author = _unitOfWork.Players.Get(int.Parse(authorData[1]));
+            if(author == null)
+            {
+                author = new Player
+                {
+                    Name = authorData[3],
+                    Institute = authorData[5],
+                };
+            }
+
+            foreach (var pack in splitedContent[1].Split("\r\n\r\n"))
+            {
+                var line = pack.Split("\r\n");
+
+                var competences = new List<Competence>();
+                foreach (var item in line[1].Replace("(","").Replace(")","").Split(','))
+                {
+                    competences.AddRange(_allCompetences.Where(c => c.Name.Contains(item.Trim())).ToList());
+                }
+                Topic topic = new Topic()
+                {
+                    Name = line[0],
+                    Author = author,
+                    Competences = competences,
+                    Description = line[2],
+                };
+
+                int questionCounter = 1;
+                for (int i = 3; i < line.Length-1; i += 2)
+                {
+                    topic.Questions.Add(new Question
+                    {
+                        Text = line[i],
+                        Type = QuestionType.THEMATICAL,
+                        Resource = null,
+                        Answer = line[i+1],
+                        ResourceType = QuestionResourceType.TEXT,
+                        Value = questionCounter < 6 ? questionCounter * 1000 : 8000,
+                    });
+                    questionCounter++;
+                }
+                value.Topics.Add(topic);
+            }
+            return value;
+
         }
 
-        public QuestionSerie LoadFromTxt(string path)
+
+
+        public QuestionSerie LoadFromTxt(string path, out string errorMessage)
         {
-            var fileContent = File.ReadAllText(path, Encoding.UTF8);
-            var name = path.Split(@"\").Last().Replace(".txt","");
-            if (fileContent.Split("\r\n")[0].Split(':')[0].ToLower() != "szerző")
+            errorMessage = "";
+            QuestionSerie value = null;
+            
+            try
             {
-                return LoadOldFormatFromTxt(name, fileContent);
+                var fullName = path.Split(@"\").Last();
+                if(!fullName.EndsWith(".txt"))
+                {
+                    throw new ArgumentException();
+                }
+                var name = fullName.Replace(".txt", "");
+                var fileContent = File.ReadAllText(path, Encoding.UTF8);
+              
+                if (fileContent.Split("\r\n")[0].ToLower() != "szerző:")
+                {
+                    value = LoadOldFormatFromTxt(name, fileContent);
+                }
+                else
+                {
+                    value = LoadNewFormatFromTxt(name, fileContent);
+                }
             }
-            else
+            catch
             {
-                return LoadNewFormatFromTxt(null, fileContent);
-            }           
+                var splited = path.Split($@"\");
+                errorMessage += $"\t{splited[splited.Length-1]}\n";
+            }
+            return value;
         }
     }
 }

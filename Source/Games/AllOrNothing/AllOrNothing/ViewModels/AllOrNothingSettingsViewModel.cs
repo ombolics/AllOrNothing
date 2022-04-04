@@ -191,14 +191,14 @@ namespace AllOrNothing.ViewModels
         private ICommand _loadFromFileCommand;
         public ICommand LoadFromFileCommand => _loadFromFileCommand ??= new RelayCommand(LoadFromFileClicked);
 
-        private void LoadFromFileClicked()
+        private async void LoadFromFileClicked()
         {
 
             AvaibleSeries = new ObservableCollection<QuestionSerieDto>(AvaibleSeries.Where(s => s.FromFile == false).ToList());
 
-            var questionSerieLoader = new QuestionSerieLoader();
-
-            var series = questionSerieLoader.LoadAllSeriesFromFolder(App.QuestionSerieFolder);
+            var questionSerieLoader = Ioc.Default.GetService<QuestionSerieLoader>();
+            string errorMessage = "";
+            var series = questionSerieLoader.LoadAllSeriesFromFolder(App.QuestionSerieFolder, out errorMessage);
 
             foreach (var serie in series)
             {
@@ -223,6 +223,10 @@ namespace AllOrNothing.ViewModels
                 AvaibleSeries.Add(dto);
             }
 
+            if(errorMessage != "")
+            {
+                await ShowDialog("Hiba a betöltéskor!", errorMessage, ContentDialogButton.Close, "", "Ok");
+            }
         }
 
         public void AutoSuggestBox_LostFocus(object sender, RoutedEventArgs e)

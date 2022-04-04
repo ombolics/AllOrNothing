@@ -448,7 +448,7 @@
 
                                                     <ItemsControl.ItemsPanel>
                                                         <ItemsPanelTemplate>
-                                                            <cc:WrapPanel/>
+                                                            <cc:WrapPanel VerticalAlignment="Center"/>
                                                         </ItemsPanelTemplate>
                                                     </ItemsControl.ItemsPanel>
 
