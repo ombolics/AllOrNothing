@@ -1,10 +1,9 @@
-﻿using AllOrNothing.Mapping;
-using AllOrNothing.Data;
+﻿using AllOrNothing.Models;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Data;
-using AllOrNothing.Models;
 using Microsoft.UI.Xaml.Media;
+using Windows.UI;
 
 namespace AllOrNothing.Controls
 {
@@ -33,17 +32,42 @@ namespace AllOrNothing.Controls
                 UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
             };
 
+            Binding foreGround = new Binding
+            {
+                Source = this,
+                Path = new PropertyPath(nameof(ForeGround)),
+                Mode = BindingMode.OneWay,
+                UpdateSourceTrigger = UpdateSourceTrigger.Default,
+            };
+
             _display.SetBinding(TextBlock.TextProperty, b);
+            _display.SetBinding(TextBlock.ForegroundProperty, foreGround);
+
+            _display.Foreground = new SolidColorBrush((Color)App.Current.Resources["MainColor1"]);
 
             Border = new Border
             {
-                Background = (Brush)App.Current.Resources["GreyBrush"],
-                CornerRadius = new CornerRadius(10),
+                //Background = new SolidColorBrush((Color)App.Current.Resources["MainColor2"]),
+                CornerRadius = new CornerRadius(5),
             };
 
             Border.Child = Display;
             Children.Add(Border);
         }
+
+
+
+        public Brush ForeGround
+        {
+            get { return (Brush)GetValue(ForeGroundProperty); }
+            set { SetValue(ForeGroundProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ForeGround.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ForeGroundProperty =
+            DependencyProperty.Register("ForeGround", typeof(Brush), typeof(PlayerTextBlock), null);
+
+
 
         public DragablePlayer Player
         {

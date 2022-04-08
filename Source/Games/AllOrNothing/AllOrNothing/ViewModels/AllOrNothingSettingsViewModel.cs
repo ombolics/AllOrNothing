@@ -63,7 +63,7 @@ namespace AllOrNothing.ViewModels
             }
 
             AvaibleSeries = new ObservableCollection<QuestionSerieDto>(tmp);
-           
+
             _teams = new();
             _selectedPlayers = new();
 
@@ -97,7 +97,7 @@ namespace AllOrNothing.ViewModels
             set => SetProperty(ref _pageXamlRoot, value);
         }
         public event EventHandler<string> HidePage;
-        
+
 
         private async Task<ContentDialogResult> ShowDialog(string title, string content, ContentDialogButton defaultButton, string primaryButtonText, string closeButtonText)
         {
@@ -110,26 +110,17 @@ namespace AllOrNothing.ViewModels
                 PrimaryButtonText = primaryButtonText,
                 CloseButtonText = closeButtonText,
             };
-            return await dialog.ShowAsync(ContentDialogPlacement.Popup);        
+            return await dialog.ShowAsync(ContentDialogPlacement.Popup);
         }
         private async void Exit()
         {
-
-            //ContentDialog dialog = new ContentDialog();
-            //dialog.XamlRoot = PageXamlRoot;
-            //dialog.Title = "Kilépés?";
-            //dialog.PrimaryButtonText = "Igen";
-            //dialog.CloseButtonText = "Mégse";
-            //dialog.DefaultButton = ContentDialogButton.Primary;
-            //dialog.Content = new CustomDialog("Biztosan kilép?");
-
             if (await ShowDialog("Kilépés?", "Biztosan kilép?", ContentDialogButton.Primary, "Igen", "Mégse") == ContentDialogResult.Primary)
             {
                 ResetSettings();
                 HidePage?.Invoke(this, "Beállítások");
                 NavigateTo(this, new NavigateToEventargs { PageName = "Menu", PageVM = typeof(AllOrNothingViewModel) });
             }
-            
+
         }
 
         public void TimePicker_SelectedTimeChanged(TimePicker sender, TimePickerSelectedValueChangedEventArgs e)
@@ -141,11 +132,11 @@ namespace AllOrNothing.ViewModels
             {
                 GameModel.GameSettings.IsTematicalAllowed = false;
             }
-            else if(sender.Name == "lightningTimePicker")
+            else if (sender.Name == "lightningTimePicker")
             {
                 GameModel.GameSettings.IsLightningAllowed = false;
             }
-            else if(sender.Name == "roundLightningTime")
+            else if (sender.Name == "roundLightningTime")
             {
                 SelectedRound.RoundSettings.IsLightningAllowed = false;
             }
@@ -166,10 +157,10 @@ namespace AllOrNothing.ViewModels
             {
                 GameModel.GameSettings.GeneralTematicalTime = TimeSpan.FromHours(1);
             }
-             else if (checkBox.Name == "lightningCheckBox" && GameModel.GameSettings.GeneralLightningTime.TotalSeconds == 0)
+            else if (checkBox.Name == "lightningCheckBox" && GameModel.GameSettings.GeneralLightningTime.TotalSeconds == 0)
             {
                 GameModel.GameSettings.GeneralLightningTime = TimeSpan.FromHours(1);
-            }              
+            }
             else if (checkBox.Name == "roundTematicalCheckBox" && SelectedRound.RoundSettings.TematicalTime.TotalSeconds == 0)
             {
                 SelectedRound.RoundSettings.TematicalTime = TimeSpan.FromHours(1);
@@ -204,7 +195,7 @@ namespace AllOrNothing.ViewModels
             {
                 var dto = Mapper.Map<QuestionSerieDto>(serie);
                 dto.FromFile = true;
-                if(dto.Competences.Count == 0)
+                if (dto.Competences.Count == 0)
                 {
                     dto.Topics[0].Competences = new ObservableCollection<CompetenceDto>{new CompetenceDto
                     {
@@ -223,7 +214,7 @@ namespace AllOrNothing.ViewModels
                 AvaibleSeries.Add(dto);
             }
 
-            if(errorMessage != "")
+            if (errorMessage != "")
             {
                 await ShowDialog("Hiba a betöltéskor!", errorMessage, ContentDialogButton.Close, "", "Ok");
             }
@@ -315,7 +306,6 @@ namespace AllOrNothing.ViewModels
                     helper.Remove(plyr);
                     team.Players.Add(plyr);
                     team.TeamName += plyr.NickName + " - ";
-
                     team.PlayerDrop += On_PlayerDropped;
 
                     team.UpdateTeamName();
@@ -337,7 +327,7 @@ namespace AllOrNothing.ViewModels
             }
             var team1 = Teams.Single(t => t.Players.Any(p => p.Id == player1.Id));
             var team2 = Teams.Single(t => t.Players.Any(p => p.Id == player2.Id));
-            
+
             team1.Players.Remove(player1);
             team1.Players.Add(player2);
             team2.Players.Remove(player2);
@@ -346,13 +336,6 @@ namespace AllOrNothing.ViewModels
             team1.UpdateTeamName();
             team2.UpdateTeamName();
         }
-
-
-
-        //public void TeamsAllowedChecked(object sender, RoutedEventArgs e)
-        //{
-        //    Teams = GenerateTeams(SelectedPlayers, GameModel.GameSettings.MaxTeamSize);
-        //}
 
         private int RoundsAgainstEachOther(int ind1, int ind2, int[,] matrix)
         {
@@ -460,7 +443,7 @@ namespace AllOrNothing.ViewModels
                     Team = item,
                     MatchPlayed = 0,
                     Score = 0,
-                }) ;
+                });
             }
             return val;
         }
@@ -486,8 +469,6 @@ namespace AllOrNothing.ViewModels
                 }
                 senderTeam.Players.Add(player);
                 senderTeam.UpdateTeamName();
-
-
             }
         }
 
@@ -502,7 +483,7 @@ namespace AllOrNothing.ViewModels
             NavigateTo?.Invoke(this, new NavigateToEventargs { PageName = "Új játékos", PageVM = typeof(PlayerAddingViewModel) });
         }
 
-       
+
         private ObservableCollection<TeamDto> _teams;
         public ObservableCollection<TeamDto> Teams
         {
@@ -536,15 +517,8 @@ namespace AllOrNothing.ViewModels
                 var suitableItems = new List<object>();
                 var splitText = sender.Text.ToLower().Split(" ");
 
-                //TODO Search for players in database
-
                 foreach (var player in _avaiblePlayers)
                 {
-                    //var found = splitText.All((key) =>
-                    //{
-                    //    return player.Name.ToLower().Contains(key);
-                    //});
-
                     //found
                     if (splitText.All((key) => player.Name.ToLower().Contains(key)))
                     {
@@ -589,7 +563,7 @@ namespace AllOrNothing.ViewModels
 
         public void AutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
-            if(args.SelectedItem is PlayerDto player)
+            if (args.SelectedItem is PlayerDto player)
             {
                 _avaiblePlayers.Remove(player);
                 player.RemoveCommand = RemovePlayerCommand as RelayCommand<object>;
@@ -599,11 +573,11 @@ namespace AllOrNothing.ViewModels
                 return;
             }
 
-            if(args.SelectedItem is StackPanel notFoundDisplay)
+            if (args.SelectedItem is StackPanel notFoundDisplay)
             {
                 NavigateTo?.Invoke(this, new NavigateToEventargs { PageName = "Új játékos", PageVM = typeof(PlayerAddingViewModel) });
             }
-          
+
         }
 
 
@@ -641,7 +615,7 @@ namespace AllOrNothing.ViewModels
         {
             message = "";
             var result = false;
-            if(Teams.Count<2)
+            if (Teams.Count < 2)
             {
                 result = true;
                 message += "Legalább 2 csapatnak kell szerepelnie!\n";
@@ -658,7 +632,7 @@ namespace AllOrNothing.ViewModels
         private async void ShowRoundSettingsClicked()
         {
             var message = "";
-            if(HasGameValidationErrors(out message))
+            if (HasGameValidationErrors(out message))
             {
                 await ShowDialog("Hiba!", message, ContentDialogButton.Close, "", "Ok");
             }
@@ -676,7 +650,7 @@ namespace AllOrNothing.ViewModels
 
                 GameSettingsVisible = Visibility.Collapsed;
                 IsRoundSettingsVisible = true;
-            }   
+            }
         }
 
         private ICommand _startGameCommand;
@@ -708,7 +682,7 @@ namespace AllOrNothing.ViewModels
         private async void StartGameClicked()
         {
             var message = "";
-            if(HasRoundValidationErrors(out message))
+            if (HasRoundValidationErrors(out message))
             {
                 await ShowDialog("Hiba!", message, ContentDialogButton.Close, "", "Ok");
             }
@@ -729,7 +703,7 @@ namespace AllOrNothing.ViewModels
             //TODO: ténylege kell ez ide? nem elég csak az eredmények oldalában kezelni az eventet?
             var vm = Ioc.Default.GetService<ScoreBoardPageViewModel>();
             vm.Setup(e);
-            if(e.IsFinalRound)
+            if (e.IsFinalRound)
             {
                 //TODO: az oldal eltűnést és megjelenést rendbrakni
                 HidePage?.Invoke(this, "Beállítások");
@@ -752,10 +726,10 @@ namespace AllOrNothing.ViewModels
         }
         public bool IsFinalRound => FinalRound != null;
 
-        public IMapper Mapper 
-        { 
+        public IMapper Mapper
+        {
             get => _mapper;
-            set => SetProperty(ref _mapper, value); 
+            set => SetProperty(ref _mapper, value);
         }
 
 
@@ -764,7 +738,7 @@ namespace AllOrNothing.ViewModels
         {
             HidePages?.Invoke(this, null);
 
-            if(FinalRound == null && Rounds != null && Rounds.All(r => r.RoundEnded))
+            if (FinalRound == null && Rounds != null && Rounds.All(r => r.RoundEnded))
             {
                 var teams = GameModel.GameStandings
                     .OrderByDescending(s => s.Score)

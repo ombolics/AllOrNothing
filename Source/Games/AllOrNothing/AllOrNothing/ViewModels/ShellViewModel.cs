@@ -105,7 +105,7 @@ namespace AllOrNothing.ViewModels
 
             //p.Children.Add(b);
 
-            if(!NavigationViewService.MenuPointExists(e.PageName))
+            if (!NavigationViewService.MenuPointExists(e.PageName))
                 NavigationViewService.AddNavItem(new NavigationViewItem { Content = e.PageName }, e.PageVM);
 
             NavigationService.NavigateTo(e.PageVM.FullName);

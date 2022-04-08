@@ -1,7 +1,7 @@
 ﻿using AllOrNothing.Activation;
-using AllOrNothing.Mapping;
 using AllOrNothing.Contracts.Services;
 using AllOrNothing.Helpers;
+using AllOrNothing.Mapping;
 using AllOrNothing.Repository;
 using AllOrNothing.Services;
 using AllOrNothing.ViewModels;

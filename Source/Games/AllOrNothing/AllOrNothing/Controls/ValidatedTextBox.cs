@@ -1,10 +1,5 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AllOrNothing.Controls
 {
@@ -35,10 +30,10 @@ namespace AllOrNothing.Controls
         public bool ValidateNumbers
         {
             get { return (bool)GetValue(ValidateNumbersProperty); }
-            set 
+            set
             {
                 SetValue(ValidateNumbersProperty, value);
-                if(value)
+                if (value)
                 {
                     _originalContent = "0";
                 }
@@ -54,7 +49,7 @@ namespace AllOrNothing.Controls
         public string ValidatedText
         {
             get { return (string)GetValue(ValidatedTextProperty); }
-            set 
+            set
             {
                 Text = value;
                 _originalContent = value;
@@ -82,7 +77,7 @@ namespace AllOrNothing.Controls
 
         private void ValidatedTextBox_TextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
         {
-            
+
         }
     }
 }

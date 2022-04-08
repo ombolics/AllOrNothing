@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace AllOrNothing.Mapping
 {
@@ -20,10 +19,10 @@ namespace AllOrNothing.Mapping
             get => _score;
             set => SetProperty(ref _score, value);
         }
-        public int MatchPlayed 
-        { 
-            get => _matchPlayed; 
-            set => SetProperty(ref _matchPlayed, value); 
+        public int MatchPlayed
+        {
+            get => _matchPlayed;
+            set => SetProperty(ref _matchPlayed, value);
         }
 
         private int _matchPlayed;
@@ -38,7 +37,7 @@ namespace AllOrNothing.Mapping
                     MatchPlayed = 0,
                     Team = item,
                     Score = 0,
-                }) ;
+                });
             }
             return value;
         }

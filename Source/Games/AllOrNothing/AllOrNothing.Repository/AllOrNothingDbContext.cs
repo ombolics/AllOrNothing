@@ -30,7 +30,7 @@ namespace AllOrNothing.Repository
         public DbSet<Player> Players { get; set; }
         public DbSet<Team> Teams { get; set; }
         public DbSet<Topic> Topics { get; set; }
-        public DbSet<Question> Questions { get ; set; }
+        public DbSet<Question> Questions { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

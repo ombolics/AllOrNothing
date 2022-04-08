@@ -3,9 +3,11 @@ using AllOrNothing.Helpers;
 using AllOrNothing.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Windows.UI;
 
 namespace AllOrNothing.Services
 {
@@ -79,6 +81,9 @@ namespace AllOrNothing.Services
 
             if (result != null)
                 (result as NavigationViewItem).Visibility = Visibility.Visible;
+
+            item.Foreground = new SolidColorBrush(Color.FromArgb(255, 255, 255, 255));
+
 
             //dont want to add an element multiple times
             if (result == null && _pageService.IsPageKey(pageKey))

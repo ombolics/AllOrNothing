@@ -3,21 +3,16 @@ using AllOrNothing.Repository;
 using AutoMapper;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml.Controls;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Windows.Input;
-using Windows.Foundation;
 
 namespace AllOrNothing.Mapping
 {
     [AutoMap(typeof(Topic), ReverseMap = true)]
     public class TopicDto : ObservableRecipient
     {
-        public TopicDto() 
+        public TopicDto()
         {
             _unitOfWork = Ioc.Default.GetService<UnitOfWork>();
             _mapper = Ioc.Default.GetService<Mapper>();
@@ -26,7 +21,7 @@ namespace AllOrNothing.Mapping
         {
             Questions = new List<QuestionDto>();
             Competences = new ObservableCollection<CompetenceDto>();
-            
+
             for (int i = 0; i < questionCount; i++)
             {
                 Questions.Add(new QuestionDto());
@@ -52,7 +47,7 @@ namespace AllOrNothing.Mapping
             Questions = questions;
 
             var competences = new ObservableCollection<CompetenceDto>();
-            if(dto.Competences != null)
+            if (dto.Competences != null)
             {
                 foreach (var competence in dto.Competences)
                 {
@@ -63,26 +58,26 @@ namespace AllOrNothing.Mapping
         }
         public int Id { get; set; }
         private string _name;
-        public string Name 
+        public string Name
         {
             get => _name;
-            set => SetProperty(ref _name, value); 
+            set => SetProperty(ref _name, value);
         }
         private string _description;
-        public string Description 
+        public string Description
         {
             get => _description;
             set => SetProperty(ref _description, value);
         }
-        
+
         private List<QuestionDto> _questions;
-        public List<QuestionDto> Questions 
+        public List<QuestionDto> Questions
         {
             get => _questions;
             set => SetProperty(ref _questions, value);
         }
         private ObservableCollection<CompetenceDto> _competences;
-        public ObservableCollection<CompetenceDto> Competences 
+        public ObservableCollection<CompetenceDto> Competences
         {
             get => _competences;
             set => SetProperty(ref _competences, value);
@@ -91,10 +86,10 @@ namespace AllOrNothing.Mapping
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public PlayerDto Author 
+        public PlayerDto Author
         {
             get => _author;
-            set    
+            set
             {
                 SetProperty(ref _author, value);
                 HasAuthor = value != null;
@@ -106,7 +101,7 @@ namespace AllOrNothing.Mapping
             bool val =
                 Name == dto.Name &&
                 Id == dto.Id &&
-                Description == dto.Description&&
+                Description == dto.Description &&
                 Competences.Count == dto.Competences.Count;
 
             for (int i = 0; i < Questions.Count; i++)
@@ -145,7 +140,7 @@ namespace AllOrNothing.Mapping
                 switch (textBox.Name)
                 {
                     case "topicNameTextBox":
-                        if(trimmedText != OriginalName)
+                        if (trimmedText != OriginalName)
                         {
                             //UnderEdit?.Invoke(this, null);
                             Name = trimmedText;
@@ -162,7 +157,7 @@ namespace AllOrNothing.Mapping
                         break;
                 }
             }
-               
+
         }
     }
 }

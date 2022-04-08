@@ -362,7 +362,7 @@ namespace AllOrNothing.DummyData
                         },
                     }
                 },
-            },         
+            },
             CreatedOn = DateTime.Now,
         };
 

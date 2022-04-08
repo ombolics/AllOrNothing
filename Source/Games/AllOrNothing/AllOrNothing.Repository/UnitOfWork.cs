@@ -1,7 +1,6 @@
 ﻿using AllOrNothing.Data;
 using AllOrNothing.Repository.Contracts;
 using AllOrNothing.Repository.Repositories;
-using System;
 
 namespace AllOrNothing.Repository
 {
@@ -69,7 +68,7 @@ namespace AllOrNothing.Repository
                 case nameof(Topic):
                     return nameof(Topics);
                     break;
-                case nameof(Question):  
+                case nameof(Question):
                     return nameof(Questions);
                     break;
                 case nameof(Competence):

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AllOrNothing.Data.DataExtensions
+﻿namespace AllOrNothing.Data.DataExtensions
 {
     public static class QuestionSerieExtension
     {
@@ -15,10 +9,10 @@ namespace AllOrNothing.Data.DataExtensions
             originalSerie.IsDeleted = newSerie.IsDeleted;
             for (int i = 0; i < originalSerie.Topics.Count; i++)
             {
-                
+
                 originalSerie.Topics[i].SetValue(newSerie.Topics[i]);
             }
-            
+
         }
     }
 }

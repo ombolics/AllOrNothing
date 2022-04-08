@@ -1,5 +1,4 @@
 ﻿using AllOrNothing.Repository.Contracts;
-using AllOrNothing.Repository.Repositories;
 using System;
 
 namespace AllOrNothing.Repository

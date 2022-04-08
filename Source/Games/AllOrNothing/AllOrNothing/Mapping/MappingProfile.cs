@@ -15,7 +15,7 @@ namespace AllOrNothing.Mapping
 
         private void ForomModelToModel()
         {
-            CreateMap<PlayerDto,DragablePlayer>();
+            CreateMap<PlayerDto, DragablePlayer>();
             CreateMap<DragablePlayer, PlayerDto>();
         }
         private void FromDataToDto()

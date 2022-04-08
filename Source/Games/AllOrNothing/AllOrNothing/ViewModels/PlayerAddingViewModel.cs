@@ -10,9 +10,6 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace AllOrNothing.ViewModels
@@ -40,15 +37,15 @@ namespace AllOrNothing.ViewModels
             {
                 SetProperty(ref _selectedPlayer, value);
                 if (value != null)
-                    EditingPlayer = value;             
+                    EditingPlayer = value;
             }
         }
 
         private PlayerDto _originalPlayer;
-        public ObservableCollection<PlayerDto> AllPlayers 
-        { 
+        public ObservableCollection<PlayerDto> AllPlayers
+        {
             get => _allPlayers;
-            set => SetProperty(ref _allPlayers, value); 
+            set => SetProperty(ref _allPlayers, value);
         }
 
         private ICommand _newPlayerCommand;
@@ -72,8 +69,8 @@ namespace AllOrNothing.ViewModels
 
             if (await dialog.ShowAsync(ContentDialogPlacement.Popup) == ContentDialogResult.Primary)
             {
-               if(!IsNewPlayerSelected)
-               {
+                if (!IsNewPlayerSelected)
+                {
                     EditingPlayer.IsDeleted = true;
                     _unitOfWork.Complete();
                     AllPlayers = new ObservableCollection<PlayerDto>(_mapper.Map<ICollection<PlayerDto>>(_unitOfWork.Players.GetAllAvaible()));
@@ -85,7 +82,7 @@ namespace AllOrNothing.ViewModels
 
         private async void Save()
         {
-            if(IsNewPlayerSelected)
+            if (IsNewPlayerSelected)
             {
                 EditingPlayer.Id = 0;
                 _unitOfWork.Players.Add(_mapper.Map<Player>(EditingPlayer));
@@ -95,7 +92,7 @@ namespace AllOrNothing.ViewModels
             dialog.XamlRoot = PageXamlRoot;
             dialog.CloseButtonText = "Ok";
             dialog.DefaultButton = ContentDialogButton.Close;
-            
+
 
             if (_unitOfWork.Complete() > 0)
             {
@@ -112,11 +109,11 @@ namespace AllOrNothing.ViewModels
             }
             await dialog.ShowAsync(ContentDialogPlacement.Popup);
 
-            
+
         }
 
-        public bool IsNewPlayerSelected 
-        { 
+        public bool IsNewPlayerSelected
+        {
             get => _isNewPlayerSelected;
             set
             {
@@ -124,9 +121,9 @@ namespace AllOrNothing.ViewModels
                 IsPlayerUnderEdit = true;
             }
         }
-        public bool IsPlayerUnderEdit 
-        { 
-            get => _isPlayerUnderEdit; 
+        public bool IsPlayerUnderEdit
+        {
+            get => _isPlayerUnderEdit;
             set => SetProperty(ref _isPlayerUnderEdit, value);
         }
         private bool _formEnabled;
@@ -139,7 +136,7 @@ namespace AllOrNothing.ViewModels
         {
             if (!(sender is TextBox textBox) || EditingPlayer == null)
                 return;
-            
+
             switch (textBox.Name)
             {
                 case "nameTextBox":
@@ -177,7 +174,7 @@ namespace AllOrNothing.ViewModels
         private bool _isNewPlayerSelected;
 
         private bool _isPlayerUnderEdit;
-        
+
         private void AddNewPlayer()
         {
             SelectedPlayer = null;

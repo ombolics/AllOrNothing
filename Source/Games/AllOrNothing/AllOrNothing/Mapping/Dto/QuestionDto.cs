@@ -24,37 +24,37 @@ namespace AllOrNothing.Mapping
         }
         public int Id { get; set; }
         private QuestionResourceType _resourceType;
-        public QuestionResourceType ResourceType 
+        public QuestionResourceType ResourceType
         {
             get => _resourceType;
-            set => SetProperty(ref _resourceType, value); 
+            set => SetProperty(ref _resourceType, value);
         }
         private QuestionType _questionType;
-        public QuestionType Type 
+        public QuestionType Type
         {
             get => _questionType;
             set => SetProperty(ref _questionType, value);
         }
         private byte[] _resource;
-        public byte[] Resource 
+        public byte[] Resource
         {
             get => _resource;
             set => SetProperty(ref _resource, value);
         }
         private string _text;
-        public string Text 
+        public string Text
         {
             get => _text;
-            set => SetProperty(ref _text, value); 
+            set => SetProperty(ref _text, value);
         }
         private string _answer;
-        public string Answer 
+        public string Answer
         {
             get => _answer;
             set => SetProperty(ref _answer, value);
         }
         private int _value;
-        public int Value 
+        public int Value
         {
             get => _value;
             set => SetProperty(ref _value, value);

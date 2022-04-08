@@ -1,12 +1,7 @@
 ﻿using AllOrNothing.Mapping;
-using AllOrNothing.Mapping;
 using CommunityToolkit.Mvvm.ComponentModel;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AllOrNothing.Models
 {
@@ -30,15 +25,15 @@ namespace AllOrNothing.Models
 
         private ObservableCollection<StandingDto> _roundStandings;
         public ObservableCollection<StandingDto> RoundStandings
-        { 
-            get => _roundStandings; 
-            set => SetProperty(ref _roundStandings, value); 
+        {
+            get => _roundStandings;
+            set => SetProperty(ref _roundStandings, value);
         }
 
         private RoundSettingsModel _roundSettings;
 
-        public RoundSettingsModel RoundSettings 
-        { 
+        public RoundSettingsModel RoundSettings
+        {
             get => _roundSettings;
             set => SetProperty(ref _roundSettings, value);
         }

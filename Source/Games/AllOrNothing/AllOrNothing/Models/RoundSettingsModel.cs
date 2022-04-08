@@ -42,7 +42,7 @@ namespace AllOrNothing.Models
         {
             get => _isTematicalAllowed;
             set => SetProperty(ref _isTematicalAllowed, value);
-        }  
+        }
 
         private bool _isLightningAllowed;
         public bool IsLightningAllowed

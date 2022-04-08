@@ -19,12 +19,12 @@ namespace AllOrNothing.Activation
 
         public bool CanHandle(object args)
         {
-            // CanHandle checks the args is of type you have configured
+            // checks if args has the requiered type
             return args is T && CanHandleInternal(args as T);
         }
 
-        // You can override this method to add extra validation on activation args
-        // to determine if your ActivationHandler should handle this activation args
+        // Potential override  method to add extra validation on activation args
+        // to determine if ActivationHandler should handle this activation args
         protected virtual bool CanHandleInternal(T args)
         {
             return true;

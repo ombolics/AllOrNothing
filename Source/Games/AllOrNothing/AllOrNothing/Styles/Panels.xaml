@@ -1,0 +1,52 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Styles/_Colors.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+    <!--ContentControl styles-->
+    <Style x:Name="MainContentControlStyle" TargetType="ContentControl">
+        <Setter Property="Background" Value="{ThemeResource MainColor2}"/>
+        <Setter Property="Margin" Value="10,10,10,10"/>
+        <Setter Property="CornerRadius" Value="10"/>
+    </Style>
+
+    <Style x:Name="NeutralContentControlStyle" TargetType="ContentControl">
+        <Setter Property="Background" Value="{ThemeResource NautralColor1}"/>
+        <Setter Property="Margin" Value="10,10,10,10"/>
+        <Setter Property="CornerRadius" Value="10"/>
+    </Style>
+
+    <!--StackPanel styles-->
+    <Style x:Name="MainPanelStyle" TargetType="StackPanel">
+        <Setter Property="Background" Value="{ThemeResource MainColor2}"/>
+        <Setter Property="Margin" Value="10,10,10,10"/>
+        <Setter Property="CornerRadius" Value="10"/>
+    </Style>
+
+    <Style x:Name="SmallMainPanelStyle" TargetType="StackPanel">
+        <Setter Property="Background" Value="{ThemeResource MainColor2}"/>
+        <Setter Property="Margin" Value="10,10,10,10"/>
+        <Setter Property="CornerRadius" Value="5"/>
+    </Style>
+
+    <Style x:Name="NeutralPanelStyle" TargetType="StackPanel">
+        <Setter Property="Background" Value="{ThemeResource NautralColor1}"/>
+        <Setter Property="Margin" Value="10,10,10,10"/>
+        <Setter Property="CornerRadius" Value="10"/>
+    </Style>
+    
+    <!--ListView styles-->
+    <Style x:Name="MainListViewStyle" TargetType="ListView">
+        <Setter Property="Background" Value="{ThemeResource MainColor2}"/>
+        <Setter Property="Margin" Value="10,10,10,10"/>
+        <Setter Property="CornerRadius" Value="10"/>
+    </Style>
+
+    <Style x:Name="NeutralListViewStyle" TargetType="ListView">
+        <Setter Property="Background" Value="{ThemeResource NautralColor1}"/>
+        <Setter Property="Margin" Value="10,10,10,10"/>
+        <Setter Property="CornerRadius" Value="10"/>
+    </Style>
+
+</ResourceDictionary>

@@ -22,34 +22,34 @@ namespace AllOrNothing.Mapping
                 Institute = dto.Institute;
                 NickName = dto.NickName;
                 IsDeleted = dto.IsDeleted;
-            }        
+            }
         }
         private int _id;
-        public int Id 
+        public int Id
         {
             get => _id;
-            set => SetProperty(ref _id, value); 
+            set => SetProperty(ref _id, value);
         }
         private string _name;
-        public string Name 
+        public string Name
         {
             get => _name;
             set => SetProperty(ref _name, value);
         }
         private string _institute;
-        public string Institute 
+        public string Institute
         {
             get => _institute;
             set => SetProperty(ref _institute, value);
         }
         private string _nickName;
-        public string NickName 
+        public string NickName
         {
             get => _nickName;
             set => SetProperty(ref _nickName, value);
         }
         private bool _isDeleted;
-        public bool IsDeleted 
+        public bool IsDeleted
         {
             get => _isDeleted;
             set => SetProperty(ref _isDeleted, value);

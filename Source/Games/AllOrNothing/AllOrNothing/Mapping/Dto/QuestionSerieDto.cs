@@ -1,10 +1,10 @@
 ﻿using AllOrNothing.Data;
 using AutoMapper;
+using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.UI.Xaml.Controls;
-using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace AllOrNothing.Mapping
 {
@@ -32,29 +32,29 @@ namespace AllOrNothing.Mapping
         }
         public int Id { get; set; }
         private List<TopicDto> _topics;
-        public List<TopicDto> Topics 
+        public List<TopicDto> Topics
         {
             get => _topics;
             set => SetProperty(ref _topics, value);
         }
-        public HashSet<PlayerDto> Authors 
+        public HashSet<PlayerDto> Authors
         {
             get => GetAuthors();
         }
         private bool _fromFile;
-        public bool FromFile 
+        public bool FromFile
         {
             get => _fromFile;
             set => SetProperty(ref _fromFile, value);
         }
         private string _name;
-        public string Name 
+        public string Name
         {
             get => _name;
             set => SetProperty(ref _name, value);
         }
         private bool _isDeleted;
-        public bool IsDeleted 
+        public bool IsDeleted
         {
             get => _isDeleted;
             set => SetProperty(ref _isDeleted, value);
@@ -65,12 +65,12 @@ namespace AllOrNothing.Mapping
             var ids = new List<int>();
             foreach (var item in Topics)
             {
-                if(item.Author != null && !ids.Contains(item.Author.Id))
+                if (item.Author != null && !ids.Contains(item.Author.Id))
                 {
                     ids.Add(item.Author.Id);
                     value.Add(item.Author);
                 }
-                
+
             }
             return value;
         }
@@ -84,7 +84,7 @@ namespace AllOrNothing.Mapping
             {
                 foreach (var item in topic.Competences)
                 {
-                    if(!value.Any(c => c.Id == item.Id))
+                    if (!value.Any(c => c.Id == item.Id))
                         value.Add(item);
                 }
             }
@@ -125,7 +125,7 @@ namespace AllOrNothing.Mapping
             {
                 Name = textBox.Text.Trim();
                 //UnderEdit?.Invoke(this, null);
-            }           
+            }
         }
     }
 }

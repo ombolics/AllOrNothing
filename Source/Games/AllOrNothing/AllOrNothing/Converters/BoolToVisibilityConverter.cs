@@ -21,7 +21,7 @@ namespace AllOrNothing.Converters
                 }
                 return Visibility.Collapsed;
             }
-            else if(param.Equals("negate"))
+            else if (param.Equals("negate"))
             {
                 bool objValue = (bool)value;
                 if (!objValue)

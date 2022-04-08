@@ -1,6 +1,6 @@
-﻿using AllOrNothing.Mapping;
-using AllOrNothing.Controls;
+﻿using AllOrNothing.Controls;
 using AllOrNothing.Data;
+using AllOrNothing.Mapping;
 using AllOrNothing.Repository;
 using AutoMapper;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -10,9 +10,8 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Windows.Input;
-using AllOrNothing.Data.DataExtensions;
 using System.Linq;
+using System.Windows.Input;
 
 namespace AllOrNothing.ViewModels
 {
@@ -27,7 +26,7 @@ namespace AllOrNothing.ViewModels
             UnselectedTextVisible = true;
         }
         private List<Competence> _allCompetences;
-        public List<Competence> AllCompetences 
+        public List<Competence> AllCompetences
         {
             get => _allCompetences;
             set => SetProperty(ref _allCompetences, value);
@@ -41,7 +40,7 @@ namespace AllOrNothing.ViewModels
         public XamlRoot PageXamlRoot { get; set; }
         private ObservableCollection<QuestionSerieDto> _allSerie;
         private readonly IUnitOfWork _unitOfWork;
-        private  IMapper _mapper;
+        private IMapper _mapper;
         private QuestionSerieDto _selectedSerie;
         public QuestionSerieDto SelectedSerie
         {
@@ -52,9 +51,9 @@ namespace AllOrNothing.ViewModels
                 if (value != null)
                 {
                     EditingSerie = value;
-                    _originalSerie = new QuestionSerieDto(value); 
+                    _originalSerie = new QuestionSerieDto(value);
                 }
-                  
+
             }
         }
 
@@ -127,7 +126,7 @@ namespace AllOrNothing.ViewModels
                 EditingSerie = null;
                 IsNewSerieSelected = false;
             }
-            
+
         }
 
         //TODO mentés előtt ne lehessen másikat kiválasztani
@@ -149,7 +148,7 @@ namespace AllOrNothing.ViewModels
                 }
                 _unitOfWork.QuestionSeries.Add(mapped);
             }
-            else if(serieChanged)
+            else if (serieChanged)
             {
                 var serie = _unitOfWork.QuestionSeries.Get(EditingSerie.Id);
                 serie.Name = EditingSerie.Name;
@@ -157,7 +156,7 @@ namespace AllOrNothing.ViewModels
                 foreach (var item in EditingSerie.Topics)
                 {
                     var data = _unitOfWork.Topics.Get(item.Id);
-                    data.Name = item.Name;                 
+                    data.Name = item.Name;
                     List<Competence> tmp = new List<Competence>();
                     foreach (var comp in item.Competences)
                     {

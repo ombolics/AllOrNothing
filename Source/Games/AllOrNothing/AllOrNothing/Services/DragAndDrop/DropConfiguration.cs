@@ -1,5 +1,4 @@
-﻿using AllOrNothing.Data;
-using AllOrNothing.Models;
+﻿using AllOrNothing.Models;
 using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
@@ -163,7 +162,7 @@ namespace AllOrNothing.Services.DragAndDrop
                 catch (Exception)
                 {
                     Debug.Print($"[{DateTime.Now}] An error occured while processing the dropped text.");
-                }              
+                }
             }
 
             if (dataview.Contains(StandardDataFormats.WebLink) && DropWebLinkCommand != null)

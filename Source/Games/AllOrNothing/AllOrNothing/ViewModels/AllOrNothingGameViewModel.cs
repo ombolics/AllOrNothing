@@ -1,9 +1,8 @@
-﻿using AllOrNothing.Mapping;
-using AllOrNothing.Contracts.ViewModels;
+﻿using AllOrNothing.Contracts.ViewModels;
 using AllOrNothing.Controls;
 using AllOrNothing.Helpers;
+using AllOrNothing.Mapping;
 using AllOrNothing.Models;
-using AllOrNothing.Services;
 using AutoMapper;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -12,7 +11,6 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Runtime.InteropServices;
 using System.Windows.Input;
 using Windows.Storage.Pickers;
 
@@ -63,7 +61,7 @@ namespace AllOrNothing.ViewModels
             {
                 GamePhase = GamePhase.LIGHTNING;
             }
-  
+
 
             if (SelectedRound.RoundSettings.IsGameWithoutButtonsEnabled)
             {
@@ -101,7 +99,7 @@ namespace AllOrNothing.ViewModels
 
         private ICommand _toggleTimerCommand;
         public ICommand ToggleTimerCommand => _toggleTimerCommand ??= new RelayCommand(ToggleTimer);
-        
+
         //TODO: egységesíteni a neveket (game over vs round over)
         private ICommand _gameOverCommand;
         public ICommand GameOverCommand => _gameOverCommand ??= new RelayCommand(On_RoundOver);

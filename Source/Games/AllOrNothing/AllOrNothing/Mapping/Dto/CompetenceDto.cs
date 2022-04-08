@@ -3,7 +3,6 @@ using AutoMapper;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
-using System;
 
 namespace AllOrNothing.Mapping
 {
@@ -22,14 +21,14 @@ namespace AllOrNothing.Mapping
         public int Id { get; set; }
 
         private string _name;
-        public string Name 
+        public string Name
         {
             get => _name;
-            set => SetProperty(ref _name, value); 
+            set => SetProperty(ref _name, value);
         }
 
         private RelayCommand<object> relayCommand;
-        public RelayCommand<object> RemoveCommand 
+        public RelayCommand<object> RemoveCommand
         {
             get => relayCommand;
             set => SetProperty(ref relayCommand, value);
@@ -45,7 +44,7 @@ namespace AllOrNothing.Mapping
             return Id == dto.Id && Name == dto.Name;
         }
 
-        public  void Button_Click(object sender, RoutedEventArgs e)
+        public void Button_Click(object sender, RoutedEventArgs e)
         {
 
         }

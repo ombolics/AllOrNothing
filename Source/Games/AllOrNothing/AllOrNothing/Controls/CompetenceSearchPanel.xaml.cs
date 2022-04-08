@@ -4,20 +4,10 @@ using AutoMapper;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Windows.Input;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -46,10 +36,10 @@ namespace AllOrNothing.Controls
         public ObservableCollection<CompetenceDto> SelectedCompetences
         {
             get { return (ObservableCollection<CompetenceDto>)GetValue(SelectedCompetencesProperty); }
-            set 
-            { 
+            set
+            {
                 SetValue(SelectedCompetencesProperty, value);
-                
+
             }
         }
 
@@ -86,13 +76,13 @@ namespace AllOrNothing.Controls
                 var suitableItems = new List<object>();
                 var splitText = sender.Text.ToLower().Split(" ");
 
-                if(_selectableCompetences == null)
+                if (_selectableCompetences == null)
                 {
                     _selectableCompetences = AllCompetences
                         .Where(c => SelectedCompetences.Any(c1 => c.Id == c1.Id) == false)
                         .ToList();
                 }
-                
+
                 //TODO Search for players in database
 
                 foreach (var comp in _selectableCompetences)
@@ -133,7 +123,7 @@ namespace AllOrNothing.Controls
                 //    suitableItems.Add(notfoundDisplay);
                 //}
                 sender.ItemsSource = suitableItems;
-            }           
+            }
         }
         private ICommand _removeCompetenceCommand;
         public ICommand RemoveCompetenceCommand => _removeCompetenceCommand ??= new RelayCommand<object>(RemoveCompetence);

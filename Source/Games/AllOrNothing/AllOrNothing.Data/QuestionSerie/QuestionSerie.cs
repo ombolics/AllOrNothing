@@ -14,16 +14,16 @@ namespace AllOrNothing.Data
         public int Id { get; set; }
         public string Name { get; set; }
         public bool IsDeleted { get; set; }
-        public List<Topic> Topics 
+        public List<Topic> Topics
         {
-            get; 
+            get;
             set;
         }
 
-        public DateTime CreatedOn 
-        { 
+        public DateTime CreatedOn
+        {
             get;
             set;
-        }     
+        }
     }
 }

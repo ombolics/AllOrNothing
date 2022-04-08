@@ -42,7 +42,7 @@ namespace AllOrNothing.Mapping
         }
 
         public void UpdateTeamName()
-        {        
+        {
             if (Players.Count <= 0)
                 return;
 
@@ -54,7 +54,7 @@ namespace AllOrNothing.Mapping
         }
 
         private string _teamName;
-        public string TeamName 
+        public string TeamName
         {
             get => _teamName;
             set => SetProperty(ref _teamName, value);

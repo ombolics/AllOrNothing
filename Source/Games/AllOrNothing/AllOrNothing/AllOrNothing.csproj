@@ -26,13 +26,19 @@
     <Optimize>false</Optimize>
   </PropertyGroup>
   <ItemGroup>
+    <Content Remove="Assets\transparentX.png" />
+    <Content Remove="Assets\x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Assets\transparentX.png" />
+    <None Remove="Assets\x.png" />
     <None Remove="Controls\CompetenceSearchPanel.xaml" />
     <None Remove="Controls\LightningDialog.xaml" />
     <None Remove="QuestionSerieSamples\András01.txt" />
     <None Remove="QuestionSerieSamples\András02.txt" />
-    <None Remove="QuestionSerieSamples\CorruptedFile1.txt" />
     <None Remove="QuestionSerieSamples\CorruptedFile2.json" />
     <None Remove="QuestionSerieSamples\Döntő 2011a.txt" />
+    <None Remove="QuestionSerieSamples\Flóra1.txt" />
     <None Remove="QuestionSerieSamples\ÖCS_01.txt" />
     <None Remove="QuestionSerieSamples\ÖCS_02.txt" />
     <None Remove="QuestionSerieSamples\ÖCS_03.txt" />
@@ -41,17 +47,31 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Assets\SplashScreen.scale-200.png" />
-    <Content Include="Assets\LockScreenLogo.scale-200.png" />
-    <Content Include="Assets\Square150x150Logo.scale-200.png" />
-    <Content Include="Assets\Square44x44Logo.scale-200.png" />
-    <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
-    <Content Include="Assets\StoreLogo.png" />
-    <Content Include="Assets\Wide310x150Logo.scale-200.png" />
-    <Content Include="QuestionSerieSamples\CorruptedFile2.json">
+    <Content Include="Assets\SplashScreen.scale-200.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="QuestionSerieSamples\CorruptedFile1.txt">
+    <Content Include="Assets\LockScreenLogo.scale-200.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Square150x150Logo.scale-200.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Square44x44Logo.scale-200.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\StoreLogo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Wide310x150Logo.scale-200.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="QuestionSerieSamples\Flóra1.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="QuestionSerieSamples\CorruptedFile2.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="QuestionSerieSamples\András01.txt">
@@ -72,6 +92,15 @@
     <Content Include="QuestionSerieSamples\ÖCS_03.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\transparentX.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\x.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
@@ -116,6 +145,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Animations\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="Assets\colorX.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Controls\CompetenceSearchPanel.xaml">

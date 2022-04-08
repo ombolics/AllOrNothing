@@ -3,6 +3,17 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">    
     <SolidColorBrush x:Key="ThemeControlForegroundBaseHighBrush" Color="{ThemeResource SystemBaseHighColor}"></SolidColorBrush>
 
+
+    <!--<SolidColorBrush x:Key="Neutral" Color="#f3f1f2"/>
+    <SolidColorBrush x:Key="PanelGreen" Color="#e0ecde"/>
+    <SolidColorBrush x:Key="HighlightColor1" Color="#578791"/>-->
+
+
+    <Color x:Key="MainColor1"> #578791 </Color>
+    <Color x:Key="MainColor2">#e0ecde</Color>
+    <Color x:Key="NautralColor1">#f3f1f2</Color>
+
+
     <SolidColorBrush x:Key="GreyBrush" Color="#D1D1D1"/>
     <SolidColorBrush x:Key="DarkGreenBrush" Color="#576b5c"/>
 

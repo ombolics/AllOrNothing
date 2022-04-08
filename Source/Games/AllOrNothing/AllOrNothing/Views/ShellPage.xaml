@@ -20,8 +20,11 @@
         IsSettingsVisible="True"
         IsPaneToggleButtonVisible="True"
         ExpandedModeThresholdWidth="1280"
-        Background="{ThemeResource SystemAccentColorDark1}"
-        PaneDisplayMode="Top">
+        PaneDisplayMode="Top"
+        Background="White">
+        <NavigationView.Resources>
+            <SolidColorBrush x:Key="NavigationViewTopPaneBackground" Color="{ThemeResource MainColor1}" />
+        </NavigationView.Resources>
         <NavigationView.MenuItems>
             <!--
             TODO WTS: Change the symbols for each item as appropriate for your app
@@ -29,7 +32,7 @@
             Or to use an IconElement instead of a Symbol see https://github.com/Microsoft/WindowsTemplateStudio/blob/release/docs/UWP/projectTypes/navigationpane.md
             Edit String/en-US/Resources.resw: Add a menu item title for each page
             -->
-            <NavigationViewItem x:Uid="Shell_Menu" helpers:NavHelper.NavigateTo="AllOrNothing.ViewModels.AllOrNothingViewModel" />
+            <NavigationViewItem x:Uid="Shell_Menu" helpers:NavHelper.NavigateTo="AllOrNothing.ViewModels.AllOrNothingViewModel" FontSize="20" FontWeight="bold" Foreground="White"/>
             <!--<NavigationViewItem>
                 <NavigationViewItem.Content>
                     <StackPanel Orientation="Horizontal">
@@ -76,7 +79,10 @@
             </behaviors:NavigationViewHeaderBehavior>
         </i:Interaction.Behaviors>-->
         <Grid>
-            <Frame x:Name="shellFrame" BorderThickness="0" IsNavigationStackEnabled="False"/>
+            <Frame x:Name="shellFrame" 
+                   BorderThickness="0" 
+                   IsNavigationStackEnabled="False"
+                   Margin="15,15,15,15"/>
         </Grid>
     </NavigationView>
 </Page>

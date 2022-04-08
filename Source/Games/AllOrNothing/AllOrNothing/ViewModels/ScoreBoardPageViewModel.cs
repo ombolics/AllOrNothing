@@ -1,5 +1,5 @@
-﻿using AllOrNothing.Mapping;
-using AllOrNothing.Helpers;
+﻿using AllOrNothing.Helpers;
+using AllOrNothing.Mapping;
 using AllOrNothing.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.WinUI.UI.Controls;
@@ -45,7 +45,7 @@ namespace AllOrNothing.ViewModels
 
             //Sync the game standings with the last round's result
 
-            
+
             //TODO optimize this
             foreach (var teamInStandings in GameStandings)
             {
