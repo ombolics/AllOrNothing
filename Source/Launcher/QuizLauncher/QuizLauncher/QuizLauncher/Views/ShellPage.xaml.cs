@@ -22,8 +22,8 @@ namespace QuizLauncher.Views
         {
             ViewModel = viewModel;
             InitializeComponent();
-            //ViewModel.NavigationService.Frame = shellFrame;
-            //ViewModel.NavigationViewService.Initialize(navigationView);
+            ViewModel.NavigationService.Frame = shellFrame;
+            ViewModel.NavigationViewService.Initialize(navigationView);
         }
 
         private void OnLoaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)

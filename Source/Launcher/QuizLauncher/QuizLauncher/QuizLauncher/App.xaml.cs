@@ -25,7 +25,7 @@ namespace QuizLauncher
             UnhandledException += App_UnhandledException;
             Ioc.Default.ConfigureServices(ConfigureServices());
 
-            GameImportService.CreateConfigFolder();
+            GameIOService.CreateConfigFolder();
 
         }
 
@@ -61,15 +61,15 @@ namespace QuizLauncher
             services.AddSingleton<INavigationService, NavigationService>();
 
             // Core Services
-            services.AddTransient<GameImportService>();
+            services.AddTransient<GameIOService>();
 
             // Views and ViewModels
             services.AddTransient<ShellPage>();
             services.AddTransient<ShellViewModel>();
             services.AddTransient<MainViewModel>();
             services.AddTransient<MainPage>();
-            services.AddTransient<SettingsViewModel>();
-            services.AddTransient<SettingsPage>();
+            services.AddSingleton<SettingsViewModel>();
+            services.AddSingleton<SettingsPage>();
             return services.BuildServiceProvider();
         }
     }

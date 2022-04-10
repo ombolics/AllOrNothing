@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml.Media.Imaging;
 using QuizLauncher.Services;
 using System;
@@ -12,7 +13,7 @@ using System.Windows.Input;
 
 namespace QuizLauncher.Models
 {
-    public class GamePreviewModel
+    public class GamePreviewModel : ObservableRecipient
     {
         private string _name;
         private string _description;
@@ -23,23 +24,50 @@ namespace QuizLauncher.Models
 
         private ICommand _launchGameCommand;
         public ICommand LaunchGameCommand => _launchGameCommand ??= new RelayCommand(LaunchGame);
-
+        public event Action ErrorWhileOpening;
         private void LaunchGame()
         {
             var actualPath = EntryPointLocation;
             if(IsRelativePath)
             {
-                actualPath = GameImportService.ConfigPath + EntryPointLocation;
+                actualPath = GameIOService.ConfigPath + EntryPointLocation;
             }
             if(!string.IsNullOrEmpty(actualPath) && File.Exists(actualPath))
-                Process.Start(actualPath);
+            {
+                try
+                {
+                    Process.Start(actualPath);
+                }
+                catch (Exception)
+                {
+
+                    ErrorWhileOpening?.Invoke();
+                }
+            }
+                
         }
 
-        public string Description { get => _description; set => _description = value; }
+        public string Description 
+        { 
+            get => _description;
+            set => SetProperty(ref _description, value); 
+        }
         public BitmapImage PreviewImage { get; set; }
-        public string EntryPointLocation { get => _entryPointLocation; set => _entryPointLocation = value; }
-        public string Name { get => _name; set => _name = value; }
-        public string PreviewImageLocation { get => _previewImageLocation; set => _previewImageLocation = value; }
+        public string EntryPointLocation 
+        { 
+            get => _entryPointLocation;
+            set => SetProperty(ref _entryPointLocation, value); 
+        }
+        public string Name 
+        { 
+            get => _name;
+            set => SetProperty(ref _name, value); 
+        }
+        public string PreviewImageLocation 
+        { 
+            get => _previewImageLocation; 
+            set => SetProperty(ref _previewImageLocation, value);
+        }
         public bool IsRelativePath { get => _isRelativePath; set => _isRelativePath = value; }
     }
 }

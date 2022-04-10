@@ -8,21 +8,22 @@
     xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:conv="using:AllOrNothing.Converters"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Background="White"
     Loaded="Page_Loaded">
 
     <Page.Resources>
         <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
     </Page.Resources>
     
-    <Grid Background="{ThemeResource GradientBrush6 }">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="0.67*"/>
         </Grid.ColumnDefinitions>
 
         <Grid Grid.Column="0"
-              Margin="10,10,10,10">
+              Style="{ThemeResource MainGridStyle}">
+            
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
@@ -35,91 +36,92 @@
                     HorizontalAlignment="Stretch"
                     Command="{x:Bind ViewModel.NewPlayerCommand}"/>
 
-            <ScrollViewer Grid.Row="1">
-                <toolkit:DataGrid ItemsSource="{x:Bind ViewModel.AllPlayers, Mode=OneWay}"
+            <toolkit:DataGrid Grid.Row="1" ItemsSource="{x:Bind ViewModel.AllPlayers, Mode=OneWay}"
                               AutoGenerateColumns="False"
                               SelectedItem="{x:Bind ViewModel.SelectedPlayer, Mode=TwoWay}"
                               CanUserReorderColumns="False"
-                              IsReadOnly="True">
-                    <toolkit:DataGrid.Columns>
-                        <toolkit:DataGridTextColumn Header="Azonosító" Binding="{Binding Id}" Tag="Id"
+                              IsReadOnly="True"
+                              Foreground="{ThemeResource MainColor1}"
+                                AlternatingRowBackground="{ThemeResource MainColor2}"
+                                AreRowGroupHeadersFrozen="True"
+                                AreRowDetailsFrozen="True"
+                                GridLinesVisibility="All"
+                                HorizontalGridLinesBrush="{ThemeResource MainColor2}"                                     
+                                HeadersVisibility="Column"
+                                ColumnHeaderStyle="{ThemeResource DatagridHeaderStyle}">
+                <toolkit:DataGrid.Columns>
+                    <toolkit:DataGridTextColumn Header="Azonosító" Binding="{Binding Id}" Tag="Id"
                                                  FontSize="20"/>
-                        <toolkit:DataGridTextColumn Header="Név" Binding="{Binding Name}" Tag="Name"
+                    <toolkit:DataGridTextColumn Header="Név" Binding="{Binding Name}" Tag="Name"
                                                  FontSize="20"/>
-                        <toolkit:DataGridTextColumn Header="Becenév" Binding="{Binding NickName}" Tag="NickNam"
+                    <toolkit:DataGridTextColumn Header="Becenév" Binding="{Binding NickName}" Tag="NickNam"
                                                  FontSize="20"/>
-                        <toolkit:DataGridTextColumn Header="Intézmény" Binding="{Binding Institute}" Tag="Institute"
+                    <toolkit:DataGridTextColumn Header="Intézmény" Binding="{Binding Institute}" Tag="Institute"
                                                  />
 
-                    </toolkit:DataGrid.Columns>
-                </toolkit:DataGrid>
-            </ScrollViewer>
+                </toolkit:DataGrid.Columns>
+            </toolkit:DataGrid>
         </Grid>
 
         <!-- Form area-->
-        <Grid Grid.Column="1" Background="{ThemeResource GreyBrush}" CornerRadius="30"
-              Visibility="{x:Bind ViewModel.FormEnabled, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+        <Grid Grid.Column="1" Style="{ThemeResource NeutralGridStyle}"
+              Visibility="{x:Bind ViewModel.FormEnabled, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
+              Padding="10,10,10,10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="6*"/>
+            </Grid.ColumnDefinitions>
 
-            <StackPanel Orientation="Horizontal"
-                        Grid.Row="0">
-                <TextBlock Text="{x:Bind ViewModel.EditingPlayer.Id, Mode=OneWay}" 
-                           Margin="10,10,10,10" FontSize="{ThemeResource LargeFontSize}"/>
 
-                <TextBlock Text="{x:Bind ViewModel.EditingPlayer.Name, Mode=OneWay}"
-                           Margin="10,10,10,10" FontSize="{ThemeResource LargeFontSize}"/>
-            </StackPanel>
-
-            <StackPanel Orientation="Vertical"
-                        Grid.Row="1"
-                        Spacing="30">
-                <StackPanel Orientation="Horizontal" Spacing="20">
-                    <TextBlock Text="Név:" FontSize="{ThemeResource MediumFontSize}"/>
-                    <TextBox Text="{x:Bind ViewModel.EditingPlayer.Name, Mode=OneWay}" FontSize="{ThemeResource MediumFontSize}"
-                             x:Name="nameTextBox"
-                             TextChanged="{x:Bind ViewModel.TextBoxChanged}"
-                             IsEnabled="{x:Bind ViewModel.FormEnabled, Mode=OneWay}"/>
-                </StackPanel>
-
-                <StackPanel Orientation="Horizontal" Spacing="20">
-                    <TextBlock Text="Becenév:" FontSize="{ThemeResource MediumFontSize}"/>
-                    <TextBox Text="{x:Bind ViewModel.EditingPlayer.NickName, Mode=OneWay}" FontSize="{ThemeResource MediumFontSize}"
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Azonosító"
+                           Style="{ThemeResource TitleStyle}"/>
+            <TextBlock Grid.Row="0" Grid.Column="1" Text="{x:Bind ViewModel.EditingPlayer.Id, Mode=OneWay}" 
+                           Style="{ThemeResource TitleStyle}"/>
+            
+            
+            <!--Name-->
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Név:" 
+                               Style="{ThemeResource TitleStyle}"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Text="{x:Bind ViewModel.EditingPlayer.Name, Mode=OneWay}" FontSize="{ThemeResource MediumFontSize}"
+                     x:Name="nameTextBox"
+                     TextChanged="{x:Bind ViewModel.TextBoxChanged}"
+                     IsEnabled="{x:Bind ViewModel.FormEnabled, Mode=OneWay}"
+                     HorizontalAlignment="Stretch"/>
+            
+            <!--NickName-->
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Becenév:" Style="{ThemeResource TitleStyle}"/>
+            <TextBox Grid.Row="2" Grid.Column="1" Text="{x:Bind ViewModel.EditingPlayer.NickName, Mode=OneWay}" FontSize="{ThemeResource MediumFontSize}"
                              x:Name="nickNameTextBox"
                              TextChanged="{x:Bind ViewModel.TextBoxChanged}"
-                             IsEnabled="{x:Bind ViewModel.FormEnabled, Mode=OneWay}"/>
-                </StackPanel>
-                
-                <StackPanel Orientation="Horizontal" Spacing="20">
-                    <TextBlock Text="Intézmény:" FontSize="{ThemeResource MediumFontSize}"/>
-                    <TextBox Text="{x:Bind ViewModel.EditingPlayer.Institute, Mode=OneWay}" FontSize="{ThemeResource MediumFontSize}"
+                             IsEnabled="{x:Bind ViewModel.FormEnabled, Mode=OneWay}"
+                     HorizontalAlignment="Stretch"/>
+
+            <!--Institute-->
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Intézmény:" Style="{ThemeResource TitleStyle}"/>
+            <TextBox Grid.Row="3" Grid.Column="1" Text="{x:Bind ViewModel.EditingPlayer.Institute, Mode=OneWay}" FontSize="{ThemeResource MediumFontSize}"
                              x:Name="instituteTextBox"
                              TextChanged="{x:Bind ViewModel.TextBoxChanged}"
-                             IsEnabled="{x:Bind ViewModel.FormEnabled, Mode=OneWay}"/>
-                </StackPanel>
+                             IsEnabled="{x:Bind ViewModel.FormEnabled, Mode=OneWay}"
+                     HorizontalAlignment="Stretch"/>
 
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    
-                    <Button Grid.Column="0"
+
+            <Button Grid.Row="4" Grid.Column="0"
                             Visibility="{x:Bind ViewModel.IsPlayerUnderEdit, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" Content="Mentés"
                             Command="{x:Bind ViewModel.SaveCommand}"
                             HorizontalAlignment="Stretch"/>
 
-                    <Button Grid.Column="1"
+            <Button Grid.Row="4" Grid.Column="1"
                             Content="Játékos törlése"
                             Command="{x:Bind ViewModel.DeleteCommand}"
                             HorizontalAlignment="Stretch"/>
-                </Grid>
-            </StackPanel>
-            
+
         </Grid>
-        
-       
     </Grid>
 </Page>

@@ -562,7 +562,7 @@
                             
                             <con:DataGrid.Columns>
                                 <con:DataGridTextColumn Header="Id" Binding="{Binding Id}"  Tag="Id"  Width="auto" />
-                            <con:DataGridTextColumn Header="Név" Binding="{Binding Name}" Tag="Name"  Width="auto"/>
+                                <con:DataGridTextColumn Header="Név" Binding="{Binding Name}" Tag="Name"  Width="auto"/>
 
                                 <!--AUTHORS-->
                                 <con:DataGridTemplateColumn Header="Szerzők" Tag="Author"

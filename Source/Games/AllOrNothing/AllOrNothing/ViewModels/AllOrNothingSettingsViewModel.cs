@@ -12,6 +12,7 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -20,6 +21,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.UI;
 
 namespace AllOrNothing.ViewModels
 {
@@ -110,6 +112,8 @@ namespace AllOrNothing.ViewModels
                 PrimaryButtonText = primaryButtonText,
                 CloseButtonText = closeButtonText,
             };
+            dialog.Background = new SolidColorBrush((Color)App.Current.Resources["NeutralColor"]);
+           
             return await dialog.ShowAsync(ContentDialogPlacement.Popup);
         }
         private async void Exit()

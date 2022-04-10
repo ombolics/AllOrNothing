@@ -5,17 +5,71 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:helpers="using:QuizLauncher.Helpers"
-    xmlns:xaml="using:Microsoft.UI.Xaml"
+    xmlns:xaml="using:Microsoft.UI.Xaml" xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
     mc:Ignorable="d"
     Style="{StaticResource PageStyle}">
     <Page.Resources>
         <helpers:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
     </Page.Resources>
     <Grid Margin="{StaticResource MediumLeftRightMargin}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Beállítsok" Style="{ThemeResource SubtitleTextBlockStyle}" />
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" Content="Mentés"  Command="{x:Bind ViewModel.SaveCommand}"/>
+            <Button Grid.Column="1" Content="Új játék"  Command="{x:Bind ViewModel.NewGameCommad}"/>
+            
+        </Grid>
+        <ListView ItemsSource="{x:Bind ViewModel.Games}"
+                  Grid.Row="2">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="10,10,10,10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="9*"/>
+                        </Grid.ColumnDefinitions>
+
+
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Játék neve"/>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Játék leírása"/>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Elérési út"/>
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Előkép elérési útja"/>
+
+                        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name, Mode=TwoWay}" HorizontalAlignment="Stretch"/>
+                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Description, Mode=TwoWay}" HorizontalAlignment="Stretch"/>
+                        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding EntryPointLocation, Mode=TwoWay}" HorizontalAlignment="Stretch"/>
+                        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding PreviewImageLocation, Mode=TwoWay}" HorizontalAlignment="Stretch"/>
+                        
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        
+
+       
+        
         <StackPanel
             x:Name="ContentArea">
-            <TextBlock x:Uid="Settings_Personalization" Style="{ThemeResource SubtitleTextBlockStyle}" />
-            <StackPanel Margin="{StaticResource SmallTopBottomMargin}">
+            
+            
+            <!--#region -->
+            <!--<StackPanel Margin="{StaticResource SmallTopBottomMargin}">
                 <TextBlock x:Uid="Settings_Theme" />
 
                 <StackPanel Margin="{StaticResource XSmallTopMargin}">
@@ -62,7 +116,8 @@
                     Margin="{StaticResource XSmallTopMargin}"
                     Style="{ThemeResource BodyTextBlockStyle}" />
                 <HyperlinkButton x:Uid="SettingsPage_PrivacyTermsLink" Margin="{StaticResource XSmallTopMargin}" />
-            </StackPanel>
+            </StackPanel>-->
+            <!--#endregion-->
         </StackPanel>
     </Grid>
 </Page>

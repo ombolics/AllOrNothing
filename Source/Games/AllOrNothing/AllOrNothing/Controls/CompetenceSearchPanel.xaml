@@ -13,37 +13,39 @@
         <SolidColorBrush x:Key="TextControlForeground" Color="{ThemeResource MainColor1}"/>
     </UserControl.Resources>
 
-    <Grid>
-        <ScrollViewer Grid.Column="0">
-            <StackPanel  Orientation="Vertical" Style="{ThemeResource NeutralPanelStyle}"
-                                HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+    <Grid Style="{ThemeResource NeutralGridStyle}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-                <AutoSuggestBox PlaceholderText="Ismeretkör keresése" QueryIcon="Find" Margin="15,15,15,15" 
+
+        <AutoSuggestBox Grid.Row="0" PlaceholderText="Ismeretkör keresése" QueryIcon="Find" Margin="15,15,15,15" 
                                         TextChanged="{x:Bind AutoSuggestBox_TextChanged}"
                                         SuggestionChosen="{x:Bind AutoSuggestBox_SuggestionChosen}"
                                         Background="{ThemeResource MainColor2}"
                                     Foreground="{ThemeResource MainColor1}"
                                     BorderThickness="0">
 
-                </AutoSuggestBox>
+        </AutoSuggestBox>
 
-                <!-- Player display area-->
-
-                <ItemsControl ItemsSource="{x:Bind SelectedCompetences, Mode=OneWay}" Background="Transparent" Loaded="ItemsControl_Loaded"
+        <!-- Player display area-->
+        <ScrollViewer Grid.Row="1">
+            <ItemsControl ItemsSource="{x:Bind SelectedCompetences, Mode=OneWay}" Background="Transparent" Loaded="ItemsControl_Loaded"
                               >
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <local:WrapPanel/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <local:WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
 
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
 
-                            <StackPanel Orientation="Horizontal" 
+                        <StackPanel Orientation="Horizontal" 
                                             Style="{ThemeResource SmallMainPanelStyle}">
-                                <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Style="{ThemeResource CommonTextStyle}" Margin="5,5,5,5"/>
-                                <Button Background="Transparent"
+                            <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Style="{ThemeResource CommonTextStyle}" Margin="5,5,5,5"/>
+                            <Button Background="Transparent"
                                                 BorderThickness="0"
                                                 Width="10"
                                                     
@@ -53,17 +55,17 @@
                                                 CommandParameter="{Binding}"
                                                 Padding="0,0,0,0"
                                                 Margin="5,5,5,5">
-                                    <Image Source="/Assets/colorX.png" 
+                                <Image Source="/Assets/colorX.png" 
                                                     Stretch="Uniform" 
                                                     HorizontalAlignment="Center" 
                                                     VerticalAlignment="Center" 
                                                     Margin="0,0,0,0"/>
-                                </Button>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </ScrollViewer>
+        
     </Grid>
 </UserControl>
