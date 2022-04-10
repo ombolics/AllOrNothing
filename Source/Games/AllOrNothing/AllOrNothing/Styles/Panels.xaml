@@ -48,5 +48,24 @@
         <Setter Property="Margin" Value="10,10,10,10"/>
         <Setter Property="CornerRadius" Value="10"/>
     </Style>
+    
+    
+    <!--Grid styles-->
+    <Style x:Name="MainGridStyle" TargetType="Grid">
+        <Setter Property="Background" Value="{ThemeResource MainColor2}"/>
+        <Setter Property="Margin" Value="10,10,10,10"/>
+        <Setter Property="CornerRadius" Value="10"/>
+    </Style>
 
+    <Style x:Name="SmallMainGridStyle" TargetType="Grid">
+        <Setter Property="Background" Value="{ThemeResource MainColor2}"/>
+        <Setter Property="Margin" Value="10,10,10,10"/>
+        <Setter Property="CornerRadius" Value="5"/>
+    </Style>
+
+    <Style x:Name="NeutralGridStyle" TargetType="Grid">
+        <Setter Property="Background" Value="{ThemeResource NautralColor1}"/>
+        <Setter Property="Margin" Value="10,10,10,10"/>
+        <Setter Property="CornerRadius" Value="10"/>
+    </Style>
 </ResourceDictionary>

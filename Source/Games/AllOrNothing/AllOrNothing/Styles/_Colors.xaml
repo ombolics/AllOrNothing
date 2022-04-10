@@ -7,7 +7,8 @@
     <!--<SolidColorBrush x:Key="Neutral" Color="#f3f1f2"/>
     <SolidColorBrush x:Key="PanelGreen" Color="#e0ecde"/>
     <SolidColorBrush x:Key="HighlightColor1" Color="#578791"/>-->
-
+    
+    <SolidColorBrush x:Key="TransparentBrush" Color="Transparent"/>
 
     <Color x:Key="MainColor1"> #578791 </Color>
     <Color x:Key="MainColor2">#e0ecde</Color>

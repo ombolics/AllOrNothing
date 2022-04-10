@@ -8,29 +8,29 @@
     xmlns:helpers="using:AllOrNothing.Helpers"
     mc:Ignorable="d">
 
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="AutoSuggestBoxSuggestionsListBackground" Color="{ThemeResource MainColor2}"/>
+        <SolidColorBrush x:Key="TextControlForeground" Color="{ThemeResource MainColor1}"/>
+    </UserControl.Resources>
+
     <Grid>
-        <StackPanel Grid.Column="0" Orientation="Vertical" CornerRadius="30" Background="White" Margin="15,15,15,15"
+        <ScrollViewer Grid.Column="0">
+            <StackPanel  Orientation="Vertical" Style="{ThemeResource NeutralPanelStyle}"
                                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
-            <AutoSuggestBox PlaceholderText="Ismeretkör keresése" QueryIcon="Find" Margin="15,15,15,15" 
+                <AutoSuggestBox PlaceholderText="Ismeretkör keresése" QueryIcon="Find" Margin="15,15,15,15" 
                                         TextChanged="{x:Bind AutoSuggestBox_TextChanged}"
                                         SuggestionChosen="{x:Bind AutoSuggestBox_SuggestionChosen}"
-                                        Background="{ThemeResource GreyBrush}">
-                <!--<AutoSuggestBox.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal" Spacing="30">
-                                        <TextBlock Text="{Binding Name}"/>
-                                        <TextBlock Text="{Binding Nickname}"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </AutoSuggestBox.ItemTemplate>-->
-            </AutoSuggestBox>
+                                        Background="{ThemeResource MainColor2}"
+                                    Foreground="{ThemeResource MainColor1}"
+                                    BorderThickness="0">
 
-            <!-- Player display area-->
-            <Border  Background="White" CornerRadius="30" Margin="15,15,15,15">
+                </AutoSuggestBox>
+
+                <!-- Player display area-->
+
                 <ItemsControl ItemsSource="{x:Bind SelectedCompetences, Mode=OneWay}" Background="Transparent" Loaded="ItemsControl_Loaded"
                               >
-
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <local:WrapPanel/>
@@ -39,19 +39,31 @@
 
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Border Background="{ThemeResource GreyBrush}" Margin="10,10,10,10" CornerRadius="5">
 
-                                <StackPanel Orientation="Horizontal" Spacing="5">
-                                    <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
-                                    <Button Content="X" VerticalAlignment="Center" Command="{Binding RemoveCommand}" CommandParameter="{Binding}"/>
-                                </StackPanel>
-                            </Border>
-
+                            <StackPanel Orientation="Horizontal" 
+                                            Style="{ThemeResource SmallMainPanelStyle}">
+                                <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Style="{ThemeResource CommonTextStyle}" Margin="5,5,5,5"/>
+                                <Button Background="Transparent"
+                                                BorderThickness="0"
+                                                Width="10"
+                                                    
+                                                VerticalAlignment="Stretch"
+                                                HorizontalAlignment="Right"
+                                                Command="{Binding RemoveCommand}" 
+                                                CommandParameter="{Binding}"
+                                                Padding="0,0,0,0"
+                                                Margin="5,5,5,5">
+                                    <Image Source="/Assets/colorX.png" 
+                                                    Stretch="Uniform" 
+                                                    HorizontalAlignment="Center" 
+                                                    VerticalAlignment="Center" 
+                                                    Margin="0,0,0,0"/>
+                                </Button>
+                            </StackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-            </Border>
-
-        </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </UserControl>

@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Windows.UI;
+using Windows.UI.Text;
 
 namespace AllOrNothing.Services
 {
@@ -83,6 +84,9 @@ namespace AllOrNothing.Services
                 (result as NavigationViewItem).Visibility = Visibility.Visible;
 
             item.Foreground = new SolidColorBrush(Color.FromArgb(255, 255, 255, 255));
+            item.FontSize = (double)App.Current.Resources["LargeFontSize"];
+            item.FontWeight = new FontWeight(700);
+
 
 
             //dont want to add an element multiple times
