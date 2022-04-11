@@ -12,7 +12,7 @@
     </Style>
 
     <Style x:Name="NeutralContentControlStyle" TargetType="ContentControl">
-        <Setter Property="Background" Value="{ThemeResource NautralColor1}"/>
+        <Setter Property="Background" Value="{ThemeResource NeutralColor1}"/>
         <Setter Property="Margin" Value="10,10,10,10"/>
         <Setter Property="CornerRadius" Value="10"/>
     </Style>
@@ -31,7 +31,7 @@
     </Style>
 
     <Style x:Name="NeutralPanelStyle" TargetType="StackPanel">
-        <Setter Property="Background" Value="{ThemeResource NautralColor1}"/>
+        <Setter Property="Background" Value="{ThemeResource NeutralColor1}"/>
         <Setter Property="Margin" Value="10,10,10,10"/>
         <Setter Property="CornerRadius" Value="10"/>
     </Style>
@@ -44,7 +44,7 @@
     </Style>
 
     <Style x:Name="NeutralListViewStyle" TargetType="ListView">
-        <Setter Property="Background" Value="{ThemeResource NautralColor1}"/>
+        <Setter Property="Background" Value="{ThemeResource NeutralColor1}"/>
         <Setter Property="Margin" Value="10,10,10,10"/>
         <Setter Property="CornerRadius" Value="10"/>
     </Style>
@@ -64,7 +64,7 @@
     </Style>
 
     <Style x:Name="NeutralGridStyle" TargetType="Grid">
-        <Setter Property="Background" Value="{ThemeResource NautralColor1}"/>
+        <Setter Property="Background" Value="{ThemeResource NeutralColor1}"/>
         <Setter Property="Margin" Value="10,10,10,10"/>
         <Setter Property="CornerRadius" Value="10"/>
     </Style>

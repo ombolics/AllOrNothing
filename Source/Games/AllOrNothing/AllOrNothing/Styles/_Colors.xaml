@@ -12,7 +12,7 @@
 
     <Color x:Key="MainColor1"> #578791 </Color>
     <Color x:Key="MainColor2">#e0ecde</Color>
-    <Color x:Key="NautralColor1">#f3f1f2</Color>
+    <Color x:Key="NeutralColor1">#f3f1f2</Color>
 
 
     <SolidColorBrush x:Key="GreyBrush" Color="#D1D1D1"/>

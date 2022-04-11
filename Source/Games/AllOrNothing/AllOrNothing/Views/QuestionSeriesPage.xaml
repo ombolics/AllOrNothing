@@ -60,8 +60,8 @@
                               ColumnHeaderStyle="{ThemeResource DatagridHeaderStyle}">
 
                 <toolkit:DataGrid.Columns>
-                    <toolkit:DataGridTextColumn Header="Azonotsító" Binding="{Binding Id}" Tag="Id" />
-                    <toolkit:DataGridTextColumn Header="Azonotsító" Binding="{Binding Name}" Tag="Id" />
+                    <toolkit:DataGridTextColumn Header="Azonosító" Binding="{Binding Id}" Tag="Id" />
+                    <toolkit:DataGridTextColumn Header="Cím" Binding="{Binding Name}" Tag="Id" />
 
                         <!--AUTHORS--> 
                     <toolkit:DataGridTemplateColumn Header="Szerzők" Tag="Author">
@@ -77,8 +77,8 @@
 
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
-                                            <Border Background="{ThemeResource GreyBrush}" Margin="10,10,10,10" CornerRadius="5">
-                                                <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+                                            <Border Background="{ThemeResource MainColor2}" Margin="10,10,10,10" CornerRadius="5">
+                                                <TextBlock Text="{Binding Name}" Style="{ThemeResource CommonTextStyle}" VerticalAlignment="Center"/>
                                             </Border>
 
                                         </DataTemplate>
@@ -104,8 +104,8 @@
 
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
-                                                <Border Background="{ThemeResource GreyBrush}" Margin="10,10,10,10" CornerRadius="5">
-                                                    <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+                                                <Border Background="{ThemeResource MainColor2}" Margin="10,10,10,10" CornerRadius="5">
+                                                    <TextBlock Text="{Binding Name}" Style="{ThemeResource CommonTextStyle}" VerticalAlignment="Center"/>
                                                 </Border>
 
                                             </DataTemplate>
@@ -128,187 +128,203 @@
         <!-- Form area-->
         <Grid Grid.Column="1" Style="{ThemeResource NeutralGridStyle}">
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
             
-            <StackPanel Orientation="Horizontal"
-                        Grid.Row="0">
-                <TextBlock Text="Kérdéssor neve" Margin="10,10,10,10" 
-                           Style="{ThemeResource TitleStyle}"/>
-                <TextBox Text="{x:Bind ViewModel.EditingSerie.Name, Mode=TwoWay}" 
-                         Margin="10,10,10,10" FontSize="{ThemeResource MediumFontSize}" 
-                         x:Name="serieNameTextbox"
-                        />
-            </StackPanel>
-
-            <TextBlock Grid.Row="1"
+            <TextBlock Grid.Row="0"
                        Text="Válasszon kérdéssort!" 
                        Style="{ThemeResource MainTitleStyle}"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"
                        Visibility="{x:Bind ViewModel.UnselectedTextVisible, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"/>
 
-            <ScrollViewer Grid.Row="1"
-                          Visibility="{x:Bind ViewModel.UnselectedTextVisible, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=negate}">
-                <StackPanel Orientation="Vertical">
-                    <ListBox ItemsSource="{x:Bind ViewModel.EditingSerie.Topics, Mode=OneWay}">
-                        <ListBox.ItemTemplate>
-                            
-                            <DataTemplate>
-                                <StackPanel Orientation="Vertical" Style="{ThemeResource MainPanelStyle}" Padding="10,0,10,0">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        
-                                        <Grid Grid.Column="0">
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="*"/>
-                                                <RowDefinition Height="*"/>
-                                            </Grid.RowDefinitions>
-                                            
-                                            <!--név-->
-                                            <StackPanel Orientation="Vertical" Grid.Row="0">
-                                                <TextBlock Text="Téma címe" Margin="10,10,10,10" Style="{ThemeResource TitleStyle}"/>
-                                                <TextBox Text="{Binding Name, Mode=TwoWay}" 
+            <Grid Visibility="{x:Bind ViewModel.UnselectedTextVisible, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=negate}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                
+                <StackPanel Orientation="Horizontal"
+                        Grid.Row="0">
+                    <TextBlock Text="Kérdéssor címe" Margin="10,10,10,10" 
+                           Style="{ThemeResource TitleStyle}"/>
+                    <TextBox Text="{x:Bind ViewModel.EditingSerie.Name, Mode=TwoWay}" 
+                         Margin="10,10,10,10" FontSize="{ThemeResource MediumFontSize}" 
+                         x:Name="serieNameTextbox"
+                         HorizontalAlignment="Stretch"/>
+                </StackPanel>
+
+                <ScrollViewer Grid.Row="1"
+                          >
+                    <StackPanel Orientation="Vertical">
+                        <ListBox ItemsSource="{x:Bind ViewModel.EditingSerie.Topics, Mode=OneWay}">
+                            <ListBox.ItemTemplate>
+
+                                <DataTemplate>
+                                    <StackPanel Orientation="Vertical" Style="{ThemeResource MainPanelStyle}" Padding="10,0,10,0">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <Grid Grid.Column="0">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="*"/>
+                                                    <RowDefinition Height="*"/>
+                                                </Grid.RowDefinitions>
+
+                                                <!--név-->
+                                                <StackPanel Orientation="Vertical" Grid.Row="0">
+                                                    <TextBlock Text="Téma címe" Margin="10,10,10,10" Style="{ThemeResource TitleStyle}"/>
+                                                    <TextBox Text="{Binding Name, Mode=TwoWay}" 
                                                          Margin="10,10,10,0" FontSize="{ThemeResource MediumFontSize}"
                                                          HorizontalAlignment="Stretch"
                                                          x:Name="topicNameTextbox"/>
 
-                                            </StackPanel>
-                                            <!--leírás-->
-                                            <StackPanel Orientation="Vertical" Grid.Row="1">
-                                                <TextBlock Text="Leírás" Margin="10,10,10,0" Style="{ThemeResource TitleStyle}"/>
-                                                <TextBox Text="{Binding Description, Mode=TwoWay}" 
+                                                </StackPanel>
+                                                <!--leírás-->
+                                                <StackPanel Orientation="Vertical" Grid.Row="1">
+                                                    <TextBlock Text="Leírás" Margin="10,10,10,0" Style="{ThemeResource TitleStyle}"/>
+                                                    <TextBox Text="{Binding Description, Mode=TwoWay}" 
                                                          Margin="10,10,10,10" FontSize="{ThemeResource MediumFontSize}"
                                                          HorizontalAlignment="Stretch"
                                                          TextWrapping="Wrap"
-                                                         x:Name="topicDescriptionTextbox"/> 
-                                            </StackPanel>
-                                        </Grid>
+                                                         x:Name="topicDescriptionTextbox"/>
+                                                </StackPanel>
+                                            </Grid>
 
-                                        <Grid Grid.Column="1">
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="auto"/>
-                                                <RowDefinition Height="*"/>
-                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Column="1">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="auto"/>
+                                                    <RowDefinition Height="*"/>
+                                                </Grid.RowDefinitions>
 
-                                            <TextBlock Name="proxy" helpers:AncestorHelper.AncestorType="Page"/>
-                                            <TextBlock Grid.Row="0" Text="Ismeretkör" Style="{ThemeResource TitleStyle}"/>
-                                            <!--Ismeretkör-->
-                                            <cc:CompetenceSearchPanel Grid.Row="1"  SelectedCompetences="{Binding Competences}"
+                                                <TextBlock Name="proxy" helpers:AncestorHelper.AncestorType="Page"/>
+                                                <TextBlock Grid.Row="0" Text="Ismeretkör" Style="{ThemeResource TitleStyle}" Margin="10,10,10,10"/>
+                                                <!--Ismeretkör-->
+                                                <cc:CompetenceSearchPanel Grid.Row="1"  SelectedCompetences="{Binding Competences}"
                                                                   Mapper="{Binding DataContext.ViewModel.Mapper, ElementName=proxy}"
                                                                   AllCompetences="{Binding DataContext.ViewModel.AllCompetences, ElementName=proxy}"/>
 
+                                            </Grid>
                                         </Grid>
-                                    </Grid>
-                                    
-                                    <!--szerző-->
-                                    <StackPanel Orientation="Horizontal" Visibility="{Binding HasAuthor, Converter={StaticResource BoolToVisibilityConverter}}">
-                                        <TextBlock Text="Szerző" 
+
+                                        <!--szerző-->
+                                        <StackPanel Orientation="Horizontal" Visibility="{Binding HasAuthor, Converter={StaticResource BoolToVisibilityConverter}}">
+                                            <TextBlock Text="Szerző" 
                                            Margin="10,10,10,10" Style="{ThemeResource TitleStyle}"/>
-                                        <TextBlock Text="{Binding Author.Name}" 
+                                            <TextBlock Text="{Binding Author.Name}" 
                                            Margin="10,10,10,10" Style="{ThemeResource TitleStyle}"/>
-                                        <TextBlock Text="-" 
+                                            <TextBlock Text="-" 
                                            Margin="10,10,10,10" Style="{ThemeResource TitleStyle}"/>
-                                        <TextBlock Text="{Binding Author.Id}" 
+                                            <TextBlock Text="{Binding Author.Id}" 
                                            Margin="10,10,10,10" Style="{ThemeResource TitleStyle}" />
-                                    </StackPanel>
-                                    
-                                    <!--kérdések-->
-                                    <TextBlock Text="Kérdések" Style="{ThemeResource TitleStyle}"/>
-                                    <ItemsControl ItemsSource="{Binding Questions}">
-                                        <ItemsControl.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <StackPanel Orientation="Vertical" Style="{ThemeResource NeutralPanelStyle}" Margin="10,10,10,20"/>
-                                            </ItemsPanelTemplate>
-                                        </ItemsControl.ItemsPanel>
+                                        </StackPanel>
 
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <StackPanel Orientation="Vertical" Style="{ThemeResource NeutralPanelStyle}">
+                                        <!--kérdések-->
+                                        <TextBlock Text="Kérdések" Style="{ThemeResource TitleStyle}" Margin="10,10,10,10"/>
+                                        <ItemsControl ItemsSource="{Binding Questions}">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel Orientation="Vertical" Style="{ThemeResource NeutralPanelStyle}" Margin="10,10,10,20"/>
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
 
-                                                    <Grid>
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="*"/>
-                                                            <ColumnDefinition Width="8*"/>
-                                                        </Grid.ColumnDefinitions>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Vertical" Style="{ThemeResource NeutralPanelStyle}">
 
-                                                        <TextBlock Grid.Column="0" Text="Kérdés"  Margin="10,10,10,5" Style="{ThemeResource TitleStyle}"/>
-                                                        <TextBox Grid.Column="1"
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="*"/>
+                                                                <ColumnDefinition Width="8*"/>
+                                                            </Grid.ColumnDefinitions>
+
+                                                            <TextBlock Grid.Column="0" Text="Kérdés"  Margin="10,10,10,5" Style="{ThemeResource TitleStyle}"/>
+                                                            <TextBox Grid.Column="1"
                                                                  Text="{Binding Text, Mode=TwoWay}" 
                                                                  Margin="10,0,10,5" 
                                                                  FontSize="{ThemeResource MediumFontSize}" 
                                                                  TextWrapping="Wrap" 
                                                                  MaxWidth="600"
                                                                  x:Name="questionTextBox"/>
-                                                        
-                                                    </Grid>
-                                                    <Grid>
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="*"/>
-                                                            <ColumnDefinition Width="6*"/>
-                                                            <ColumnDefinition Width="auto"/>
-                                                            <ColumnDefinition Width="auto"/>
-                                                        </Grid.ColumnDefinitions>
 
-                                                        <TextBlock Grid.Column="0" Text="Válasz"  Margin="10,0,10,5" Style="{ThemeResource TitleStyle}"/>
-                                                        <TextBox Grid.Column="1" Text="{Binding Answer, Mode=TwoWay}" 
+                                                        </Grid>
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="*"/>
+                                                                <ColumnDefinition Width="6*"/>
+                                                                <ColumnDefinition Width="auto"/>
+                                                                <ColumnDefinition Width="auto"/>
+                                                            </Grid.ColumnDefinitions>
+
+                                                            <TextBlock Grid.Column="0" Text="Válasz"  Margin="10,0,10,5" Style="{ThemeResource TitleStyle}"/>
+                                                            <TextBox Grid.Column="1" Text="{Binding Answer, Mode=TwoWay}" 
                                                                  Margin="10,0,10,5" 
                                                                  FontSize="{ThemeResource MediumFontSize}" 
                                                                  TextWrapping="Wrap"
                                                              
                                                                  x:Name="answerTextBox"/>
 
-                                                        <TextBlock Grid.Column="2" Text="Érték"  Margin="10,0,10,5" Style="{ThemeResource TitleStyle}"/>
-                                                        <TextBox Grid.Column="3" Text="{Binding Value, Mode=TwoWay}" 
+                                                            <TextBlock Grid.Column="2" Text="Érték"  Margin="10,0,10,5" Style="{ThemeResource TitleStyle}"/>
+                                                            <TextBox Grid.Column="3" Text="{Binding Value, Mode=TwoWay}" 
                                                                              Margin="10,0,10,5" 
                                                                              FontSize="{ThemeResource MediumFontSize}"
                                                                              
                                                                              x:Name="valueTextBox"/>
-                                                    </Grid>
-
-                                                    
-                                                </StackPanel>
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                        <ListBox.ItemContainerStyle>
-                            <Style TargetType="ListBoxItem">
-                                <Setter Property="HorizontalContentAlignment"  Value="Stretch"></Setter>
-                                <Setter Property="VerticalContentAlignment"  Value="Stretch"></Setter>
-                            </Style>
-                        </ListBox.ItemContainerStyle>
-                    </ListBox>
+                                                        </Grid>
 
 
-                </StackPanel>
-            </ScrollViewer>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
 
-            <Grid Grid.Row="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Button Content="Mentés"
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                            <ListBox.ItemContainerStyle>
+                                <Style TargetType="ListBoxItem">
+                                    <Setter Property="HorizontalContentAlignment"  Value="Stretch"></Setter>
+                                    <Setter Property="VerticalContentAlignment"  Value="Stretch"></Setter>
+                                </Style>
+                            </ListBox.ItemContainerStyle>
+                        </ListBox>
+
+
+                    </StackPanel>
+                </ScrollViewer>
+
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <Button Content="Mentés"
+                            Foreground="{ThemeResource MainColor1}"
+                            FontSize="20"
+                            FontWeight="Bold"
+                            Margin="10,10,10,10"
                     Grid.Column="0"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
                     Command="{x:Bind ViewModel.SaveCommand}"/>
 
-                <Button Content="Kérdéssor törlése"
+                    <Button Content="Kérdéssor törlése"
+                            Foreground="{ThemeResource MainColor1}"
+                            FontSize="20"
+                            FontWeight="Bold"
+                            Margin="10,10,10,10"
                     Grid.Column="1"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
                     Command="{x:Bind ViewModel.DeleteCommand}"/>
+                </Grid>
             </Grid>
+            
         </Grid>
         
     </Grid>
