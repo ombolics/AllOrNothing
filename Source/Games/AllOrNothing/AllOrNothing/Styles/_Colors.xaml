@@ -9,10 +9,22 @@
     <SolidColorBrush x:Key="HighlightColor1" Color="#578791"/>-->
     
     <SolidColorBrush x:Key="TransparentBrush" Color="Transparent"/>
+    <SolidColorBrush x:Key="SelectedItemBrush" Color="DarkGray" Opacity="40"/>
+
+
+    <!-- light blue ABC2E8-->
+    <!-- dark blue 6886C5-->
+
+    <!-- light green cedfcc-->
+    <!-- dark green 6886C5-->
+
 
     <Color x:Key="MainColor1"> #578791 </Color>
-    <Color x:Key="MainColor2">#e0ecde</Color>
+    <Color x:Key="MainColor2">#cedfcc</Color>
+    <Color x:Key="MainColor3">#e0ebde</Color> 
+
     <Color x:Key="NeutralColor1">#f3f1f2</Color>
+    
 
 
     <SolidColorBrush x:Key="GreyBrush" Color="#D1D1D1"/>

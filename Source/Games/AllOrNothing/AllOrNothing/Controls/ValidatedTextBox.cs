@@ -12,6 +12,7 @@ namespace AllOrNothing.Controls
             _originalContent = "";
         }
 
+
         private void ValidatedTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
             var textBox = sender as TextBox;

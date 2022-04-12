@@ -44,6 +44,7 @@
     <None Remove="QuestionSerieSamples\ÖCS_03.txt" />
     <None Remove="Styles\CheckBox.xaml" />
     <None Remove="Styles\DataGrid.xaml" />
+    <None Remove="Styles\TextBox.xaml" />
     <None Remove="Views\PlayerAddingPage.xaml" />
     <None Remove="Views\ScoreBoardPage.xaml" />
   </ItemGroup>
@@ -152,6 +153,11 @@
     <Content Update="Assets\colorX.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Styles\TextBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Styles\DataGrid.xaml">

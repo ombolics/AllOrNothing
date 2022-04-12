@@ -16,11 +16,11 @@ namespace AllOrNothing.Converters
             var brush = new SolidColorBrush();
             if (boolValue)
             {
-                brush.Color = Color.FromArgb(255, 46, 95, 105);
+                brush.Color = (Color)App.Current.Resources["NeutralColor1"];
             }
             else
             {
-                brush.Color = Color.FromArgb(255, 184, 220, 227);
+                brush.Color = (Color)App.Current.Resources["MainColor2"];
             }
             return brush;
         }
