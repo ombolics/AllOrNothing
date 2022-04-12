@@ -14,7 +14,9 @@
         <conv:NullValueConverter x:Key="NullValueConverter"/>
     </UserControl.Resources>
 
-    <Grid x:Name="MainGrid" Background="#ADC2A9">
+    <Grid x:Name="MainGrid" 
+          Background="{ThemeResource MainColor2}"
+          CornerRadius="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="*"/>
@@ -23,9 +25,15 @@
 
 
         <Grid Grid.Row="1">
-            <Border Margin="0,20,0,0" Background="{ThemeResource GradientBrush5}">
+            <Border Margin="10,10,10,10" 
+                    Background="White"
+                    CornerRadius="10">
                 <TextBlock x:Name="QuestionTextBlock" Text="{x:Bind QuestionDisplay, Mode=OneWay}"
-                           TextAlignment="Center" VerticalAlignment="Center" TextWrapping="WrapWholeWords" FontSize="{ThemeResource MediumFontSize}"/>
+                           TextAlignment="Center" 
+                           VerticalAlignment="Center" 
+                           TextWrapping="WrapWholeWords" 
+                           Style="{ThemeResource TitleStyle}"
+                           />
             </Border>
 
         </Grid>

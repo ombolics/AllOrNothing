@@ -23,7 +23,7 @@
     </Page.Resources>
 
 
-    <Grid>
+    <Grid Background="White">
         <!--Game without buttons-->
         <Grid x:Name="buttonlessMainGrid" Background="{ ThemeResource GradientBrush4}"
               Visibility="{x:Bind ViewModel.SelectedRound.RoundSettings.IsGameWithoutButtonsEnabled, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
@@ -45,7 +45,9 @@
                         <ColumnDefinition Width="4*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Row="1" Text="{x:Bind ViewModel.OccasionName}" FontSize="{StaticResource LargeFontSize}" Margin="10,10,10,10"/>
+                    <TextBlock Grid.Row="1" Text="{x:Bind ViewModel.OccasionName}"
+                               Style="{ThemeResource MainTitleStyle}"
+                               Margin="10,10,10,10"/>
                 </Grid>
 
                 <cc:QuestionGrid Grid.Row="2" Margin="15,15,15,15"
@@ -186,14 +188,15 @@
         </Grid>
 
         <!-- GameWithButtons-->
-        <Grid x:Name="MainGrid" Background="{ ThemeResource GradientBrush4}"
+        <Grid x:Name="MainGrid"            
               Visibility="{x:Bind ViewModel.SelectedRound.RoundSettings.IsGameWithoutButtonsEnabled, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=negate}">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="8*"/>
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
-            <Grid>
+            
+            <Grid Grid.Column="0" Style="{ThemeResource NeutralGridStyle}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="5*"/>
@@ -204,15 +207,22 @@
                         <ColumnDefinition Width="4*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Row="1" Text="{x:Bind ViewModel.OccasionName}" FontSize="{StaticResource LargeFontSize}" Margin="10,10,10,10"/>
+                    <TextBlock Grid.Row="1" Text="{x:Bind ViewModel.OccasionName}" 
+                               Style="{ThemeResource MainTitleStyle}" 
+                               Margin="10,10,10,10"/>
 
                     <Button Grid.Row="1" Grid.Column="1" 
                             Content="{x:Bind ViewModel.SelectedRound.RoundSettings.TematicalTime, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}" 
                             CornerRadius="10" 
                             HorizontalAlignment="Right" 
-                            VerticalAlignment="Stretch" 
-                            FontSize="{StaticResource LargeFontSize}"
-                            Command="{x:Bind ViewModel.ToggleTimerCommand}"/>
+                            VerticalAlignment="Center" 
+                            FontSize="30"
+                            BorderThickness="0"
+                            Foreground="{ThemeResource MainColor1}"
+                            FontWeight="Bold"
+                            Command="{x:Bind ViewModel.ToggleTimerCommand}"
+                            Padding="10,10,10,10"
+                            Margin="10,10,10,10"/>
 
                 </Grid>
 
@@ -224,51 +234,31 @@
 
             </Grid>
 
-            <Grid Grid.Column="1" Margin="10,0,0,0">
+            <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="4*"/>
+                    <RowDefinition Height="3.618*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
+                <Grid Grid.Row="0"
+                  Style="{ThemeResource MainGridStyle}">
 
-                <ItemsControl ItemsSource="{x:Bind ViewModel.SelectedRound.RoundStandings}">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <con:UniformGrid Columns="1"/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <cc:TeamScore Standing="{Binding}" CurrentQuestion="{Binding ViewModel.CurrentQuestion, Mode=TwoWay, ElementName=gamePage}"
+
+                    <ItemsControl ItemsSource="{x:Bind ViewModel.SelectedRound.RoundStandings}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <con:UniformGrid Columns="1"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <cc:TeamScore Standing="{Binding}" CurrentQuestion="{Binding ViewModel.CurrentQuestion, Mode=TwoWay, ElementName=gamePage}"
                                           HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-                <!--<ListBox Grid.Row="0" 
-                          ItemsSource="{x:Bind ViewModel.SelectedRound.RoundStandings, Mode=OneWay}"
-
-                          HorizontalContentAlignment="Stretch"
-                          VerticalContentAlignment="Stretch"
- 
-                          Background="White"
-                          CornerRadius="20">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <cc:TeamScore Standing="{Binding}" CurrentQuestion="{Binding ViewModel.CurrentQuestion, Mode=TwoWay, ElementName=gamePage}"
-                                          HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                    <ListBox.ItemContainerStyle>
-                        <Style TargetType="ListBoxItem">
-                            <Setter Property="HorizontalContentAlignment"  Value="Stretch"></Setter>
-                            <Setter Property="VerticalContentAlignment"  Value="Stretch"></Setter>
-                        </Style>
-                    </ListBox.ItemContainerStyle>
-                </ListBox>-->
-                
-                <!--<cc:TeamScore Grid.Row="0" Grid.Column="0" Score="{x:Bind ViewModel.ScoreTest, Mode=TwoWay}" CurrentQuestion="{x:Bind ViewModel.CurrentQuestion, Mode=TwoWay}" />-->
-
-
-                <Grid Grid.Row="1" Background="white" CornerRadius="20" Margin="10,10,10,10">
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Grid>
+                <Grid Grid.Row="1"
+                      Style="{ThemeResource NeutralGridStyle}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
@@ -278,28 +268,42 @@
                             Content="Nincs válasz" 
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Stretch"
-                            Command="{x:Bind ViewModel.SkipAnswerCommand}"/>
-                    
-                    <Grid Grid.Row="1" Margin="10,10,10,10" ColumnSpacing="5">
+                            Command="{x:Bind ViewModel.SkipAnswerCommand}"
+                            CornerRadius="10"
+                            Margin="10,10,10,10"
+                            Foreground="{ThemeResource MainColor1}"
+                            />
+
+                    <Grid Grid.Row="1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        
-                        <Button Grid.Column="0" Content="V" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+
+                        <Button Grid.Column="0" 
+                                Content="Villám" 
+                                Background="White"
+                                HorizontalAlignment="Stretch" 
+                                VerticalAlignment="Stretch" 
                                 Command="{x:Bind ViewModel.ShowLightningCommand}"
-                                Visibility="{x:Bind ViewModel.GamePhase, Mode=OneWay, Converter={StaticResource GamePhaseToVisibilityConverter}, ConverterParameter=Tematical }"/>
-                       
-                        
-                        <Button Grid.Column="1" Content="E" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                Command="{x:Bind ViewModel.GameOverCommand}"/>
+                                Visibility="{x:Bind ViewModel.GamePhase, Mode=OneWay, Converter={StaticResource GamePhaseToVisibilityConverter}, ConverterParameter=Tematical }"
+                                CornerRadius="10"
+                                Margin="10,10,10,10"
+                                Foreground="{ThemeResource MainColor1}"/>
+
+
+                        <Button Grid.Column="1" 
+                                Content="Eredmény" 
+                                Background="White"
+                                HorizontalAlignment="Stretch" 
+                                VerticalAlignment="Stretch"
+                                Command="{x:Bind ViewModel.GameOverCommand}"
+                                CornerRadius="10"
+                                Margin="10,10,10,10"
+                                Foreground="{ThemeResource MainColor1}"/>
                     </Grid>
-
-
                 </Grid>
             </Grid>
-
         </Grid>
-        
     </Grid>
 </Page>

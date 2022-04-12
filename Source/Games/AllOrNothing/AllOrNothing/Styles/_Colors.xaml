@@ -21,8 +21,10 @@
 
     <Color x:Key="MainColor1"> #578791 </Color>
     <Color x:Key="MainColor2">#cedfcc</Color>
-    <Color x:Key="MainColor3">#e0ebde</Color> 
-
+    <Color x:Key="MainColor3">#e0ebde</Color>
+    <Color x:Key="MainColor4">#91c4b1</Color>
+    
+    
     <Color x:Key="NeutralColor1">#f3f1f2</Color>
     
 

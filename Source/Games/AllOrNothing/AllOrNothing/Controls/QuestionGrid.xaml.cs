@@ -1,6 +1,9 @@
 ﻿using AllOrNothing.Mapping;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media;
+using Windows.UI;
+using Windows.UI.Text;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -92,8 +95,8 @@ namespace AllOrNothing.Controls
             for (int i = 0; i < _questionSerie.Topics[0].Questions.Count + 1; i++)
             {
                 _buttonGrid.RowDefinitions.Add(new RowDefinition
-                {
-                    Height = new GridLength(1.0, GridUnitType.Star)
+                {                    
+                    Height = new GridLength(1.0, i == 0 ? GridUnitType.Auto : GridUnitType.Star)
                 });
             }
 
@@ -102,6 +105,16 @@ namespace AllOrNothing.Controls
 
                 Button headerButton = new Button()
                 {
+                    CornerRadius = new CornerRadius(10),
+                    Background = new SolidColorBrush((Color)App.Current.Resources["MainColor4"]),
+                    Foreground = new SolidColorBrush(Color.FromArgb(255, 255, 255, 255)),
+                    FontSize = 20,
+                    FontWeight = new FontWeight(700),
+                    HorizontalContentAlignment = HorizontalAlignment.Center,
+                    VerticalContentAlignment = VerticalAlignment.Center,
+                    BorderThickness = new Thickness(0,0,0,0),
+                    Margin = new Thickness(5, 5, 5, 20),
+
                     Content = _questionSerie.Topics[i].Name,
                     Flyout = !string.IsNullOrEmpty(_questionSerie.Topics[i].Description)
                     ? new Flyout()
@@ -113,8 +126,8 @@ namespace AllOrNothing.Controls
                         },
                     }
                     : null,
-                    VerticalAlignment = VerticalAlignment.Center,
-                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Stretch,
+                    HorizontalAlignment = HorizontalAlignment.Stretch,
                 };
 
                 _buttonGrid.Children.Add(headerButton);
@@ -124,11 +137,15 @@ namespace AllOrNothing.Controls
                 {
                     QuestionButton b = new QuestionButton(_questionSerie.Topics[i].Questions[j - 1])
                     {
+                        CornerRadius = new CornerRadius(10),
+                        Background = new SolidColorBrush(Color.FromArgb(255,255,255,255)),
+                        Foreground = new SolidColorBrush((Color)App.Current.Resources["MainColor1"]),
+                        BorderThickness = new Thickness(0, 0, 0, 0),
+
                         Content = _questionSerie.Topics[i].Questions[j - 1].Value.ToString(),
                         VerticalAlignment = VerticalAlignment.Stretch,
                         HorizontalAlignment = HorizontalAlignment.Stretch,
-                        BorderThickness = new Thickness(10.0, 1.0, 1.0, 1.0),
-                        Margin = new Thickness(2, 2, 2, 2),
+                        Margin = new Thickness(5,5,5,5),
                         UseLayoutRounding = true,
                     };
                     b.Click += B_Click;

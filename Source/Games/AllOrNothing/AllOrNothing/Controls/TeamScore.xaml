@@ -5,11 +5,9 @@
     xmlns:local="using:AllOrNothing.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    MaxHeight="165"
-    MaxWidth="440">
+    mc:Ignorable="d">
 
-    <Grid Margin="0,10">
+    <Grid >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="9*"/>
@@ -36,24 +34,56 @@
             </Grid>
         </Grid>-->
 
-        <Grid Grid.Column="1" Background="#99A799">
+        <Grid Grid.Column="1" 
+              Style="{ThemeResource NeutralGridStyle}">
             <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
-            <TextBlock x:Name="TeamNameBlock" Grid.Row="0" Text="{x:Bind Standing.Team.TeamName, Mode=OneWay}" HorizontalAlignment="Stretch"/>
-            <TextBox x:Name="ScoreBox" Grid.Row="1" Text="{x:Bind Standing.Score, Mode=TwoWay}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-                     TextAlignment="Center" TextWrapping="Wrap" TextChanged="On_TextChanged"/>
+            <TextBlock x:Name="TeamNameBlock" 
+                       Grid.Row="0" 
+                       Text="{x:Bind Standing.Team.TeamName, Mode=OneWay}" 
+                       HorizontalAlignment="Center"
+                       Style="{ThemeResource TitleStyle}"/>
+            
+            <TextBox x:Name="ScoreBox" 
+                     Grid.Row="1" 
+                     Text="{x:Bind Standing.Score, Mode=TwoWay}" 
+                     HorizontalAlignment="Center" 
+                     VerticalAlignment="Center" 
+                     TextAlignment="Center" 
+                     Background="Transparent"
+                     Foreground="{ThemeResource MainColor1}"
+                     FontSize="17"
+                     TextChanged="On_TextChanged"/>
 
             <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Button x:Name="PlusButton" Grid.Column="0" Content="+" HorizontalAlignment="Stretch" Click="On_ButtonPressed"/>
-                <Button x:Name="MinusButton" Grid.Column="1" Content="-" HorizontalAlignment="Stretch" Click="On_ButtonPressed"/>
+                
+                <Button x:Name="PlusButton"
+                        Margin="5,5,10,5"
+                        Grid.Column="0" 
+                        Content="+"
+                        Foreground="{ThemeResource MainColor1}"
+                        Background="White"
+                        HorizontalAlignment="Right"
+                        Click="On_ButtonPressed"
+                        CornerRadius="10"/>
+                
+                <Button x:Name="MinusButton" 
+                        Margin="10,5,5,5"
+                        Grid.Column="1" 
+                        Content="-" 
+                        Foreground="{ThemeResource MainColor1}"
+                        Background="White"
+                        HorizontalAlignment="Left"
+                        CornerRadius="10"
+                        Click="On_ButtonPressed"/>
             </Grid>
         </Grid>
 
