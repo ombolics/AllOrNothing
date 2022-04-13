@@ -15,6 +15,7 @@
 
     <Page.Resources>
         <SolidColorBrush x:Key="NavigationViewTopPaneBackground" Color="{ThemeResource MainColor1}" />
+        <SolidColorBrush x:Key="NavigationViewTopPaneForeground" Color="White" />
         <SolidColorBrush x:Key="NavigationViewItemForeground" Color="White"/>
         <!--<SolidColorBrush x:Key="NavigationViewItemForegroundPointerOver" Color="Red"/>-->
         <SolidColorBrush x:Key="NavigationViewItemForegroundSelected" Color="Red"/>
@@ -33,9 +34,6 @@
         PaneDisplayMode="Top"
         Foreground="White"
         Background="White">
-        <NavigationView.Resources>
-            
-        </NavigationView.Resources>
         <NavigationView.MenuItems>
             <!--
             TODO WTS: Change the symbols for each item as appropriate for your app
@@ -43,7 +41,7 @@
             Or to use an IconElement instead of a Symbol see https://github.com/Microsoft/WindowsTemplateStudio/blob/release/docs/UWP/projectTypes/navigationpane.md
             Edit String/en-US/Resources.resw: Add a menu item title for each page
             -->
-            <NavigationViewItem x:Uid="Shell_Menu" helpers:NavHelper.NavigateTo="AllOrNothing.ViewModels.AllOrNothingViewModel" FontSize="{ThemeResource LargeFontSize}" FontWeight="bold" Foreground="White"/>
+            <NavigationViewItem Content="Főmenü" helpers:NavHelper.NavigateTo="AllOrNothing.ViewModels.AllOrNothingViewModel" FontSize="{ThemeResource LargeFontSize}" FontWeight="bold" Foreground="White"/>
             <!--<NavigationViewItem>
                 <NavigationViewItem.Content>
                     <StackPanel Orientation="Horizontal">

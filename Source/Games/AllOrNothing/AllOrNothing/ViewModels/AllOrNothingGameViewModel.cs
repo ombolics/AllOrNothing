@@ -1,4 +1,5 @@
-﻿using AllOrNothing.Contracts.ViewModels;
+﻿using AllOrNothing.Contracts.Services;
+using AllOrNothing.Contracts.ViewModels;
 using AllOrNothing.Controls;
 using AllOrNothing.Helpers;
 using AllOrNothing.Mapping;
@@ -22,10 +23,9 @@ namespace AllOrNothing.ViewModels
         LIGHTNING
     }
 
-    public class AllOrNothingGameViewModel : ObservableRecipient, INavigationAware
+    public class AllOrNothingGameViewModel : ViewModelBase
     {
-
-        public AllOrNothingGameViewModel(IMapper mapper)
+        public AllOrNothingGameViewModel(INavigationViewService navigationViewService, IMapper mapper) : base(navigationViewService)
         {
             ScoreTest = 3000;
 
@@ -33,6 +33,8 @@ namespace AllOrNothing.ViewModels
             _gameTimer.Interval = TimeSpan.FromSeconds(1);
             _gameTimer.Tick += _gameTimer_Tick;
             _mapper = mapper;
+
+            ReachablePages = new List<Type> { typeof(AllOrNothingSettingsViewModel) };
         }
         private GamePhase _gamePhase;
 
@@ -110,6 +112,7 @@ namespace AllOrNothing.ViewModels
             SelectedRound.RoundEnded = true;
             //TODO create game history
             _gameTimer.Stop();
+            IsMenuButtonVisible = false;
             HidePage?.Invoke(this, "Játék");
             RoundOver?.Invoke(this, SelectedRound);
         }

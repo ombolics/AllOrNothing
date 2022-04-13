@@ -1,4 +1,6 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using AllOrNothing.Contracts.Services;
+using AllOrNothing.Contracts.ViewModels;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using System;
@@ -6,11 +8,17 @@ using System.Windows.Input;
 
 namespace AllOrNothing.ViewModels
 {
-    public class AllOrNothingViewModel : ObservableRecipient
+    public class AllOrNothingViewModel : ViewModelBase
     {
-        public AllOrNothingViewModel()
+        public AllOrNothingViewModel(INavigationViewService navigationViewService) 
+            : base(navigationViewService)
         {
         }
+
+        //public override void OnNavigatedTo(object param)
+        //{
+
+        //}
 
         public event EventHandler<NavigateToEventargs> NavigateTo;
 

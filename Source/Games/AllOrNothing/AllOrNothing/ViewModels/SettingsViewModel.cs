@@ -8,7 +8,7 @@ using Windows.ApplicationModel;
 
 namespace AllOrNothing.ViewModels
 {
-    public class SettingsViewModel : ObservableRecipient
+    public class SettingsViewModel : ViewModelBase
     {
         private readonly IThemeSelectorService _themeSelectorService;
         private ElementTheme _elementTheme;
@@ -52,7 +52,8 @@ namespace AllOrNothing.ViewModels
             }
         }
 
-        public SettingsViewModel(IThemeSelectorService themeSelectorService)
+        public SettingsViewModel(INavigationViewService navigationViewService, IThemeSelectorService themeSelectorService)
+            : base(navigationViewService)
         {
             _themeSelectorService = themeSelectorService;
             _elementTheme = _themeSelectorService.Theme;

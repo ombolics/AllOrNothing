@@ -1,4 +1,5 @@
-﻿using AllOrNothing.Contracts.ViewModels;
+﻿using AllOrNothing.Contracts.Services;
+using AllOrNothing.Contracts.ViewModels;
 using AllOrNothing.Controls;
 using AllOrNothing.Data;
 using AllOrNothing.Helpers;
@@ -25,10 +26,11 @@ using Windows.UI;
 
 namespace AllOrNothing.ViewModels
 {
-    public class AllOrNothingSettingsViewModel : ObservableRecipient, INavigationAware
+    public class AllOrNothingSettingsViewModel : ViewModelBase
     {
 
-        public AllOrNothingSettingsViewModel(IMapper mapper, IUnitOfWork unitOfWork)
+        public AllOrNothingSettingsViewModel(INavigationViewService navigationViewService, IMapper mapper, IUnitOfWork unitOfWork)
+            : base(navigationViewService)
         {
             Mapper = mapper;
             _unitOfWork = unitOfWork;
@@ -38,6 +40,10 @@ namespace AllOrNothing.ViewModels
 
         public void ResetSettings()
         {
+
+            IsMenuButtonVisible = false;
+            ReachablePages = null;
+
             _gameSettingsVisible = Visibility.Visible;
             _roundSettingsVisible = Visibility.Collapsed;
             _playerTest = new ObservableCollection<Player>();

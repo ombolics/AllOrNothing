@@ -1,4 +1,5 @@
-﻿using AllOrNothing.Controls;
+﻿using AllOrNothing.Contracts.Services;
+using AllOrNothing.Controls;
 using AllOrNothing.Data;
 using AllOrNothing.Mapping;
 using AllOrNothing.Repository;
@@ -15,9 +16,10 @@ using System.Windows.Input;
 
 namespace AllOrNothing.ViewModels
 {
-    public class QuestionSeriesPageViewModel : ObservableRecipient
+    public class QuestionSeriesPageViewModel : ViewModelBase
     {
-        public QuestionSeriesPageViewModel(IUnitOfWork unitOfWork, IMapper mapper)
+        public QuestionSeriesPageViewModel(INavigationViewService navigationViewService, IUnitOfWork unitOfWork, IMapper mapper)
+            : base(navigationViewService)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;

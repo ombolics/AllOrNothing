@@ -13,9 +13,9 @@ namespace AllOrNothing.Contracts.Services
         void Initialize(NavigationView navigationView);
 
         void UnregisterEvents();
-
+  
         NavigationViewItem GetSelectedItem(Type pageType);
-        void SetNavItemVisibility(string itemContent, bool value);
+        void UpdatenavigationMenu(ICollection<Type> enabledPages, Type sender);
         void AddNavItem(NavigationViewItem item, Type vmType);
         bool MenuPointExists(object content);
         void HideAllPageExcept(List<string> itemContents);

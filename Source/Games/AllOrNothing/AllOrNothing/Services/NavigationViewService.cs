@@ -1,6 +1,8 @@
 ﻿using AllOrNothing.Contracts.Services;
+using AllOrNothing.Contracts.ViewModels;
 using AllOrNothing.Helpers;
 using AllOrNothing.ViewModels;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
@@ -160,6 +162,70 @@ namespace AllOrNothing.Services
             }
 
             return false;
+        }
+
+        private void SetAllNavigationItemVisibility(bool value)
+        {
+            foreach (var item in MenuItems.OfType<NavigationViewItem>())
+            {
+                item.Visibility = value ? Visibility.Visible : Visibility.Collapsed;
+            }
+        }
+        private Type GetItemKeyType(NavigationViewItem item)
+        {
+            return Type.GetType(item.GetValue(NavHelper.NavigateToProperty).ToString());
+        }
+        private void ShowNavigationViewItem(NavigationViewItem item)
+        {
+            INavigationAware vm = GetItemKeyType(item).Name switch
+            {
+                nameof(AllOrNothingGameViewModel) => Ioc.Default.GetService<AllOrNothingGameViewModel>(),
+                nameof(AllOrNothingSettingsViewModel) => Ioc.Default.GetService<AllOrNothingSettingsViewModel>(),
+                nameof(AllOrNothingViewModel) => Ioc.Default.GetService<AllOrNothingViewModel>(),
+                nameof(PlayerAddingViewModel) => Ioc.Default.GetService<PlayerAddingViewModel>(),
+                nameof(QuestionSeriesPageViewModel) => Ioc.Default.GetService<QuestionSeriesPageViewModel>(),
+                nameof(ScoreBoardPageViewModel) => Ioc.Default.GetService<ScoreBoardPageViewModel>(),
+                nameof(SettingsViewModel) => Ioc.Default.GetService<SettingsViewModel>(),
+
+                _ => throw new Exception()
+            };
+
+            item.Visibility = vm.IsReachable() ? Visibility.Visible : Visibility.Collapsed;
+        }
+        public void UpdatenavigationMenu(ICollection<Type> enabledPages, Type sender)
+        {
+            //show them if they agree
+            if (enabledPages == null)
+            {
+                foreach (var item in MenuItems.OfType<NavigationViewItem>())
+                {
+                    ShowNavigationViewItem(item);
+                }
+                return;
+            }
+
+            //wanish all
+            if(enabledPages.Count == 0)
+            {
+                SetAllNavigationItemVisibility(false);
+                var sendersItem =MenuItems.OfType<NavigationViewItem>().Single(item => sender == Type.GetType(item.GetValue(NavHelper.NavigateToProperty).ToString()));
+                sendersItem.Visibility = Visibility.Visible;
+                return;
+            }
+
+            //only show those, who both agree, and wanted to be shown
+            foreach (var item in MenuItems.OfType<NavigationViewItem>())
+            {
+                var type = Type.GetType(item.GetValue(NavHelper.NavigateToProperty).ToString());
+                if (enabledPages.Contains(type))
+                {
+                    ShowNavigationViewItem(item);                        
+                }
+                else
+                {
+                    item.Visibility = type == sender ? Visibility.Visible : Visibility.Collapsed;
+                }
+            }
         }
     }
 }

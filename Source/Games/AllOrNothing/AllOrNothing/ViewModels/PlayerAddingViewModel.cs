@@ -1,4 +1,6 @@
-﻿using AllOrNothing.Controls;
+﻿using AllOrNothing.Contracts.Services;
+using AllOrNothing.Contracts.ViewModels;
+using AllOrNothing.Controls;
 using AllOrNothing.Data;
 using AllOrNothing.Mapping;
 using AllOrNothing.Repository;
@@ -14,9 +16,10 @@ using System.Windows.Input;
 
 namespace AllOrNothing.ViewModels
 {
-    public class PlayerAddingViewModel : ObservableRecipient
+    public class PlayerAddingViewModel : ViewModelBase
     {
-        public PlayerAddingViewModel(IUnitOfWork unitOfWork, IMapper mapper)
+        public PlayerAddingViewModel(INavigationViewService navigationViewService, IUnitOfWork unitOfWork, IMapper mapper)
+            : base(navigationViewService)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;

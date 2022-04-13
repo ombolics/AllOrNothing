@@ -31,7 +31,8 @@ namespace AllOrNothing.Services
         {
             if (App.MainWindow.Content is FrameworkElement rootElement)
             {
-                rootElement.RequestedTheme = Theme;
+                //TODO uncomment
+                //rootElement.RequestedTheme = Theme;
             }
 
             await Task.CompletedTask;

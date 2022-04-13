@@ -71,40 +71,27 @@ namespace AllOrNothing.ViewModels
 
         private void On_HidePage(object sender, string e)
         {
-            if (!string.IsNullOrEmpty(e))
-            {
-                NavigationViewService.SetNavItemVisibility(e, false);
-            }
+            //if (!string.IsNullOrEmpty(e))
+            //{
+            //    NavigationViewService.SetNavItemVisibility(e, false);
+            //}
+            //TODO
         }
 
         private void On_HidePages(object sender, System.Collections.Generic.List<string> e)
         {
-            if (e is null || e.Count == 0)
-            {
-                NavigationViewService.ShowAllPage();
-            }
-            else
-            {
-                NavigationViewService.HideAllPageExcept(e);
-            }
+            //if (e is null || e.Count == 0)
+            //{
+            //    NavigationViewService.ShowAllPage();
+            //}
+            //else
+            //{
+            //    NavigationViewService.HideAllPageExcept(e);
+            //}
         }
 
         private void On_NavigateTo(object sender, NavigateToEventargs e)
         {
-            //TODO close button
-            //StackPanel p = new StackPanel();
-            //p.Children.Add(new TextBlock { Text = e.PageName });
-            //Button b = new Button();
-            //Image i = new Image();
-            //var uriSource = new Uri();
-            //i.Source = new BitmapImage();
-            //i.Width = 10;
-            //i.Height = 10;
-            //i.Stretch = Stretch.UniformToFill;
-            //b.Content = i;
-
-            //p.Children.Add(b);
-
             if (!NavigationViewService.MenuPointExists(e.PageName))
                 NavigationViewService.AddNavItem(new NavigationViewItem { Content = e.PageName }, e.PageVM);
 

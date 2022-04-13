@@ -1,4 +1,5 @@
-﻿using AllOrNothing.Helpers;
+﻿using AllOrNothing.Contracts.Services;
+using AllOrNothing.Helpers;
 using AllOrNothing.Mapping;
 using AllOrNothing.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -8,9 +9,10 @@ using System.Linq;
 
 namespace AllOrNothing.ViewModels
 {
-    public class ScoreBoardPageViewModel : ObservableRecipient
+    public class ScoreBoardPageViewModel : ViewModelBase
     {
-        public ScoreBoardPageViewModel()
+        public ScoreBoardPageViewModel(INavigationViewService navigationViewService)
+            : base(navigationViewService)
         {
 
         }
