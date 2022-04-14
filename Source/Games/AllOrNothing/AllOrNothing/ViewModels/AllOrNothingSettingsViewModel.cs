@@ -358,12 +358,13 @@ namespace AllOrNothing.ViewModels
         {
             int value = 0;
             int i = 0;
-
-            while (i < round.Count && round[i] > 0)
-            {
-                value += RoundsAgainstEachOther(teamIndex, round[i], matrix);
-                i++;
-            }
+            value = round.Sum(r => RoundsAgainstEachOther(teamIndex, r, matrix));
+            
+            //while (i < round.Count && round[i] > 0)
+            //{
+            //    value += RoundsAgainstEachOther(teamIndex, round[i], matrix);
+            //    i++;
+            //}
             return value;
         }
 
@@ -380,7 +381,7 @@ namespace AllOrNothing.ViewModels
             }
         }
 
-        public void GenerateSchedule()
+        public void GenerateSchedule(int numberOfRounds)
         {
             var Schedules = new List<Schedule>();
 
@@ -391,22 +392,25 @@ namespace AllOrNothing.ViewModels
             {
                 occurrences.Add(i, 0);
             }
-
-            while (occurrences.Any(p => p.Value < GameModel.GameSettings.NumberOfRounds))
+            bool isRunning = occurrences.Any(p => p.Value < numberOfRounds);
+            //while there is a team, that didnt play the requiered times
+            while (isRunning)
             {
-
+                // the index of team in Teams
                 var round = new List<int>();
 
-                for (int i = 0; i < 4; i++)
+                // we need a maximum of 4 team in a round
+                for (int i = 0; i < 4 && isRunning; i++)
                 {
                     if (i == 0)
                     {
-                        int teamIndex = occurrences.Where(p => p.Value == occurrences.Min(p => p.Value)).ElementAt(0).Key;
+                        int teamIndex = occurrences.First(p => p.Value == occurrences.Min(p => p.Value)).Key;
                         round.Add(teamIndex);
                         occurrences[teamIndex]++;
                     }
                     else
                     {
+                        //teams with the least occurences
                         var minTeams = occurrences.Where(p => p.Value == occurrences.Min(p => p.Value)).ToList();
 
                         int min = int.MaxValue;
@@ -425,10 +429,13 @@ namespace AllOrNothing.ViewModels
                         occurrences[minIndex]++;
                         foreach (var item in round)
                         {
+                            if (item == minIndex)
+                                continue;
                             matrix[item, minIndex]++;
                             matrix[minIndex, item]++;
                         }
                     }
+                    isRunning = occurrences.Any(p => p.Value < numberOfRounds);
                 }
 
                 var sch = new Schedule();
@@ -648,7 +655,7 @@ namespace AllOrNothing.ViewModels
             }
             else
             {
-                GenerateSchedule();
+                GenerateSchedule(GameModel.GameSettings.NumberOfRounds);
                 GameModel.GameStandings = new ObservableCollection<StandingDto>(CreateStandingFromGameModel(GameModel));
 
                 Rounds = new ObservableCollection<RoundModel>(RoundModel.FromGameModel(GameModel));

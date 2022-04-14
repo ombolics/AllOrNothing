@@ -1,9 +1,11 @@
 ﻿using AllOrNothing.Contracts.Services;
 using AllOrNothing.Helpers;
+
 using Microsoft.UI.Xaml;
 using System;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Windows.UI;
 
 namespace AllOrNothing.Services
 {
@@ -32,7 +34,7 @@ namespace AllOrNothing.Services
             if (App.MainWindow.Content is FrameworkElement rootElement)
             {
                 //TODO uncomment
-                //rootElement.RequestedTheme = Theme;
+                rootElement.RequestedTheme = Theme;
             }
 
             await Task.CompletedTask;
@@ -54,6 +56,6 @@ namespace AllOrNothing.Services
         private async Task SaveThemeInSettingsAsync(ElementTheme theme)
         {
             await ApplicationData.Current.LocalSettings.SaveAsync(SettingsKey, theme.ToString());
-        }
+        }       
     }
 }

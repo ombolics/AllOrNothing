@@ -114,7 +114,8 @@
                      x:Name="nameTextBox"
                      TextChanged="{x:Bind ViewModel.TextBoxChanged}"
                      IsEnabled="{x:Bind ViewModel.FormEnabled, Mode=OneWay}"
-                     HorizontalAlignment="Stretch"/>
+                     HorizontalAlignment="Stretch"
+                     Style="{ThemeResource CommonTextBoxStyle}"/>
 
                     <!--NickName-->
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Becenév:" Style="{ThemeResource TitleStyle}"/>
@@ -122,7 +123,8 @@
                              x:Name="nickNameTextBox"
                              TextChanged="{x:Bind ViewModel.TextBoxChanged}"
                              IsEnabled="{x:Bind ViewModel.FormEnabled, Mode=OneWay}"
-                     HorizontalAlignment="Stretch"/>
+                     HorizontalAlignment="Stretch"
+                     Style="{ThemeResource CommonTextBoxStyle}"/>
 
                     <!--Institute-->
                     <TextBlock Grid.Row="3" Grid.Column="0" Text="Intézmény:" Style="{ThemeResource TitleStyle}"/>
@@ -130,7 +132,8 @@
                              x:Name="instituteTextBox"
                              TextChanged="{x:Bind ViewModel.TextBoxChanged}"
                              IsEnabled="{x:Bind ViewModel.FormEnabled, Mode=OneWay}"
-                     HorizontalAlignment="Stretch"/>
+                     HorizontalAlignment="Stretch"
+                             Style="{ThemeResource CommonTextBoxStyle}"/>
 
                 </Grid>
 

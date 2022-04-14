@@ -43,13 +43,14 @@ namespace AllOrNothing.Mapping
 
         public void UpdateTeamName()
         {
-            if (Players.Count <= 0)
+            if (Players.Count < 1)
                 return;
 
             TeamName = "";
             for (int i = 0; i < Players.Count; i++)
             {
-                TeamName += i == Players.Count - 1 ? Players[i].NickName : Players[i].NickName + " - ";
+                TeamName += string.IsNullOrWhiteSpace(Players[i].NickName) ? Players[i].Name : Players[i].NickName;
+                TeamName += i != Players.Count - 1 ? " - " : ""; 
             }
         }
 

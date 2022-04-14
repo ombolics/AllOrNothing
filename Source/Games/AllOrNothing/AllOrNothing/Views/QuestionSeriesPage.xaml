@@ -152,7 +152,8 @@
                     <TextBox Text="{x:Bind ViewModel.EditingSerie.Name, Mode=TwoWay}" 
                          Margin="10,10,10,10" FontSize="{ThemeResource MediumFontSize}" 
                          x:Name="serieNameTextbox"
-                         HorizontalAlignment="Stretch"/>
+                         HorizontalAlignment="Stretch"
+                         Style="{ThemeResource CommonTextBoxStyle}"/>
                 </StackPanel>
 
                 <ScrollViewer Grid.Row="1"
@@ -181,7 +182,8 @@
                                                     <TextBox Text="{Binding Name, Mode=TwoWay}" 
                                                          Margin="10,10,10,0" FontSize="{ThemeResource MediumFontSize}"
                                                          HorizontalAlignment="Stretch"
-                                                         x:Name="topicNameTextbox"/>
+                                                         x:Name="topicNameTextbox"
+                                                             Style="{ThemeResource CommonTextBoxStyle}"/>
 
                                                 </StackPanel>
                                                 <!--leírás-->
@@ -191,7 +193,8 @@
                                                          Margin="10,10,10,10" FontSize="{ThemeResource MediumFontSize}"
                                                          HorizontalAlignment="Stretch"
                                                          TextWrapping="Wrap"
-                                                         x:Name="topicDescriptionTextbox"/>
+                                                         x:Name="topicDescriptionTextbox"
+                                                         Style="{ThemeResource CommonTextBoxStyle}"/>
                                                 </StackPanel>
                                             </Grid>
 
@@ -249,7 +252,8 @@
                                                                  FontSize="{ThemeResource MediumFontSize}" 
                                                                  TextWrapping="Wrap" 
                                                                  MaxWidth="600"
-                                                                 x:Name="questionTextBox"/>
+                                                                 x:Name="questionTextBox"
+                                                                 Style="{ThemeResource CommonTextBoxStyle}"/>
 
                                                         </Grid>
                                                         <Grid>
@@ -265,14 +269,14 @@
                                                                  Margin="10,0,10,5" 
                                                                  FontSize="{ThemeResource MediumFontSize}" 
                                                                  TextWrapping="Wrap"
-                                                             
+                                                                 Style="{ThemeResource CommonTextBoxStyle}"
                                                                  x:Name="answerTextBox"/>
 
                                                             <TextBlock Grid.Column="2" Text="Érték"  Margin="10,0,10,5" Style="{ThemeResource TitleStyle}"/>
                                                             <TextBox Grid.Column="3" Text="{Binding Value, Mode=TwoWay}" 
                                                                              Margin="10,0,10,5" 
                                                                              FontSize="{ThemeResource MediumFontSize}"
-                                                                             
+                                                                             Style="{ThemeResource CommonTextBoxStyle}"
                                                                              x:Name="valueTextBox"/>
                                                         </Grid>
 

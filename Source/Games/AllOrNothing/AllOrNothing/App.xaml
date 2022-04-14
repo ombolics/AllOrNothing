@@ -19,6 +19,8 @@
                 <ResourceDictionary Source="/Styles/CheckBox.xaml" />
                 <ResourceDictionary Source="/Styles/DataGrid.xaml" />
                 <ResourceDictionary Source="/Styles/TextBox.xaml" />
+                <ResourceDictionary Source="/Styles/AutoSuggestBoxStyle.xaml" />
+                <ResourceDictionary Source="/Styles/TimePickerStyle.xaml" />
                 <!--#endregion-->
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

@@ -40,11 +40,7 @@
         <SolidColorBrush x:Key="CheckBoxCheckBackgroundStrokeChecked" Color="{ThemeResource MainColor1}"/>
         <!--#endregion-->
         
-        <!--#region AutoSuggestBox resources-->
-        <SolidColorBrush x:Key="AutoSuggestBoxSuggestionsListBackground" Color="{ThemeResource MainColor2}"/>
-        <SolidColorBrush x:Key="TextControlForeground" Color="{ThemeResource MainColor1}"/>
-        <!--<SolidColorBrush x:Key="AutoSuggestBoxSuggestionsListBackground" Color="{ThemeResource MainColor2}"/>-->
-        <!--#endregion-->
+        
 
         <!--<Color x:Key="GreenishColor">#FF60B560</Color>
         <Color x:Key="YellowishColor">#FFFFF700</Color>
@@ -85,9 +81,10 @@
                                     TextChanged="{x:Bind ViewModel.AutoSuggestBox_TextChanged}"
                                     SuggestionChosen="{x:Bind ViewModel.AutoSuggestBox_SuggestionChosen}"
                                     LostFocus="{x:Bind ViewModel.AutoSuggestBox_LostFocus}"
-                                    Background="{ThemeResource MainColor2}"
+                                    FontSize="16"
                                     Foreground="{ThemeResource MainColor1}"
                                     BorderThickness="0">
+                            
                         </AutoSuggestBox>
 
                          <!--Player display area-->
@@ -331,11 +328,12 @@
 
                     <Button Grid.Row="2" 
                             Content="Csapatok sorsolása"
-                            Margin="10,0,0,5" 
+                            Margin="10,10,10,10" 
                             Command="{x:Bind ViewModel.GenerateTeamsCommand}"
                             VerticalAlignment="Stretch"
                             HorizontalAlignment="Stretch"
                             FontSize="18"
+                            Background="White"
                             Foreground="{ThemeResource MainColor1}"
                             />
 
@@ -432,7 +430,8 @@
                         AllowDrop="True"
                         Style="{ThemeResource MainListViewStyle}"
                         ItemClick="{x:Bind ViewModel.RoundSelected}"
-                        Padding="0,0,0,0">
+                        Padding="0,0,0,0"
+                        >
                     <ListView.Resources>
                         <SolidColorBrush x:Key="ListViewItemBackgroundSelected" Color="{ThemeResource MainColor1}" Opacity="40" />
                         <SolidColorBrush x:Key="ListViewItemBackgroundSelectedPointerOver" Color="{ThemeResource MainColor1}" Opacity="40" /> 
@@ -441,6 +440,7 @@
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            
                         </Style>
                     </ListView.ItemContainerStyle>
 
@@ -451,7 +451,9 @@
                                 Background="{Binding RoundEnded, Converter={StaticResource RoundStateToColorConverter}}"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Stretch"
-                                Margin="0,0,0,0">
+                                Margin="0,0,0,0"
+                                BorderBrush="White"
+                                BorderThickness="0,1,0,1">
                                 
                                 <ItemsControl ItemsSource="{Binding RoundSettings.Teams }" IsEnabled="{Binding RoundEnded}"
                                               Padding="0,0,0,0"
@@ -459,7 +461,8 @@
                                     
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>
-                                            <cc:WrapPanel HorizontalAlignment="Stretch"/>
+                                            <tK:UniformGrid Columns="4"/>
+                                            <!--<cc:WrapPanel HorizontalAlignment="Stretch"/>-->
                                         </ItemsPanelTemplate>
                                     </ItemsControl.ItemsPanel>
 

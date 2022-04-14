@@ -250,11 +250,7 @@ namespace AllOrNothing.ViewModels
         {
             HidePages?.Invoke(this, _enabledPages);
         }
-
-        public void OnNavigatedFrom()
-        {
-
-        }
+      
 
         private QuestionDto _currentQuestion;
         public QuestionSerieDto Serie => _mapper.Map<QuestionSerieDto>(DummyData.DummyData.QS1);

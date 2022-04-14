@@ -10,18 +10,13 @@
     xmlns:fa5="http://schemas.fontawesome.com/icons/"  
     xmlns:winui="using:Microsoft.UI.Xaml.Controls"
     Loaded="OnLoaded"
-    Style="{StaticResource PageStyle}"
+    Background="White"
     >
 
     <Page.Resources>
         <SolidColorBrush x:Key="NavigationViewTopPaneBackground" Color="{ThemeResource MainColor1}" />
-        <SolidColorBrush x:Key="NavigationViewTopPaneForeground" Color="White" />
+        <!--<SolidColorBrush x:Key="NavigationViewTopPaneForeground" Color="White" />-->
         <SolidColorBrush x:Key="NavigationViewItemForeground" Color="White"/>
-        <!--<SolidColorBrush x:Key="NavigationViewItemForegroundPointerOver" Color="Red"/>-->
-        <SolidColorBrush x:Key="NavigationViewItemForegroundSelected" Color="Red"/>
-        <SolidColorBrush x:Key="NavigationViewItemForegroundSelectedPointerOver" Color="Red"/>
-        <SolidColorBrush x:Key="NavigationViewItemForegroundPressed" Color="Red"/>
-        <SolidColorBrush x:Key="NavigationViewItemForegroundSelectedPressed" Color="Red"/>
     </Page.Resources>
     <NavigationView
         x:Name="navigationView"
@@ -32,7 +27,6 @@
         IsPaneToggleButtonVisible="True"
         ExpandedModeThresholdWidth="1280"
         PaneDisplayMode="Top"
-        Foreground="White"
         Background="White">
         <NavigationView.MenuItems>
             <!--
@@ -91,7 +85,8 @@
             <Frame x:Name="shellFrame" 
                    BorderThickness="0" 
                    IsNavigationStackEnabled="False"
-                   Margin="15,15,15,15"/>
+                   Margin="15,15,15,15"
+                   Background="White"/>
         </Grid>
     </NavigationView>
 </Page>

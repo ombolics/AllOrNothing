@@ -42,9 +42,11 @@
     <None Remove="QuestionSerieSamples\ÖCS_01.txt" />
     <None Remove="QuestionSerieSamples\ÖCS_02.txt" />
     <None Remove="QuestionSerieSamples\ÖCS_03.txt" />
+    <None Remove="Styles\AutoSuggestBoxStyle.xaml" />
     <None Remove="Styles\CheckBox.xaml" />
     <None Remove="Styles\DataGrid.xaml" />
     <None Remove="Styles\TextBox.xaml" />
+    <None Remove="Styles\TimePickerStyle.xaml" />
     <None Remove="Views\PlayerAddingPage.xaml" />
     <None Remove="Views\ScoreBoardPage.xaml" />
   </ItemGroup>
@@ -153,6 +155,16 @@
     <Content Update="Assets\colorX.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Styles\TimePickerStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Styles\AutoSuggestBoxStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Styles\TextBox.xaml">

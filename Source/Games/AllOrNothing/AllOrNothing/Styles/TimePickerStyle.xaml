@@ -1,0 +1,25 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:AllOrNothing.Styles">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Styles/_Colors.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <ResourceDictionary.ThemeDictionaries>
+        <ResourceDictionary x:Key="Dark">
+            <SolidColorBrush x:Key="TimePickerButtonBackground" Color="LightGray" Opacity="0.8"/>
+            <SolidColorBrush x:Key="TimePickerButtonForeground" Color="{ThemeResource MainColor1}"/>
+            <SolidColorBrush x:Key="TimePickerSpacerFill" Color="LightGray" Opacity="1"/>
+            <SolidColorBrush x:Key="TimePickerButtonBorderBrush" Color="{ThemeResource MainColor1}"/>
+        </ResourceDictionary>
+        <ResourceDictionary x:Key="Light">
+            <SolidColorBrush x:Key="TimePickerButtonBackground" Color="LightGray" Opacity="0.8"/>
+            <SolidColorBrush x:Key="TimePickerButtonForeground" Color="{ThemeResource MainColor1}"/>
+            <SolidColorBrush x:Key="TimePickerSpacerFill" Color="LightGray" Opacity="1"/>
+            <SolidColorBrush x:Key="TimePickerButtonBorderBrush" Color="{ThemeResource MainColor1}"/>
+        </ResourceDictionary>
+    </ResourceDictionary.ThemeDictionaries>
+
+</ResourceDictionary>
