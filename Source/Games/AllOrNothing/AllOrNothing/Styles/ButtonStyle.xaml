@@ -14,5 +14,10 @@
         <Setter Property="FontWeight" Value="SemiBold" />
     </Style>
 
-    
+    <Style TargetType="Button" x:Key="PrimaryPopUpButtonStyle">
+        <Setter Property="Background" Value="{ThemeResource MainColor4}" />
+        <Setter Property="Foreground" Value="White" />
+    </Style>
+
+
 </ResourceDictionary>

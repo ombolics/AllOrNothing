@@ -33,6 +33,7 @@
                            VerticalAlignment="Center" 
                            TextWrapping="WrapWholeWords" 
                            Style="{ThemeResource TitleStyle}"
+                           FontSize="20"
                            />
             </Border>
 

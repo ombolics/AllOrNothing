@@ -6,11 +6,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+>
 
     <Grid>
         <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-            <TextBlock Text="{x:Bind Text, Mode=OneWay}" />
+            <TextBlock Text="{x:Bind Text, Mode=OneWay}" Foreground="{ThemeResource MainColor1}" FontSize="17"/>
         </StackPanel>
 
     </Grid>

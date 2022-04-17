@@ -1,7 +1,7 @@
 ﻿Szerző:
 Azonosító:11Név:Zareczky AndrásIntézmény:PSEG
 Kapcsolat
-(történelem, irodalom, matematika)
+(ads)
 (a szó az előző válasz utolsó betűjével kezdődik, egy vagy többjegyű msh. esetén az utolsó jeggyel kezdődik)
 1. Tizenöt a négyzeten mínusz huszonöt. 
 Kétszáz
@@ -17,7 +17,7 @@ Akkád
 Dedukció
 
 Kivágták a rezet
-(történelem, matematika)
+(közélet)
 (hírhedt emberek)
 1. Doppingvétség miatt megfosztották minden 1998 óta elért kerékpáros eredményétől.
 Lens Armstrong
@@ -45,8 +45,7 @@ Antant
 Baden Baden
 5. Az ókori rómaiak használták ezt a szót az észak-afrikai arab törzsekre valamint a velük kapcsolatos dolgokra. 
 Berber
-8. Melyik versből származik az alábbi idézet? „Nyikorgó kosárral ölében,
-ment a padlásra, ment serényen.” 
+8. Melyik versből származik az alábbi idézet? „Nyikorgó kosárral ölében, ment a padlásra, ment serényen.” 
 Mama
 
 Zene
@@ -66,7 +65,7 @@ Bergendy
 Edda
 
 Folyó
-(földrajz, informatika)
+(földrajz)
 (A felsorolt települések melyik folyó partján vannak?)
 1.Taktakenéz, Záhony, Tokaj, Szeged. 
 Tisza

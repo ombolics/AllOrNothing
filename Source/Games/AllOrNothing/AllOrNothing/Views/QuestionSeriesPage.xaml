@@ -71,7 +71,7 @@
 
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>
-                                            <toolkit:WrapPanel/>
+                                            <toolkit:WrapPanel VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                         </ItemsPanelTemplate>
                                     </ItemsControl.ItemsPanel>
 
@@ -98,7 +98,7 @@
 
                                         <ItemsControl.ItemsPanel>
                                             <ItemsPanelTemplate>
-                                                <toolkit:WrapPanel/>
+                                                <toolkit:WrapPanel VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                             </ItemsPanelTemplate>
                                         </ItemsControl.ItemsPanel>
 

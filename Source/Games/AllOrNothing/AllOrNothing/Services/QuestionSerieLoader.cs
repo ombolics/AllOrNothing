@@ -85,14 +85,17 @@ namespace AllOrNothing.Services
             if (content == null || string.IsNullOrWhiteSpace(content))
                 return null;
 
-            var splitedContent = content.Split("\r\r\n");
+            const string sectionDelimeter = "\r\r\n";
+            const string rowDelimeter = "\r\n";
+
+            var splitedContent = content.Split(sectionDelimeter);
             QuestionSerie value = new QuestionSerie()
             {
                 CreatedOn = DateTime.Now,
                 Name = name,
             };
             value.Topics = new List<Topic>();
-            var authorData = splitedContent[0].Split("\r\n")[1].Split("\r");
+            var authorData = splitedContent[0].Split(rowDelimeter)[1].Split("\r");
 
             var author = _unitOfWork.Players.Get(int.Parse(authorData[1]));
             if (author == null)
@@ -106,14 +109,17 @@ namespace AllOrNothing.Services
 
             foreach (var pack in splitedContent[1].Split("\r\n\r\n"))
             {
-                var splitedWithDelimeter1 = pack.Split("\r\n");
+                var splitedWithDelimeter1 = pack.Split(rowDelimeter);
                 var line = splitedWithDelimeter1.Length < 2 ? pack.Split("\r") : splitedWithDelimeter1;
 
                 var competences = new List<Competence>();
                 foreach (var item in line[1].Replace("(", "").Replace(")", "").Split(','))
                 {
+                    if (string.IsNullOrWhiteSpace(item))
+                        continue;
                     competences.AddRange(_allCompetences.Where(c => c.Name.Contains(item.Trim())).ToList());
                 }
+
                 Topic topic = new Topic()
                 {
                     Name = line[0],
@@ -135,9 +141,14 @@ namespace AllOrNothing.Services
                         Value = questionCounter < 6 ? questionCounter * 1000 : 8000,
                     });
                     questionCounter++;
-                }
+                }              
+                
                 value.Topics.Add(topic);
             }
+
+            if(value.Topics.Count != 5 || !value.Topics.All(t => t.Questions.Count == 6))
+                throw new ArgumentException("Too few topics or questions", nameof(content));
+            
             return value;
 
         }
@@ -148,28 +159,23 @@ namespace AllOrNothing.Services
         {
             errorMessage = "";
             QuestionSerie value = null;
-
-
-            var fullName = path.Split(@"\").Last();
-            //if (!fullName.EndsWith(".txt"))
-            //{
-            //    throw new ArgumentException();
-            //}
-            var name = fullName.Replace(".txt", "");
-            var fileContent = File.ReadAllText(path, Encoding.UTF8);
-
-            if (fileContent.Split("\r\n")[0].ToLower() != "szerző:")
-            {
-                value = LoadOldFormatFromTxt(name, fileContent);
-            }
-            else
-            {
-                value = LoadNewFormatFromTxt(name, fileContent);
-            }
-
             try
             {
-
+                var fullName = path.Split(@"\").Last();
+                if (!fullName.EndsWith(".txt"))
+                {
+                    throw new ArgumentException();
+                }
+                var name = fullName.Replace(".txt", "");
+                var fileContent = File.ReadAllText(path, Encoding.UTF8);
+                if (fileContent.Split("\r\n")[0].ToLower() != "szerző:")
+                {
+                    value = LoadOldFormatFromTxt(name, fileContent);
+                }
+                else
+                {
+                    value = LoadNewFormatFromTxt(name, fileContent);
+                }
             }
             catch (Exception e)
             {

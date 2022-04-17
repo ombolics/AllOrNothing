@@ -156,7 +156,6 @@ namespace AllOrNothing.ViewModels
 
                 var answ = new AnswerLogModel
                 {
-                    TopicName = "yikes",
                     TeamName = PickingTeam.Team.TeamName,
                     QuestionValue = gainedScore,
                 };

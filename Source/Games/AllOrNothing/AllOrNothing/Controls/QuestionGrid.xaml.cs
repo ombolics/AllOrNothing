@@ -19,7 +19,8 @@ namespace AllOrNothing.Controls
             set
             {
                 _questionSerie = value;
-                CreateGrid();
+                if(value != null)
+                    CreateGrid();
             }
         }
 
@@ -141,6 +142,7 @@ namespace AllOrNothing.Controls
                         Background = new SolidColorBrush(Color.FromArgb(255,255,255,255)),
                         Foreground = new SolidColorBrush((Color)App.Current.Resources["MainColor1"]),
                         BorderThickness = new Thickness(0, 0, 0, 0),
+                        FontSize = 17,
 
                         Content = _questionSerie.Topics[i].Questions[j - 1].Value.ToString(),
                         VerticalAlignment = VerticalAlignment.Stretch,

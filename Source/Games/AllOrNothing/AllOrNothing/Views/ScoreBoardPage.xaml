@@ -8,7 +8,7 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
+    <Grid  Background="{ThemeResource GradientBrush9}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
@@ -16,7 +16,6 @@
 
         <StackPanel Orientation="Vertical" 
                     Grid.Column="0"
-                    Background="{ThemeResource GradientBrush7}"
                     Margin=" 30, 10,10,10"
                     >
 
@@ -25,18 +24,33 @@
                        FontSize="{ThemeResource LargeFontSize}"/>
 
             <controls:DataGrid ItemsSource="{x:Bind ViewModel.GameStandings}"
-                               AutoGenerateColumns="False">
+                               AutoGenerateColumns="False"
+                               Foreground="{ThemeResource MainColor1}">
+                <controls:DataGrid.Background>
+                    <SolidColorBrush Color="LightGray" Opacity="0.3"/>
+                </controls:DataGrid.Background>
                 <controls:DataGrid.Columns>
-                    <controls:DataGridTextColumn Header="Pontszám" Binding="{Binding Score}" Tag="Score" />
-                    <controls:DataGridTextColumn Header="Csapat" Binding="{Binding Team.TeamName}" Tag="TeamName" />
+                    <controls:DataGridTextColumn Header="Pontszám" 
+                                                 Binding="{Binding Score}" 
+                                                 Tag="Score"
+                                                 FontSize="20"
+                                                 Width="*"
+                                                 />
+
+                    <controls:DataGridTextColumn Header="Csapat" 
+                                                 Binding="{Binding Team.TeamName}"                                                 
+                                                 Tag="TeamName"
+                                                 Width="*"
+                                                 FontSize="20"
+                                                 IsReadOnly="True"/>
                 </controls:DataGrid.Columns>
 
             </controls:DataGrid>
         </StackPanel>
 
         <StackPanel Orientation="Vertical" 
-                    Grid.Column="1"
-                    Background="{ThemeResource GradientBrush6}"
+                    Grid.Column="1"  
+                    VerticalAlignment="Center"
                     Margin=" 30, 10,10,10">
 
             <TextBlock Text="Legutóbbi kör:"
@@ -44,31 +58,30 @@
                        FontSize="{ThemeResource LargeFontSize}"
                        />
             <controls:DataGrid ItemsSource="{x:Bind ViewModel.LastRoundStandings}"
-                               AutoGenerateColumns="False">
-                
-                <controls:DataGrid.Columns>
-                    <!--<controls:DataGridTextColumn Header="Helyezés" Tag="Order" x:Name="orderColumn"
-                                                 Binding="{Binding ElementName=orderColumn, Converter=}"
-                                                 FontSize="20">
+                               AutoGenerateColumns="False"
+                               Foreground="{ThemeResource MainColor1}">
 
-                        
-                    </controls:DataGridTextColumn>-->
-                    
-                    <controls:DataGridTextColumn Header="Pontszám" Binding="{Binding Score}" Tag="Score"
-                                                 FontSize="20"/>
-                    <controls:DataGridTextColumn Header="Csapat" Binding="{Binding Team.TeamName}" Tag="TeamName"
-                                                 FontSize="20"/>
+                <controls:DataGrid.Background>
+                    <SolidColorBrush Color="LightGray" Opacity="0.3"/>
+                </controls:DataGrid.Background>
+
+                <controls:DataGrid.Columns>
+
+                    <controls:DataGridTextColumn Header="Pontszám" 
+                                                 Binding="{Binding Score}" 
+                                                 Tag="Score"
+                                                 FontSize="20"
+                                                 Width="*"/>
+
+                    <controls:DataGridTextColumn Header="Csapat" 
+                                                 Binding="{Binding Team.TeamName}"
+                                                 Tag="TeamName"
+                                                 Width="*"
+                                                 FontSize="20"
+                                                 IsReadOnly="True"  />
                 </controls:DataGrid.Columns>
 
             </controls:DataGrid>
-
-            <Button HorizontalAlignment="Stretch"
-                    MinHeight="100"
-                    Content="Tovább a következő körre"
-                    HorizontalContentAlignment="Center"
-                    VerticalContentAlignment="Center"
-                    FontSize="{ThemeResource MediumFontSize}"
-                    Margin="10,10,10,10"/>
         </StackPanel>
     </Grid>
 </Page>

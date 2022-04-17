@@ -9,10 +9,11 @@
 
     <Grid >
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
+            <!--<ColumnDefinition Width="*"/>-->
             <ColumnDefinition Width="9*"/>
         </Grid.ColumnDefinitions>
 
+        <!--For future use-->
         <!--<Grid Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="3*"/>
@@ -34,18 +35,20 @@
             </Grid>
         </Grid>-->
 
-        <Grid Grid.Column="1" 
-              Style="{ThemeResource NeutralGridStyle}">
+        <Grid Grid.Column="0" 
+              Style="{ThemeResource NeutralGridStyle}"
+              Margin="15,15,15,15">
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="auto"/>
+                <RowDefinition Height="4*"/>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="3*"/>
             </Grid.RowDefinitions>
 
             <TextBlock x:Name="TeamNameBlock" 
                        Grid.Row="0" 
                        Text="{x:Bind Standing.Team.TeamName, Mode=OneWay}" 
                        HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
                        Style="{ThemeResource TitleStyle}"/>
             
             <TextBox x:Name="ScoreBox" 
@@ -56,7 +59,9 @@
                      TextAlignment="Center" 
                      Background="Transparent"
                      Foreground="{ThemeResource MainColor1}"
-                     FontSize="17"
+                     FontSize="24"
+                     BorderThickness="0"
+                     FontWeight="SemiBold"
                      TextChanged="On_TextChanged"/>
 
             <Grid Grid.Row="2">
@@ -64,26 +69,33 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                
+
                 <Button x:Name="PlusButton"
+                        Height="30"
+                        Width="60"
                         Margin="5,5,10,5"
                         Grid.Column="0" 
-                        Content="+"
                         Foreground="{ThemeResource MainColor1}"
                         Background="White"
                         HorizontalAlignment="Right"
                         Click="On_ButtonPressed"
-                        CornerRadius="10"/>
-                
-                <Button x:Name="MinusButton" 
+                        CornerRadius="10"
+                        Padding="0,0,0,0">
+                    <Image Source="/Assets/plus.png" Stretch="Uniform"/>
+                </Button>
+
+                <Button x:Name="MinusButton"
+                        Height="30"
+                        Width="60"
                         Margin="10,5,5,5"
                         Grid.Column="1" 
-                        Content="-" 
                         Foreground="{ThemeResource MainColor1}"
                         Background="White"
                         HorizontalAlignment="Left"
                         CornerRadius="10"
-                        Click="On_ButtonPressed"/>
+                        Click="On_ButtonPressed">
+                    <Image Source="/Assets/minus.png" Stretch="Uniform"/>
+                </Button>
             </Grid>
         </Grid>
 

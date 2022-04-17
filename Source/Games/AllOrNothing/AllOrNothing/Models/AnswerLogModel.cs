@@ -1,14 +1,25 @@
-﻿namespace AllOrNothing.Models
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+
+namespace AllOrNothing.Models
 {
-    public class AnswerLogModel
+    public class AnswerLogModel : ObservableRecipient
     {
-        public string TopicName;
-        public int QuestionValue;
-        public string TeamName;
+        private int _questionValue;
+        public int QuestionValue
+        {
+            get => _questionValue;
+            set => SetProperty(ref _questionValue, value);
+        }
+        private string _teamName;
+        public string TeamName
+        {
+            get => _teamName;
+            set => SetProperty(ref _teamName, value);
+        }
 
         public override string ToString()
         {
-            return $"{TeamName}\t{TopicName}\t{QuestionValue}";
+            return $"{TeamName}\t\t{QuestionValue}";
         }
     }
 }

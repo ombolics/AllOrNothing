@@ -637,7 +637,7 @@
 
                                                 <ItemsControl.ItemsPanel>
                                                     <ItemsPanelTemplate>
-                                                        <cc:WrapPanel VerticalAlignment="Center"/>
+                                                        <cc:WrapPanel VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                                     </ItemsPanelTemplate>
                                                 </ItemsControl.ItemsPanel>
 
@@ -665,7 +665,7 @@
 
                                                     <ItemsControl.ItemsPanel>
                                                         <ItemsPanelTemplate>
-                                                            <cc:WrapPanel/>
+                                                            <cc:WrapPanel VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                                         </ItemsPanelTemplate>
                                                     </ItemsControl.ItemsPanel>
 

@@ -119,7 +119,10 @@ namespace AllOrNothing.ViewModels
                 CloseButtonText = closeButtonText,
             };
             dialog.Background = new SolidColorBrush((Color)App.Current.Resources["NeutralColor1"]);
-           
+            dialog.Foreground = new SolidColorBrush((Color)App.Current.Resources["MainColor1"]);
+            dialog.Resources["ButtonBackground"] = new SolidColorBrush((Color)App.Current.Resources["MainColor4"]);
+
+
             return await dialog.ShowAsync(ContentDialogPlacement.Popup);
         }
         private async void Exit()

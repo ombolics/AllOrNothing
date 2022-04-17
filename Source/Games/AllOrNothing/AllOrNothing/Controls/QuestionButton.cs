@@ -4,7 +4,6 @@ using Microsoft.UI.Xaml.Controls;
 namespace AllOrNothing.Controls
 {
     class QuestionButton : Button
-
     {
         public QuestionButton()
         {
