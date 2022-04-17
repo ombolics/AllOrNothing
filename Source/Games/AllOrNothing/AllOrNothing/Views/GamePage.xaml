@@ -272,7 +272,7 @@
                   Style="{ThemeResource MainGridStyle}">
 
 
-                    <ItemsControl ItemsSource="{x:Bind ViewModel.SelectedRound.RoundStandings}">
+                    <ItemsControl ItemsSource="{x:Bind ViewModel.SelectedRound.RoundStandings, Mode=OneWay}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <con:UniformGrid Columns="1"/>
