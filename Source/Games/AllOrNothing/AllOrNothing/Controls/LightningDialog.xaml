@@ -10,7 +10,7 @@
 
     <Grid>
         <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-            <TextBlock Text="{x:Bind Text, Mode=OneWay}" Foreground="{ThemeResource MainColor1}" FontSize="17"/>
+            <TextBlock Text="{x:Bind Text, Mode=OneWay}" Foreground="{ThemeResource MainColor1}" FontSize="17" TextWrapping="WrapWholeWords"/>
         </StackPanel>
 
     </Grid>

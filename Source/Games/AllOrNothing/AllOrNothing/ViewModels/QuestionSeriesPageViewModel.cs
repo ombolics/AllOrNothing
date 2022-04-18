@@ -135,49 +135,7 @@ namespace AllOrNothing.ViewModels
 
         private async void Save()
         {
-            bool serieChanged = !EditingSerie.HasTheSameValue(_originalSerie);
-            if (IsNewSerieSelected)
-            {
-                EditingSerie.Id = 0;
-                EditingSerie.CreatedOn = DateTime.Now;
-                var mapped = Mapper.Map<QuestionSerie>(EditingSerie);
-                for (int i = 0; i < EditingSerie.Topics.Count; i++)
-                {
-                    for (int j = 0; j < EditingSerie.Topics[i].Competences.Count; j++)
-                    {
-                        mapped.Topics[i].Competences[j] = _unitOfWork.Competences.Get(EditingSerie.Topics[i].Competences[j].Id);
-                    }
-                }
-                _unitOfWork.QuestionSeries.Add(mapped);
-            }
-            else if (serieChanged)
-            {
-                var serie = _unitOfWork.QuestionSeries.Get(EditingSerie.Id);
-                serie.Name = EditingSerie.Name;
-
-                foreach (var item in EditingSerie.Topics)
-                {
-                    var data = _unitOfWork.Topics.Get(item.Id);
-                    data.Name = item.Name;
-                    List<Competence> tmp = new List<Competence>();
-                    foreach (var comp in item.Competences)
-                    {
-                        tmp.Add(_unitOfWork.Competences.Get(comp.Id));
-                    }
-                    data.Competences = tmp;
-                    data.Description = item.Description;
-
-                    foreach (var question in item.Questions)
-                    {
-                        var dbQuestion = _unitOfWork.Questions.Get(question.Id);
-                        dbQuestion.Resource = question.Resource;
-                        dbQuestion.ResourceType = question.ResourceType;
-                        dbQuestion.Text = question.Text;
-                        dbQuestion.Type = question.Type;
-                        dbQuestion.Value = question.Value;
-                    }
-                }
-            }
+            //the result diaog
             ContentDialog dialog = new ContentDialog
             {
                 XamlRoot = PageXamlRoot,
@@ -185,19 +143,68 @@ namespace AllOrNothing.ViewModels
                 DefaultButton = ContentDialogButton.Close,
             };
 
-            if (_unitOfWork.Complete() > 0 || !serieChanged)
+            
+            try
             {
-                AllSerie = GetSeriesAsDto();
-                dialog.Title = "Sikeres mentés";
-                dialog.Content = new CustomDialog("Sikeres mentés!");
-                IsNewSerieSelected = false;
-                EditingSerie = null;
+                bool serieChanged = !EditingSerie.HasTheSameValue(_originalSerie);
+                if (IsNewSerieSelected)
+                {
+                    EditingSerie.Id = 0;
+                    EditingSerie.CreatedOn = DateTime.Now;
+                    var mapped = Mapper.Map<QuestionSerie>(EditingSerie);
+                    for (int i = 0; i < EditingSerie.Topics.Count; i++)
+                    {
+                        for (int j = 0; j < EditingSerie.Topics[i].Competences.Count; j++)
+                        {
+                            mapped.Topics[i].Competences[j] = _unitOfWork.Competences.Get(EditingSerie.Topics[i].Competences[j].Id);
+                        }
+                    }
+                    _unitOfWork.QuestionSeries.Add(mapped);
+                }
+                else if (serieChanged)
+                {
+                    var serie = _unitOfWork.QuestionSeries.Get(EditingSerie.Id);
+                    serie.Name = EditingSerie.Name;
+
+                    foreach (var item in EditingSerie.Topics)
+                    {
+                        var data = _unitOfWork.Topics.Get(item.Id);
+                        data.Name = item.Name;
+                        List<Competence> tmp = new List<Competence>();
+                        foreach (var comp in item.Competences)
+                        {
+                            tmp.Add(_unitOfWork.Competences.Get(comp.Id));
+                        }
+                        data.Competences = tmp;
+                        data.Description = item.Description;
+
+                        foreach (var question in item.Questions)
+                        {
+                            var dbQuestion = _unitOfWork.Questions.Get(question.Id);
+                            dbQuestion.Resource = question.Resource;
+                            dbQuestion.ResourceType = question.ResourceType;
+                            dbQuestion.Text = question.Text;
+                            dbQuestion.Type = question.Type;
+                            dbQuestion.Value = question.Value;
+                        }
+                    }
+                }
+
+                if (_unitOfWork.Complete() > 0 || !serieChanged)
+                {
+                    AllSerie = GetSeriesAsDto();
+                    dialog.Title = "Sikeres mentés";
+                    dialog.Content = new CustomDialog("Sikeres mentés!");
+                    IsNewSerieSelected = false;
+                    EditingSerie = null;
+                }
             }
-            else
+            catch (Exception e)
             {
                 dialog.Title = "Sikertelen mentés";
-                dialog.Content = new CustomDialog("Sikertelen mentés!");
-            }
+                dialog.Content = new CustomDialog("Sikertelen mentés! Töltse ki az összes kötelező mezőt! (Cím, téma címek, kérdések, válaszok, kérdések értékei)");
+            }   
+
             await dialog.ShowAsync(ContentDialogPlacement.Popup);
         }
 

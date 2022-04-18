@@ -273,10 +273,11 @@
                                                                  x:Name="answerTextBox"/>
 
                                                             <TextBlock Grid.Column="2" Text="Érték"  Margin="10,0,10,5" Style="{ThemeResource TitleStyle}"/>
-                                                            <TextBox Grid.Column="3" Text="{Binding Value, Mode=TwoWay}" 
+                                                            <cc:ValidatedTextBox Grid.Column="3" Text="{Binding Value, Mode=TwoWay}" 
                                                                              Margin="10,0,10,5" 
                                                                              FontSize="{ThemeResource MediumFontSize}"
                                                                              Style="{ThemeResource CommonTextBoxStyle}"
+                                                                             ValidateNumbers="True"
                                                                              x:Name="valueTextBox"/>
                                                         </Grid>
 
