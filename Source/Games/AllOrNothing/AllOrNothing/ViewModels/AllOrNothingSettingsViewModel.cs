@@ -103,29 +103,10 @@ namespace AllOrNothing.ViewModels
             set => SetProperty(ref _pageXamlRoot, value);
         }
         public event EventHandler<string> HidePage;
-
-
-        private async Task<ContentDialogResult> ShowDialog(string title, string content, ContentDialogButton defaultButton, string primaryButtonText, string closeButtonText)
-        {
-            ContentDialog dialog = new ContentDialog
-            {
-                XamlRoot = PageXamlRoot,
-                Title = title,
-                Content = new CustomDialog(content),
-                DefaultButton = defaultButton,
-                PrimaryButtonText = primaryButtonText,
-                CloseButtonText = closeButtonText,
-            };
-            dialog.Background = new SolidColorBrush((Color)App.Current.Resources["NeutralColor1"]);
-            dialog.Foreground = new SolidColorBrush((Color)App.Current.Resources["MainColor1"]);
-            dialog.Resources["ButtonBackground"] = new SolidColorBrush((Color)App.Current.Resources["MainColor4"]);
-
-
-            return await dialog.ShowAsync(ContentDialogPlacement.Popup);
-        }
+       
         private async void Exit()
         {
-            if (await ShowDialog("Kilépés?", "Biztosan kilép?", ContentDialogButton.Primary, "Igen", "Mégse") == ContentDialogResult.Primary)
+            if (await PopupManager.ShowDialog(PageXamlRoot, "Kilépés?", "Biztosan kilép?", ContentDialogButton.Primary, "Igen", "Mégse") == ContentDialogResult.Primary)
             {
                 ResetSettings();
                 HidePage?.Invoke(this, "Beállítások");
@@ -227,7 +208,7 @@ namespace AllOrNothing.ViewModels
 
             if (errorMessage != "")
             {
-                await ShowDialog("Hiba a betöltéskor!", errorMessage, ContentDialogButton.Close, "", "Ok");
+                await PopupManager.ShowDialog(PageXamlRoot, "Hiba a betöltéskor!", errorMessage, ContentDialogButton.Close, "", "Ok");
             }
         }
 
@@ -652,7 +633,7 @@ namespace AllOrNothing.ViewModels
             var message = "";
             if (HasGameValidationErrors(out message))
             {
-                await ShowDialog("Hiba!", message, ContentDialogButton.Close, "", "Ok");
+                await PopupManager.ShowDialog(PageXamlRoot, "Hiba!", message, ContentDialogButton.Close, "", "Ok");
             }
             else
             {
@@ -676,33 +657,28 @@ namespace AllOrNothing.ViewModels
 
         private bool HasRoundValidationErrors(out string message)
         {
-            message = "";
-            var result = false;
-            if (SelectedRound == null)
-            {
-                result = true;
-                message += "Válasszon ki egy kört!\n";
-            }
+            message = "";          
+            if (SelectedRound == null || SelectedRound.RoundEnded)
+                message += "Válasszon ki egy le nem játszott kört!\n";
 
-            if (SelectedRound != null && SelectedRound.RoundSettings.QuestionSerie == null)
-            {
-                result = true;
+            if (SelectedRound != null && SelectedRound.RoundSettings.IsTematicalAllowed && SelectedRound.RoundSettings.QuestionSerie == null)
                 message += "Válasszon ki egy kérdéssort!\n";
+            else if(GameModel.GameSettings.IsGameWithoutButtonsEnabled && !SelectedRound.RoundSettings.QuestionSerie.CanBePlayedWithoutButtons)
+            {
+                message += "Olyan kérdéssort válasszon ki, ami kompatibilis a nyomógombok nélküli játékkal!\n";
             }
 
             if (SelectedRound != null && !(SelectedRound.RoundSettings.IsTematicalAllowed || SelectedRound.RoundSettings.IsLightningAllowed))
-            {
-                result = true;
                 message += "Legalább egy játékmódot válasszon ki!\n";
-            }
-            return result;
+
+            return message != "";
         }
         private async void StartGameClicked()
         {
             var message = "";
             if (HasRoundValidationErrors(out message))
             {
-                await ShowDialog("Hiba!", message, ContentDialogButton.Close, "", "Ok");
+                await PopupManager.ShowDialog(PageXamlRoot, "Hiba!", message, ContentDialogButton.Close, "", "Ok");
             }
             else
             {

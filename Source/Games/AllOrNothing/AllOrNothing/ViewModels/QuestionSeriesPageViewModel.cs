@@ -1,6 +1,7 @@
 ﻿using AllOrNothing.Contracts.Services;
 using AllOrNothing.Controls;
 using AllOrNothing.Data;
+using AllOrNothing.Helpers;
 using AllOrNothing.Mapping;
 using AllOrNothing.Repository;
 using AutoMapper;
@@ -105,17 +106,7 @@ namespace AllOrNothing.ViewModels
         }
         private async void Delete()
         {
-            ContentDialog dialog = new ContentDialog
-            {
-                XamlRoot = PageXamlRoot,
-                Title = "Biztosan törli?",
-                PrimaryButtonText = "Igen",
-                CloseButtonText = "Mégse",
-                DefaultButton = ContentDialogButton.Primary,
-                Content = new CustomDialog("Biztosan törli a kérdéssort?"),
-            };
-
-            if (await dialog.ShowAsync(ContentDialogPlacement.Popup) == ContentDialogResult.Primary)
+            if (await PopupManager.ShowDialog(PageXamlRoot, "Biztosan törli?", "Biztosan törli a kérdéssort?", ContentDialogButton.Primary,"Igen", "Mégse") == ContentDialogResult.Primary)
             {
                 if (!IsNewSerieSelected)
                 {
@@ -134,15 +125,8 @@ namespace AllOrNothing.ViewModels
 
         private async void Save()
         {
-            //the result diaog
-            ContentDialog dialog = new ContentDialog
-            {
-                XamlRoot = PageXamlRoot,
-                CloseButtonText = "Ok",
-                DefaultButton = ContentDialogButton.Close,
-            };
-
-
+            var dialogTitle = "";
+            var dialogContent = "";
             try
             {
                 bool serieChanged = !EditingSerie.HasTheSameValue(_originalSerie);
@@ -191,20 +175,19 @@ namespace AllOrNothing.ViewModels
 
                 if (_unitOfWork.Complete() > 0 || !serieChanged)
                 {
-                    AllSerie = GetSeriesAsDto();
-                    dialog.Title = "Sikeres mentés";
-                    dialog.Content = new CustomDialog("Sikeres mentés!");
+                    AllSerie = GetSeriesAsDto();                   
                     IsNewSerieSelected = false;
                     EditingSerie = null;
+                    dialogTitle = "Sikeres mentés";
+                    dialogContent = "Sikeres mentés!";
                 }
             }
-            catch (Exception e)
+            catch
             {
-                dialog.Title = "Sikertelen mentés";
-                dialog.Content = new CustomDialog("Sikertelen mentés! Töltse ki az összes kötelező mezőt! (Cím, téma címek, kérdések, válaszok, kérdések értékei)");
+                dialogTitle = "Sikertelen mentés";
+                dialogContent = "Sikertelen mentés! Töltse ki az összes kötelező mezőt! (Cím, téma címek, kérdések, válaszok, kérdések értékei)";
             }
-
-            await dialog.ShowAsync(ContentDialogPlacement.Popup);
+            PopupManager.ShowDialog(PageXamlRoot, dialogTitle, dialogContent, ContentDialogButton.Close, "", "Ok");
         }
 
         public bool IsNewSerieSelected

@@ -36,8 +36,9 @@
         </Grid>-->
 
         <Grid Grid.Column="0" 
-              Style="{ThemeResource NeutralGridStyle}"
-              Margin="15,15,15,15">
+              Background="{ThemeResource NeutralColor1}"
+              CornerRadius="10"
+             >
             <Grid.RowDefinitions>
                 <RowDefinition Height="4*"/>
                 <RowDefinition Height="5*"/>

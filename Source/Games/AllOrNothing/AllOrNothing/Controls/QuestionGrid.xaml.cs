@@ -2,6 +2,7 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
+using System.Diagnostics;
 using Windows.UI;
 using Windows.UI.Text;
 
@@ -48,35 +49,16 @@ namespace AllOrNothing.Controls
             get { return (QuestionDto)GetValue(CurrentQuestionProperty); }
             set
             {
+                Debug.WriteLine("QG\t" + value?.GetHashCode());
                 SetValue(CurrentQuestionProperty, value);
                 QuestionDisplay = CurrentQuestion == null ? "" : CurrentQuestion.Text;
+                
             }
         }
 
         // Using a DependencyProperty as the backing store for CurrentQuestion.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty CurrentQuestionProperty =
             DependencyProperty.Register("CurrentQuestion", typeof(QuestionDto), typeof(QuestionGrid), null);
-
-
-
-        public bool IsAnswered
-        {
-            get { return (bool)GetValue(IsAnsweredProperty); }
-            set
-            {
-                SetValue(IsAnsweredProperty, value);
-                if (value)
-                {
-                    //QuestionText.Text = "";
-                    CurrentQuestion = null;
-                }
-            }
-        }
-
-        // Using a DependencyProperty as the backing store for IsAnswered.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty IsAnsweredProperty =
-            DependencyProperty.Register("IsAnswered", typeof(bool), typeof(QuestionGrid), null);
-
 
         private Grid _buttonGrid;
         private void CreateGrid()

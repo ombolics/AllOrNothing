@@ -75,6 +75,8 @@ namespace AllOrNothing.Mapping
             return value;
         }
 
+        public bool CanBePlayedWithoutButtons => Topics.All(topic => topic.Questions.All(q => !string.IsNullOrWhiteSpace(q.Answer)));
+
         public DateTime CreatedOn { get; set; }
 
         private HashSet<CompetenceDto> GetCompetences()

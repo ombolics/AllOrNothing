@@ -85,6 +85,7 @@
                                     Foreground="{ThemeResource MainColor1}"
                                     BorderThickness="0">
                             
+                            
                         </AutoSuggestBox>
 
                          <!--Player display area-->
@@ -615,7 +616,7 @@
                                       HorizontalGridLinesBrush="{ThemeResource MainColor2}"                                     
                                       HeadersVisibility="Column"
                                       ColumnHeaderStyle="{ThemeResource DatagridHeaderStyle}"
-                                      >
+                                      IsEnabled="{x:Bind ViewModel.SelectedRound.RoundSettings.IsTematicalAllowed, Mode=OneWay}">
 
                             <con:DataGrid.RowStyle>
                             <Style TargetType="con:DataGridRow">
@@ -686,7 +687,28 @@
                                 </con:DataGridTemplateColumn>
 
                                 <con:DataGridTextColumn Header="Dátum" Binding="{Binding CreatedOn}" Tag="CreatedOn" Width="*"/>
-                            </con:DataGrid.Columns>
+                            <con:DataGridTemplateColumn Header="Gombok nélkül" Width="*"
+                                                            Visibility="{x:Bind ViewModel.GameModel.GameSettings.IsGameWithoutButtonsEnabled, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <con:DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Image Source="/Assets/checkMark.png" 
+                                               Visibility="{Binding CanBePlayedWithoutButtons, Converter={StaticResource BoolToVisibilityConverter}}"
+                                               Stretch="UniformToFill"
+                                               MaxWidth="20"
+                                               MaxHeight="20"/>
+
+                                            <Image Source="/Assets/colorX.png" 
+                                               Visibility="{Binding CanBePlayedWithoutButtons, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=negate}"
+                                               Stretch="UniformToFill"
+                                               MaxWidth="20"
+                                               MaxHeight="20"/>
+
+                                        </Grid>
+                                    </DataTemplate>
+                                </con:DataGridTemplateColumn.CellTemplate>
+                            </con:DataGridTemplateColumn>
+                        </con:DataGrid.Columns>
 
                         </con:DataGrid>
 

@@ -1,6 +1,8 @@
 ﻿using AllOrNothing.Mapping;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using System;
+using System.Diagnostics;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -53,8 +55,18 @@ namespace AllOrNothing.Controls
         }
 
         // Using a DependencyProperty as the backing store for CurrentQuestion.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty CurrentQuestionProperty =
-            DependencyProperty.Register("CurrentQuestion", typeof(QuestionDto), typeof(TeamScore), null);
+        public static readonly DependencyProperty CurrentQuestionProperty = DependencyProperty.Register(
+            "CurrentQuestion", 
+            typeof(QuestionDto), 
+            typeof(TeamScore),
+            new PropertyMetadata(null,new PropertyChangedCallback(On_CurrentQuestionChanged)));
+
+        private static void On_CurrentQuestionChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var o = e.OldValue;
+            var n = e.NewValue;
+            _ = 0;
+        }
 
 
 
@@ -74,6 +86,7 @@ namespace AllOrNothing.Controls
             else
                 Standing.Score -= CurrentQuestion.Value;
 
+            //SetValue(CurrentQuestionProperty, null);
             CurrentQuestion = null;
         }
 

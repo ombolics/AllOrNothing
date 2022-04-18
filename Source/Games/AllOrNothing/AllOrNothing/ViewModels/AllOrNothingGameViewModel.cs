@@ -10,6 +10,7 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows.Input;
 using Windows.Storage.Pickers;
 
@@ -46,6 +47,20 @@ namespace AllOrNothing.ViewModels
 
         public event EventHandler<string> HidePage;
 
+        private void SetupLightning()
+        {
+            GamePhase = GamePhase.LIGHTNING;
+            CurrentQuestion = new QuestionDto
+            {
+                Value = 3000,
+            };
+        }
+
+        private void SetupTematical()
+        {
+            GamePhase = GamePhase.TEMATICAL;
+        }
+
         public void SetupRound(RoundModel m)
         {
             m.RoundSettings.TematicalTime = m.RoundSettings.TematicalTime.ShiftToRight();
@@ -55,11 +70,11 @@ namespace AllOrNothing.ViewModels
 
             if (SelectedRound.RoundSettings.IsTematicalAllowed)
             {
-                GamePhase = GamePhase.TEMATICAL;
+                SetupTematical();
             }
             else
             {
-                GamePhase = GamePhase.LIGHTNING;
+                SetupLightning();
             }
 
 
@@ -147,22 +162,33 @@ namespace AllOrNothing.ViewModels
         private int _pickingIndex;
         private void SubmitAnser()
         {
-            if (CurrentQuestion != null)
+            if (CurrentQuestion == null)
+                return;
+
+            int gainedScore;
+            if (AnswerText.ToLower() == CurrentQuestion.Answer.ToLower())
             {
-                var gainedScore = AnswerText.ToLower() == CurrentQuestion.Answer.ToLower() ? CurrentQuestion.Value : -CurrentQuestion.Value;
-                PickingTeam.Score += gainedScore;
-
-                var answ = new AnswerLogModel
-                {
-                    TeamName = PickingTeam.Team.TeamName,
-                    QuestionValue = gainedScore,
-                };
-
-                AnswerLog.Add(answ);
-                PickingTeam = SelectedRound.RoundStandings[++_pickingIndex % SelectedRound.RoundStandings.Count];
-                AnswerText = string.Empty;
-                CurrentQuestion = null;
+                PopupManager.ShowDialog(PageXamlRoot, "Helyes válasz!", $"{CurrentQuestion.Answer}", ContentDialogButton.Close, "", "Ezaz!");
+                gainedScore = CurrentQuestion.Value;
             }
+            else
+            {
+                PopupManager.ShowDialog(PageXamlRoot, "Rossz válasz!", $"A helyes válasz:\n{CurrentQuestion.Answer}", ContentDialogButton.Close, "", "A fenébe!");
+                gainedScore = -CurrentQuestion.Value;
+            }
+
+            PickingTeam.Score += gainedScore;
+
+            var answ = new AnswerLogModel
+            {
+                TeamName = PickingTeam.Team.TeamName,
+                QuestionValue = gainedScore,
+            };
+
+            AnswerLog.Add(answ);
+            PickingTeam = SelectedRound.RoundStandings[++_pickingIndex % SelectedRound.RoundStandings.Count];
+            AnswerText = string.Empty;
+            CurrentQuestion = null;          
         }
 
         private ICommand _showLightningCommand;
@@ -170,18 +196,9 @@ namespace AllOrNothing.ViewModels
 
         private async void ShowLightning()
         {
-            ContentDialog dialog = new ContentDialog();
-            dialog.XamlRoot = PageXamlRoot;
-            dialog.Title = "Villám?";
-            dialog.PrimaryButtonText = "Villám!";
-            dialog.CloseButtonText = "Mégse";
-            dialog.DefaultButton = ContentDialogButton.Primary;
-            dialog.Content = new CustomDialog("Biztosan továbblép a villámra?");
-
-            if (await dialog.ShowAsync(ContentDialogPlacement.Popup) == ContentDialogResult.Primary)
+            if (await PopupManager.ShowDialog(PageXamlRoot, "Villám?", "Biztosan továbblép a villámkérdésekhez?", ContentDialogButton.Primary, "Igen", "Mégse") == ContentDialogResult.Primary)
             {
-                GamePhase = GamePhase.LIGHTNING;
-                //CurrentQuestion
+                SetupLightning();
             }
         }
 
@@ -264,6 +281,14 @@ namespace AllOrNothing.ViewModels
             get => _currentQuestion;
             set
             {
+                if(GamePhase == GamePhase.LIGHTNING && value == null)
+                {
+                    value = new QuestionDto
+                    {
+                        Value = 3000,
+                    };
+                }
+                Debug.WriteLine("VM\t" + value?.GetHashCode());
                 SetProperty(ref _currentQuestion, value);
             }
         }

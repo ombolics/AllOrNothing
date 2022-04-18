@@ -1,6 +1,7 @@
 ﻿using AllOrNothing.Contracts.Services;
 using AllOrNothing.Controls;
 using AllOrNothing.Data;
+using AllOrNothing.Helpers;
 using AllOrNothing.Mapping;
 using AllOrNothing.Repository;
 using AutoMapper;
@@ -60,15 +61,7 @@ namespace AllOrNothing.ViewModels
 
         private async void Delete()
         {
-            ContentDialog dialog = new ContentDialog();
-            dialog.XamlRoot = PageXamlRoot;
-            dialog.Title = "Biztosan törli?";
-            dialog.PrimaryButtonText = "Igen";
-            dialog.CloseButtonText = "Mégse";
-            dialog.DefaultButton = ContentDialogButton.Primary;
-            dialog.Content = new CustomDialog("Biztosan törli a játékost?");
-
-            if (await dialog.ShowAsync(ContentDialogPlacement.Popup) == ContentDialogResult.Primary)
+            if (await PopupManager.ShowDialog(PageXamlRoot, "Biztosan törli?", "Biztosan törli a játékost?",ContentDialogButton.Primary,"Igen", "Mégse") == ContentDialogResult.Primary)
             {
                 if (!IsNewPlayerSelected)
                 {
@@ -89,28 +82,18 @@ namespace AllOrNothing.ViewModels
                 _unitOfWork.Players.Add(_mapper.Map<Player>(EditingPlayer));
             }
 
-            ContentDialog dialog = new ContentDialog();
-            dialog.XamlRoot = PageXamlRoot;
-            dialog.CloseButtonText = "Ok";
-            dialog.DefaultButton = ContentDialogButton.Close;
-
-
+            var dialogTitle = "Sikertelen mentés";
+            var dialogContent = "Sikertelen mentés!";
+          
             if (_unitOfWork.Complete() > 0)
             {
                 AllPlayers = new ObservableCollection<PlayerDto>(_mapper.Map<ICollection<PlayerDto>>(_unitOfWork.Players.GetAllAvaible()));
-                dialog.Title = "Sikeres mentés";
-                dialog.Content = new CustomDialog("Sikeres mentés!");
+                dialogTitle = "Sikeres mentés";
+                dialogContent = "Sikeres mentés!";
                 IsNewPlayerSelected = false;
                 EditingPlayer = null;
-            }
-            else
-            {
-                dialog.Title = "Sikertelen mentés";
-                dialog.Content = new CustomDialog("Sikertelen mentés!");
-            }
-            await dialog.ShowAsync(ContentDialogPlacement.Popup);
-
-
+            }     
+            await PopupManager.ShowDialog(PageXamlRoot, dialogTitle, dialogContent, ContentDialogButton.Close, "", "Ok");
         }
 
         public bool IsNewPlayerSelected
