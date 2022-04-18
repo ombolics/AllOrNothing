@@ -205,10 +205,10 @@ namespace AllOrNothing.Services
             }
 
             //wanish all
-            if(enabledPages.Count == 0)
+            if (enabledPages.Count == 0)
             {
                 SetAllNavigationItemVisibility(false);
-                var sendersItem =MenuItems.OfType<NavigationViewItem>().Single(item => sender == Type.GetType(item.GetValue(NavHelper.NavigateToProperty).ToString()));
+                var sendersItem = MenuItems.OfType<NavigationViewItem>().Single(item => sender == Type.GetType(item.GetValue(NavHelper.NavigateToProperty).ToString()));
                 sendersItem.Visibility = Visibility.Visible;
                 return;
             }
@@ -219,7 +219,7 @@ namespace AllOrNothing.Services
                 var type = Type.GetType(item.GetValue(NavHelper.NavigateToProperty).ToString());
                 if (enabledPages.Contains(type))
                 {
-                    ShowNavigationViewItem(item);                        
+                    ShowNavigationViewItem(item);
                 }
                 else
                 {

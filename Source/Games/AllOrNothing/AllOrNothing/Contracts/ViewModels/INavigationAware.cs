@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace AllOrNothing.Contracts.ViewModels
+﻿namespace AllOrNothing.Contracts.ViewModels
 {
     public interface INavigationAware
     {

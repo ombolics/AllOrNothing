@@ -2,7 +2,6 @@
 using AllOrNothing.Helpers;
 using AllOrNothing.Mapping;
 using AllOrNothing.Models;
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.WinUI.UI.Controls;
 using System.Collections.Generic;
 using System.Linq;

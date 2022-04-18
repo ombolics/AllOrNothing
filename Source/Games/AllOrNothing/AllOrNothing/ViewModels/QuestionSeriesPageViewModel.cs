@@ -4,7 +4,6 @@ using AllOrNothing.Data;
 using AllOrNothing.Mapping;
 using AllOrNothing.Repository;
 using AutoMapper;
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -143,7 +142,7 @@ namespace AllOrNothing.ViewModels
                 DefaultButton = ContentDialogButton.Close,
             };
 
-            
+
             try
             {
                 bool serieChanged = !EditingSerie.HasTheSameValue(_originalSerie);
@@ -203,7 +202,7 @@ namespace AllOrNothing.ViewModels
             {
                 dialog.Title = "Sikertelen mentés";
                 dialog.Content = new CustomDialog("Sikertelen mentés! Töltse ki az összes kötelező mezőt! (Cím, téma címek, kérdések, válaszok, kérdések értékei)");
-            }   
+            }
 
             await dialog.ShowAsync(ContentDialogPlacement.Popup);
         }

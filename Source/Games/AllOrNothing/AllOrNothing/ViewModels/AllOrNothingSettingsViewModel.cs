@@ -1,5 +1,4 @@
 ﻿using AllOrNothing.Contracts.Services;
-using AllOrNothing.Contracts.ViewModels;
 using AllOrNothing.Controls;
 using AllOrNothing.Data;
 using AllOrNothing.Helpers;
@@ -8,7 +7,6 @@ using AllOrNothing.Models;
 using AllOrNothing.Repository;
 using AllOrNothing.Services;
 using AutoMapper;
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
@@ -362,7 +360,7 @@ namespace AllOrNothing.ViewModels
             int value = 0;
             int i = 0;
             value = round.Sum(r => RoundsAgainstEachOther(teamIndex, r, matrix));
-            
+
             //while (i < round.Count && round[i] > 0)
             //{
             //    value += RoundsAgainstEachOther(teamIndex, round[i], matrix);

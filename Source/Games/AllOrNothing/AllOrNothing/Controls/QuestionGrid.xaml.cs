@@ -19,7 +19,7 @@ namespace AllOrNothing.Controls
             set
             {
                 _questionSerie = value;
-                if(value != null)
+                if (value != null)
                     CreateGrid();
             }
         }
@@ -96,7 +96,7 @@ namespace AllOrNothing.Controls
             for (int i = 0; i < _questionSerie.Topics[0].Questions.Count + 1; i++)
             {
                 _buttonGrid.RowDefinitions.Add(new RowDefinition
-                {                    
+                {
                     Height = new GridLength(1.0, i == 0 ? GridUnitType.Auto : GridUnitType.Star)
                 });
             }
@@ -113,7 +113,7 @@ namespace AllOrNothing.Controls
                     FontWeight = new FontWeight(700),
                     HorizontalContentAlignment = HorizontalAlignment.Center,
                     VerticalContentAlignment = VerticalAlignment.Center,
-                    BorderThickness = new Thickness(0,0,0,0),
+                    BorderThickness = new Thickness(0, 0, 0, 0),
                     Margin = new Thickness(5, 5, 5, 20),
 
                     Content = _questionSerie.Topics[i].Name,
@@ -139,7 +139,7 @@ namespace AllOrNothing.Controls
                     QuestionButton b = new QuestionButton(_questionSerie.Topics[i].Questions[j - 1])
                     {
                         CornerRadius = new CornerRadius(10),
-                        Background = new SolidColorBrush(Color.FromArgb(255,255,255,255)),
+                        Background = new SolidColorBrush(Color.FromArgb(255, 255, 255, 255)),
                         Foreground = new SolidColorBrush((Color)App.Current.Resources["MainColor1"]),
                         BorderThickness = new Thickness(0, 0, 0, 0),
                         FontSize = 17,
@@ -147,7 +147,7 @@ namespace AllOrNothing.Controls
                         Content = _questionSerie.Topics[i].Questions[j - 1].Value.ToString(),
                         VerticalAlignment = VerticalAlignment.Stretch,
                         HorizontalAlignment = HorizontalAlignment.Stretch,
-                        Margin = new Thickness(5,5,5,5),
+                        Margin = new Thickness(5, 5, 5, 5),
                         UseLayoutRounding = true,
                     };
                     b.Click += B_Click;

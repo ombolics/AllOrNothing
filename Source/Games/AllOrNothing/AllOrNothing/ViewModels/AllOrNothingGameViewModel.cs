@@ -1,11 +1,9 @@
 ﻿using AllOrNothing.Contracts.Services;
-using AllOrNothing.Contracts.ViewModels;
 using AllOrNothing.Controls;
 using AllOrNothing.Helpers;
 using AllOrNothing.Mapping;
 using AllOrNothing.Models;
 using AutoMapper;
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -249,7 +247,7 @@ namespace AllOrNothing.ViewModels
         {
             HidePages?.Invoke(this, _enabledPages);
         }
-      
+
 
         private QuestionDto _currentQuestion;
         public QuestionSerieDto Serie => _mapper.Map<QuestionSerieDto>(DummyData.DummyData.QS1);

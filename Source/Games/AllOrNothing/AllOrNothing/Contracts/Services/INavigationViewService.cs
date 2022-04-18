@@ -13,7 +13,7 @@ namespace AllOrNothing.Contracts.Services
         void Initialize(NavigationView navigationView);
 
         void UnregisterEvents();
-  
+
         NavigationViewItem GetSelectedItem(Type pageType);
         void UpdatenavigationMenu(ICollection<Type> enabledPages, Type sender);
         void AddNavItem(NavigationViewItem item, Type vmType);

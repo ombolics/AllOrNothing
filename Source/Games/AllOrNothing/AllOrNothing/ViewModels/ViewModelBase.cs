@@ -3,9 +3,6 @@ using AllOrNothing.Contracts.ViewModels;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AllOrNothing.ViewModels
 {
@@ -13,8 +10,8 @@ namespace AllOrNothing.ViewModels
     {
         private INavigationViewService _navigationViewService;
         private bool _isMenuButtonVisible;
-        public bool IsMenuButtonVisible 
-        { 
+        public bool IsMenuButtonVisible
+        {
             get => _isMenuButtonVisible;
             set => _isMenuButtonVisible = value;
         }
@@ -24,7 +21,7 @@ namespace AllOrNothing.ViewModels
             _navigationViewService = navigationViewService;
         }
         private ICollection<Type> _reachablePages;
-        public ICollection<Type> ReachablePages 
+        public ICollection<Type> ReachablePages
         {
             get => _reachablePages;
             set => SetProperty(ref _reachablePages, value);
@@ -32,7 +29,7 @@ namespace AllOrNothing.ViewModels
 
         public void OnNavigatedFrom()
         {
-            
+
         }
 
         public virtual void OnNavigatedTo(object parameter)

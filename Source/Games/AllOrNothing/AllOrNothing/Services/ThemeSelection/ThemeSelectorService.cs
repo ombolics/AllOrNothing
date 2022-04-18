@@ -5,7 +5,6 @@ using Microsoft.UI.Xaml;
 using System;
 using System.Threading.Tasks;
 using Windows.Storage;
-using Windows.UI;
 
 namespace AllOrNothing.Services
 {
@@ -56,6 +55,6 @@ namespace AllOrNothing.Services
         private async Task SaveThemeInSettingsAsync(ElementTheme theme)
         {
             await ApplicationData.Current.LocalSettings.SaveAsync(SettingsKey, theme.ToString());
-        }       
+        }
     }
 }

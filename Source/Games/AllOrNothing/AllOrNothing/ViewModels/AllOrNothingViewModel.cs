@@ -1,6 +1,4 @@
 ﻿using AllOrNothing.Contracts.Services;
-using AllOrNothing.Contracts.ViewModels;
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using System;
@@ -10,7 +8,7 @@ namespace AllOrNothing.ViewModels
 {
     public class AllOrNothingViewModel : ViewModelBase
     {
-        public AllOrNothingViewModel(INavigationViewService navigationViewService) 
+        public AllOrNothingViewModel(INavigationViewService navigationViewService)
             : base(navigationViewService)
         {
         }

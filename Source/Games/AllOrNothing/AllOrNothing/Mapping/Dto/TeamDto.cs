@@ -50,7 +50,7 @@ namespace AllOrNothing.Mapping
             for (int i = 0; i < Players.Count; i++)
             {
                 TeamName += string.IsNullOrWhiteSpace(Players[i].NickName) ? Players[i].Name : Players[i].NickName;
-                TeamName += i != Players.Count - 1 ? " - " : ""; 
+                TeamName += i != Players.Count - 1 ? " - " : "";
             }
         }
 

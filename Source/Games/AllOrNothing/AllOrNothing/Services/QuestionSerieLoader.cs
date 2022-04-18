@@ -141,14 +141,14 @@ namespace AllOrNothing.Services
                         Value = questionCounter < 6 ? questionCounter * 1000 : 8000,
                     });
                     questionCounter++;
-                }              
-                
+                }
+
                 value.Topics.Add(topic);
             }
 
-            if(value.Topics.Count != 5 || !value.Topics.All(t => t.Questions.Count == 6))
+            if (value.Topics.Count != 5 || !value.Topics.All(t => t.Questions.Count == 6))
                 throw new ArgumentException("Too few topics or questions", nameof(content));
-            
+
             return value;
 
         }
