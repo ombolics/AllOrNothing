@@ -116,7 +116,7 @@ namespace AllOrNothing.Services
 
                 if (frame.GetPageViewModel() is INavigationAware navigationAware)
                 {
-                    navigationAware.OnNavigatedTo(e.Parameter);
+                    navigationAware.OnNavigatedTo();
                 }
 
                 Navigated?.Invoke(sender, e);

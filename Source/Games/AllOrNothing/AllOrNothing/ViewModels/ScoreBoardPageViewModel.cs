@@ -4,6 +4,7 @@ using AllOrNothing.Mapping;
 using AllOrNothing.Models;
 using CommunityToolkit.WinUI.UI.Controls;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace AllOrNothing.ViewModels
@@ -21,9 +22,9 @@ namespace AllOrNothing.ViewModels
             e.Row.Header = e.Row.GetIndex().ToString();
         }
 
-        private List<StandingDto> _gameStandings;
+        private ObservableCollection<StandingDto> _gameStandings;
 
-        public List<StandingDto> GameStandings
+        public ObservableCollection<StandingDto> GameStandings
         {
             get => _gameStandings;
             set => SetProperty(ref _gameStandings, value);
@@ -37,32 +38,38 @@ namespace AllOrNothing.ViewModels
             set => SetProperty(ref _lastRoundStandings, value);
         }
 
-        public void Setup(RoundModel m)
+        private string _roundDisplayText;
+        public string RoundDisplayText
         {
-            var ls = new List<StandingDto>(m.RoundStandings);
-            ls.Sort(new StandingDtoComparer());
-            ls.Reverse();
-            LastRoundStandings = ls;
+            get => _roundDisplayText;
+            set => SetProperty(ref _roundDisplayText, value);
+        }
+        public void InitVm(ObservableCollection<StandingDto> gameStandings)
+        {
+            GameStandings = gameStandings;
+            RoundDisplayText = "A legutóbbi kör eredménye";
+        }
 
+        public void UpdateStandings(RoundModel m)
+        {
             //Sync the game standings with the last round's result
+            LastRoundStandings = new List<StandingDto>(m.RoundStandings)
+                .OrderByDescending(m => m.Score)
+                .ToList();
 
-
-            //TODO optimize this
-            foreach (var teamInStandings in GameStandings)
+            if (m.IsFinalRound)
             {
-                foreach (var teamFromModel in m.RoundStandings)
-                {
-                    if (teamInStandings.Team.Players.Select(x => x.Id).SequenceEqual(teamFromModel.Team.Players.Select(x => x.Id)))
-                    {
-                        teamInStandings.Score += teamFromModel.Score;
-                        teamInStandings.MatchPlayed++;
-                    }
-                }
-            }
+                RoundDisplayText = "A döntő eredménye";
+                return;
+            }               
 
-            GameStandings.Sort(new StandingDtoComparer());
-            GameStandings.Reverse();
-
+            foreach (var standing in LastRoundStandings)
+            {
+                var gameStanding = GameStandings.Single(s => s.Team == standing.Team);
+                gameStanding.Score += standing.Score;
+                gameStanding.MatchPlayed++;
+            }      
+            GameStandings = new ObservableCollection<StandingDto>(GameStandings.OrderByDescending(s => s.Score).ThenBy(s => s.Team.TeamName).ToList());
         }
     }
 }

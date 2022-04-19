@@ -61,7 +61,6 @@ namespace AllOrNothing.ViewModels
 
             AllOrNothingSettingsViewModel = Ioc.Default.GetService<AllOrNothingSettingsViewModel>();
             AllOrNothingSettingsViewModel.NavigateTo += On_NavigateTo;
-            AllOrNothingSettingsViewModel.HidePages += On_HidePages;
             AllOrNothingSettingsViewModel.HidePage += On_HidePage;
 
             GameViewModel = Ioc.Default.GetRequiredService<AllOrNothingGameViewModel>();

@@ -45,9 +45,14 @@
                         <ColumnDefinition Width="4*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Row="1" Text="{x:Bind ViewModel.OccasionName, Mode=OneWay}"
-                               Style="{ThemeResource MainTitleStyle}"
-                               Margin="10,10,10,10"/>
+                    
+                    <TextBlock Grid.Column="0"
+                               Text="{x:Bind ViewModel.OccasionName, Mode=OneWay}" 
+                               Foreground="{ThemeResource MainColor1}"
+                               FontSize="40"
+                               VerticalAlignment="Center"
+                               FontWeight="SemiBold"
+                               Margin="20,10,10,10"/>
                 </Grid>
 
                 <cc:QuestionGrid Grid.Row="2" Margin="15,15,15,15"
@@ -184,7 +189,8 @@
                                 <cc:TeamScore Standing="{Binding}"
                                               CurrentQuestion="{Binding ViewModel.CurrentQuestion, Mode=TwoWay, ElementName=gamePage}"
                                           HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                              Margin="0,0,0,0"/>
+                                              Margin="0,0,0,0"
+                                              GamePhase="{Binding ViewModel.GamePhase, Mode=OneWay, ElementName=gamePage}"/>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                         <ListBox.ItemContainerStyle>
@@ -233,26 +239,43 @@
                         <ColumnDefinition Width="4*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
+                    
                     <TextBlock Grid.Column="0"
                                Text="{x:Bind ViewModel.OccasionName, Mode=OneWay}" 
                                Foreground="{ThemeResource MainColor1}"
                                FontSize="40"
                                VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
                                FontWeight="SemiBold"
                                Margin="20,10,10,10"/>
 
                     <Button Grid.Column="1" 
                             Content="{x:Bind ViewModel.SelectedRound.RoundSettings.TematicalTime, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}" 
+                            Visibility="{x:Bind ViewModel.GamePhase, Mode=OneWay, Converter={StaticResource GamePhaseToVisibilityConverter}, ConverterParameter=Tematical }"
                             CornerRadius="10" 
                             HorizontalAlignment="Right" 
                             VerticalAlignment="Center" 
-                            FontSize="30"
+                            FontSize="60"
                             BorderThickness="0"
                             Foreground="{ThemeResource MainColor1}"
                             FontWeight="Bold"
                             Command="{x:Bind ViewModel.ToggleTimerCommand}"
                             Padding="10,10,10,10"
-                            Margin="10,10,10,10"/>
+                            Margin="10,10,15,10"/>
+
+                    <Button Grid.Column="1" 
+                            Content="{x:Bind ViewModel.SelectedRound.RoundSettings.LightningTime, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}" 
+                            Visibility="{x:Bind ViewModel.GamePhase, Mode=OneWay, Converter={StaticResource GamePhaseToVisibilityConverter}, ConverterParameter=Lightning }"
+                            CornerRadius="10" 
+                            HorizontalAlignment="Right" 
+                            VerticalAlignment="Center" 
+                            FontSize="60"
+                            BorderThickness="0"
+                            Foreground="{ThemeResource MainColor1}"
+                            FontWeight="Bold"
+                            Command="{x:Bind ViewModel.ToggleTimerCommand}"
+                            Padding="10,10,10,10"
+                            Margin="10,10,15,10"/>
 
                 </Grid>
 
@@ -261,6 +284,38 @@
                              CurrentQuestion="{x:Bind ViewModel.CurrentQuestion, Mode=TwoWay}"
                              CornerRadius="30"
                              Visibility="{x:Bind ViewModel.GamePhase, Mode=OneWay, Converter={StaticResource GamePhaseToVisibilityConverter}, ConverterParameter=Tematical }"/>
+
+                <Grid Grid.Row="2"
+                      Margin="70,70,70,70"
+                      Background="{ThemeResource MainColor2}"
+                      CornerRadius="10"
+                      Visibility="{x:Bind ViewModel.GamePhase, Mode=OneWay, Converter={StaticResource GamePhaseToVisibilityConverter}, ConverterParameter=Lightning }">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0"
+                               Grid.Row="0"
+                               FontSize="35"
+                               Foreground="{ThemeResource MainColor1}"
+                               FontWeight="SemiBold"
+                               VerticalAlignment="Center"
+                               Text="Villámkérdések!"/>
+
+                    <TextBlock Grid.Column="1"
+                               Grid.Row="1"
+                               FontSize="40"
+                               Foreground="{ThemeResource MainColor1}"
+                               FontWeight="SemiBold"
+                               VerticalAlignment="Center"
+                               Text="Minden kérdés 3000 pontot ér!"/>
+
+                </Grid>
 
             </Grid>
 
@@ -284,7 +339,8 @@
                                 <cc:TeamScore Standing="{Binding}"
                                               CurrentQuestion="{Binding ViewModel.CurrentQuestion, Mode=TwoWay, ElementName=gamePage}"
                                           HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                            Margin="15,15,15,15"/>
+                                            Margin="15,15,15,15"
+                                               GamePhase="{Binding ViewModel.GamePhase, Mode=OneWay, ElementName=gamePage}"/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
@@ -302,7 +358,7 @@
                             VerticalAlignment="Stretch"
                             Command="{x:Bind ViewModel.SkipAnswerCommand}"
                             CornerRadius="10"
-                            Margin="10,10,10,10"
+                            Margin="10,10,10,5"
                             Foreground="{ThemeResource MainColor1}"
                             />
 
@@ -320,7 +376,7 @@
                                 Command="{x:Bind ViewModel.ShowLightningCommand}"
                                 Visibility="{x:Bind ViewModel.GamePhase, Mode=OneWay, Converter={StaticResource GamePhaseToVisibilityConverter}, ConverterParameter=Tematical }"
                                 CornerRadius="10"
-                                Margin="10,10,10,10"
+                                Margin="10,5,5,10"
                                 Foreground="{ThemeResource MainColor1}"/>
 
 
@@ -331,7 +387,7 @@
                                 VerticalAlignment="Stretch"
                                 Command="{x:Bind ViewModel.GameOverCommand}"
                                 CornerRadius="10"
-                                Margin="10,10,10,10"
+                                Margin="5,5,10,10"
                                 Foreground="{ThemeResource MainColor1}"/>
                     </Grid>
                 </Grid>

@@ -415,10 +415,11 @@
                 <TextBlock Grid.Row="0" 
                            Text="Körök beosztása"
                            Margin="10,10,10,10"
-                           Style="{ThemeResource MainTitleStyle}"/>
+                           Style="{ThemeResource MainTitleStyle}"
+                           Visibility="{x:Bind ViewModel.SelectedRound.IsFinalRound, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=negate}"/>
 
                 <ListView Grid.Row="1" x:Name="ScheduleList"
-                        Visibility="{x:Bind ViewModel.IsFinalRound, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=negate}"
+                        Visibility="{x:Bind ViewModel.SelectedRound.IsFinalRound, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=negate}"
                         ItemsSource="{x:Bind ViewModel.Rounds, Mode=OneWay}"
                         SelectedItem="{x:Bind ViewModel.SelectedRound, Mode=OneWay}"
                         ScrollViewer.VerticalScrollMode="Auto"
@@ -472,7 +473,8 @@
                                             <Border Background="{ThemeResource NeutralColor1}" Margin="10,10,10,10" CornerRadius="5">
                                                 <TextBlock Text="{Binding TeamName}"
                                                            Style="{ThemeResource TitleStyle}"
-                                                           Margin=" 5,5,5,5"/>
+                                                           Margin=" 5,5,5,5"
+                                                           TextWrapping="WrapWholeWords"/>
                                             </Border>
 
                                         </DataTemplate>
@@ -487,11 +489,17 @@
 
                 <StackPanel Grid.Row="1" 
                         Orientation="Vertical"
-                        Visibility="{x:Bind ViewModel.IsFinalRound, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                        Visibility="{x:Bind ViewModel.SelectedRound.IsFinalRound, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center">
+                    
                     <TextBlock Text="Döntő"
-                            HorizontalAlignment="Center"
-                            FontSize="40"/>
-                    <ItemsControl ItemsSource="{x:Bind ViewModel.FinalRound.RoundSettings.Teams, Mode=OneWay}"
+                               HorizontalAlignment="Center"
+                               Foreground="{ThemeResource MainColor1}"
+                               FontSize="40"
+                               FontWeight="SemiBold"/>
+                    
+                    <ItemsControl ItemsSource="{x:Bind ViewModel.SelectedRound.RoundSettings.Teams, Mode=OneWay}"
                                 VerticalAlignment="Center">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
@@ -501,10 +509,14 @@
 
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Border Background="{ThemeResource GreyBrush}" Margin="10,10,10,10" CornerRadius="5">
-                                    <TextBlock Text="{Binding TeamName}" 
-                                            FontSize="20"
-                                            TextAlignment="Center"/>
+                                <Border Background="{ThemeResource MainColor2}" 
+                                        Margin="10,10,10,10" 
+                                        CornerRadius="5" 
+                                        Padding="2,2,2,2">
+                                    <TextBlock Text="{Binding TeamName}"
+                                               Foreground="{ThemeResource MainColor1}"
+                                               FontSize="20"
+                                               TextAlignment="Center"/>
                                 </Border>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>

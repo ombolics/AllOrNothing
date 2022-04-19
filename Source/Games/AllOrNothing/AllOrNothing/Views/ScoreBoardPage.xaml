@@ -6,9 +6,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="White">
 
-    <Grid  Background="{ThemeResource GradientBrush9}">
+    <Grid  Background="White">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
@@ -16,19 +16,22 @@
 
         <StackPanel Orientation="Vertical" 
                     Grid.Column="0"
-                    Margin=" 30, 10,10,10"
-                    >
+                    Margin=" 10, 10,10,10"
+                    VerticalAlignment="Center"
+                    Style ="{ThemeResource NeutralPanelStyle}">
 
             <TextBlock Text="Összesített eredmények:" 
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       Foreground="{ThemeResource MainColor1}"
+                       FontWeight="SemiBold"
                        Margin="30,10,10,10"
                        FontSize="{ThemeResource LargeFontSize}"/>
 
             <controls:DataGrid ItemsSource="{x:Bind ViewModel.GameStandings}"
                                AutoGenerateColumns="False"
                                Foreground="{ThemeResource MainColor1}">
-                <controls:DataGrid.Background>
-                    <SolidColorBrush Color="LightGray" Opacity="0.3"/>
-                </controls:DataGrid.Background>
+
                 <controls:DataGrid.Columns>
                     <controls:DataGridTextColumn Header="Pontszám" 
                                                  Binding="{Binding Score}" 
@@ -43,6 +46,13 @@
                                                  Width="*"
                                                  FontSize="20"
                                                  IsReadOnly="True"/>
+
+                    <controls:DataGridTextColumn Header="Lejátszott körök" 
+                                                 Binding="{Binding MatchPlayed}"                                                 
+                                                 Tag="MatchPlayed"
+                                                 Width="*"
+                                                 FontSize="20"
+                                                 IsReadOnly="True"/>
                 </controls:DataGrid.Columns>
 
             </controls:DataGrid>
@@ -51,19 +61,21 @@
         <StackPanel Orientation="Vertical" 
                     Grid.Column="1"  
                     VerticalAlignment="Center"
-                    Margin=" 30, 10,10,10">
+                    Margin=" 30, 10,10,10"
+                    Style="{ThemeResource MainPanelStyle}">
 
-            <TextBlock Text="Legutóbbi kör:"
-                       Margin="30,10,10,10"
+            <TextBlock Text="{x:Bind ViewModel.RoundDisplayText, Mode=OneWay}"
+                       Margin="10,10,10,10"
                        FontSize="{ThemeResource LargeFontSize}"
+                       Foreground="{ThemeResource MainColor1}"
+                       FontWeight="SemiBold"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
                        />
+
             <controls:DataGrid ItemsSource="{x:Bind ViewModel.LastRoundStandings}"
                                AutoGenerateColumns="False"
                                Foreground="{ThemeResource MainColor1}">
-
-                <controls:DataGrid.Background>
-                    <SolidColorBrush Color="LightGray" Opacity="0.3"/>
-                </controls:DataGrid.Background>
 
                 <controls:DataGrid.Columns>
 

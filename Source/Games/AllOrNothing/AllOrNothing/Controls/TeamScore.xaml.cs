@@ -1,4 +1,5 @@
 ﻿using AllOrNothing.Mapping;
+using AllOrNothing.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -87,8 +88,22 @@ namespace AllOrNothing.Controls
                 Standing.Score -= CurrentQuestion.Value;
 
             //SetValue(CurrentQuestionProperty, null);
-            CurrentQuestion = null;
+            if(GamePhase == GamePhase.TEMATICAL)
+                CurrentQuestion = null;
         }
+
+
+
+        public GamePhase GamePhase
+        {
+            get { return (GamePhase)GetValue(GamePhaseProperty); }
+            set { SetValue(GamePhaseProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty GamePhaseProperty =
+            DependencyProperty.Register("GamePhase", typeof(GamePhase), typeof(TeamScore), null);
+
 
 
         private void On_TextChanged(object sender, TextChangedEventArgs e)

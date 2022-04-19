@@ -29,8 +29,23 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            
-            <Button Grid.Row="0"
+
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="0"
+                    Content="Vissza"
+                    Margin="10,10,10,10"
+                    Foreground="{ThemeResource MainColor1}"
+                    FontSize ="20"
+                    FontWeight="Bold"
+                    CornerRadius="10"
+                    Command="{x:Bind ViewModel.ExitCommand}"/>
+
+                <Button Grid.Column="1"
                     Content="Új játékos"
                     Margin="10,10,10,10"
                     HorizontalAlignment="Stretch"
@@ -39,6 +54,8 @@
                     FontWeight="Bold"
                     CornerRadius="10"
                     Command="{x:Bind ViewModel.NewPlayerCommand}"/>
+            </Grid>
+            
 
             <toolkit:DataGrid Grid.Row="1" ItemsSource="{x:Bind ViewModel.AllPlayers, Mode=OneWay}"
                               AutoGenerateColumns="False"

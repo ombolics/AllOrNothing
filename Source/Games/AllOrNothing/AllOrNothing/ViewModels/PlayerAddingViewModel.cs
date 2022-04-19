@@ -50,6 +50,14 @@ namespace AllOrNothing.ViewModels
             set => SetProperty(ref _allPlayers, value);
         }
 
+        private ICommand _exitCommand;
+        public ICommand ExitCommand => _exitCommand ??= new RelayCommand(Exit);
+
+        private void Exit()
+        {
+            
+        }
+
         private ICommand _newPlayerCommand;
         public ICommand NewPlayerCommand => _newPlayerCommand ??= new RelayCommand(AddNewPlayer);
 

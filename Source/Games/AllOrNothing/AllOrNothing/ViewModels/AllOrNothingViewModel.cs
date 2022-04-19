@@ -1,6 +1,9 @@
 ﻿using AllOrNothing.Contracts.Services;
+using AllOrNothing.Helpers;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Windows.Input;
 
@@ -47,9 +50,18 @@ namespace AllOrNothing.ViewModels
         {
             NavigateTo?.Invoke(this, new NavigateToEventargs { PageVM = typeof(StatisticsViewModel), PageName = "Statisztikák" });
         }
-        private void NewGameClicked()
+
+        public XamlRoot PageXamlRoot;
+
+        private async void NewGameClicked()
         {
             var vm = Ioc.Default.GetService<AllOrNothingSettingsViewModel>();
+            if(vm.GameInProgress &&
+                await PopupManager.ShowDialog(PageXamlRoot, "Új játékor kezd?", "Egy játék jelenleg is aktív! Ha új játékot kezd, a jelenlegi játék összes eredménye elveszik!",
+                ContentDialogButton.Primary, "Igen", "Mégse") != ContentDialogResult.Primary)
+            {
+                return;
+            }
             vm.ResetSettings();
             NavigateTo?.Invoke(this, new NavigateToEventargs { PageVM = typeof(AllOrNothingSettingsViewModel), PageName = "Beállítások" });
         }

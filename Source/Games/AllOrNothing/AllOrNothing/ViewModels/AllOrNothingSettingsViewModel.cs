@@ -579,9 +579,6 @@ namespace AllOrNothing.ViewModels
 
         }
 
-
-        public ObservableCollection<Type> ReachablePages { get => new ObservableCollection<Type>(); set { } }
-
         public event EventHandler<NavigateToEventargs> NavigateTo;
 
         private ObservableCollection<Player> _playerTest;
@@ -644,8 +641,7 @@ namespace AllOrNothing.ViewModels
                 SelectedRound = Rounds?[0];
 
                 var vm = Ioc.Default.GetService<ScoreBoardPageViewModel>();
-
-                vm.GameStandings = new List<StandingDto>(GameModel.GameStandings);
+                vm.InitVm(GameModel.GameStandings);
 
                 GameSettingsVisible = Visibility.Collapsed;
                 IsRoundSettingsVisible = true;
@@ -673,30 +669,46 @@ namespace AllOrNothing.ViewModels
 
             return message != "";
         }
+
+        private bool _gameInProgress;
+        public bool GameInProgress
+        {
+            get => _gameInProgress;
+            set => SetProperty(ref _gameInProgress, value);
+        }
         private async void StartGameClicked()
         {
             var message = "";
             if (HasRoundValidationErrors(out message))
             {
                 await PopupManager.ShowDialog(PageXamlRoot, "Hiba!", message, ContentDialogButton.Close, "", "Ok");
+                return;
             }
-            else
-            {
-                var vm = Ioc.Default.GetService<AllOrNothingGameViewModel>();
-                vm.OccasionName = GameModel.GameSettings.OccasionName;
-                vm.SetupRound(SelectedRound);
-                vm.RoundOver += GameVM_RoundOver;
 
-                NavigateTo?.Invoke(this, new NavigateToEventargs { PageVM = typeof(AllOrNothingGameViewModel), PageName = "Játék" });
-                //TODO close this page
+            var vm = Ioc.Default.GetService<AllOrNothingGameViewModel>();          
+            vm.SetupRound(SelectedRound);
+
+            if (!GameInProgress)
+            {
+                vm.OccasionName = GameModel.GameSettings.OccasionName;
+                vm.RoundOver += GameVM_RoundOver;
+                GameInProgress = true;
             }
+            NavigateTo?.Invoke(this, new NavigateToEventargs { PageVM = typeof(AllOrNothingGameViewModel), PageName = "Játék" }); 
         }
 
         private void GameVM_RoundOver(object sender, RoundModel e)
         {
+            if (e.IsFinalRound)
+            {
+                IsMenuButtonVisible = false;
+                GameInProgress = false;
+            }
+                
+
             //TODO: ténylege kell ez ide? nem elég csak az eredmények oldalában kezelni az eventet?
             var vm = Ioc.Default.GetService<ScoreBoardPageViewModel>();
-            vm.Setup(e);
+            vm.UpdateStandings(e);
             if (e.IsFinalRound)
             {
                 //TODO: az oldal eltűnést és megjelenést rendbrakni
@@ -710,15 +722,24 @@ namespace AllOrNothing.ViewModels
             throw new NotImplementedException();
         }
 
-        public event EventHandler<List<string>> HidePages;
 
         private RoundModel _finalRound;
         public RoundModel FinalRound
         {
             get => _finalRound;
-            set => SetProperty(ref _finalRound, value);
+            set
+            {
+                SetProperty(ref _finalRound, value);
+                if (value != null)
+                    IsFinalRound = true;
+            } 
         }
-        public bool IsFinalRound => FinalRound != null;
+        private bool _isFinalRound;
+        public bool IsFinalRound
+        {
+            get => _isFinalRound;
+            set => SetProperty(ref _isFinalRound, value);
+        }
 
         public IMapper Mapper
         {
@@ -728,9 +749,9 @@ namespace AllOrNothing.ViewModels
 
 
 
-        public void OnNavigatedTo(object parameter)
+        public override void OnNavigatedTo()
         {
-            HidePages?.Invoke(this, null);
+            base.OnNavigatedTo();
 
             if (FinalRound == null && Rounds != null && Rounds.All(r => r.RoundEnded))
             {
@@ -743,11 +764,6 @@ namespace AllOrNothing.ViewModels
                 FinalRound.IsFinalRound = true;
                 SelectedRound = FinalRound;
             }
-        }
-
-        public void OnNavigatedFrom()
-        {
-
         }
     }
 }

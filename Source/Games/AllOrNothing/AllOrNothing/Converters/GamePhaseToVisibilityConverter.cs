@@ -15,8 +15,8 @@ namespace AllOrNothing.Converters
             var gP = (GamePhase)value;
             string param = parameter as string;
 
-            if ((param == "Tematical" && gP == GamePhase.TEMATICAL) ||
-                (param == "Lightning" && gP == GamePhase.LIGHTNING))
+            if ((param.ToLower() == "tematical" && gP == GamePhase.TEMATICAL) ||
+                (param.ToLower() == "lightning" && gP == GamePhase.LIGHTNING))
             {
                 return Visibility.Visible;
             }

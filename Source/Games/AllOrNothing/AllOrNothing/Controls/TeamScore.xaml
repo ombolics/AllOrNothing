@@ -39,20 +39,27 @@
               Background="{ThemeResource NeutralColor1}"
               CornerRadius="10"
              >
-            <Grid.RowDefinitions>
-                <RowDefinition Height="4*"/>
-                <RowDefinition Height="5*"/>
-                <RowDefinition Height="3*"/>
-            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-            <TextBlock x:Name="TeamNameBlock" 
+            
+
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="2*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock x:Name="TeamNameBlock" 
                        Grid.Row="0" 
                        Text="{x:Bind Standing.Team.TeamName, Mode=OneWay}" 
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"
                        Style="{ThemeResource TitleStyle}"/>
-            
-            <TextBox x:Name="ScoreBox" 
+
+                <local:ValidatedTextBox x:Name="ScoreBox" 
                      Grid.Row="1" 
                      Text="{x:Bind Standing.Score, Mode=TwoWay}" 
                      HorizontalAlignment="Center" 
@@ -60,45 +67,48 @@
                      TextAlignment="Center" 
                      Background="Transparent"
                      Foreground="{ThemeResource MainColor1}"
-                     FontSize="24"
+                     FontSize="30"
                      BorderThickness="0"
                      FontWeight="SemiBold"
-                     TextChanged="On_TextChanged"/>
+                     TextChanged="On_TextChanged"
+                     ValidateNumbers="True"/>
+            </Grid>
 
-            <Grid Grid.Row="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-                <Button x:Name="PlusButton"
-                        Height="30"
-                        Width="60"
-                        Margin="5,5,10,5"
-                        Grid.Column="0" 
+                <Button Grid.Row="0" 
+                    x:Name="PlusButton"
+                        Height="40"
+                        Width="40"
+                        Margin="5,5,5,5"                        
                         Foreground="{ThemeResource MainColor1}"
                         Background="White"
-                        HorizontalAlignment="Right"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
                         Click="On_ButtonPressed"
                         CornerRadius="10"
                         Padding="0,0,0,0">
                     <Image Source="/Assets/plus.png" Stretch="Uniform"/>
                 </Button>
 
-                <Button x:Name="MinusButton"
-                        Height="30"
-                        Width="60"
-                        Margin="10,5,5,5"
-                        Grid.Column="1" 
+                <Button Grid.Row="1"
+                        x:Name="MinusButton"
+                        Height="40"
+                        Width="40"
+                        Margin="5,5,5,5"
                         Foreground="{ThemeResource MainColor1}"
                         Background="White"
-                        HorizontalAlignment="Left"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"  
                         CornerRadius="10"
                         Click="On_ButtonPressed">
                     <Image Source="/Assets/minus.png" Stretch="Uniform"/>
                 </Button>
             </Grid>
         </Grid>
-
     </Grid>
 </UserControl>
