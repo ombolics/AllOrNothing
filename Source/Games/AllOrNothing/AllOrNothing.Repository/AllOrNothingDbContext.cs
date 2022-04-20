@@ -40,7 +40,7 @@ namespace AllOrNothing.Repository
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
 
                 //TODO kivenni az eszköznév specifikus dolgokat a connection stringből DESKTOP-B5C457P\SQLEXPRESS
-                optionsBuilder.UseSqlServer(@"Server=DESKTOP-B5C457P\SQLEXPRESS;Database=AllOrNothingDb;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLOCALDB;Integrated Security=true;Database=AllOrNothingDb;");
             }
 
         }

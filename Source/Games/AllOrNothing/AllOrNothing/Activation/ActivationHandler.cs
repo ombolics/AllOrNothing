@@ -23,8 +23,11 @@ namespace AllOrNothing.Activation
             return args is T && CanHandleInternal(args as T);
         }
 
-        // Potential override  method to add extra validation on activation args
-        // to determine if ActivationHandler should handle this activation args
+        /// <summary>
+        /// Potential override  method to add extra validation on activation args to determine if ActivationHandler should handle this activation args
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
         protected virtual bool CanHandleInternal(T args)
         {
             return true;

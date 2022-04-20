@@ -2,7 +2,7 @@
 using Microsoft.UI.Xaml.Data;
 using System;
 
-namespace AllOrNothing.Helpers
+namespace AllOrNothing.Converters
 {
     public class EnumToBooleanConverter : IValueConverter
     {

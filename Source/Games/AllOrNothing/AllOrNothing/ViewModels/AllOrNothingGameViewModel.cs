@@ -267,7 +267,6 @@ namespace AllOrNothing.ViewModels
 
 
         private QuestionDto _currentQuestion;
-        public QuestionSerieDto Serie => _mapper.Map<QuestionSerieDto>(DummyData.DummyData.QS1);
 
         private string _occasionName;
         public string OccasionName

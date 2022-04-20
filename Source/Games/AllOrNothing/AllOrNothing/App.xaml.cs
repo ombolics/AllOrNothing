@@ -12,9 +12,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using System.IO;
-using System.Runtime.Versioning;
 
-// To learn more about WinUI3, see: https://docs.microsoft.com/windows/apps/winui/winui3/.
+
 namespace AllOrNothing
 {
     public partial class App : Application
@@ -31,6 +30,7 @@ namespace AllOrNothing
             //Borderless mode
             //MainWindow.ExtendsContentIntoTitleBar = true;
 
+            MainWindow = new Window() { Title = "AppDisplayName".GetLocalized() };
             if (!Directory.Exists(QuestionSerieFolder))
             {
                 Directory.CreateDirectory(QuestionSerieFolder);
@@ -73,7 +73,7 @@ namespace AllOrNothing
             // Core Services
             //services.AddTransient<IAllOrNothingDbContext, AllOrNothingDbContext>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
-            services.AddDbContext<AllOrNothingDbContext>(optionsBuilder => optionsBuilder.UseSqlServer(@"Server=DESKTOP-B5C457P\SQLEXPRESS;Database=AllOrNothingDb;Trusted_Connection=True;"));
+            services.AddDbContext<AllOrNothingDbContext>(optionsBuilder => optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLOCALDB;Integrated Security=true;Database=AllOrNothingDb;"));
             services.AddTransient<QuestionSerieLoader>();
             //Mapping
 
