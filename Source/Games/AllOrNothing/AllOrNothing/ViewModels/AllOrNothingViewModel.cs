@@ -38,7 +38,7 @@ namespace AllOrNothing.ViewModels
 
         private void OpenPlayeraddingPage()
         {
-            NavigateTo?.Invoke(this, new NavigateToEventargs { PageVM = typeof(PlayerAddingViewModel), PageName = "Új játákos" });
+            NavigateTo?.Invoke(this, new NavigateToEventargs { PageVM = typeof(PlayerAddingViewModel), PageName = "Játékosok" });
         }
 
         private void OpenQuestionSeries()

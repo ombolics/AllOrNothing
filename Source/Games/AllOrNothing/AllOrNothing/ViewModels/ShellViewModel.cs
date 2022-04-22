@@ -34,6 +34,20 @@ namespace AllOrNothing.ViewModels
             set => SetProperty(ref _allOrNothingViewModel, value);
         }
 
+        private PlayerAddingViewModel _playerAddingViewModel;
+        public PlayerAddingViewModel PlayerAddingViewModel
+        {
+            get => _playerAddingViewModel;
+            set => SetProperty(ref _playerAddingViewModel, value);
+        }
+
+        private QuestionSeriesPageViewModel _questionSeriesPageViewModel;
+        public QuestionSeriesPageViewModel QuestionSeriesPageViewModel
+        {
+            get => _questionSeriesPageViewModel;
+            set => SetProperty(ref _questionSeriesPageViewModel, value);
+        }
+
         public INavigationService NavigationService { get; }
 
         public INavigationViewService NavigationViewService { get; }
@@ -59,14 +73,18 @@ namespace AllOrNothing.ViewModels
             AllOrNothingViewModel = Ioc.Default.GetService<AllOrNothingViewModel>();
             AllOrNothingViewModel.NavigateTo += On_NavigateTo;
 
+            PlayerAddingViewModel = Ioc.Default.GetService<PlayerAddingViewModel>();
+            PlayerAddingViewModel.NavigateTo += On_NavigateTo;
+
+            QuestionSeriesPageViewModel = Ioc.Default.GetService<QuestionSeriesPageViewModel>();
+            QuestionSeriesPageViewModel.NavigateTo += On_NavigateTo;
+
             AllOrNothingSettingsViewModel = Ioc.Default.GetService<AllOrNothingSettingsViewModel>();
             AllOrNothingSettingsViewModel.NavigateTo += On_NavigateTo;
-            AllOrNothingSettingsViewModel.HidePage += On_HidePage;
 
             GameViewModel = Ioc.Default.GetRequiredService<AllOrNothingGameViewModel>();
-            GameViewModel.HidePages += On_HidePages;
-            GameViewModel.HidePage += On_HidePage;
-        }
+
+        }     
 
         private void On_HidePage(object sender, string e)
         {

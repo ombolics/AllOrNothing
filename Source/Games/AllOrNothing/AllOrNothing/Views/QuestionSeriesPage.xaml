@@ -30,13 +30,28 @@
         <!-- add button + list of series-->
         <Grid Grid.Column="0"
               Style="{ThemeResource NeutralGridStyle}">
-            
+
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            
-            <Button Grid.Row="0"
+
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="0"
+                    Content="Vissza"
+                    Margin="10,10,10,10"
+                    Foreground="{ThemeResource MainColor1}"
+                    FontSize ="20"
+                    FontWeight="Bold"
+                    CornerRadius="10"
+                    Command="{x:Bind ViewModel.ExitCommand}"/>
+
+                <Button Grid.Column="1"
                     Content="Új kérdéssor"
                     FontSize="{ThemeResource MediumFontSize}"
                     FontWeight="Bold"
@@ -44,7 +59,8 @@
                     Margin="10,10,10,10"
                     HorizontalAlignment="Stretch"
                     Command="{x:Bind ViewModel.NewSerieCommand}"/>
-            
+            </Grid>
+
 
             <toolkit:DataGrid Grid.Row="1"
                               ItemsSource="{x:Bind ViewModel.AllSerie, Mode=OneWay}"

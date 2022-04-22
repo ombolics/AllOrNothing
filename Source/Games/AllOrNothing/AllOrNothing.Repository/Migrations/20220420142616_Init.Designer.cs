@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AllOrNothing.Repository.Migrations
 {
     [DbContext(typeof(AllOrNothingDbContext))]
-    [Migration("20220323185159_PLayer_IsDeletedFieldAdded")]
-    partial class PLayer_IsDeletedFieldAdded
+    [Migration("20220420142616_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,12 +32,7 @@ namespace AllOrNothing.Repository.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TopicId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("TopicId");
 
                     b.ToTable("Competences");
                 });
@@ -80,7 +75,6 @@ namespace AllOrNothing.Repository.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Answer")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<byte[]>("Resource")
@@ -106,7 +100,7 @@ namespace AllOrNothing.Repository.Migrations
 
                     b.HasIndex("TopicId");
 
-                    b.ToTable("Question");
+                    b.ToTable("Questions");
                 });
 
             modelBuilder.Entity("AllOrNothing.Data.QuestionSerie", b =>
@@ -118,6 +112,12 @@ namespace AllOrNothing.Repository.Migrations
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -165,14 +165,22 @@ namespace AllOrNothing.Repository.Migrations
 
                     b.HasIndex("QuestionSerieId");
 
-                    b.ToTable("Topic");
+                    b.ToTable("Topics");
                 });
 
-            modelBuilder.Entity("AllOrNothing.Data.Competence", b =>
+            modelBuilder.Entity("CompetenceTopic", b =>
                 {
-                    b.HasOne("AllOrNothing.Data.Topic", null)
-                        .WithMany("Competences")
-                        .HasForeignKey("TopicId");
+                    b.Property<int>("CompetencesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TopicsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CompetencesId", "TopicsId");
+
+                    b.HasIndex("TopicsId");
+
+                    b.ToTable("CompetenceTopic");
                 });
 
             modelBuilder.Entity("AllOrNothing.Data.Player", b =>
@@ -202,6 +210,21 @@ namespace AllOrNothing.Repository.Migrations
                     b.Navigation("Author");
                 });
 
+            modelBuilder.Entity("CompetenceTopic", b =>
+                {
+                    b.HasOne("AllOrNothing.Data.Competence", null)
+                        .WithMany()
+                        .HasForeignKey("CompetencesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AllOrNothing.Data.Topic", null)
+                        .WithMany()
+                        .HasForeignKey("TopicsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("AllOrNothing.Data.QuestionSerie", b =>
                 {
                     b.Navigation("Topics");
@@ -214,8 +237,6 @@ namespace AllOrNothing.Repository.Migrations
 
             modelBuilder.Entity("AllOrNothing.Data.Topic", b =>
                 {
-                    b.Navigation("Competences");
-
                     b.Navigation("Questions");
                 });
 #pragma warning restore 612, 618

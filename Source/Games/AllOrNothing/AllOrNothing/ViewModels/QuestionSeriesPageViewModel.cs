@@ -121,6 +121,20 @@ namespace AllOrNothing.ViewModels
 
         }
 
+        private ICommand _exitCommand;
+        public ICommand ExitCommand => _exitCommand ??= new RelayCommand(Exit);
+
+
+        public event EventHandler<NavigateToEventargs> NavigateTo;
+        private async void Exit()
+        {
+            if (await PopupManager.ShowDialog(PageXamlRoot, "Biztosan kilép?", "Ha kilép, minden nem mentett módosítás elveszik.", ContentDialogButton.Primary, "Igen", "Mégse") == ContentDialogResult.Primary)
+            {
+                NavigateTo?.Invoke(this, new NavigateToEventargs { PageName = "Főmenü", PageVM = typeof(AllOrNothingViewModel) });
+                IsMenuButtonVisible = false;
+            }
+        }
+
         //TODO mentés előtt ne lehessen másikat kiválasztani
 
         private async void Save()

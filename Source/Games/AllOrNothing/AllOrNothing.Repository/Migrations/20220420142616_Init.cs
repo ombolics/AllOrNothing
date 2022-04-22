@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AllOrNothing.Repository.Migrations
 {
@@ -8,11 +8,26 @@ namespace AllOrNothing.Repository.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Competences",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Competences", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "QuestionSeries",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -40,20 +55,14 @@ namespace AllOrNothing.Repository.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Institue = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Institute = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NickName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    QuestionSerieId = table.Column<int>(type: "int", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     TeamId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Players", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Players_QuestionSeries_QuestionSerieId",
-                        column: x => x.QuestionSerieId,
-                        principalTable: "QuestionSeries",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Players_Teams_TeamId",
                         column: x => x.TeamId,
@@ -63,7 +72,7 @@ namespace AllOrNothing.Repository.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Topic",
+                name: "Topics",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -75,15 +84,15 @@ namespace AllOrNothing.Repository.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Topic", x => x.Id);
+                    table.PrimaryKey("PK_Topics", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Topic_Players_AuthorId",
+                        name: "FK_Topics_Players_AuthorId",
                         column: x => x.AuthorId,
                         principalTable: "Players",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Topic_QuestionSeries_QuestionSerieId",
+                        name: "FK_Topics_QuestionSeries_QuestionSerieId",
                         column: x => x.QuestionSerieId,
                         principalTable: "QuestionSeries",
                         principalColumn: "Id",
@@ -91,34 +100,31 @@ namespace AllOrNothing.Repository.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Competences",
+                name: "CompetenceTopic",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    QuestionSerieId = table.Column<int>(type: "int", nullable: true),
-                    TopicId = table.Column<int>(type: "int", nullable: true)
+                    CompetencesId = table.Column<int>(type: "int", nullable: false),
+                    TopicsId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Competences", x => x.Id);
+                    table.PrimaryKey("PK_CompetenceTopic", x => new { x.CompetencesId, x.TopicsId });
                     table.ForeignKey(
-                        name: "FK_Competences_QuestionSeries_QuestionSerieId",
-                        column: x => x.QuestionSerieId,
-                        principalTable: "QuestionSeries",
+                        name: "FK_CompetenceTopic_Competences_CompetencesId",
+                        column: x => x.CompetencesId,
+                        principalTable: "Competences",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Competences_Topic_TopicId",
-                        column: x => x.TopicId,
-                        principalTable: "Topic",
+                        name: "FK_CompetenceTopic_Topics_TopicsId",
+                        column: x => x.TopicsId,
+                        principalTable: "Topics",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Question",
+                name: "Questions",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -127,35 +133,25 @@ namespace AllOrNothing.Repository.Migrations
                     Type = table.Column<int>(type: "int", nullable: false),
                     Resource = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     Text = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Answer = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Answer = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Value = table.Column<int>(type: "int", nullable: false),
                     TopicId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Question", x => x.Id);
+                    table.PrimaryKey("PK_Questions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Question_Topic_TopicId",
+                        name: "FK_Questions_Topics_TopicId",
                         column: x => x.TopicId,
-                        principalTable: "Topic",
+                        principalTable: "Topics",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Competences_QuestionSerieId",
-                table: "Competences",
-                column: "QuestionSerieId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Competences_TopicId",
-                table: "Competences",
-                column: "TopicId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Players_QuestionSerieId",
-                table: "Players",
-                column: "QuestionSerieId");
+                name: "IX_CompetenceTopic_TopicsId",
+                table: "CompetenceTopic",
+                column: "TopicsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Players_TeamId",
@@ -163,31 +159,34 @@ namespace AllOrNothing.Repository.Migrations
                 column: "TeamId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Question_TopicId",
-                table: "Question",
+                name: "IX_Questions_TopicId",
+                table: "Questions",
                 column: "TopicId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Topic_AuthorId",
-                table: "Topic",
+                name: "IX_Topics_AuthorId",
+                table: "Topics",
                 column: "AuthorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Topic_QuestionSerieId",
-                table: "Topic",
+                name: "IX_Topics_QuestionSerieId",
+                table: "Topics",
                 column: "QuestionSerieId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "CompetenceTopic");
+
+            migrationBuilder.DropTable(
+                name: "Questions");
+
+            migrationBuilder.DropTable(
                 name: "Competences");
 
             migrationBuilder.DropTable(
-                name: "Question");
-
-            migrationBuilder.DropTable(
-                name: "Topic");
+                name: "Topics");
 
             migrationBuilder.DropTable(
                 name: "Players");

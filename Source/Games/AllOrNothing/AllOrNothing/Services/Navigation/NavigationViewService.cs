@@ -95,6 +95,7 @@ namespace AllOrNothing.Services
             if (result == null && _pageService.IsPageKey(pageKey))
             {
                 NavHelper.SetNavigateTo(item, pageKey);
+                item.Visibility = Visibility.Visible;
                 _navigationView.MenuItems.Add(item);
             }
         }
