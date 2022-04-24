@@ -7,14 +7,42 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="QuestionSerieLoaderTest.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <None Remove="TestFiles\QuestionSerieLoader\NewFormat_Correct.txt" />
+    <None Remove="TestFiles\QuestionSerieLoader\NewFormat_NoAuthorGiven.txt" />
+    <None Remove="TestFiles\QuestionSerieLoader\NewFormat_OnlyAuthorNameIsGiven.txt" />
     <None Remove="TestFiles\QuestionSerieLoader\OldFormat_Correct.txt" />
+    <None Remove="TestFiles\QuestionSerieLoader\OldFormat_LessQuestion.txt" />
+    <None Remove="TestFiles\QuestionSerieLoader\OldFormat_LessTopic.txt" />
+    <None Remove="TestFiles\QuestionSerieLoader\OldFormat_MoreQuestion.txt" />
+    <None Remove="TestFiles\QuestionSerieLoader\OldFormat_MoreTopic.txt" />
+    <None Remove="TestFiles\QuestionSerieLoader\OldFormat_WrongDelimeter.txt" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="TestFiles\QuestionSerieLoader\NewFormat_OnlyAuthorNameIsGiven.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFiles\QuestionSerieLoader\NewFormat_NoAuthorGiven.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFiles\QuestionSerieLoader\NewFormat_Correct.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFiles\QuestionSerieLoader\OldFormat_WrongDelimeter.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFiles\QuestionSerieLoader\OldFormat_MoreQuestion.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFiles\QuestionSerieLoader\OldFormat_LessQuestion.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFiles\QuestionSerieLoader\OldFormat_MoreTopic.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFiles\QuestionSerieLoader\OldFormat_LessTopic.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="TestFiles\QuestionSerieLoader\OldFormat_Correct.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

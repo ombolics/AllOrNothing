@@ -17,24 +17,35 @@ namespace AllOrNothing.Services
         }
         private IUnitOfWork _unitOfWork;
         private List<Competence> _allCompetences;
+
+        //mostly for testing porpusses
+        public void SetupAllCompetences()
+        {
+            _allCompetences = _unitOfWork.Competences.GetAll().ToList();
+        }
+
         public List<QuestionSerie> LoadAllSeriesFromFolder(string folderPath, out string errorMessage)
         {
             errorMessage = "";
-            _allCompetences = _unitOfWork.Competences.GetAll().ToList();
+            SetupAllCompetences();
             var files = Directory.GetFiles(folderPath);
             var result = new List<QuestionSerie>();
 
             foreach (var file in files)
             {
-                string error = "";
-                var serie = LoadFromTxt(file, out error);
-                if (error != "")
+                QuestionSerie serie;
+                bool isSucessful = LoadFromTxt(file, out serie);
+                if (isSucessful)
                 {
+                    result.Add(serie);
+                }
+                else
+                {
+                    var error = $"{file.Split(@"\").Last()}\n";
                     errorMessage += errorMessage == "" ? "Probléma lépett fel a következő fájlok beolvasása során:\n" + error : error;
                 }
-                if (serie != null)
-                    result.Add(serie);
             }
+
             if (errorMessage != "")
             {
                 errorMessage += "Ellenőrizze hogy nem sérültek-e a fájlok!";
@@ -42,12 +53,12 @@ namespace AllOrNothing.Services
             return result;
         }
 
-        public QuestionSerie LoadOldFormatFromTxt(string name, string content)
+        public bool ParseOldFormat(string name, string content, out QuestionSerie value)
         {
-            QuestionSerie value = new QuestionSerie()
+            value = new QuestionSerie()
             {
                 CreatedOn = DateTime.Now,
-                Name = name,
+                Name = name.Trim(),
             };
             value.Topics = new List<Topic>();
             var topicArray = content.Split("\r\n\r\n");
@@ -56,7 +67,7 @@ namespace AllOrNothing.Services
                 var line = pack.Split("\r\n");
                 Topic topic = new Topic()
                 {
-                    Name = line[0],
+                    Name = line[0].Trim(),
                     Author = null,
                     Competences = null,
                     Description = null,
@@ -77,19 +88,29 @@ namespace AllOrNothing.Services
                 value.Topics.Add(topic);
             }
 
-            return value;
+            if(value.Topics.Count != 5 || !value.Topics.All(t => t.Questions.Count == 6))
+            {
+                value = null;
+                return false;
+            }
+            return true;
         }
 
-        public QuestionSerie LoadNewFormatFromTxt(string name, string content)
+        public bool ParseNewFormat(string name, string content, out QuestionSerie value)
         {
+            
             if (content == null || string.IsNullOrWhiteSpace(content))
-                return null;
+            {
+                value = null;
+                return false;
+            }
+                
 
             const string sectionDelimeter = "\r\r\n";
             const string rowDelimeter = "\r\n";
 
             var splitedContent = content.Split(sectionDelimeter);
-            QuestionSerie value = new QuestionSerie()
+            value = new QuestionSerie()
             {
                 CreatedOn = DateTime.Now,
                 Name = name,
@@ -102,8 +123,8 @@ namespace AllOrNothing.Services
             {
                 author = new Player
                 {
-                    Name = authorData[3],
-                    Institute = authorData[5],
+                    Name = authorData[3].Trim(),
+                    Institute = authorData[5].Trim(),
                 };
             }
 
@@ -122,10 +143,10 @@ namespace AllOrNothing.Services
 
                 Topic topic = new Topic()
                 {
-                    Name = line[0],
+                    Name = line[0].Trim(),
                     Author = author,
                     Competences = competences,
-                    Description = line[2],
+                    Description = line[2].Trim(),
                 };
 
                 int questionCounter = 1;
@@ -147,43 +168,40 @@ namespace AllOrNothing.Services
             }
 
             if (value.Topics.Count != 5 || !value.Topics.All(t => t.Questions.Count == 6))
-                throw new ArgumentException("Too few topics or questions", nameof(content));
+                return false;
 
-            return value;
+            return true;
 
         }
 
 
 
-        public QuestionSerie LoadFromTxt(string path, out string errorMessage)
+        public bool LoadFromTxt(string path, out QuestionSerie value)
         {
-            errorMessage = "";
-            QuestionSerie value = null;
+            bool hasError = false;
+            value = null;
             try
             {
                 var fullName = path.Split(@"\").Last();
                 if (!fullName.EndsWith(".txt"))
-                {
-                    throw new ArgumentException();
-                }
+                    return false;
+
                 var name = fullName.Replace(".txt", "");
                 var fileContent = File.ReadAllText(path, Encoding.UTF8);
                 if (fileContent.Split("\r\n")[0].ToLower() != "szerző:")
                 {
-                    value = LoadOldFormatFromTxt(name, fileContent);
+                    hasError = hasError || !ParseOldFormat(name, fileContent, out value);
                 }
                 else
                 {
-                    value = LoadNewFormatFromTxt(name, fileContent);
+                    hasError = hasError || !ParseNewFormat(name, fileContent, out value);
                 }
             }
-            catch (Exception e)
+            catch
             {
-                Debug.WriteLine(e.Message);
-                var splited = path.Split($@"\");
-                errorMessage += $"\t{splited[splited.Length - 1]}\n";
+                hasError = true;
             }
-            return value;
+            return !hasError;
         }
     }
 }
