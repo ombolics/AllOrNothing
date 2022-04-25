@@ -7,18 +7,87 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="TestFiles\QuestionSerieLoader\NewFormat_AuthorsNameNotMatchesPlayersNameWithTheGivenId.txt" />
+    <None Remove="TestFiles\QuestionSerieLoader\NewFormat_CompetenceRowIsMissing.txt" />
     <None Remove="TestFiles\QuestionSerieLoader\NewFormat_Correct.txt" />
+    <None Remove="TestFiles\QuestionSerieLoader\NewFormat_DataBaseNotContainsTheGivenCompetence.txt" />
+    <None Remove="TestFiles\QuestionSerieLoader\NewFormat_DescriptionIsMissing.txt" />
+    <None Remove="TestFiles\QuestionSerieLoader\NewFormat_LessQuestion.txt" />
+    <None Remove="TestFiles\QuestionSerieLoader\NewFormat_LessTopic.txt" />
+    <None Remove="TestFiles\QuestionSerieLoader\NewFormat_MoreQuestion.txt" />
+    <None Remove="TestFiles\QuestionSerieLoader\NewFormat_MoreTopic.txt" />
+    <None Remove="TestFiles\QuestionSerieLoader\NewFormat_NameIsGivenIdIsGivenNoPlayerWithId.txt" />
     <None Remove="TestFiles\QuestionSerieLoader\NewFormat_NoAuthorGiven.txt" />
+    <None Remove="TestFiles\QuestionSerieLoader\NewFormat_NoCompetenceIsGiven.txt" />
+    <None Remove="TestFiles\QuestionSerieLoader\NewFormat_NoPlayerWithOnlyIdGiven.txt" />
+    <None Remove="TestFiles\QuestionSerieLoader\NewFormat_NoTopicDescription.txt" />
+    <None Remove="TestFiles\QuestionSerieLoader\NewFormat_OnlyAuthorIdIsGiven.txt" />
     <None Remove="TestFiles\QuestionSerieLoader\NewFormat_OnlyAuthorNameIsGiven.txt" />
+    <None Remove="TestFiles\QuestionSerieLoader\NewFormat_OnlyInstituteIsGiven.txt" />
+    <None Remove="TestFiles\QuestionSerieLoader\NewFormat_SameCompetenceIsGivenTwiceAtATopic.txt" />
+    <None Remove="TestFiles\QuestionSerieLoader\NewFormat_WrongCompetenceDelimeter.txt" />
+    <None Remove="TestFiles\QuestionSerieLoader\NewFormat_WrongDelimeter.txt" />
     <None Remove="TestFiles\QuestionSerieLoader\OldFormat_Correct.txt" />
     <None Remove="TestFiles\QuestionSerieLoader\OldFormat_LessQuestion.txt" />
     <None Remove="TestFiles\QuestionSerieLoader\OldFormat_LessTopic.txt" />
     <None Remove="TestFiles\QuestionSerieLoader\OldFormat_MoreQuestion.txt" />
     <None Remove="TestFiles\QuestionSerieLoader\OldFormat_MoreTopic.txt" />
     <None Remove="TestFiles\QuestionSerieLoader\OldFormat_WrongDelimeter.txt" />
+    <None Remove="TestFiles\QuestionSerieLoader\WrongExtension.json" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="TestFiles\QuestionSerieLoader\NewFormat_CompetenceRowIsMissing.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFiles\QuestionSerieLoader\WrongExtension.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFiles\QuestionSerieLoader\NewFormat_WrongCompetenceDelimeter.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFiles\QuestionSerieLoader\NewFormat_DescriptionIsMissing.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFiles\QuestionSerieLoader\NewFormat_WrongDelimeter.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFiles\QuestionSerieLoader\NewFormat_LessQuestion.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFiles\QuestionSerieLoader\NewFormat_MoreQuestion.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFiles\QuestionSerieLoader\NewFormat_MoreTopic.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFiles\QuestionSerieLoader\NewFormat_SameCompetenceIsGivenTwiceAtATopic.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFiles\QuestionSerieLoader\NewFormat_NoCompetenceIsGiven.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFiles\QuestionSerieLoader\NewFormat_DataBaseNotContainsTheGivenCompetence.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFiles\QuestionSerieLoader\NewFormat_NoTopicDescription.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFiles\QuestionSerieLoader\NewFormat_AuthorsNameNotMatchesPlayersNameWithTheGivenId.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFiles\QuestionSerieLoader\NewFormat_NoPlayerWithOnlyIdGiven.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFiles\QuestionSerieLoader\NewFormat_NameIsGivenIdIsGivenNoPlayerWithId.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFiles\QuestionSerieLoader\NewFormat_OnlyInstituteIsGiven.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFiles\QuestionSerieLoader\NewFormat_OnlyAuthorIdIsGiven.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="TestFiles\QuestionSerieLoader\NewFormat_OnlyAuthorNameIsGiven.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -26,6 +95,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="TestFiles\QuestionSerieLoader\NewFormat_Correct.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFiles\QuestionSerieLoader\NewFormat_LessTopic.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="TestFiles\QuestionSerieLoader\OldFormat_WrongDelimeter.txt">

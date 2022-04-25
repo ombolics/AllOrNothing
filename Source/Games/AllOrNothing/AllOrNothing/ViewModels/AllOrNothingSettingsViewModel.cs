@@ -187,7 +187,7 @@ namespace AllOrNothing.ViewModels
             {
                 var dto = Mapper.Map<QuestionSerieDto>(serie);
                 dto.FromFile = true;
-                if (dto.Competences.Count == 0)
+                if (dto.Competences == null || dto.Competences.Count == 0)
                 {
                     dto.Topics[0].Competences = new ObservableCollection<CompetenceDto>{new CompetenceDto
                     {
@@ -195,7 +195,7 @@ namespace AllOrNothing.ViewModels
                     }};
                 }
 
-                if (dto.Authors.Count == 0)
+                if (dto.Authors == null || dto.Authors.Count == 0)
                 {
                     dto.Topics[0].Author = new PlayerDto
                     {
@@ -272,7 +272,7 @@ namespace AllOrNothing.ViewModels
 
         }
 
-        private ObservableCollection<TeamDto> GenerateTeams(ICollection<PlayerDto> players, int maxTeamSize)
+        public ObservableCollection<TeamDto> GenerateTeams(ICollection<PlayerDto> players, int maxTeamSize)
         {
             var value = new ObservableCollection<TeamDto>();
 
