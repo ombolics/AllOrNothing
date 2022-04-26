@@ -4,6 +4,7 @@ using AllOrNothing.Mapping;
 using AllOrNothing.Repository;
 using AllOrNothing.Services;
 using AllOrNothing.ViewModels;
+using AllOrNothingTest.Helpers;
 using AutoMapper;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using FluentAssertions;
@@ -17,14 +18,22 @@ using Xunit;
 
 namespace AllOrNothingTest
 {
-    public class AllOrNothingSettingsViewModelTest
+    public class AllOrNothingSettingsViewModelTest : IClassFixture<SettingsViewModelTestFixture>
     {
         AllOrNothingSettingsViewModel _viewModel;
-        public AllOrNothingSettingsViewModelTest()
+        private readonly SettingsViewModelTestFixture _fixture;
+        public AllOrNothingSettingsViewModelTest(SettingsViewModelTestFixture fixture)
         {
-            Ioc.Default.ConfigureServices(ConfigureServices());
+            _fixture = fixture;
+            if (_fixture.MyProperty == 0)
+            {
+                Ioc.Default.ConfigureServices(ConfigureServices());
+                _fixture.MyProperty = 1;
+            }
+           
         }
 
+        #region Helper Methods
         private System.IServiceProvider ConfigureServices()
         {
             // TODO WTS: Register your services, viewmodels and pages here
@@ -67,7 +76,9 @@ namespace AllOrNothingTest
             }
             return value;
         }
+        #endregion
 
+        #region TeamGeneration tests
         [Fact]
         public void TeamGenerationTest_MaxTeamSize()
         {
@@ -94,5 +105,119 @@ namespace AllOrNothingTest
             teams.Count.Should().Be(1);
             teams.All(t => t.Players.Count == 4).Should().BeTrue();
         }
-    } 
+
+        [Fact]
+        public void TeamGenerationTest_EachPlayerInOneTeam()
+        {
+            _viewModel = new AllOrNothingSettingsViewModel(
+                Ioc.Default.GetService<INavigationViewService>(),
+                Ioc.Default.GetService<IMapper>(),
+                Ioc.Default.GetService<IUnitOfWork>());
+
+            var players = GetPlayerCollection(10);
+            var teams = _viewModel.GenerateTeams(players, 2);
+            foreach (var player in players)
+            {
+                teams.Count(t => t.Players.Any(p => p.Id == player.Id)).Should().Be(1);
+            }
+
+        }
+        #endregion
+
+        #region SheduleGeneration tests
+        [Fact]
+        public void EachTeamAppearsTheRequieredTime()
+        {
+            _viewModel = new AllOrNothingSettingsViewModel(
+                Ioc.Default.GetService<INavigationViewService>(),
+                Ioc.Default.GetService<IMapper>(),
+                Ioc.Default.GetService<IUnitOfWork>());
+
+            var teams = _viewModel.GenerateTeams(GetPlayerCollection(2), 1);
+            var shedule = _viewModel.GenerateSchedule(teams, 3);
+
+            foreach (var team in teams)
+            {
+                shedule.Count(s => s.Teams.Contains(team)).Should().Be(3);
+            }
+
+            teams = _viewModel.GenerateTeams(GetPlayerCollection(10), 1);
+            shedule = _viewModel.GenerateSchedule(teams, 3);
+
+            foreach (var team in teams)
+            {
+                shedule.Count(s => s.Teams.Contains(team)).Should().Be(3);
+            }
+        }
+
+        [Fact]
+        public void EachSheduleContainsDifferentTeams()
+        {
+            _viewModel = new AllOrNothingSettingsViewModel(
+                Ioc.Default.GetService<INavigationViewService>(),
+                Ioc.Default.GetService<IMapper>(),
+                Ioc.Default.GetService<IUnitOfWork>());
+
+            // (round count * team count ) mod 4
+
+            // team count is low
+            var teams = _viewModel.GenerateTeams(GetPlayerCollection(2), 1);
+            var shedules = _viewModel.GenerateSchedule(teams, 2);
+            shedules.All(s => s.Teams.Distinct().Count() == s.Teams.Count).Should().BeTrue();
+
+            teams = _viewModel.GenerateTeams(GetPlayerCollection(3), 1);
+            shedules = _viewModel.GenerateSchedule(teams, 4);
+            shedules.All(s => s.Teams.Distinct().Count() == s.Teams.Count).Should().BeTrue();
+
+            teams = _viewModel.GenerateTeams(GetPlayerCollection(5), 1);
+            shedules = _viewModel.GenerateSchedule(teams, 1);
+            shedules.All(s => s.Teams.Distinct().Count() == s.Teams.Count).Should().BeTrue();
+
+            // 0
+            teams = _viewModel.GenerateTeams(GetPlayerCollection(10), 1);
+            shedules = _viewModel.GenerateSchedule(teams, 2);
+            shedules.All(s => s.Teams.Distinct().Count() == s.Teams.Count).Should().BeTrue();
+
+            //1
+            teams = _viewModel.GenerateTeams(GetPlayerCollection(9), 1);
+            shedules = _viewModel.GenerateSchedule(teams, 5);
+            shedules.All(s => s.Teams.Distinct().Count() == s.Teams.Count).Should().BeTrue();
+
+            //2
+            teams = _viewModel.GenerateTeams(GetPlayerCollection(11), 1);
+            shedules = _viewModel.GenerateSchedule(teams, 6);
+            shedules.All(s => s.Teams.Distinct().Count() == s.Teams.Count).Should().BeTrue();
+
+            //3
+            teams = _viewModel.GenerateTeams(GetPlayerCollection(13), 1);
+            shedules = _viewModel.GenerateSchedule(teams, 3);
+            shedules.All(s => s.Teams.Distinct().Count() == s.Teams.Count).Should().BeTrue();
+        }
+
+        [Fact]
+        public void EachSheduleContainsTheRequieredAmountOfTeams()
+        {
+            _viewModel = new AllOrNothingSettingsViewModel(
+                Ioc.Default.GetService<INavigationViewService>(),
+                Ioc.Default.GetService<IMapper>(),
+                Ioc.Default.GetService<IUnitOfWork>());
+
+            var teams = _viewModel.GenerateTeams(GetPlayerCollection(2), 1);
+            var shedules = _viewModel.GenerateSchedule(teams, 3);
+
+            shedules.All(s => s.Teams.Count <= 4).Should().BeTrue();
+        }
+
+        [Fact]
+        public void EmptyTeamList()
+        {
+            _viewModel = new AllOrNothingSettingsViewModel(
+                Ioc.Default.GetService<INavigationViewService>(),
+                Ioc.Default.GetService<IMapper>(),
+                Ioc.Default.GetService<IUnitOfWork>());
+
+            
+        }
+        #endregion
+    }
 }

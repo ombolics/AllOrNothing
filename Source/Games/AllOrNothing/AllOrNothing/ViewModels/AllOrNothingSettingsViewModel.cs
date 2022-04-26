@@ -363,14 +363,14 @@ namespace AllOrNothing.ViewModels
             }
         }
 
-        public void GenerateSchedule(int numberOfRounds)
+        public List<Schedule> GenerateSchedule(IList<TeamDto> teams, int numberOfRounds)
         {
-            var Schedules = new List<Schedule>();
+            var schedules = new List<Schedule>();
 
-            var matrix = new int[Teams.Count, Teams.Count];
+            var matrix = new int[teams.Count, teams.Count];
             var occurrences = new Dictionary<int, int>();
 
-            for (int i = 0; i < Teams.Count; i++)
+            for (int i = 0; i < teams.Count; i++)
             {
                 occurrences.Add(i, 0);
             }
@@ -423,13 +423,13 @@ namespace AllOrNothing.ViewModels
                 var sch = new Schedule();
                 foreach (var item in round)
                 {
-                    sch.Teams.Add(Teams[item]);
+                    sch.Teams.Add(teams[item]);
                 }
 
-                Schedules.Add(sch);
+                schedules.Add(sch);
             }
             PrintMatrix(matrix);
-            GameModel.GameSettings.Schedules = Schedules;
+            return schedules;
         }
 
         public IList<StandingDto> CreateStandingFromGameModel(GameModel model)
@@ -634,7 +634,7 @@ namespace AllOrNothing.ViewModels
             }
             else
             {
-                GenerateSchedule(GameModel.GameSettings.NumberOfRounds);
+                GameModel.GameSettings.Schedules = GenerateSchedule(Teams, GameModel.GameSettings.NumberOfRounds);
                 GameModel.GameStandings = new ObservableCollection<StandingDto>(CreateStandingFromGameModel(GameModel));
 
                 Rounds = new ObservableCollection<RoundModel>(RoundModel.FromGameModel(GameModel));
