@@ -55,7 +55,7 @@
 
 
         <!--Game Settings--> 
-        <Grid Visibility="{x:Bind ViewModel.GameSettingsVisible, Mode=OneWay}">
+        <Grid Visibility="{x:Bind ViewModel.IsGameSettingsVisible, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="587*"/>
                 <RowDefinition Height="218*"/>
@@ -400,8 +400,8 @@
             </Grid>
         </Grid>
 
-        <!--Round Settings--> 
-        <Grid Visibility="{x:Bind ViewModel.IsRoundSettingsVisible, Mode=OneWay}">
+        <!--Round Settings-->
+        <Grid Visibility="{x:Bind ViewModel.IsGameSettingsVisible, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=negate}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="1.618*"/>

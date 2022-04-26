@@ -59,8 +59,8 @@ namespace AllOrNothing.ViewModels
         {
             if(await PopupManager.ShowDialog(PageXamlRoot, "Biztosan kilép?", "Ha kilép, minden nem mentett módosítás elveszik.", ContentDialogButton.Primary, "Igen", "Mégse") == ContentDialogResult.Primary)
             {
-                NavigateTo?.Invoke(this, new NavigateToEventargs { PageName = "Főmenü", PageVM = typeof(AllOrNothingViewModel) });
                 IsMenuButtonVisible = false;
+                NavigateTo?.Invoke(this, new NavigateToEventargs { PageName = "Főmenü", PageVM = typeof(AllOrNothingViewModel) });               
             }
         }
 

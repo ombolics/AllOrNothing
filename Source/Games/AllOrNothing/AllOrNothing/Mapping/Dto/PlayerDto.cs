@@ -64,7 +64,7 @@ namespace AllOrNothing.Mapping
 
         public override string ToString()
         {
-            return Name;
+            return $"{Name} ({Id})";
         }
 
         internal bool HasTheSameValue(PlayerDto dto)

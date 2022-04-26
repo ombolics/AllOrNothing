@@ -62,6 +62,7 @@ namespace AllOrNothing.ViewModels
             {
                 return;
             }
+            Ioc.Default.GetService<ScoreBoardPageViewModel>().IsMenuButtonVisible = false;
             vm.ResetSettings();
             NavigateTo?.Invoke(this, new NavigateToEventargs { PageVM = typeof(AllOrNothingSettingsViewModel), PageName = "Beállítások" });
         }

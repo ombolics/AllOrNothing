@@ -73,7 +73,10 @@ namespace AllOrNothing
             // Core Services
             //services.AddTransient<IAllOrNothingDbContext, AllOrNothingDbContext>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
-            services.AddDbContext<AllOrNothingDbContext>(optionsBuilder => optionsBuilder.UseSqlServer(@"Server=DESKTOP-B5C457P\SQLEXPRESS;Integrated Security=true;Database=AllOrNothingDb;"));
+            //services.AddDbContext<AllOrNothingDbContext>(optionsBuilder => optionsBuilder.UseSqlServer(@"Server=DESKTOP-B5C457P\SQLEXPRESS;Integrated Security=true;Database=AllOrNothingDb;"));
+            var dir = System.AppDomain.CurrentDomain.BaseDirectory;
+            //var dirs = Directory.GetFiles($@"{dir}..\..\..\..\..\..\..\AllOrNothing.Repository\AllOrNothingDb.db");
+            services.AddDbContext<AllOrNothingDbContext>(optionsBuilder => optionsBuilder.UseSqlite(@$"Data source={dir}..\..\..\..\..\..\..\AllOrNothing.Repository\AllOrNothingDb.db"));
             services.AddTransient<QuestionSerieLoader>();
             //Mapping
 
@@ -108,8 +111,8 @@ namespace AllOrNothing
             services.AddTransient<PlayerStatViewModel>();
             services.AddTransient<PlayerStatPage>();
 
-            services.AddTransient<QuestionSeriesPageViewModel>();
-            services.AddTransient<QuestionSeriesPage>();
+            services.AddSingleton<QuestionSeriesPageViewModel>();
+            services.AddSingleton<QuestionSeriesPage>();
 
             services.AddSingleton<ScoreBoardPageViewModel>();
             services.AddSingleton<ScoreBoardPage>();

@@ -47,7 +47,7 @@ namespace AllOrNothingTest
             // Core Services
             //services.AddTransient<IAllOrNothingDbContext, AllOrNothingDbContext>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
-            services.AddDbContext<AllOrNothingDbContext>(optionsBuilder => optionsBuilder.UseSqlServer(@"Server=DESKTOP-B5C457P\SQLEXPRESS;Integrated Security=true;Database=AllOrNothingDb;"));
+            //services.AddDbContext<AllOrNothingDbContext>(optionsBuilder => optionsBuilder.UseSqlServer(@"Server=DESKTOP-B5C457P\SQLEXPRESS;Integrated Security=true;Database=AllOrNothingDb;"));
 
             //Mapping
 

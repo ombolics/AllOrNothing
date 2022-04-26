@@ -42,12 +42,10 @@ namespace AllOrNothing.ViewModels
             IsMenuButtonVisible = false;
             ReachablePages = null;
 
-            _gameSettingsVisible = Visibility.Visible;
-            _roundSettingsVisible = Visibility.Collapsed;
+            IsGameSettingsVisible = true;
             _playerTest = new ObservableCollection<Player>();
 
             _gameModel = new GameModel(new GameSettingsModel(), new ObservableCollection<StandingDto>());
-            _isRoundSettingsVisible = false;
             _rounds = null;
             _selectedRound = null;
 
@@ -108,11 +106,11 @@ namespace AllOrNothing.ViewModels
         {
             if (await PopupManager.ShowDialog(PageXamlRoot, "Kilépés?", "Biztosan kilép?", ContentDialogButton.Primary, "Igen", "Mégse") == ContentDialogResult.Primary)
             {
+                //todo átgondolni
                 ResetSettings();
-                HidePage?.Invoke(this, "Beállítások");
-                NavigateTo(this, new NavigateToEventargs { PageName = "Menu", PageVM = typeof(AllOrNothingViewModel) });
+                IsMenuButtonVisible = false;
+                NavigateTo(this, new NavigateToEventargs { PageName = "Főmenü", PageVM = typeof(AllOrNothingViewModel) });
             }
-
         }
 
         public void TimePicker_SelectedTimeChanged(TimePicker sender, TimePickerSelectedValueChangedEventArgs e)
@@ -244,13 +242,7 @@ namespace AllOrNothing.ViewModels
                 //SelectedRound = _rounds[0];
             }
         }
-
-        private bool _isRoundSettingsVisible;
-        public bool IsRoundSettingsVisible
-        {
-            get => _isRoundSettingsVisible;
-            set => SetProperty(ref _isRoundSettingsVisible, value);
-        }
+      
         private ObservableCollection<RoundModel> _rounds;
 
 
@@ -479,7 +471,7 @@ namespace AllOrNothing.ViewModels
 
         private void NavigateToNewPlayerPage()
         {
-            NavigateTo?.Invoke(this, new NavigateToEventargs { PageName = "Új játékos", PageVM = typeof(PlayerAddingViewModel) });
+            NavigateTo?.Invoke(this, new NavigateToEventargs { PageName = "Játékosok", PageVM = typeof(PlayerAddingViewModel) });
         }
 
 
@@ -535,17 +527,11 @@ namespace AllOrNothing.ViewModels
 
                     notfoundDisplay.Children.Add(new TextBlock
                     {
-                        Text = "Nincs ilyen játkos!",
+                        Text = $"Kattintson a(z) {sender.Text} nevű játékos hozzáadásához!",
+                        VerticalAlignment = VerticalAlignment.Center,
+                        TextWrapping = TextWrapping.WrapWholeWords,
                     });
-
-                    notfoundDisplay.Children.Add(new Button
-                    {
-                        Content = new TextBlock
-                        {
-                            Text = "Új játékos",
-                        },
-                        Command = NavigateToNewPlayerPageCommand,
-                    });
+                    
                     suitableItems.Add(notfoundDisplay);
                 }
                 sender.ItemsSource = suitableItems;
@@ -574,7 +560,7 @@ namespace AllOrNothing.ViewModels
 
             if (args.SelectedItem is StackPanel notFoundDisplay)
             {
-                NavigateTo?.Invoke(this, new NavigateToEventargs { PageName = "Új játékos", PageVM = typeof(PlayerAddingViewModel) });
+                NavigateTo?.Invoke(this, new NavigateToEventargs { PageName = "Játékosok", PageVM = typeof(PlayerAddingViewModel) });
             }
 
         }
@@ -589,19 +575,12 @@ namespace AllOrNothing.ViewModels
             set { SetProperty(ref _playerTest, value); }
         }
 
-        private Visibility _gameSettingsVisible;
-        public Visibility GameSettingsVisible
+        private bool _isGameSettingsVisible;
+        public bool IsGameSettingsVisible
         {
-            get => _gameSettingsVisible;
-            set => SetProperty(ref _gameSettingsVisible, value);
-        }
-
-        private Visibility _roundSettingsVisible;
-        public Visibility RoundSettingsVisible
-        {
-            get => _roundSettingsVisible;
-            set => SetProperty(ref _roundSettingsVisible, value);
-        }
+            get => _isGameSettingsVisible;
+            set => SetProperty(ref _isGameSettingsVisible, value);
+        }       
 
         private ICommand _showRoundSettingsCommand;
 
@@ -643,8 +622,7 @@ namespace AllOrNothing.ViewModels
                 var vm = Ioc.Default.GetService<ScoreBoardPageViewModel>();
                 vm.InitVm(GameModel.GameStandings);
 
-                GameSettingsVisible = Visibility.Collapsed;
-                IsRoundSettingsVisible = true;
+                IsGameSettingsVisible = false;
             }
         }
 
@@ -752,6 +730,7 @@ namespace AllOrNothing.ViewModels
         public override void OnNavigatedTo()
         {
             base.OnNavigatedTo();
+            _avaiblePlayers.UnionWith(Mapper.Map<IEnumerable<PlayerDto>>(_unitOfWork.Players.GetAllAvaible()));
 
             if (FinalRound == null && Rounds != null && Rounds.All(r => r.RoundEnded))
             {

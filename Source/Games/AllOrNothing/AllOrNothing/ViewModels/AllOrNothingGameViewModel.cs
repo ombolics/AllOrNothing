@@ -120,14 +120,22 @@ namespace AllOrNothing.ViewModels
         public ICommand GameOverCommand => _gameOverCommand ??= new RelayCommand(On_RoundOver);
 
         public event EventHandler<RoundModel> RoundOver;
-        private void On_RoundOver()
+        private async void On_RoundOver()
         {
-            SelectedRound.RoundEnded = true;
-            //TODO create game history
-            _gameTimer.Stop();
-            IsMenuButtonVisible = false;
-            HidePage?.Invoke(this, "Játék");
-            RoundOver?.Invoke(this, SelectedRound);
+            string popUpContent = "Biztosan véget vet a játéknak?";
+            if (GamePhase == GamePhase.TEMATICAL && SelectedRound.RoundSettings.IsLightningAllowed)
+            {
+                popUpContent += "\nA villámkérdések még visszavannak!";
+            }
+            
+            if(await PopupManager.ShowDialog(PageXamlRoot, "Kör vége?", popUpContent,ContentDialogButton.Primary,"Igen","Mégse") == ContentDialogResult.Primary)
+            {
+                SelectedRound.RoundEnded = true;
+                //TODO create game history
+                _gameTimer.Stop();
+                IsMenuButtonVisible = false;
+                RoundOver?.Invoke(this, SelectedRound);
+            }
         }
 
         private ICommand _skipAnswerCommand;
