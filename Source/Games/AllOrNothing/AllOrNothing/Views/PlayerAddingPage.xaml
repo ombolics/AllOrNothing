@@ -114,20 +114,24 @@
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="6*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="7*"/>
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Grid.Row="0" Grid.Column="0" Text="Azonosító"
-                           Style="{ThemeResource TitleStyle}"/>
+                           Style="{ThemeResource TitleStyle}"
+                                Margin="10,10,10,10"/>
                     <TextBlock Grid.Row="0" Grid.Column="1" Text="{x:Bind ViewModel.EditingPlayer.Id, Mode=OneWay}" 
                            Style="{ThemeResource TitleStyle}"/>
 
 
                     <!--Name-->
-                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Név:" 
-                               Style="{ThemeResource TitleStyle}"/>
-                    <TextBox Grid.Row="1" Grid.Column="1" Text="{x:Bind ViewModel.EditingPlayer.Name, Mode=OneWay}" FontSize="{ThemeResource MediumFontSize}"
+                    <TextBlock Grid.Row="1" 
+                               Grid.Column="0" Text="Név:" 
+                               Style="{ThemeResource TitleStyle}"
+                               Margin="10,10,10,10"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="{x:Bind ViewModel.EditingPlayer.Name, Mode=TwoWay}" 
+                             FontSize="{ThemeResource MediumFontSize}"
                      x:Name="nameTextBox"
                      TextChanged="{x:Bind ViewModel.TextBoxChanged}"
                      IsEnabled="{x:Bind ViewModel.FormEnabled, Mode=OneWay}"
@@ -135,8 +139,9 @@
                      Style="{ThemeResource CommonTextBoxStyle}"/>
 
                     <!--NickName-->
-                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Becenév:" Style="{ThemeResource TitleStyle}"/>
-                    <TextBox Grid.Row="2" Grid.Column="1" Text="{x:Bind ViewModel.EditingPlayer.NickName, Mode=OneWay}" FontSize="{ThemeResource MediumFontSize}"
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Becenév:" Style="{ThemeResource TitleStyle}"  Margin="10,10,10,10"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Text="{x:Bind ViewModel.EditingPlayer.NickName, Mode=TwoWay}" 
+                             FontSize="{ThemeResource MediumFontSize}"
                              x:Name="nickNameTextBox"
                              TextChanged="{x:Bind ViewModel.TextBoxChanged}"
                              IsEnabled="{x:Bind ViewModel.FormEnabled, Mode=OneWay}"
@@ -144,8 +149,9 @@
                      Style="{ThemeResource CommonTextBoxStyle}"/>
 
                     <!--Institute-->
-                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Intézmény:" Style="{ThemeResource TitleStyle}"/>
-                    <TextBox Grid.Row="3" Grid.Column="1" Text="{x:Bind ViewModel.EditingPlayer.Institute, Mode=OneWay}" FontSize="{ThemeResource MediumFontSize}"
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Intézmény:" Style="{ThemeResource TitleStyle}"  Margin="10,10,10,10"/>
+                    <TextBox Grid.Row="3" Grid.Column="1" Text="{x:Bind ViewModel.EditingPlayer.Institute, Mode=TwoWay}" 
+                             FontSize="{ThemeResource MediumFontSize}"
                              x:Name="instituteTextBox"
                              TextChanged="{x:Bind ViewModel.TextBoxChanged}"
                              IsEnabled="{x:Bind ViewModel.FormEnabled, Mode=OneWay}"
@@ -160,8 +166,8 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Button Grid.Column="0"
-                            Visibility="{x:Bind ViewModel.IsPlayerUnderEdit, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" Content="Mentés"
+                    <Button Grid.Column="0" 
+                            Content="Mentés"
                             Command="{x:Bind ViewModel.SaveCommand}"
                             HorizontalAlignment="Stretch"
                             FontSize="{ThemeResource LargeFontSize}"

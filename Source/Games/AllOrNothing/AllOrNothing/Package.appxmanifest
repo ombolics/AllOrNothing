@@ -9,7 +9,7 @@
   <Identity
     Name="f4391cfb-2c5c-4457-b068-ab574b611f78"
     Publisher="CN=Csaba Ömböli"
-    Version="1.0.4.0" />
+    Version="1.0.8.0" />
 
   <Properties>
     <DisplayName>AllOrNothing</DisplayName>

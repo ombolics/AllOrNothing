@@ -1,7 +1,10 @@
 ﻿using AllOrNothing.Activation;
 using AllOrNothing.Contracts.Services;
+using AllOrNothing.Repository;
 using AllOrNothing.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.Collections.Generic;
@@ -67,6 +70,13 @@ namespace AllOrNothing.Services
 
         private async Task InitializeAsync()
         {
+            //create database if not exists
+            using (var serviceScope = Ioc.Default.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetRequiredService<AllOrNothingDbContext>();
+                context.Database.Migrate();
+            }
+
             await _themeSelectorService.InitializeAsync().ConfigureAwait(false);
             await Task.CompletedTask;
         }

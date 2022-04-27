@@ -168,13 +168,14 @@ namespace AllOrNothing.ViewModels
             set => SetProperty(ref _pickingTeam, value);
         }
         private int _pickingIndex;
+
         private void SubmitAnser()
         {
             if (CurrentQuestion == null)
                 return;
 
             int gainedScore;
-            if (AnswerText.ToLower() == CurrentQuestion.Answer.ToLower())
+            if (AnswerText?.ToLower() == CurrentQuestion.Answer?.ToLower())
             {
                 PopupManager.ShowDialog(PageXamlRoot, "Helyes válasz!", $"{CurrentQuestion.Answer}", ContentDialogButton.Close, "", "Ezaz!");
                 gainedScore = CurrentQuestion.Value;

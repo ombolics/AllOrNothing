@@ -21,8 +21,8 @@
     Loaded="Page_Loaded">
     
     <Page.Resources>
-        <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
-        <conv:RoundStateToColorConverter x:Key="RoundStateToColorConverter"/>
+        <!--<conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <conv:RoundStateToColorConverter x:Key="RoundStateToColorConverter"/>-->
 
         <!--#region CheckBox resources-->
         <SolidColorBrush x:Key="CheckBoxForegroundUnchecked" Color="{ThemeResource MainColor1}"/>
@@ -183,6 +183,7 @@
                                                         FontWeight="Bold" 
                                                         Foreground="{ThemeResource MainColor1 }"
                                                         Background="Transparent"
+                                                     IsSpellCheckEnabled="False"
                                                         BorderThickness="0"/>
 
                                             <!--<Line HorizontalAlignment="Stretch" Margin="50, 10, 50, 10" Stroke="Black" StrokeThickness="4" />-->
@@ -272,6 +273,7 @@
 
                         <TextBox Grid.Column="1" PlaceholderText="Pl.: Kvízklub 2022.04.10."
                                  Text="{x:Bind ViewModel.GameModel.GameSettings.OccasionName, Mode=TwoWay}"
+                                 IsSpellCheckEnabled="False"
                                  Style="{ThemeResource CommonTextBoxStyle}"/>
                     </Grid>
                     
@@ -284,6 +286,7 @@
                         <cc:ValidatedTextBox ValidatedText="{x:Bind ViewModel.GameModel.GameSettings.NumberOfRounds, Mode=TwoWay}"
                                              ValidateNumbers="True"
                                              Style="{ThemeResource CommonTextBoxStyle}"
+                                             IsSpellCheckEnabled="False"
                                              TextAlignment="Center"/>
                     </StackPanel>
 
@@ -324,6 +327,7 @@
                                              TextAlignment="Center"
                                              ValidatedText="{x:Bind ViewModel.GameModel.GameSettings.MaxTeamSize, Mode=TwoWay}" 
                                              ValidateNumbers="True"
+                                             IsSpellCheckEnabled="False"
                                              Style="{ThemeResource MainTextBoxStyle}"/>
                     </Grid>
 
@@ -364,7 +368,7 @@
                         <CheckBox Content="Tematikus" Margin="20,10,10,0" 
                                         x:Name="tematicalCheckBox"
                                         IsChecked="{x:Bind ViewModel.GameModel.GameSettings.IsTematicalAllowed, Mode=TwoWay}"
-                                        Checked="{x:Bind ViewModel.TimeSelectionCheckBox_Checked, Mode=OneWay}"/>
+                                        Checked="{x:Bind ViewModel.TematicalCheckBoxChecked, Mode=OneWay}"/>
 
                         <TimePicker ClockIdentifier="24HourClock" Time="{x:Bind ViewModel.GameModel.GameSettings.GeneralTematicalTime, Mode=TwoWay}" 
                                         x:Name="tematicalTimePicker"
@@ -379,7 +383,7 @@
                         <CheckBox Content="Villám" Margin="20,5,10,0" 
                                         x:Name="lightningCheckBox"
                                         IsChecked="{x:Bind ViewModel.GameModel.GameSettings.IsLightningAllowed, Mode=TwoWay}"
-                                        Checked="{x:Bind ViewModel.TimeSelectionCheckBox_Checked, Mode=OneWay}"/>
+                                        Checked="{x:Bind ViewModel.LightningCheckBoxChecked, Mode=OneWay}"/>
 
                         <TimePicker ClockIdentifier="24HourClock" Time="{x:Bind ViewModel.GameModel.GameSettings.GeneralLightningTime, Mode=TwoWay}" 
                                         x:Name="lightningTimePicker"
@@ -388,8 +392,9 @@
                                         SelectedTimeChanged="{x:Bind ViewModel.TimePicker_SelectedTimeChanged, Mode=OneWay}"/>
                     </StackPanel>
 
-                    <CheckBox Grid.Row="3" Content="Gombok nélüli játék" Margin="20,0,0,0" 
-                                    IsChecked="{x:Bind ViewModel.GameModel.GameSettings.IsGameWithoutButtonsEnabled, Mode=TwoWay}"/>
+                    <CheckBox Grid.Row="3" Content="Gombok nélüli játék" Margin="20,0,0,0"
+                              IsChecked="{x:Bind ViewModel.GameModel.GameSettings.IsGameWithoutButtonsEnabled, Mode=TwoWay}"
+                              Checked="{x:Bind ViewModel.GmaWithoutButtonsChecked}"/>
                 </Grid>
                 
                 <Button Grid.Column="4"
@@ -558,8 +563,9 @@
                             <CheckBox Content="Tematikus" Margin="20,0,10,5"                                       
                                         x:Name="roundTematicalCheckbox"
                                       BorderThickness="0"
+                                      IsEnabled="{x:Bind ViewModel.GameModel.GameSettings.IsGameWithoutButtonsEnabled,Mode=OneWay, Converter={StaticResource NegateConverter}}"
                                         IsChecked="{x:Bind ViewModel.SelectedRound.RoundSettings.IsTematicalAllowed, Mode=TwoWay}"
-                                        Checked="{x:Bind ViewModel.TimeSelectionCheckBox_Checked, Mode=OneWay}">
+                                        Checked="{x:Bind ViewModel.TematicalCheckBoxChecked, Mode=OneWay}">
                                 <CheckBox.Resources>
                                     <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillUnchecked" Color="{ThemeResource MainColor2}"/>
                                 </CheckBox.Resources>
@@ -576,8 +582,9 @@
                             <CheckBox Content="Villám" Margin="20,5,10,5"
                                       
                                         x:Name="roundLightningCheckBox"
+                                        IsEnabled="{x:Bind ViewModel.GameModel.GameSettings.IsGameWithoutButtonsEnabled, Mode=OneWay, Converter={StaticResource NegateConverter}}"
                                         IsChecked="{x:Bind ViewModel.SelectedRound.RoundSettings.IsLightningAllowed, Mode=TwoWay}"
-                                        Checked="{x:Bind ViewModel.TimeSelectionCheckBox_Checked, Mode=OneWay}">
+                                        Checked="{x:Bind ViewModel.LightningCheckBoxChecked, Mode=OneWay}">
                                 <CheckBox.Resources>
                                     <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillUnchecked" Color="{ThemeResource MainColor2}"/>
                                 </CheckBox.Resources>

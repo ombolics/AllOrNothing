@@ -22,6 +22,8 @@
                 <ResourceDictionary Source="/Styles/AutoSuggestBoxStyle.xaml" />
                 <ResourceDictionary Source="/Styles/TimePickerStyle.xaml" />
                 <!--#endregion-->
+
+                <ResourceDictionary Source="/Converters/Converters.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
 

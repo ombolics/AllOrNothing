@@ -95,6 +95,14 @@ namespace AllOrNothing.ViewModels
                 EditingPlayer.Id = 0;
                 _unitOfWork.Players.Add(_mapper.Map<Player>(EditingPlayer));
             }
+            else
+            {
+                var playerData = _unitOfWork.Players.Get(EditingPlayer.Id);
+                playerData.Name = EditingPlayer.Name;
+                playerData.NickName = EditingPlayer.NickName;
+                playerData.Institute = EditingPlayer.Institute;
+            }
+
 
             var dialogTitle = "Sikertelen mentés";
             var dialogContent = "Sikertelen mentés!";

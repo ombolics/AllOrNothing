@@ -15,13 +15,11 @@ namespace AllOrNothing.Repository
         public AllOrNothingDbContext()
             : base()
         {
-
         }
 
         public AllOrNothingDbContext(DbContextOptions<AllOrNothingDbContext> options)
             : base(options)
         {
-
         }
         //*************************************************************
 

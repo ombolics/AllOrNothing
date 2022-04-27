@@ -136,7 +136,36 @@ namespace AllOrNothing.ViewModels
             }
         }
 
-        public void TimeSelectionCheckBox_Checked(object sender, RoutedEventArgs e)
+        public void GmaWithoutButtonsChecked(object sender, RoutedEventArgs e)
+        {
+            GameModel.GameSettings.IsLightningAllowed = false;
+        }
+
+        public void LightningCheckBoxChecked(object sender, RoutedEventArgs e)
+        {
+            var checkBox = sender as CheckBox;
+            if (!checkBox.IsChecked.GetValueOrDefault(false))
+                return;
+
+            if(checkBox.Name == "lightningCheckBox")
+            {
+                GameModel.GameSettings.IsGameWithoutButtonsEnabled = false;
+                if (GameModel.GameSettings.GeneralLightningTime.TotalSeconds == 0)
+                {
+                    GameModel.GameSettings.GeneralLightningTime = TimeSpan.FromHours(1);
+                }
+                return;
+            }
+
+            if (checkBox.Name == "roundLightningCheckBox")
+            {
+                SelectedRound.RoundSettings.LightningTime = TimeSpan.FromHours(1);
+                return;
+            }
+            
+        }
+
+        public void TematicalCheckBoxChecked(object sender, RoutedEventArgs e)
         {
             var checkBox = sender as CheckBox;
             if (!checkBox.IsChecked.GetValueOrDefault(false))
@@ -146,19 +175,11 @@ namespace AllOrNothing.ViewModels
             if (checkBox.Name == "tematicalCheckBox" && GameModel.GameSettings.GeneralTematicalTime.TotalSeconds == 0)
             {
                 GameModel.GameSettings.GeneralTematicalTime = TimeSpan.FromHours(1);
-            }
-            else if (checkBox.Name == "lightningCheckBox" && GameModel.GameSettings.GeneralLightningTime.TotalSeconds == 0)
-            {
-                GameModel.GameSettings.GeneralLightningTime = TimeSpan.FromHours(1);
-            }
+            }         
             else if (checkBox.Name == "roundTematicalCheckBox" && SelectedRound.RoundSettings.TematicalTime.TotalSeconds == 0)
             {
                 SelectedRound.RoundSettings.TematicalTime = TimeSpan.FromHours(1);
-            }
-            else if (checkBox.Name == "roundLightningCheckBox" && SelectedRound.RoundSettings.LightningTime.TotalSeconds == 0)
-            {
-                SelectedRound.RoundSettings.LightningTime = TimeSpan.FromHours(1);
-            }
+            }          
         }
 
         private ICommand _generateTeamsCommand;

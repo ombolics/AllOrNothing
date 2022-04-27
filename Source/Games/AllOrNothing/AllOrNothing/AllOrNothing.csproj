@@ -34,6 +34,7 @@
     <None Remove="Assets\x.png" />
     <None Remove="Controls\CompetenceSearchPanel.xaml" />
     <None Remove="Controls\LightningDialog.xaml" />
+    <None Remove="Converters\Converters.xaml" />
     <None Remove="QuestionSerieSamples\András01.txt" />
     <None Remove="QuestionSerieSamples\András02.txt" />
     <None Remove="QuestionSerieSamples\CorruptedFile2.json" />
@@ -156,6 +157,11 @@
     <Content Update="Assets\colorX.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Converters\Converters.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Styles\TimePickerStyle.xaml">
