@@ -26,6 +26,12 @@
     <Optimize>false</Optimize>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Animations\**" />
+    <EmbeddedResource Remove="Animations\**" />
+    <None Remove="Animations\**" />
+    <Page Remove="Animations\**" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Remove="Assets\transparentX.png" />
     <Content Remove="Assets\x.png" />
   </ItemGroup>
@@ -33,7 +39,7 @@
     <None Remove="Assets\transparentX.png" />
     <None Remove="Assets\x.png" />
     <None Remove="Controls\CompetenceSearchPanel.xaml" />
-    <None Remove="Controls\LightningDialog.xaml" />
+    <None Remove="Controls\CustomDialog.xaml" />
     <None Remove="Converters\Converters.xaml" />
     <None Remove="QuestionSerieSamples\András01.txt" />
     <None Remove="QuestionSerieSamples\András02.txt" />
@@ -146,12 +152,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Controls\LightningDialog.xaml">
+    <Page Update="Controls\CustomDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Animations\" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="Assets\colorX.png">
@@ -192,5 +195,8 @@
     <Page Update="Controls\CompetenceSearchPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Remove="Animations\**" />
   </ItemGroup>
 </Project>

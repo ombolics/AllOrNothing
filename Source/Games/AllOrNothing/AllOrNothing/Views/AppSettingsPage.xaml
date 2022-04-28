@@ -8,34 +8,30 @@
     xmlns:converters="using:AllOrNothing.Converters"
     mc:Ignorable="d"
     Style="{StaticResource PageStyle}">
-    <Page.Resources>
-        <converters:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
-    </Page.Resources>
-    
+
     <Grid Margin="{StaticResource MediumLeftRightMargin}">
-        <StackPanel
-            x:Name="ContentArea">
-            <TextBlock x:Uid="Settings_Personalization" Style="{ThemeResource SubtitleTextBlockStyle}" />
+        <StackPanel x:Name="ContentArea">
+            <TextBlock x:Uid="Settings_Personalization" 
+                       Style="{ThemeResource SubtitleTextBlockStyle}" />
             <StackPanel Margin="{StaticResource SmallTopBottomMargin}">
                 <TextBlock x:Uid="Settings_Theme" />
 
                 <StackPanel Margin="{StaticResource XSmallTopMargin}">
-                    <RadioButton
-                        x:Uid="Settings_Theme_Light"
-                        Command="{x:Bind ViewModel.SwitchThemeCommand}"
-                        IsChecked="{x:Bind ViewModel.ElementTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Light, Mode=OneWay}"
-                        FontSize="15"
-                        GroupName="AppTheme">
+                    <RadioButton x:Uid="Settings_Theme_Light"
+                                 Command="{x:Bind ViewModel.SwitchThemeCommand}"
+                                 IsChecked="{x:Bind ViewModel.ElementTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Light, Mode=OneWay}"
+                                 FontSize="15"
+                                 GroupName="AppTheme">
                         <RadioButton.CommandParameter>
                             <xaml:ElementTheme>Light</xaml:ElementTheme>
                         </RadioButton.CommandParameter>
                     </RadioButton>
-                    <RadioButton
-                        x:Uid="Settings_Theme_Dark"
-                        Command="{x:Bind ViewModel.SwitchThemeCommand}"
-                        IsChecked="{x:Bind ViewModel.ElementTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Dark, Mode=OneWay}"
-                        FontSize="15"
-                        GroupName="AppTheme">
+
+                    <RadioButton x:Uid="Settings_Theme_Dark"
+                                 Command="{x:Bind ViewModel.SwitchThemeCommand}"
+                                 IsChecked="{x:Bind ViewModel.ElementTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Dark, Mode=OneWay}"
+                                 FontSize="15"
+                                 GroupName="AppTheme">
                         <RadioButton.CommandParameter>
                             <xaml:ElementTheme>Dark</xaml:ElementTheme>
                         </RadioButton.CommandParameter>
@@ -53,16 +49,19 @@
                 </StackPanel>
             </StackPanel>
 
-            <TextBlock Text="Valami leírás az appról..." Style="{ThemeResource SubtitleTextBlockStyle}" />
+            <TextBlock Text="Valami leírás az appról..." 
+                       Style="{ThemeResource SubtitleTextBlockStyle}" />
 
             <StackPanel Margin="{StaticResource XSmallTopMargin}">
-                <TextBlock Text="{x:Bind ViewModel.VersionDescription, Mode=OneWay}" Style="{ThemeResource BodyTextBlockStyle}" />
+                <TextBlock Text="{x:Bind ViewModel.VersionDescription, Mode=OneWay}" 
+                           Style="{ThemeResource BodyTextBlockStyle}" />
 
                 <TextBlock
                     Text="Valami leírás az appról..."
                     Margin="{StaticResource XSmallTopMargin}"
                     Style="{ThemeResource BodyTextBlockStyle}" />
-                <HyperlinkButton x:Uid="SettingsPage_PrivacyTermsLink" Margin="{StaticResource XSmallTopMargin}" />
+                <HyperlinkButton x:Uid="SettingsPage_PrivacyTermsLink" 
+                                 Margin="{StaticResource XSmallTopMargin}" />
             </StackPanel>
         </StackPanel>
     </Grid>

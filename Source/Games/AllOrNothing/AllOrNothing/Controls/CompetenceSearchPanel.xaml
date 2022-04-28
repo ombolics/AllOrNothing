@@ -20,19 +20,22 @@
         </Grid.RowDefinitions>
 
 
-        <AutoSuggestBox Grid.Row="0" PlaceholderText="Ismeretkör keresése" QueryIcon="Find" Margin="15,15,15,15" 
-                                        TextChanged="{x:Bind AutoSuggestBox_TextChanged}"
-                                        SuggestionChosen="{x:Bind AutoSuggestBox_SuggestionChosen}"
-                                        Background="{ThemeResource MainColor2}"
-                                    Foreground="{ThemeResource MainColor1}"
-                                    BorderThickness="0">
-
-        </AutoSuggestBox>
+        <AutoSuggestBox Grid.Row="0" 
+                        PlaceholderText="Ismeretkör keresése" 
+                        QueryIcon="Find" 
+                        Margin="15,15,15,15" 
+                        TextChanged="{x:Bind AutoSuggestBox_TextChanged}"
+                        SuggestionChosen="{x:Bind AutoSuggestBox_SuggestionChosen}"
+                        Background="{ThemeResource MainColor2}"
+                        Foreground="{ThemeResource MainColor1}"
+                        BorderThickness="0"/>
 
         <!-- Player display area-->
         <ScrollViewer Grid.Row="1">
-            <ItemsControl ItemsSource="{x:Bind SelectedCompetences, Mode=OneWay}" Background="Transparent" Loaded="ItemsControl_Loaded"
-                              >
+            <ItemsControl ItemsSource="{x:Bind SelectedCompetences, Mode=OneWay}" 
+                          Background="Transparent" 
+                          Loaded="ItemsControl_Loaded">
+
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <local:WrapPanel/>
@@ -43,29 +46,33 @@
                     <DataTemplate>
 
                         <StackPanel Orientation="Horizontal" 
-                                            Style="{ThemeResource SmallMainPanelStyle}">
-                            <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Style="{ThemeResource CommonTextStyle}" Margin="5,5,5,5"/>
+                                    Style="{ThemeResource SmallMainPanelStyle}">
+
+                            <TextBlock Text="{Binding Name}" 
+                                       VerticalAlignment="Center" 
+                                       Style="{ThemeResource CommonTextStyle}" 
+                                       Margin="5,5,5,5"/>
+
                             <Button Background="Transparent"
-                                                BorderThickness="0"
-                                                Width="10"
-                                                    
-                                                VerticalAlignment="Stretch"
-                                                HorizontalAlignment="Right"
-                                                Command="{Binding RemoveCommand}" 
-                                                CommandParameter="{Binding}"
-                                                Padding="0,0,0,0"
-                                                Margin="5,5,5,5">
+                                    BorderThickness="0"
+                                    Width="10"                
+                                    VerticalAlignment="Stretch"
+                                    HorizontalAlignment="Right"
+                                    Command="{Binding RemoveCommand}" 
+                                    CommandParameter="{Binding}"
+                                    Padding="0,0,0,0"
+                                    Margin="5,5,5,5">
+
                                 <Image Source="/Assets/colorX.png" 
-                                                    Stretch="Uniform" 
-                                                    HorizontalAlignment="Center" 
-                                                    VerticalAlignment="Center" 
-                                                    Margin="0,0,0,0"/>
+                                       Stretch="Uniform" 
+                                       HorizontalAlignment="Center" 
+                                       VerticalAlignment="Center" 
+                                       Margin="0,0,0,0"/>
                             </Button>
                         </StackPanel>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>
-        
     </Grid>
 </UserControl>

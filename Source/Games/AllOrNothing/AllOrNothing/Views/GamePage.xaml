@@ -13,19 +13,13 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     Name="gamePage"
-    Loaded="gamePage_Loaded"
-    >
-
-    <Page.Resources>
-        <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
-        <conv:TimeSpanToStringConverter x:Key="TimeSpanToStringConverter"/>
-        <conv:GamePhaseToVisibilityConverter x:Key="GamePhaseToVisibilityConverter"/>
-    </Page.Resources>
+    Loaded="gamePage_Loaded">
 
 
     <Grid Background="White">
-        <!--Game without buttons-->
-        <Grid x:Name="buttonlessMainGrid" Background="White"
+        <!--#region Game without buttons-->
+        <Grid x:Name="buttonlessMainGrid" 
+              Background="White"
               Visibility="{x:Bind ViewModel.SelectedRound.RoundSettings.IsGameWithoutButtonsEnabled, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
 
             <Grid.ColumnDefinitions>
@@ -34,6 +28,7 @@
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
             
+            <!--#region QuestionGrid -->
             <Grid Grid.Column="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
@@ -55,15 +50,21 @@
                                Margin="20,10,10,10"/>
                 </Grid>
 
-                <cc:QuestionGrid Grid.Row="2" Margin="15,15,15,15"
-                             QuestionSerie="{x:Bind ViewModel.SelectedRound.RoundSettings.QuestionSerie, Mode=OneWay}" 
-                             CurrentQuestion="{x:Bind ViewModel.CurrentQuestion, Mode=TwoWay}"
-                             CornerRadius="30"
-                             Visibility="{x:Bind ViewModel.GamePhase, Mode=OneWay, Converter={StaticResource GamePhaseToVisibilityConverter}, ConverterParameter=Tematical }"/>
+                <cc:QuestionGrid Grid.Row="2" 
+                                 Margin="15,15,15,15"
+                                 QuestionSerie="{x:Bind ViewModel.SelectedRound.RoundSettings.QuestionSerie, Mode=OneWay}" 
+                                 CurrentQuestion="{x:Bind ViewModel.CurrentQuestion, Mode=TwoWay}"
+                                 CornerRadius="30"
+                                 Visibility="{x:Bind ViewModel.GamePhase, Mode=OneWay, Converter={StaticResource GamePhaseToVisibilityConverter}, ConverterParameter=Tematical }"/>
 
             </Grid>
-
-            <Grid Grid.Column="1" Background="{ThemeResource MainColor2}" CornerRadius="10" Margin="10,10,10,10">
+            <!--#endregion-->
+            
+            <!--#region Answering panel-->
+            <Grid Grid.Column="1" 
+                  Background="{ThemeResource MainColor2}" 
+                  CornerRadius="10" 
+                  Margin="10,10,10,10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="5*"/>
@@ -76,7 +77,8 @@
                            VerticalAlignment="Center"
                            HorizontalAlignment="Center"/>
 
-                <ListView Grid.Row="1"  ItemsSource="{x:Bind ViewModel.AnswerLog, Mode=OneWay}">
+                <ListView Grid.Row="1"  
+                          ItemsSource="{x:Bind ViewModel.AnswerLog, Mode=OneWay}">
                     <ListView.ItemsPanel>
                         <ItemsPanelTemplate>
                             <VirtualizingStackPanel VerticalAlignment="Bottom"/>
@@ -85,22 +87,21 @@
                     
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Vertical" Style="{ThemeResource NeutralPanelStyle}"
-                                        >
+                            <StackPanel Orientation="Vertical" 
+                                        Style="{ThemeResource NeutralPanelStyle}">
+
                                 <TextBlock Text="{Binding TeamName}" 
-                                       HorizontalAlignment="Center"
-                                       FontSize="20"
-                                       VerticalAlignment="Center"
-                                       Foreground="{ThemeResource MainColor1}"/>
+                                           HorizontalAlignment="Center"
+                                           FontSize="20"
+                                           VerticalAlignment="Center"
+                                           Foreground="{ThemeResource MainColor1}"/>
 
                                 <TextBlock Text="{Binding QuestionValue}" 
-                                       HorizontalAlignment="Center"
-                                       FontSize="20"
-                                       VerticalAlignment="Center"
-                                       Foreground="{ThemeResource MainColor4}"/>
+                                           HorizontalAlignment="Center"
+                                           FontSize="20"
+                                           VerticalAlignment="Center"
+                                           Foreground="{ThemeResource MainColor4}"/>
                             </StackPanel>
-                            
-                            
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
@@ -168,8 +169,11 @@
                 </Grid>
 
             </Grid>
+            <!--#endregion-->
 
-            <Grid Grid.Column="2" Margin="10,10,10,10">
+            <!--#region Score display area -->
+            <Grid Grid.Column="2" 
+                  Margin="10,10,10,10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="4.618*"/>
                     <RowDefinition Height="*"/>
@@ -177,22 +181,23 @@
 
                 <Grid Style="{ThemeResource MainGridStyle}"
                       Grid.Row="0">
-                    <ListBox
-                          ItemsSource="{x:Bind ViewModel.SelectedRound.RoundStandings, Mode=OneWay}"                         
-                          HorizontalContentAlignment="Stretch"
-                          VerticalContentAlignment="Stretch"
-                          SelectedItem="{x:Bind ViewModel.PickingTeam, Mode=TwoWay}"
-                          Background="{ThemeResource MainColor2}"
-                          >
+
+                    <ListBox ItemsSource="{x:Bind ViewModel.SelectedRound.RoundStandings, Mode=OneWay}"                         
+                             HorizontalContentAlignment="Stretch"
+                             VerticalContentAlignment="Stretch"
+                             SelectedItem="{x:Bind ViewModel.PickingTeam, Mode=TwoWay}"
+                             Background="{ThemeResource MainColor2}">
+
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <cc:TeamScore Standing="{Binding}"
                                               CurrentQuestion="{Binding ViewModel.CurrentQuestion, Mode=TwoWay, ElementName=gamePage}"
-                                          HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                              HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                               Margin="0,0,0,0"
                                               GamePhase="{Binding ViewModel.GamePhase, Mode=OneWay, ElementName=gamePage}"/>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
+                        
                         <ListBox.ItemContainerStyle>
                             <Style TargetType="ListBoxItem">
                                 <Setter Property="HorizontalContentAlignment"  Value="Stretch"></Setter>
@@ -202,24 +207,23 @@
                     </ListBox>
                 </Grid>
 
-
-
                 <Button Grid.Row="1" 
-                                Content="Eredmény" 
-                                Background="White"
-                                HorizontalAlignment="Stretch" 
-                                VerticalAlignment="Stretch"
-                                Command="{x:Bind ViewModel.GameOverCommand}"
-                                CornerRadius="10"
-                                Margin="10,10,10,10"
+                        Content="Eredmény" 
+                        Background="White"
+                        HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Stretch"
+                        Command="{x:Bind ViewModel.GameOverCommand}"
+                        CornerRadius="10"
+                        Margin="10,10,10,10"
                         FontSize="20"
                         FontWeight="SemiBold"
-                                Foreground="{ThemeResource MainColor1}"/>
+                        Foreground="{ThemeResource MainColor1}"/>
             </Grid>
-
+            <!--#endregion-->
         </Grid>
+        <!--#endregion-->
 
-        <!-- GameWithButtons-->
+        <!--#region Game with buttons-->
         <Grid x:Name="MainGrid"            
               Visibility="{x:Bind ViewModel.SelectedRound.RoundSettings.IsGameWithoutButtonsEnabled, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=negate}">
 
@@ -228,7 +232,9 @@
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
             
-            <Grid Grid.Column="0" Style="{ThemeResource NeutralGridStyle}">
+            <!--#region Question grid-->
+            <Grid Grid.Column="0" 
+                  Style="{ThemeResource NeutralGridStyle}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="5*"/>
@@ -316,9 +322,10 @@
                                Text="Minden kérdés 3000 pontot ér!"/>
 
                 </Grid>
-
             </Grid>
-
+            <!--#endregion-->
+            
+            <!--#region Score display area-->
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="3.618*"/>
@@ -392,6 +399,8 @@
                     </Grid>
                 </Grid>
             </Grid>
+            <!--#endregion-->
         </Grid>
+        <!--#endregion-->
     </Grid>
 </Page>

@@ -6,6 +6,7 @@
         <ResourceDictionary Source="/Styles/_Colors.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
+    <!--For future usement-->
     <!--<ResourceDictionary.ThemeDictionaries>
         <ResourceDictionary x:Key="Dark">
             <SolidColorBrush x:Key="AutoSuggestBoxSuggestionsListBackground" Color="{ThemeResource MainColor2}"/>

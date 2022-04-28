@@ -16,9 +16,7 @@
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Margin" Value="10,10,10,10"/>
         <Setter Property="FontSize" Value="15"/>
-
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-
     </Style>
 
     <Style x:Key="CommonTextBoxStyle" TargetType="TextBox">

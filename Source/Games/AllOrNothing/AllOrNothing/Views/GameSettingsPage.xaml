@@ -19,19 +19,16 @@
     Name="gameSettingsPage"
     DataContext="{x:Bind ViewModel}"
     Loaded="Page_Loaded">
-    
-    <Page.Resources>
-        <!--<conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
-        <conv:RoundStateToColorConverter x:Key="RoundStateToColorConverter"/>-->
 
+    <Page.Resources>
         <!--#region CheckBox resources-->
         <SolidColorBrush x:Key="CheckBoxForegroundUnchecked" Color="{ThemeResource MainColor1}"/>
         <SolidColorBrush x:Key="CheckBoxForegroundChecked" Color="{ThemeResource MainColor1}"/>
-        
+
         <!--box background-->
         <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillChecked" Color="{ThemeResource MainColor1}"/>
         <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillUnChecked" Color="{ThemeResource MainColor3}"/>
-        
+
         <!--Glyph-->
         <SolidColorBrush x:Key="CheckBoxCheckGlyphForegroundChecked" Color="{ThemeResource MainColor3}"/>
 
@@ -39,22 +36,10 @@
         <SolidColorBrush x:Key="CheckBoxCheckBackgroundStrokeUnchecked" Color="{ThemeResource MainColor1}"/>
         <SolidColorBrush x:Key="CheckBoxCheckBackgroundStrokeChecked" Color="{ThemeResource MainColor1}"/>
         <!--#endregion-->
-        
-        
-
-        <!--<Color x:Key="GreenishColor">#FF60B560</Color>
-        <Color x:Key="YellowishColor">#FFFFF700</Color>
-        <Color x:Key="BlueishColor">#FF00e5ff</Color>
-        <StaticResource x:Key="DataGridColumnHeaderBackgroundColor" ResourceKey=""/>
-        <StaticResource x:Key="DataGridColumnHeaderHoveredBackgroundColor" ResourceKey="YellowishColor"/>
-        <StaticResource x:Key="DataGridColumnHeaderPressedBackgroundColor" ResourceKey="BlueishColor"/>-->
     </Page.Resources>
 
-
     <Grid>
-
-
-        <!--Game Settings--> 
+        <!--#region Game Settings-->
         <Grid Visibility="{x:Bind ViewModel.IsGameSettingsVisible, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="587*"/>
@@ -69,26 +54,25 @@
                     <ColumnDefinition Width="843*"/>
                 </Grid.ColumnDefinitions>
 
-                
-                <!--Player adding area-->
+                <!--#region Player adding area-->
                 <ScrollViewer Grid.Column="0" 
                               Style="{StaticResource NeutralContentControlStyle}">
 
                     <StackPanel Orientation="Vertical"
-                                HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                HorizontalAlignment="Stretch" 
+                                VerticalAlignment="Stretch">
 
-                        <AutoSuggestBox PlaceholderText="Játékos keresése" QueryIcon="Find" Margin="15,15,15,15" 
-                                    TextChanged="{x:Bind ViewModel.AutoSuggestBox_TextChanged}"
-                                    SuggestionChosen="{x:Bind ViewModel.AutoSuggestBox_SuggestionChosen}"
-                                    LostFocus="{x:Bind ViewModel.AutoSuggestBox_LostFocus}"
-                                    FontSize="16"
-                                    Foreground="{ThemeResource MainColor1}"
-                                    BorderThickness="0">
-                            
-                            
-                        </AutoSuggestBox>
+                        <AutoSuggestBox PlaceholderText="Játékos keresése" 
+                                        QueryIcon="Find" 
+                                        Margin="15,15,15,15" 
+                                        TextChanged="{x:Bind ViewModel.AutoSuggestBox_TextChanged}"
+                                        SuggestionChosen="{x:Bind ViewModel.AutoSuggestBox_SuggestionChosen}"
+                                        LostFocus="{x:Bind ViewModel.AutoSuggestBox_LostFocus}"
+                                        FontSize="16"
+                                        Foreground="{ThemeResource MainColor1}"
+                                        BorderThickness="0"/>
 
-                         <!--Player display area-->
+                        <!--Player display area-->
                         <Border Margin="15,15,15,15">
                             <ItemsControl ItemsSource="{x:Bind ViewModel.SelectedPlayers, Mode=OneWay}" 
                                           AllowDrop="True" 
@@ -107,21 +91,21 @@
 
                                         <StackPanel Orientation="Horizontal"
                                                     Style="{ThemeResource SmallMainPanelStyle}">
-                                            
+
                                             <TextBlock Text="{Binding Name}" 
                                                        Style="{ThemeResource CommonTextStyle}"
                                                        Margin="5,5,5,5"/>
 
                                             <Button Background="Transparent"
                                                     BorderThickness="0"
-                                                    Width="10"
-                                                    
+                                                    Width="10"                                                   
                                                     VerticalAlignment="Stretch"
                                                     HorizontalAlignment="Right"
                                                     Command="{Binding RemoveCommand}" 
                                                     CommandParameter="{Binding}"
                                                     Padding="0,0,0,0"
                                                     Margin="5,5,5,5">
+
                                                 <Image Source="/Assets/colorX.png" 
                                                        Stretch="Uniform" 
                                                        HorizontalAlignment="Center" 
@@ -129,39 +113,34 @@
                                                        Margin="0,0,0,0"/>
                                             </Button>
                                         </StackPanel>
-
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
                         </Border>
-
                     </StackPanel>
                 </ScrollViewer>
-             
-    
+                <!--#endregion-->
+
                 <!--Teams-->
                 <ScrollViewer Grid.Column="1" 
                               Style="{ThemeResource MainContentControlStyle}">
-                    
+
                     <StackPanel Orientation="Vertical">
                         <TextBlock Text="Csapatok" 
                                    Style="{ThemeResource MainTitleStyle}"
                                    Margin="15,15,15,15"/>
-                            
+
                         <ItemsControl ItemsSource="{x:Bind ViewModel.Teams, Mode=OneWay}"   >
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <cc:WrapPanel HorizontalAlignment="Stretch"
-                                                  VerticalAlignment="Stretch">
-
-                                    </cc:WrapPanel>
+                                                  VerticalAlignment="Stretch"/>
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
 
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel>
-                                                                               
                                         <StackPanel Orientation="Vertical" 
                                                     AllowDrop="{Binding AllowDrop}"
                                                     Style="{ThemeResource NeutralPanelStyle}">
@@ -169,7 +148,7 @@
                                             <dd:DragDropService.Configuration>
                                                 <dd:DropConfiguration DropTextCommand="{Binding AddPlayerCommand}"/>
                                             </dd:DragDropService.Configuration>
-                                            
+
                                             <dd:DragDropService.VisualConfiguration>
                                                 <dd:VisualDropConfiguration Caption="Csapattag áthelyezése"
                                                                 IsContentVisible="True"
@@ -177,18 +156,17 @@
                                             </dd:DragDropService.VisualConfiguration>
 
                                             <TextBox Text="{Binding TeamName, Mode=TwoWay}" 
-                                                        Margin="10,10,0,10" 
-                                                        HorizontalAlignment="Center" 
-                                                        FontSize="15"
-                                                        FontWeight="Bold" 
-                                                        Foreground="{ThemeResource MainColor1 }"
-                                                        Background="Transparent"
+                                                     Margin="10,10,0,10" 
+                                                     HorizontalAlignment="Center" 
+                                                     FontSize="15"
+                                                     FontWeight="Bold" 
+                                                     Foreground="{ThemeResource MainColor1 }"
+                                                     Background="Transparent"
                                                      IsSpellCheckEnabled="False"
-                                                        BorderThickness="0"/>
+                                                     BorderThickness="0"/>
 
-                                            <!--<Line HorizontalAlignment="Stretch" Margin="50, 10, 50, 10" Stroke="Black" StrokeThickness="4" />-->
-
-                                            <ItemsControl ItemsSource="{Binding Players}" Background="Transparent">
+                                            <ItemsControl ItemsSource="{Binding Players}" 
+                                                          Background="Transparent">
                                                 <ItemsControl.ItemsPanel>
                                                     <ItemsPanelTemplate>
                                                         <cc:WrapPanel/>
@@ -202,11 +180,11 @@
                                                                 CanDrag="{Binding CanDrag}"
                                                                 AllowDrop="True"
                                                                 ForeGround="{ThemeResource MainColor1 }">
-                                                                
+
                                                             <dd:DragDropService.Configuration>
                                                                 <dd:DropConfiguration DropTextCommand="{Binding ChangePlayerCommand}"/>
                                                             </dd:DragDropService.Configuration>
-                                                            
+
                                                             <dd:DragDropService.VisualConfiguration>
                                                                 <dd:VisualDropConfiguration Caption="Csapattagok cseréje"
                                                                                 IsContentVisible="True"
@@ -219,16 +197,11 @@
                                             </ItemsControl>
                                         </StackPanel>
                                     </StackPanel>
-
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
                     </StackPanel>
-                        
-
                 </ScrollViewer>
-               
-     
             </Grid>
 
             <Grid Grid.Row="1">
@@ -247,7 +220,7 @@
                          
                         Command="{x:Bind ViewModel.ExitCommand}"/>
 
-                <!--Setting1--> 
+                <!--Setting1-->
                 <Grid Grid.Column="1" 
                             HorizontalAlignment="Stretch" 
                             VerticalAlignment="Stretch" 
@@ -262,13 +235,16 @@
                                    Margin="15,15,15,15"
                                    Style="{ThemeResource MainTitleStyle}"/>
 
-                    <Grid Grid.Row="1" VerticalAlignment="Center" Margin="10,0,0,5">
+                    <Grid Grid.Row="1" 
+                          VerticalAlignment="Center" 
+                          Margin="10,0,0,5">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        
-                        <TextBlock Grid.Column="0" Text="Alkalom neve:"
+
+                        <TextBlock Grid.Column="0" 
+                                   Text="Alkalom neve:"
                                    Style="{ThemeResource CommonTextStyle}"/>
 
                         <TextBox Grid.Column="1" PlaceholderText="Pl.: Kvízklub 2022.04.10."
@@ -276,9 +252,11 @@
                                  IsSpellCheckEnabled="False"
                                  Style="{ThemeResource CommonTextBoxStyle}"/>
                     </Grid>
-                    
 
-                    <StackPanel Grid.Row="2" VerticalAlignment="Center" Orientation="Horizontal" Margin="10,0,0,5">
+                    <StackPanel Grid.Row="2" 
+                                VerticalAlignment="Center" 
+                                Orientation="Horizontal" 
+                                Margin="10,0,0,5">
 
                         <TextBlock Text="Körök száma:"
                                    Style="{ThemeResource CommonTextStyle}"/>
@@ -289,14 +267,9 @@
                                              IsSpellCheckEnabled="False"
                                              TextAlignment="Center"/>
                     </StackPanel>
-
-                    <!--for later functions
-                    <CheckBox Content="Körök sorsolása" IsChecked="{x:Bind ViewModel.GameModel.GameSettings.GenerateSchedule, Mode=TwoWay}"/>
-                            <CheckBox Content="Kérdéssor beállítása előre" IsChecked="{x:Bind ViewModel.GameModel.GameSettings.AssignSeriesForAllGame, Mode=TwoWay}"/>-->
                 </Grid>
 
                 <!--Setting2-->
-
                 <Grid Grid.Column="2"
                             HorizontalAlignment="Stretch" 
                             VerticalAlignment="Stretch" 
@@ -307,10 +280,11 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0" Text="Csapatokkal kapcsolatos adatok" 
-                                   HorizontalAlignment="Stretch"
-                                   Margin="15,15,15,15"
-                                   Style="{ThemeResource MainTitleStyle}"/>
+                    <TextBlock Grid.Row="0" 
+                               Text="Csapatokkal kapcsolatos adatok" 
+                               HorizontalAlignment="Stretch"
+                               Margin="15,15,15,15"
+                               Style="{ThemeResource MainTitleStyle}"/>
 
                     <Grid Grid.Row="1" 
                           Margin="10,0,0,5" 
@@ -320,7 +294,8 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Column="0" Text="Maximális csaptalétszám:"
+                        <TextBlock Grid.Column="0" 
+                                   Text="Maximális csaptalétszám:"
                                    Style="{ThemeResource CommonTextStyle}"/>
                         <cc:ValidatedTextBox Height="30"
                                              Grid.Column="1"
@@ -341,10 +316,7 @@
                             Background="White"
                             Foreground="{ThemeResource MainColor1}"
                             />
-
-
                 </Grid>
-                
 
                 <!--Setting3-->
                 <Grid Grid.Column="3"
@@ -357,46 +329,49 @@
                     </Grid.RowDefinitions>
 
                     <TextBlock Grid.Row="0" Text="Játékmódok" 
-                                   HorizontalAlignment="Stretch" 
-                                   Margin="15,15,15,15"
-                                   Style="{ThemeResource MainTitleStyle}"/>
+                               HorizontalAlignment="Stretch" 
+                               Margin="15,15,15,15"
+                               Style="{ThemeResource MainTitleStyle}"/>
 
                     <StackPanel Grid.Row="1" Orientation="Horizontal"
                                 VerticalAlignment="Stretch"
                                 HorizontalAlignment="Stretch">
-                        
+
                         <CheckBox Content="Tematikus" Margin="20,10,10,0" 
-                                        x:Name="tematicalCheckBox"
-                                        IsChecked="{x:Bind ViewModel.GameModel.GameSettings.IsTematicalAllowed, Mode=TwoWay}"
-                                        Checked="{x:Bind ViewModel.TematicalCheckBoxChecked, Mode=OneWay}"/>
+                                  x:Name="tematicalCheckBox"
+                                  IsChecked="{x:Bind ViewModel.GameModel.GameSettings.IsTematicalAllowed, Mode=TwoWay}"
+                                  Checked="{x:Bind ViewModel.TematicalCheckBoxChecked, Mode=OneWay}"/>
 
                         <TimePicker ClockIdentifier="24HourClock" Time="{x:Bind ViewModel.GameModel.GameSettings.GeneralTematicalTime, Mode=TwoWay}" 
-                                        x:Name="tematicalTimePicker"
-                                        SelectedTime="7:00" 
-                                        IsEnabled="{x:Bind ViewModel.GameModel.GameSettings.IsTematicalAllowed, Mode=TwoWay}"
-                                        SelectedTimeChanged="{x:Bind ViewModel.TimePicker_SelectedTimeChanged, Mode=OneWay}"/>
+                                    x:Name="tematicalTimePicker"
+                                    SelectedTime="7:00" 
+                                    IsEnabled="{x:Bind ViewModel.GameModel.GameSettings.IsTematicalAllowed, Mode=TwoWay}"
+                                    SelectedTimeChanged="{x:Bind ViewModel.TimePicker_SelectedTimeChanged, Mode=OneWay}"/>
                     </StackPanel>
 
-                    <StackPanel Grid.Row="2" Orientation="Horizontal"
+                    <StackPanel Grid.Row="2" 
+                                Orientation="Horizontal"
                                 VerticalAlignment="Stretch"
                                 HorizontalAlignment="Stretch">
+
                         <CheckBox Content="Villám" Margin="20,5,10,0" 
-                                        x:Name="lightningCheckBox"
-                                        IsChecked="{x:Bind ViewModel.GameModel.GameSettings.IsLightningAllowed, Mode=TwoWay}"
-                                        Checked="{x:Bind ViewModel.LightningCheckBoxChecked, Mode=OneWay}"/>
+                                  x:Name="lightningCheckBox"
+                                  IsChecked="{x:Bind ViewModel.GameModel.GameSettings.IsLightningAllowed, Mode=TwoWay}"
+                                  Checked="{x:Bind ViewModel.LightningCheckBoxChecked, Mode=OneWay}"/>
 
                         <TimePicker ClockIdentifier="24HourClock" Time="{x:Bind ViewModel.GameModel.GameSettings.GeneralLightningTime, Mode=TwoWay}" 
-                                        x:Name="lightningTimePicker"
-                                        SelectedTime="3:00"
-                                        IsEnabled="{x:Bind ViewModel.GameModel.GameSettings.IsLightningAllowed, Mode=TwoWay}"
-                                        SelectedTimeChanged="{x:Bind ViewModel.TimePicker_SelectedTimeChanged, Mode=OneWay}"/>
+                                    x:Name="lightningTimePicker"
+                                    SelectedTime="3:00"
+                                    IsEnabled="{x:Bind ViewModel.GameModel.GameSettings.IsLightningAllowed, Mode=TwoWay}"
+                                    SelectedTimeChanged="{x:Bind ViewModel.TimePicker_SelectedTimeChanged, Mode=OneWay}"/>
                     </StackPanel>
 
-                    <CheckBox Grid.Row="3" Content="Gombok nélüli játék" Margin="20,0,0,0"
+                    <CheckBox Grid.Row="3" Content="Gombok nélüli játék" 
+                              Margin="20,0,0,0"
                               IsChecked="{x:Bind ViewModel.GameModel.GameSettings.IsGameWithoutButtonsEnabled, Mode=TwoWay}"
                               Checked="{x:Bind ViewModel.GmaWithoutButtonsChecked}"/>
                 </Grid>
-                
+
                 <Button Grid.Column="4"
                         Visibility="{x:Bind ViewModel.CanGoToNextPage, Mode=OneWay, Converter = {StaticResource BoolToVisibilityConverter}}" 
                         Content="Tovább" FontSize="{ThemeResource LargeFontSize}" 
@@ -404,8 +379,9 @@
                         HorizontalAlignment="Stretch" Command="{x:Bind ViewModel.ShowRoundSettingsCommand}"/>
             </Grid>
         </Grid>
+        <!--#endregion-->
 
-        <!--Round Settings-->
+        <!--#region Round Settings-->
         <Grid Visibility="{x:Bind ViewModel.IsGameSettingsVisible, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=negate}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -423,31 +399,35 @@
                            Style="{ThemeResource MainTitleStyle}"
                            Visibility="{x:Bind ViewModel.SelectedRound.IsFinalRound, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=negate}"/>
 
-                <ListView Grid.Row="1" x:Name="ScheduleList"
-                        Visibility="{x:Bind ViewModel.SelectedRound.IsFinalRound, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=negate}"
-                        ItemsSource="{x:Bind ViewModel.Rounds, Mode=OneWay}"
-                        SelectedItem="{x:Bind ViewModel.SelectedRound, Mode=OneWay}"
-                        ScrollViewer.VerticalScrollMode="Auto"
-                        ShowsScrollingPlaceholders="False"
-                        IsItemClickEnabled="True"
-                        CanReorderItems="True"
-                        SelectionMode="Single"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
-                        AllowDrop="True"
-                        Style="{ThemeResource MainListViewStyle}"
-                        ItemClick="{x:Bind ViewModel.RoundSelected}"
-                        Padding="0,0,0,0"
-                        >
+                <ListView Grid.Row="1" 
+                          x:Name="ScheduleList"
+                          Visibility="{x:Bind ViewModel.SelectedRound.IsFinalRound, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=negate}"
+                          ItemsSource="{x:Bind ViewModel.Rounds, Mode=OneWay}"
+                          SelectedItem="{x:Bind ViewModel.SelectedRound, Mode=OneWay}"
+                          ScrollViewer.VerticalScrollMode="Auto"
+                          ShowsScrollingPlaceholders="False"
+                          IsItemClickEnabled="True"
+                          CanReorderItems="True"
+                          SelectionMode="Single"
+                          HorizontalAlignment="Stretch"
+                          VerticalAlignment="Stretch"
+                          AllowDrop="True"
+                          Style="{ThemeResource MainListViewStyle}"
+                          ItemClick="{x:Bind ViewModel.RoundSelected}"
+                          Padding="0,0,0,0">
+
                     <ListView.Resources>
-                        <SolidColorBrush x:Key="ListViewItemBackgroundSelected" Color="{ThemeResource MainColor1}" Opacity="40" />
-                        <SolidColorBrush x:Key="ListViewItemBackgroundSelectedPointerOver" Color="{ThemeResource MainColor1}" Opacity="40" /> 
+                        <SolidColorBrush x:Key="ListViewItemBackgroundSelected" 
+                                         Color="{ThemeResource MainColor1}" 
+                                         Opacity="40" />
+                        <SolidColorBrush x:Key="ListViewItemBackgroundSelectedPointerOver" 
+                                         Color="{ThemeResource MainColor1}" 
+                                         Opacity="40" />
                     </ListView.Resources>
-                    
+
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                            
                         </Style>
                     </ListView.ItemContainerStyle>
 
@@ -461,51 +441,49 @@
                                 Margin="0,0,0,0"
                                 BorderBrush="White"
                                 BorderThickness="0,1,0,1">
-                                
-                                <ItemsControl ItemsSource="{Binding RoundSettings.Teams }" IsEnabled="{Binding RoundEnded}"
-                                              Padding="0,0,0,0"
-                                             >
-                                    
+
+                                <ItemsControl ItemsSource="{Binding RoundSettings.Teams }" 
+                                              IsEnabled="{Binding RoundEnded}"
+                                              Padding="0,0,0,0">
+
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>
                                             <tK:UniformGrid Columns="4"/>
-                                            <!--<cc:WrapPanel HorizontalAlignment="Stretch"/>-->
                                         </ItemsPanelTemplate>
                                     </ItemsControl.ItemsPanel>
 
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
-                                            <Border Background="{ThemeResource NeutralColor1}" Margin="10,10,10,10" CornerRadius="5">
+                                            <Border Background="{ThemeResource NeutralColor1}" 
+                                                    Margin="10,10,10,10" 
+                                                    CornerRadius="5">
                                                 <TextBlock Text="{Binding TeamName}"
                                                            Style="{ThemeResource TitleStyle}"
                                                            Margin=" 5,5,5,5"
                                                            TextWrapping="WrapWholeWords"/>
                                             </Border>
-
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
                             </Border>
-
                         </DataTemplate>
                     </ListView.ItemTemplate>
-
                 </ListView>
 
                 <StackPanel Grid.Row="1" 
-                        Orientation="Vertical"
-                        Visibility="{x:Bind ViewModel.SelectedRound.IsFinalRound, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
+                            Orientation="Vertical"
+                            Visibility="{x:Bind ViewModel.SelectedRound.IsFinalRound, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center">
-                    
+
                     <TextBlock Text="Döntő"
                                HorizontalAlignment="Center"
                                Foreground="{ThemeResource MainColor1}"
                                FontSize="40"
                                FontWeight="SemiBold"/>
-                    
+
                     <ItemsControl ItemsSource="{x:Bind ViewModel.SelectedRound.RoundSettings.Teams, Mode=OneWay}"
-                                VerticalAlignment="Center">
+                                  VerticalAlignment="Center">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <tK:UniformGrid Rows="1"/>
@@ -518,6 +496,7 @@
                                         Margin="10,10,10,10" 
                                         CornerRadius="5" 
                                         Padding="2,2,2,2">
+
                                     <TextBlock Text="{Binding TeamName}"
                                                Foreground="{ThemeResource MainColor1}"
                                                FontSize="20"
@@ -527,9 +506,7 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                 </StackPanel>
-
             </Grid>
-            
 
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
@@ -543,48 +520,54 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                     <!--Gamemode related stuff-->
+                    <!--Gamemode related stuff-->
                     <Grid Grid.Column="0"
                           Style="{ThemeResource NeutralGridStyle}"
-                          HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                          HorizontalAlignment="Stretch" 
+                          VerticalAlignment="Stretch">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        
-                        <TextBlock Grid.Row="0" Text="Játékmódok"
+
+                        <TextBlock Grid.Row="0" 
+                                   Text="Játékmódok"
                                    HorizontalAlignment="Stretch"
                                    Style="{ThemeResource MainTitleStyle}"
                                    Margin="10,10,10,10"/>
 
-                        <StackPanel Grid.Row="1" Orientation="Horizontal">
-                            
-                            <CheckBox Content="Tematikus" Margin="20,0,10,5"                                       
-                                        x:Name="roundTematicalCheckbox"
+                        <StackPanel Grid.Row="1" 
+                                    Orientation="Horizontal">
+
+                            <CheckBox Content="Tematikus" 
+                                      Margin="20,0,10,5"                                       
+                                      x:Name="roundTematicalCheckbox"
                                       BorderThickness="0"
                                       IsEnabled="{x:Bind ViewModel.GameModel.GameSettings.IsGameWithoutButtonsEnabled,Mode=OneWay, Converter={StaticResource NegateConverter}}"
-                                        IsChecked="{x:Bind ViewModel.SelectedRound.RoundSettings.IsTematicalAllowed, Mode=TwoWay}"
-                                        Checked="{x:Bind ViewModel.TematicalCheckBoxChecked, Mode=OneWay}">
+                                      IsChecked="{x:Bind ViewModel.SelectedRound.RoundSettings.IsTematicalAllowed, Mode=TwoWay}"
+                                      Checked="{x:Bind ViewModel.TematicalCheckBoxChecked, Mode=OneWay}">
                                 <CheckBox.Resources>
                                     <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillUnchecked" Color="{ThemeResource MainColor2}"/>
                                 </CheckBox.Resources>
                             </CheckBox>
 
-                            <TimePicker ClockIdentifier="24HourClock" Time="7:00"
+                            <TimePicker ClockIdentifier="24HourClock" 
+                                        Time="7:00"
                                         x:Name="roundTematicalTime"
                                         IsEnabled="{x:Bind ViewModel.SelectedRound.RoundSettings.IsTematicalAllowed, Mode=TwoWay}"
                                         SelectedTime="{x:Bind ViewModel.SelectedRound.RoundSettings.TematicalTime, Mode=TwoWay}"
                                         SelectedTimeChanged="{x:Bind ViewModel.TimePicker_SelectedTimeChanged, Mode=OneWay}"/>
                         </StackPanel>
 
-                        <StackPanel Grid.Row="2" Orientation="Horizontal">
-                            <CheckBox Content="Villám" Margin="20,5,10,5"
-                                      
-                                        x:Name="roundLightningCheckBox"
-                                        IsEnabled="{x:Bind ViewModel.GameModel.GameSettings.IsGameWithoutButtonsEnabled, Mode=OneWay, Converter={StaticResource NegateConverter}}"
-                                        IsChecked="{x:Bind ViewModel.SelectedRound.RoundSettings.IsLightningAllowed, Mode=TwoWay}"
-                                        Checked="{x:Bind ViewModel.LightningCheckBoxChecked, Mode=OneWay}">
+                        <StackPanel Grid.Row="2" 
+                                    Orientation="Horizontal">
+                            <CheckBox Content="Villám" 
+                                      Margin="20,5,10,5"                                   
+                                      x:Name="roundLightningCheckBox"
+                                      IsEnabled="{x:Bind ViewModel.GameModel.GameSettings.IsGameWithoutButtonsEnabled, Mode=OneWay, Converter={StaticResource NegateConverter}}"
+                                      IsChecked="{x:Bind ViewModel.SelectedRound.RoundSettings.IsLightningAllowed, Mode=TwoWay}"
+                                      Checked="{x:Bind ViewModel.LightningCheckBoxChecked, Mode=OneWay}">
                                 <CheckBox.Resources>
                                     <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillUnchecked" Color="{ThemeResource MainColor2}"/>
                                 </CheckBox.Resources>
@@ -599,141 +582,168 @@
                     </Grid>
 
 
-                    <Button Grid.Column="1" Content="Indítás" FontSize="{ThemeResource LargeFontSize}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                            Margin="10,10,10,10" CornerRadius="10" Command="{x:Bind ViewModel.StartGameCommand}"/>
-
+                    <Button Grid.Column="1" 
+                            Content="Indítás" 
+                            FontSize="{ThemeResource LargeFontSize}"
+                            HorizontalAlignment="Stretch" 
+                            VerticalAlignment="Stretch"
+                            Margin="10,10,10,10" 
+                            CornerRadius="10" 
+                            Command="{x:Bind ViewModel.StartGameCommand}"/>
                 </Grid>
 
                 <!--QuestionSeries-->
                 <Grid Grid.Row="1"
                       Style="{ThemeResource NeutralGridStyle}"
                       HorizontalAlignment="Stretch" 
-                      VerticalAlignment="Stretch" >
+                      VerticalAlignment="Stretch">
 
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="20">
+                    <StackPanel Grid.Row="0" 
+                                Orientation="Horizontal" 
+                                Spacing="20">
+
                         <TextBlock Text="Kiválasztott kérdéssor"
                                    Style="{ThemeResource MainTitleStyle}"
                                    Margin="10,10,10,10"/>
-                        <Button Content="Betöltés fájlból" Command="{x:Bind ViewModel.LoadFromFileCommand}"/>
+
+                        <Button Content="Betöltés fájlból" 
+                                Command="{x:Bind ViewModel.LoadFromFileCommand}"/>
                     </StackPanel>
 
-                        <con:DataGrid Grid.Row="1"
-                                      Foreground="{ThemeResource MainColor1}"
-                                      ItemsSource="{x:Bind ViewModel.AvaibleSeries, Mode=OneWay}"                                       
-                                      AutoGenerateColumns="False"
-                                      SelectedItem="{x:Bind ViewModel.SelectedRound.RoundSettings.QuestionSerie, Mode=TwoWay}"
-                                      IsReadOnly="True"
-                                      AlternatingRowBackground="{ThemeResource MainColor2}"
-                                      AreRowGroupHeadersFrozen="True"
-                                      AreRowDetailsFrozen="True"
-                                      GridLinesVisibility="All"
-                                      HorizontalGridLinesBrush="{ThemeResource MainColor2}"                                     
-                                      HeadersVisibility="Column"
-                                      ColumnHeaderStyle="{ThemeResource DatagridHeaderStyle}"
-                                      IsEnabled="{x:Bind ViewModel.SelectedRound.RoundSettings.IsTematicalAllowed, Mode=OneWay}">
+                    <con:DataGrid Grid.Row="1"
+                                   Foreground="{ThemeResource MainColor1}"
+                                   ItemsSource="{x:Bind ViewModel.AvaibleSeries, Mode=OneWay}"                                       
+                                   AutoGenerateColumns="False"
+                                   SelectedItem="{x:Bind ViewModel.SelectedRound.RoundSettings.QuestionSerie, Mode=TwoWay}"
+                                   IsReadOnly="True"
+                                   AlternatingRowBackground="{ThemeResource MainColor2}"
+                                   AreRowGroupHeadersFrozen="True"
+                                   AreRowDetailsFrozen="True"
+                                   GridLinesVisibility="All"
+                                   HorizontalGridLinesBrush="{ThemeResource MainColor2}"                                     
+                                   HeadersVisibility="Column"
+                                   ColumnHeaderStyle="{ThemeResource DatagridHeaderStyle}"
+                                   IsEnabled="{x:Bind ViewModel.SelectedRound.RoundSettings.IsTematicalAllowed, Mode=OneWay}">
 
-                            <con:DataGrid.RowStyle>
+                        <con:DataGrid.RowStyle>
                             <Style TargetType="con:DataGridRow">
-                                <Setter Property="BorderThickness" Value="10, 10, 10, 10"/>
-                                <Setter Property="BorderBrush" Value="Black"/>
+                                <Setter Property="BorderThickness" 
+                                        Value="10, 10, 10, 10"/>
+                                <Setter Property="BorderBrush" 
+                                        Value="Black"/>
                             </Style>
-                            </con:DataGrid.RowStyle>
-                            
-                            <con:DataGrid.Columns>
-                                <con:DataGridTextColumn Header="Id" Binding="{Binding Id}"  Tag="Id"  Width="auto" />
-                                <con:DataGridTextColumn Header="Név" Binding="{Binding Name}" Tag="Name"  Width="auto"/>
+                        </con:DataGrid.RowStyle>
 
-                                <!--AUTHORS-->
-                                <con:DataGridTemplateColumn Header="Szerzők" Tag="Author"
-                                                            Width="*">
-                                    <con:DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <ItemsControl ItemsSource="{Binding Authors}">
+                        <con:DataGrid.Columns>
+                            <con:DataGridTextColumn Header="Id" 
+                                                    Binding="{Binding Id}" 
+                                                    Tag="Id" 
+                                                    Width="auto" />
 
+                            <con:DataGridTextColumn Header="Név" 
+                                                    Binding="{Binding Name}" 
+                                                    Tag="Name" 
+                                                    Width="auto"/>
+
+                            <!--AUTHORS-->
+                            <con:DataGridTemplateColumn Header="Szerzők" 
+                                                        Tag="Author"
+                                                        Width="*">
+
+                                <con:DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ItemsControl ItemsSource="{Binding Authors}">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <cc:WrapPanel VerticalAlignment="Center" 
+                                                                  HorizontalAlignment="Center"/>
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Border Background="{ThemeResource MainColor3}" 
+                                                            Margin="10,10,10,10" 
+                                                            CornerRadius="5">
+
+                                                        <TextBlock Text="{Binding Name}" 
+                                                                   VerticalAlignment="Center"/>
+                                                    </Border>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </DataTemplate>
+                                </con:DataGridTemplateColumn.CellTemplate>
+                            </con:DataGridTemplateColumn>
+
+                            <!--COMPETENCES-->
+                            <con:DataGridTemplateColumn Header="Ismeretkör"
+                                                        Tag="Competences"
+                                                        Width="*">
+                                <con:DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Border>
+                                            <ItemsControl ItemsSource="{Binding Competences}">
                                                 <ItemsControl.ItemsPanel>
                                                     <ItemsPanelTemplate>
-                                                        <cc:WrapPanel VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                        <cc:WrapPanel VerticalAlignment="Center" 
+                                                                      HorizontalAlignment="Center"/>
                                                     </ItemsPanelTemplate>
                                                 </ItemsControl.ItemsPanel>
 
                                                 <ItemsControl.ItemTemplate>
                                                     <DataTemplate>
-                                                        <Border Background="{ThemeResource MainColor3}" Margin="10,10,10,10" CornerRadius="5">
-                                                            <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
-                                                        </Border>
+                                                        <Border Background="{ThemeResource MainColor3}" 
+                                                                Margin="10,10,10,10" 
+                                                                CornerRadius="5">
 
+                                                            <TextBlock Text="{Binding Name}"
+                                                                       VerticalAlignment="Center"/>
+                                                        </Border>
                                                     </DataTemplate>
                                                 </ItemsControl.ItemTemplate>
                                             </ItemsControl>
-                                        </DataTemplate>
-                                    </con:DataGridTemplateColumn.CellTemplate>
+                                        </Border>
+                                    </DataTemplate>
+                                </con:DataGridTemplateColumn.CellTemplate>
+                            </con:DataGridTemplateColumn>
 
-                                </con:DataGridTemplateColumn>
+                            <con:DataGridTextColumn Header="Dátum" 
+                                                    Binding="{Binding CreatedOn}"
+                                                    Tag="CreatedOn"
+                                                    Width="*"/>
 
-                                <!--COMPETENCES-->
-                                <con:DataGridTemplateColumn Header="Ismeretkör" Tag="Competences"
-                                                            Width="*">
-                                    <con:DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Border>
-                                                <ItemsControl ItemsSource="{Binding Competences}">
-
-                                                    <ItemsControl.ItemsPanel>
-                                                        <ItemsPanelTemplate>
-                                                            <cc:WrapPanel VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                                        </ItemsPanelTemplate>
-                                                    </ItemsControl.ItemsPanel>
-
-                                                    <ItemsControl.ItemTemplate>
-                                                        <DataTemplate>
-                                                        <Border Background="{ThemeResource MainColor3}" Margin="10,10,10,10" CornerRadius="5">
-                                                                <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
-                                                            </Border>
-
-                                                        </DataTemplate>
-                                                    </ItemsControl.ItemTemplate>
-                                                </ItemsControl>
-                                            </Border>
-
-                                        </DataTemplate>
-                                    </con:DataGridTemplateColumn.CellTemplate>
-
-                                </con:DataGridTemplateColumn>
-
-                                <con:DataGridTextColumn Header="Dátum" Binding="{Binding CreatedOn}" Tag="CreatedOn" Width="*"/>
-                            <con:DataGridTemplateColumn Header="Gombok nélkül" Width="*"
-                                                            Visibility="{x:Bind ViewModel.GameModel.GameSettings.IsGameWithoutButtonsEnabled, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <con:DataGridTemplateColumn Header="Gombok nélkül" 
+                                                        Width="*"
+                                                        Visibility="{x:Bind ViewModel.GameModel.GameSettings.IsGameWithoutButtonsEnabled, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
                                 <con:DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <Grid>
                                             <Image Source="/Assets/checkMark.png" 
-                                               Visibility="{Binding CanBePlayedWithoutButtons, Converter={StaticResource BoolToVisibilityConverter}}"
-                                               Stretch="UniformToFill"
-                                               MaxWidth="20"
-                                               MaxHeight="20"/>
+                                                   Visibility="{Binding CanBePlayedWithoutButtons, Converter={StaticResource BoolToVisibilityConverter}}"
+                                                   Stretch="UniformToFill"
+                                                   MaxWidth="20"
+                                                   MaxHeight="20"/>
 
                                             <Image Source="/Assets/colorX.png" 
-                                               Visibility="{Binding CanBePlayedWithoutButtons, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=negate}"
-                                               Stretch="UniformToFill"
-                                               MaxWidth="20"
-                                               MaxHeight="20"/>
-
+                                                   Visibility="{Binding CanBePlayedWithoutButtons, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=negate}"
+                                                   Stretch="UniformToFill"
+                                                   MaxWidth="20"
+                                                   MaxHeight="20"/>
                                         </Grid>
                                     </DataTemplate>
                                 </con:DataGridTemplateColumn.CellTemplate>
                             </con:DataGridTemplateColumn>
                         </con:DataGrid.Columns>
-
-                        </con:DataGrid>
-
+                    </con:DataGrid>
                 </Grid>
             </Grid>
         </Grid>
+        <!--#endregion-->
     </Grid>
-
 </Page>

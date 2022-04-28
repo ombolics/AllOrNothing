@@ -28,7 +28,9 @@
             <Border Margin="10,10,10,10" 
                     Background="White"
                     CornerRadius="10">
-                <TextBlock x:Name="QuestionTextBlock" Text="{x:Bind QuestionDisplay, Mode=OneWay}"
+
+                <TextBlock x:Name="QuestionTextBlock" 
+                           Text="{x:Bind QuestionDisplay, Mode=OneWay}"
                            TextAlignment="Center" 
                            VerticalAlignment="Center" 
                            TextWrapping="WrapWholeWords" 
@@ -36,9 +38,6 @@
                            FontSize="20"
                            />
             </Border>
-
         </Grid>
-
-
     </Grid>
 </UserControl>

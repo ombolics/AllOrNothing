@@ -54,7 +54,6 @@
                                                  FontSize="20"
                                                  IsReadOnly="True"/>
                 </controls:DataGrid.Columns>
-
             </controls:DataGrid>
         </StackPanel>
 
@@ -70,15 +69,13 @@
                        Foreground="{ThemeResource MainColor1}"
                        FontWeight="SemiBold"
                        VerticalAlignment="Center"
-                       HorizontalAlignment="Center"
-                       />
+                       HorizontalAlignment="Center"/>
 
             <controls:DataGrid ItemsSource="{x:Bind ViewModel.LastRoundStandings}"
                                AutoGenerateColumns="False"
                                Foreground="{ThemeResource MainColor1}">
 
                 <controls:DataGrid.Columns>
-
                     <controls:DataGridTextColumn Header="Pontszám" 
                                                  Binding="{Binding Score}" 
                                                  Tag="Score"
@@ -90,9 +87,8 @@
                                                  Tag="TeamName"
                                                  Width="*"
                                                  FontSize="20"
-                                                 IsReadOnly="True"  />
+                                                 IsReadOnly="True"/>
                 </controls:DataGrid.Columns>
-
             </controls:DataGrid>
         </StackPanel>
     </Grid>

@@ -6,6 +6,9 @@ namespace AllOrNothing.Models
 {
     public class GameModel : ObservableRecipient
     {
+        private GameSettingsModel _gameSettings;
+        private ObservableCollection<StandingDto> _gameStandings;
+
         public GameModel()
         {
 
@@ -15,21 +18,17 @@ namespace AllOrNothing.Models
             GameSettings = settings;
             GameStandings = standings;
         }
-        private ObservableCollection<StandingDto> _gameStandings;
+        
         public ObservableCollection<StandingDto> GameStandings
         {
             get => _gameStandings;
             set => SetProperty(ref _gameStandings, value);
         }
 
-        private GameSettingsModel _gameSettings;
-
         public GameSettingsModel GameSettings
         {
             get => _gameSettings;
             set => SetProperty(ref _gameSettings, value);
         }
-
-
     }
 }

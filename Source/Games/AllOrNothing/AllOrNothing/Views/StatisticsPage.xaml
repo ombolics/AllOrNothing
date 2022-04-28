@@ -8,13 +8,8 @@
     xmlns:winui="using:Microsoft.UI.Xaml.Controls"
     xmlns:helpers="using:AllOrNothing.Helpers"
     xmlns:oxy="using:OxyPlot"
-    mc:Ignorable="d"
-    Background="Black"
-    >
-
-
+    mc:Ignorable="d">
     <Grid>
-
-
+        
     </Grid>
 </Page>
