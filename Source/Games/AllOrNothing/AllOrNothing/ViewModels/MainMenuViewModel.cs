@@ -9,33 +9,35 @@ using System.Windows.Input;
 
 namespace AllOrNothing.ViewModels
 {
-    public class AllOrNothingViewModel : ViewModelBase
+    public class MainMenuViewModel : ViewModelBase
     {
-        public AllOrNothingViewModel(INavigationViewService navigationViewService)
+        #region Fields
+        private ICommand _newGameCommand;
+        private ICommand _openStatsCommand;
+        private ICommand _openQuestionSeriesCommand;
+        private ICommand _openPlayeraddingPageCommand;
+        #endregion
+
+        #region Constructors
+        public MainMenuViewModel(INavigationViewService navigationViewService)
             : base(navigationViewService)
         {
         }
+        #endregion
 
-        //public override void OnNavigatedTo(object param)
-        //{
-
-        //}
-
+        #region Events
         public event EventHandler<NavigateToEventargs> NavigateTo;
+        #endregion
 
-        private ICommand _newGameCommand;
+        #region Properties
+        public XamlRoot PageXamlRoot { get; set; }
         public ICommand NewGameCommand => _newGameCommand ?? (_newGameCommand = new RelayCommand(NewGameClicked));
-
-        private ICommand _openStatsCommand;
         public ICommand OpenStatsCommand => _openStatsCommand ?? (_openStatsCommand = new RelayCommand(OpenStatsPage));
-
-
-        private ICommand _openQuestionSeriesCommand;
         public ICommand OpenQuestionSeriesCommand => _openQuestionSeriesCommand ?? (_openQuestionSeriesCommand = new RelayCommand(OpenQuestionSeries));
-
-        private ICommand _openPlayeraddingPageCommand;
         public ICommand OpenPlayeraddingPageCommand => _openPlayeraddingPageCommand ?? (_openPlayeraddingPageCommand = new RelayCommand(OpenPlayeraddingPage));
+        #endregion
 
+        #region Methods
         private void OpenPlayeraddingPage()
         {
             NavigateTo?.Invoke(this, new NavigateToEventargs { PageVM = typeof(PlayerAddingViewModel), PageName = "Játékosok" });
@@ -43,7 +45,7 @@ namespace AllOrNothing.ViewModels
 
         private void OpenQuestionSeries()
         {
-            NavigateTo?.Invoke(this, new NavigateToEventargs { PageVM = typeof(QuestionSeriesPageViewModel), PageName = "Kérdéssorok" });
+            NavigateTo?.Invoke(this, new NavigateToEventargs { PageVM = typeof(QuestionSerieEditorViewModel), PageName = "Kérdéssorok" });
         }
 
         private void OpenStatsPage()
@@ -51,12 +53,10 @@ namespace AllOrNothing.ViewModels
             NavigateTo?.Invoke(this, new NavigateToEventargs { PageVM = typeof(StatisticsViewModel), PageName = "Statisztikák" });
         }
 
-        public XamlRoot PageXamlRoot;
-
         private async void NewGameClicked()
         {
-            var vm = Ioc.Default.GetService<AllOrNothingSettingsViewModel>();
-            if(vm.GameInProgress &&
+            var vm = Ioc.Default.GetService<GameSettingsViewModel>();
+            if (vm.GameInProgress &&
                 await PopupManager.ShowDialog(PageXamlRoot, "Új játékor kezd?", "Egy játék jelenleg is aktív! Ha új játékot kezd, a jelenlegi játék összes eredménye elveszik!",
                 ContentDialogButton.Primary, "Igen", "Mégse") != ContentDialogResult.Primary)
             {
@@ -64,7 +64,8 @@ namespace AllOrNothing.ViewModels
             }
             Ioc.Default.GetService<ScoreBoardPageViewModel>().IsMenuButtonVisible = false;
             vm.ResetSettings();
-            NavigateTo?.Invoke(this, new NavigateToEventargs { PageVM = typeof(AllOrNothingSettingsViewModel), PageName = "Beállítások" });
+            NavigateTo?.Invoke(this, new NavigateToEventargs { PageVM = typeof(GameSettingsViewModel), PageName = "Beállítások" });
         }
+        #endregion
     }
 }

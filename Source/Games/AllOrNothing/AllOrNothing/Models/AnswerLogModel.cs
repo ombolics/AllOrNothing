@@ -4,6 +4,7 @@ namespace AllOrNothing.Models
 {
     public class AnswerLogModel : ObservableRecipient
     {
+        
         private int _questionValue;
         public int QuestionValue
         {

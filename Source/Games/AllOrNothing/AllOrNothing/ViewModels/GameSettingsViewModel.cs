@@ -24,18 +24,138 @@ using Windows.UI;
 
 namespace AllOrNothing.ViewModels
 {
-    public class AllOrNothingSettingsViewModel : ViewModelBase
+    public class GameSettingsViewModel : ViewModelBase
     {
+        #region Fields
+        private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public AllOrNothingSettingsViewModel(INavigationViewService navigationViewService, IMapper mapper, IUnitOfWork unitOfWork)
+        private List<Competence> _allCompetences;
+        private bool _canGoToNextPage;
+        private XamlRoot _pageXamlRoot;
+        private ObservableCollection<QuestionSerieDto> _avaibleSeries;
+        private RoundModel _selectedRound;
+        private ObservableCollection<RoundModel> _rounds;
+        private GameModel _gameModel;
+        private ObservableCollection<PlayerDto> _selectedPlayers;
+        private SortedSet<PlayerDto> _avaiblePlayers;
+        private bool _isGameSettingsVisible;
+        private bool _gameInProgress;
+        private RoundModel _finalRound;
+        private bool _isFinalRound;
+        private ObservableCollection<TeamDto> _teams;
+
+        private ICommand _exitCommand;
+        private ICommand _generateTeamsCommand;
+        private ICommand _loadFromFileCommand;
+        private ICommand _removePlayerCommand;
+        private ICommand _showRoundSettingsCommand;
+        private ICommand _startGameCommand;
+        private ICommand _navigateToNewPlayerPageCommand;
+        #endregion
+
+        #region Constructors
+        public GameSettingsViewModel(INavigationViewService navigationViewService, IMapper mapper, IUnitOfWork unitOfWork)
             : base(navigationViewService)
         {
-            Mapper = mapper;
+            _mapper = mapper;
             _unitOfWork = unitOfWork;
 
             ResetSettings();
         }
+        #endregion
 
+        #region Events
+        public event EventHandler<NavigateToEventargs> NavigateTo;
+        #endregion
+
+        #region Properties
+        public IMapper Mapper => _mapper;
+        public List<Competence> AllCompetences
+        {
+            get => _allCompetences;
+            set => SetProperty(ref _allCompetences, value);
+        }
+        public bool CanGoToNextPage
+        {
+            get => true; //_canGoToNextPage;
+            set => SetProperty(ref _canGoToNextPage, value);
+        }
+        public XamlRoot PageXamlRoot
+        {
+            get => _pageXamlRoot;
+            set => SetProperty(ref _pageXamlRoot, value);
+        }
+        public ObservableCollection<QuestionSerieDto> AvaibleSeries
+        {
+            get => _avaibleSeries;
+            set => SetProperty(ref _avaibleSeries, value);
+        }
+        public RoundModel SelectedRound
+        {
+            get => _selectedRound;
+            set => SetProperty(ref _selectedRound, value);
+        }
+        public ObservableCollection<RoundModel> Rounds
+        {
+            get => _rounds;
+            set
+            {
+                SetProperty(ref _rounds, value);
+                //SelectedRound = _rounds[0];
+            }
+        }
+        public GameModel GameModel
+        {
+            get => _gameModel;
+            set => SetProperty(ref _gameModel, value);
+        }
+        public ObservableCollection<PlayerDto> SelectedPlayers
+        {
+            get => _selectedPlayers;
+            set => SetProperty(ref _selectedPlayers, value);
+        }
+        public RoundModel FinalRound
+        {
+            get => _finalRound;
+            set
+            {
+                SetProperty(ref _finalRound, value);
+                if (value != null)
+                    IsFinalRound = true;
+            }
+        }
+        public ObservableCollection<TeamDto> Teams
+        {
+            get => _teams;
+            set => SetProperty(ref _teams, value);
+        }
+        public bool IsFinalRound
+        {
+            get => _isFinalRound;
+            set => SetProperty(ref _isFinalRound, value);
+        }
+        public bool IsGameSettingsVisible
+        {
+            get => _isGameSettingsVisible;
+            set => SetProperty(ref _isGameSettingsVisible, value);
+        }
+        public bool GameInProgress
+        {
+            get => _gameInProgress;
+            set => SetProperty(ref _gameInProgress, value);
+        }
+
+        public ICommand ExitCommand => _exitCommand ??= new RelayCommand(Exit);
+        public ICommand GenerateTeamsCommand => _generateTeamsCommand ??= new RelayCommand(GenerateTeamsClicked);
+        public ICommand LoadFromFileCommand => _loadFromFileCommand ??= new RelayCommand(LoadFromFileClicked);
+        public ICommand ShowRoundSettingsCommand => _showRoundSettingsCommand ?? (_showRoundSettingsCommand = new RelayCommand(ShowRoundSettingsClicked));
+        public ICommand StartGameCommand => _startGameCommand ??= new RelayCommand(StartGameClicked);
+        public ICommand RemovePlayerCommand => _removePlayerCommand ??= new RelayCommand<object>(On_RemovePlayer);
+        public ICommand NavigateToNewPlayerPageCommand => _navigateToNewPlayerPageCommand ??= new RelayCommand(NavigateToNewPlayerPage);
+        #endregion
+
+        #region Methods
         public void ResetSettings()
         {
 
@@ -43,7 +163,6 @@ namespace AllOrNothing.ViewModels
             ReachablePages = null;
 
             IsGameSettingsVisible = true;
-            _playerTest = new ObservableCollection<Player>();
 
             _gameModel = new GameModel(new GameSettingsModel(), new ObservableCollection<StandingDto>());
             _rounds = null;
@@ -74,34 +193,6 @@ namespace AllOrNothing.ViewModels
             AllCompetences = _unitOfWork.Competences.GetAll().ToList();
         }
 
-        private List<Competence> _allCompetences;
-        public List<Competence> AllCompetences
-        {
-            get => _allCompetences;
-            set => SetProperty(ref _allCompetences, value);
-        }
-
-        private IMapper _mapper;
-        private readonly IUnitOfWork _unitOfWork;
-
-        private bool _canGoToNextPage;
-        public bool CanGoToNextPage
-        {
-            get => true; //_canGoToNextPage;
-            set => SetProperty(ref _canGoToNextPage, value);
-        }
-
-        private ICommand _exitCommand;
-        public ICommand ExitCommand => _exitCommand ??= new RelayCommand(Exit);
-
-        private XamlRoot _pageXamlRoot;
-        public XamlRoot PageXamlRoot
-        {
-            get => _pageXamlRoot;
-            set => SetProperty(ref _pageXamlRoot, value);
-        }
-        public event EventHandler<string> HidePage;
-       
         private async void Exit()
         {
             if (await PopupManager.ShowDialog(PageXamlRoot, "Kilépés?", "Biztosan kilép?", ContentDialogButton.Primary, "Igen", "Mégse") == ContentDialogResult.Primary)
@@ -109,7 +200,7 @@ namespace AllOrNothing.ViewModels
                 //todo átgondolni
                 ResetSettings();
                 IsMenuButtonVisible = false;
-                NavigateTo(this, new NavigateToEventargs { PageName = "Főmenü", PageVM = typeof(AllOrNothingViewModel) });
+                NavigateTo(this, new NavigateToEventargs { PageName = "Főmenü", PageVM = typeof(MainMenuViewModel) });
             }
         }
 
@@ -182,16 +273,10 @@ namespace AllOrNothing.ViewModels
             }          
         }
 
-        private ICommand _generateTeamsCommand;
-        public ICommand GenerateTeamsCommand => _generateTeamsCommand ??= new RelayCommand(GenerateTeamsClicked);
-
         private void GenerateTeamsClicked()
         {
             Teams = GenerateTeams(SelectedPlayers, GameModel.GameSettings.MaxTeamSize);
         }
-
-        private ICommand _loadFromFileCommand;
-        public ICommand LoadFromFileCommand => _loadFromFileCommand ??= new RelayCommand(LoadFromFileClicked);
 
         private async void LoadFromFileClicked()
         {
@@ -235,47 +320,11 @@ namespace AllOrNothing.ViewModels
         {
             (sender as AutoSuggestBox).ItemsSource = null;
         }
-
-        private ObservableCollection<QuestionSerieDto> _avaibleSeries;
-        public ObservableCollection<QuestionSerieDto> AvaibleSeries
-        {
-            get => _avaibleSeries;
-            set => SetProperty(ref _avaibleSeries, value);
-        }
+ 
         public void RoundSelected(object sender, ItemClickEventArgs e)
         {
             SelectedRound = e.ClickedItem as RoundModel;
         }
-
-        private RoundModel _selectedRound;
-        public RoundModel SelectedRound
-        {
-            get => _selectedRound;
-            set => SetProperty(ref _selectedRound, value);
-        }
-
-        public ObservableCollection<RoundModel> Rounds
-        {
-            get => _rounds;
-            set
-            {
-                SetProperty(ref _rounds, value);
-                //SelectedRound = _rounds[0];
-            }
-        }
-      
-        private ObservableCollection<RoundModel> _rounds;
-
-
-        private GameModel _gameModel;
-        public GameModel GameModel
-        {
-            get => _gameModel;
-            set => SetProperty(ref _gameModel, value);
-        }
-
-        //private ICommand _dropPlayerCommand;
-        //public ICommand DropPlayerCommand => _dropPlayerCommand ??= new RelayCommand<PlayerDto>(OnPlayerDropped);
 
         public void FinalizeSettings()
         {
@@ -484,23 +533,9 @@ namespace AllOrNothing.ViewModels
             }
         }
 
-        private ICommand _removePlayerCommand;
-        public ICommand RemovePlayerCommand => _removePlayerCommand ??= new RelayCommand<object>(On_RemovePlayer);
-
-        private ICommand _navigateToNewPlayerPageCommand;
-        public ICommand NavigateToNewPlayerPageCommand => _navigateToNewPlayerPageCommand ??= new RelayCommand(NavigateToNewPlayerPage);
-
         private void NavigateToNewPlayerPage()
         {
             NavigateTo?.Invoke(this, new NavigateToEventargs { PageName = "Játékosok", PageVM = typeof(PlayerAddingViewModel) });
-        }
-
-
-        private ObservableCollection<TeamDto> _teams;
-        public ObservableCollection<TeamDto> Teams
-        {
-            get => _teams;
-            set => SetProperty(ref _teams, value);
         }
 
         public void On_RemovePlayer(object param)
@@ -510,15 +545,11 @@ namespace AllOrNothing.ViewModels
             _avaiblePlayers.Add(playerDto);
         }
 
-        public bool Asd => false;
-
         public void ItemDragStarting(UIElement sender, DragStartingEventArgs e)
         {
             e.AllowedOperations = DataPackageOperation.Move;
             var asd = e.Data;
         }
-
-        private SortedSet<PlayerDto> _avaiblePlayers;
 
         public void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
@@ -559,14 +590,6 @@ namespace AllOrNothing.ViewModels
             }
         }
 
-        private ObservableCollection<PlayerDto> _selectedPlayers;
-        public ObservableCollection<PlayerDto> SelectedPlayers
-        {
-            get => _selectedPlayers;
-            set => SetProperty(ref _selectedPlayers, value);
-        }
-
-
         public void AutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
             if (args.SelectedItem is PlayerDto player)
@@ -585,27 +608,6 @@ namespace AllOrNothing.ViewModels
             }
 
         }
-
-        public event EventHandler<NavigateToEventargs> NavigateTo;
-
-        private ObservableCollection<Player> _playerTest;
-
-        public ObservableCollection<Player> PlayerTest
-        {
-            get { return _playerTest; }
-            set { SetProperty(ref _playerTest, value); }
-        }
-
-        private bool _isGameSettingsVisible;
-        public bool IsGameSettingsVisible
-        {
-            get => _isGameSettingsVisible;
-            set => SetProperty(ref _isGameSettingsVisible, value);
-        }       
-
-        private ICommand _showRoundSettingsCommand;
-
-        public ICommand ShowRoundSettingsCommand => _showRoundSettingsCommand ?? (_showRoundSettingsCommand = new RelayCommand(ShowRoundSettingsClicked));
 
         private bool HasGameValidationErrors(out string message)
         {
@@ -641,14 +643,11 @@ namespace AllOrNothing.ViewModels
                 SelectedRound = Rounds?[0];
 
                 var vm = Ioc.Default.GetService<ScoreBoardPageViewModel>();
-                vm.InitVm(GameModel.GameStandings);
+                vm.Init(GameModel.GameStandings);
 
                 IsGameSettingsVisible = false;
             }
         }
-
-        private ICommand _startGameCommand;
-        public ICommand StartGameCommand => _startGameCommand ??= new RelayCommand(StartGameClicked);
 
         private bool HasRoundValidationErrors(out string message)
         {
@@ -669,12 +668,6 @@ namespace AllOrNothing.ViewModels
             return message != "";
         }
 
-        private bool _gameInProgress;
-        public bool GameInProgress
-        {
-            get => _gameInProgress;
-            set => SetProperty(ref _gameInProgress, value);
-        }
         private async void StartGameClicked()
         {
             var message = "";
@@ -684,7 +677,7 @@ namespace AllOrNothing.ViewModels
                 return;
             }
 
-            var vm = Ioc.Default.GetService<AllOrNothingGameViewModel>();          
+            var vm = Ioc.Default.GetService<GameViewModel>();          
             vm.SetupRound(SelectedRound);
 
             if (!GameInProgress)
@@ -693,7 +686,7 @@ namespace AllOrNothing.ViewModels
                 vm.RoundOver += GameVM_RoundOver;
                 GameInProgress = true;
             }
-            NavigateTo?.Invoke(this, new NavigateToEventargs { PageVM = typeof(AllOrNothingGameViewModel), PageName = "Játék" }); 
+            NavigateTo?.Invoke(this, new NavigateToEventargs { PageVM = typeof(GameViewModel), PageName = "Játék" }); 
         }
 
         private void GameVM_RoundOver(object sender, RoundModel e)
@@ -711,43 +704,10 @@ namespace AllOrNothing.ViewModels
             if (e.IsFinalRound)
             {
                 //TODO: az oldal eltűnést és megjelenést rendbrakni
-                HidePage?.Invoke(this, "Beállítások");
+                IsMenuButtonVisible = false;
             }
             NavigateTo?.Invoke(this, new NavigateToEventargs { PageVM = typeof(ScoreBoardPageViewModel), PageName = "Eredmények" });
         }
-
-        public void ResetReachablePages()
-        {
-            throw new NotImplementedException();
-        }
-
-
-        private RoundModel _finalRound;
-        public RoundModel FinalRound
-        {
-            get => _finalRound;
-            set
-            {
-                SetProperty(ref _finalRound, value);
-                if (value != null)
-                    IsFinalRound = true;
-            } 
-        }
-        private bool _isFinalRound;
-        public bool IsFinalRound
-        {
-            get => _isFinalRound;
-            set => SetProperty(ref _isFinalRound, value);
-        }
-
-        public IMapper Mapper
-        {
-            get => _mapper;
-            set => SetProperty(ref _mapper, value);
-        }
-
-
-
         public override void OnNavigatedTo()
         {
             base.OnNavigatedTo();
@@ -765,5 +725,6 @@ namespace AllOrNothing.ViewModels
                 SelectedRound = FinalRound;
             }
         }
+        #endregion
     }
 }

@@ -11,23 +11,27 @@ namespace AllOrNothing.Services
 {
     public class PageService : IPageService
     {
+        #region Fields
         private readonly Dictionary<string, Type> _pages = new Dictionary<string, Type>();
+        #endregion
 
+        #region Constructors
         public PageService()
         {
             //core pages
-            Configure<SettingsViewModel, SettingsPage>();
-            Configure<AllOrNothingViewModel, MenuPage>();
-            Configure<AllOrNothingSettingsViewModel, AllOrNothingGameSettings>();
-            Configure<AllOrNothingGameViewModel, GamePage>();
+            Configure<AppSettingsViewModel, AppSettingsPage>();
+            Configure<MainMenuViewModel, MenuPage>();
+            Configure<GameSettingsViewModel, GameSettingsPage>();
+            Configure<GameViewModel, GamePage>();
             Configure<StatisticsViewModel, StatisticsPage>();
-            Configure<PlayerStatViewModel, PlayerStatPage>();
-            Configure<QuestionSeriesPageViewModel, QuestionSeriesPage>();
+            Configure<QuestionSerieEditorViewModel, QuestionSeriesPage>();
             Configure<ScoreBoardPageViewModel, ScoreBoardPage>();
             Configure<PlayerAddingViewModel, PlayerAddingPage>();
 
         }
+        #endregion
 
+        #region Methods
         public Type GetPageType(string key)
         {
             Type pageType;
@@ -68,5 +72,6 @@ namespace AllOrNothing.Services
                 _pages.Add(key, type);
             }
         }
+        #endregion     
     }
 }

@@ -35,7 +35,7 @@
             Or to use an IconElement instead of a Symbol see https://github.com/Microsoft/WindowsTemplateStudio/blob/release/docs/UWP/projectTypes/navigationpane.md
             Edit String/en-US/Resources.resw: Add a menu item title for each page
             -->
-            <NavigationViewItem Content="Főmenü" helpers:NavHelper.NavigateTo="AllOrNothing.ViewModels.AllOrNothingViewModel" FontSize="{ThemeResource LargeFontSize}" FontWeight="bold" Foreground="White"/>
+            <NavigationViewItem Content="Főmenü" helpers:NavHelper.NavigateTo="AllOrNothing.ViewModels.MainMenuViewModel" FontSize="{ThemeResource LargeFontSize}" FontWeight="bold" Foreground="White"/>
             <!--<NavigationViewItem>
                 <NavigationViewItem.Content>
                     <StackPanel Orientation="Horizontal">

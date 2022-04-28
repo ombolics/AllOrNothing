@@ -133,7 +133,6 @@
                     <TextBox Grid.Row="1" Grid.Column="1" Text="{x:Bind ViewModel.EditingPlayer.Name, Mode=TwoWay}" 
                              FontSize="{ThemeResource MediumFontSize}"
                      x:Name="nameTextBox"
-                     TextChanged="{x:Bind ViewModel.TextBoxChanged}"
                      IsEnabled="{x:Bind ViewModel.FormEnabled, Mode=OneWay}"
                      HorizontalAlignment="Stretch"
                      Style="{ThemeResource CommonTextBoxStyle}"/>
@@ -143,7 +142,6 @@
                     <TextBox Grid.Row="2" Grid.Column="1" Text="{x:Bind ViewModel.EditingPlayer.NickName, Mode=TwoWay}" 
                              FontSize="{ThemeResource MediumFontSize}"
                              x:Name="nickNameTextBox"
-                             TextChanged="{x:Bind ViewModel.TextBoxChanged}"
                              IsEnabled="{x:Bind ViewModel.FormEnabled, Mode=OneWay}"
                      HorizontalAlignment="Stretch"
                      Style="{ThemeResource CommonTextBoxStyle}"/>
@@ -153,7 +151,6 @@
                     <TextBox Grid.Row="3" Grid.Column="1" Text="{x:Bind ViewModel.EditingPlayer.Institute, Mode=TwoWay}" 
                              FontSize="{ThemeResource MediumFontSize}"
                              x:Name="instituteTextBox"
-                             TextChanged="{x:Bind ViewModel.TextBoxChanged}"
                              IsEnabled="{x:Bind ViewModel.FormEnabled, Mode=OneWay}"
                      HorizontalAlignment="Stretch"
                              Style="{ThemeResource CommonTextBoxStyle}"/>

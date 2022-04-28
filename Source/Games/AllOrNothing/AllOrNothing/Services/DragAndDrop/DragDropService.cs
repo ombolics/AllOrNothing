@@ -9,16 +9,9 @@ using Windows.ApplicationModel.DataTransfer;
 
 namespace AllOrNothing.Services.DragAndDrop
 {
-    public class TestData : ISerializable
-    {
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            throw new System.NotImplementedException();
-        }
-    }
-    // For instructions on testing this service see https://github.com/Microsoft/WindowsTemplateStudio/blob/release/docs/UWP/features/drag-and-drop.md
     public class DragDropService
     {
+        #region Dependency properties
         private static DependencyProperty configurationProperty = DependencyProperty.RegisterAttached(
         "Configuration",
         typeof(DropConfiguration),
@@ -30,7 +23,9 @@ namespace AllOrNothing.Services.DragAndDrop
         typeof(VisualDropConfiguration),
         typeof(DragDropService),
         new PropertyMetadata(null, OnVisualConfigurationPropertyChanged));
+        #endregion
 
+        #region Methods
         public static void SetConfiguration(DependencyObject dependencyObject, DropConfiguration value)
         {
             if (dependencyObject != null)
@@ -156,5 +151,6 @@ namespace AllOrNothing.Services.DragAndDrop
                 }
             };
         }
+        #endregion
     }
 }

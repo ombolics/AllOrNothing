@@ -13,7 +13,7 @@ namespace AllOrNothing.Views
     /// </summary>
     public sealed partial class QuestionSeriesPage : Page
     {
-        public QuestionSeriesPageViewModel ViewModel { get; set; } = Ioc.Default.GetService<QuestionSeriesPageViewModel>();
+        public QuestionSerieEditorViewModel ViewModel { get; set; } = Ioc.Default.GetService<QuestionSerieEditorViewModel>();
         public QuestionSeriesPage()
         {
             this.InitializeComponent();

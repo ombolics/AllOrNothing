@@ -8,11 +8,11 @@ namespace AllOrNothing.Views
 {
     public sealed partial class MenuPage : Page
     {
-        public AllOrNothingViewModel ViewModel { get; set; } = Ioc.Default.GetService<AllOrNothingViewModel>();
+        public MainMenuViewModel ViewModel { get; set; } = Ioc.Default.GetService<MainMenuViewModel>();
 
         public MenuPage()
         {
-            ViewModel = Ioc.Default.GetService<AllOrNothingViewModel>();
+            ViewModel = Ioc.Default.GetService<MainMenuViewModel>();
             InitializeComponent();
         }
 

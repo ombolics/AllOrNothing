@@ -15,29 +15,6 @@
 
     <Grid>
 
-        <!--<winui:NavigationView x:Name="navView" IsBackButtonVisible="Collapsed" IsSettingsVisible="False" 
-                              IsPaneToggleButtonVisible="False" SelectedItem="{x:Bind ViewModel.Selected, Mode=OneWay}">
-            <winui:NavigationView.MenuItems>
-                <winui:NavigationViewItem IsTapEnabled="True" helpers:NavHelper.NavigateTo="AllOrNothing.ViewModels.PlayerStatViewModel">
-                    <winui:NavigationViewItem.Content >
-
-                        <winui:AutoSuggestBox PlaceholderText="Type a control name"
-                         TextChanged="AutoSuggestBox_TextChanged"
-                        QueryIcon="Find"
-                        SuggestionChosen="AutoSuggestBox_SuggestionChosen"/> 
-
-                    </winui:NavigationViewItem.Content>
-                </winui:NavigationViewItem>
-                <winui:NavigationViewItem Icon="LeaveChat" Content="Menu Item2" Tag="SamplePage2" />
-                <winui:NavigationViewItem Icon="Refresh" Content="Menu Item3" Tag="SamplePage3" />
-                <winui:NavigationViewItem Icon="Download" Content="Menu Item4" Tag="SamplePage4" />
-            </winui:NavigationView.MenuItems>
-            
-            <Frame x:Name="contentFrame"/>
-            
-        </winui:NavigationView>-->
-
-        <oxy:PlotView Model="{x:Bind ViewModel.PlotModel}" Visibility="Visible"/>
 
     </Grid>
 </Page>

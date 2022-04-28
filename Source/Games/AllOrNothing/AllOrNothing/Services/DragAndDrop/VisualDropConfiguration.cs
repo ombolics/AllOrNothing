@@ -5,6 +5,7 @@ namespace AllOrNothing.Services.DragAndDrop
 {
     public class VisualDropConfiguration : DependencyObject
     {
+        #region Dependency properties
         public static readonly DependencyProperty CaptionProperty =
             DependencyProperty.Register("Caption", typeof(string), typeof(VisualDropConfiguration), new PropertyMetadata(string.Empty));
 
@@ -22,7 +23,9 @@ namespace AllOrNothing.Services.DragAndDrop
 
         public static readonly DependencyProperty DropOverImageProperty =
             DependencyProperty.Register("DropOverImage", typeof(ImageSource), typeof(VisualDropConfiguration), new PropertyMetadata(null));
+        #endregion
 
+        #region Properties
         public string Caption
         {
             get { return (string)GetValue(CaptionProperty); }
@@ -58,5 +61,6 @@ namespace AllOrNothing.Services.DragAndDrop
             get { return (ImageSource)GetValue(DropOverImageProperty); }
             set { SetValue(DropOverImageProperty, value); }
         }
+        #endregion
     }
 }

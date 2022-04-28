@@ -15,6 +15,7 @@ namespace AllOrNothing.Services.DragAndDrop
 {
     public class DropConfiguration : DependencyObject
     {
+        #region Dependency properties
         public static readonly DependencyProperty DropBitmapCommandProperty =
             DependencyProperty.Register("DropBitmapCommand", typeof(ICommand), typeof(DropConfiguration), new PropertyMetadata(null));
 
@@ -47,7 +48,9 @@ namespace AllOrNothing.Services.DragAndDrop
 
         public static readonly DependencyProperty DragLeaveCommandProperty =
             DependencyProperty.Register("DragLeaveCommand", typeof(ICommand), typeof(DropConfiguration), new PropertyMetadata(null));
+        #endregion
 
+        #region Properties
         public ICommand DropBitmapCommand
         {
             get { return (ICommand)GetValue(DropBitmapCommandProperty); }
@@ -113,7 +116,9 @@ namespace AllOrNothing.Services.DragAndDrop
             get { return (ICommand)GetValue(DragLeaveCommandProperty); }
             set { SetValue(DragLeaveCommandProperty, value); }
         }
+        #endregion
 
+        #region Methods
         public async Task ProcessComandsAsync(DataPackageView dataview)
         {
             if (DropDataViewCommand != null)
@@ -171,5 +176,6 @@ namespace AllOrNothing.Services.DragAndDrop
                 DropWebLinkCommand.Execute(uri);
             }
         }
+        #endregion     
     }
 }

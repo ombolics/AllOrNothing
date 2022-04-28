@@ -93,25 +93,22 @@ namespace AllOrNothing
             services.AddTransient<ShellPage>();
             services.AddTransient<ShellViewModel>();
 
-            services.AddTransient<SettingsViewModel>();
-            services.AddTransient<SettingsPage>();
+            services.AddTransient<AppSettingsViewModel>();
+            services.AddTransient<AppSettingsPage>();
 
             services.AddSingleton<MenuPage>();
-            services.AddSingleton<AllOrNothingViewModel>();
+            services.AddSingleton<MainMenuViewModel>();
 
-            services.AddSingleton<AllOrNothingGameSettings>();
-            services.AddSingleton<AllOrNothingSettingsViewModel>();
+            services.AddSingleton<GameSettingsPage>();
+            services.AddSingleton<GameSettingsViewModel>();
 
             services.AddSingleton<GamePage>();
-            services.AddSingleton<AllOrNothingGameViewModel>();
+            services.AddSingleton<GameViewModel>();
 
             services.AddSingleton<StatisticsPage>();
             services.AddSingleton<StatisticsViewModel>();
 
-            services.AddTransient<PlayerStatViewModel>();
-            services.AddTransient<PlayerStatPage>();
-
-            services.AddSingleton<QuestionSeriesPageViewModel>();
+            services.AddSingleton<QuestionSerieEditorViewModel>();
             services.AddSingleton<QuestionSeriesPage>();
 
             services.AddSingleton<ScoreBoardPageViewModel>();

@@ -17,7 +17,7 @@ namespace AllOrNothing.Activation
 
         protected override async Task HandleInternalAsync(LaunchActivatedEventArgs args)
         {
-            _navigationService.NavigateTo(typeof(AllOrNothingViewModel).FullName, args.Arguments);
+            _navigationService.NavigateTo(typeof(MainMenuViewModel).FullName, args.Arguments);
             await Task.CompletedTask;
         }
 

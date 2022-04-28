@@ -9,104 +9,91 @@ namespace AllOrNothing.ViewModels
 {
     public class ShellViewModel : ObservableRecipient
     {
+        #region Fields
         private bool _isBackEnabled;
-
         private object _selected;
-        public object Selected
-        {
-            get { return _selected; }
-            set { SetProperty(ref _selected, value); }
-        }
 
-        private AllOrNothingGameViewModel _gameViewModel;
-
-        private AllOrNothingSettingsViewModel _allOrNothingSettingsViewModel;
-        public AllOrNothingSettingsViewModel AllOrNothingSettingsViewModel
-        {
-            get => _allOrNothingSettingsViewModel;
-            set => SetProperty(ref _allOrNothingSettingsViewModel, value);
-        }
-
-        private AllOrNothingViewModel _allOrNothingViewModel;
-        public AllOrNothingViewModel AllOrNothingViewModel
-        {
-            get => _allOrNothingViewModel;
-            set => SetProperty(ref _allOrNothingViewModel, value);
-        }
-
+        //page viewModels
+        private GameViewModel _gameViewModel;
+        private GameSettingsViewModel _allOrNothingSettingsViewModel;
+        private MainMenuViewModel _allOrNothingViewModel;
         private PlayerAddingViewModel _playerAddingViewModel;
-        public PlayerAddingViewModel PlayerAddingViewModel
-        {
-            get => _playerAddingViewModel;
-            set => SetProperty(ref _playerAddingViewModel, value);
-        }
+        private QuestionSerieEditorViewModel _questionSeriesPageViewModel;
+        #endregion
 
-        private QuestionSeriesPageViewModel _questionSeriesPageViewModel;
-        public QuestionSeriesPageViewModel QuestionSeriesPageViewModel
-        {
-            get => _questionSeriesPageViewModel;
-            set => SetProperty(ref _questionSeriesPageViewModel, value);
-        }
-
-        public INavigationService NavigationService { get; }
-
-        public INavigationViewService NavigationViewService { get; }
-
-        public bool IsBackEnabled
-        {
-            get { return _isBackEnabled; }
-            set { SetProperty(ref _isBackEnabled, value); }
-        }
-
-        public AllOrNothingGameViewModel GameViewModel
-        {
-            get => _gameViewModel;
-            set => SetProperty(ref _gameViewModel, value);
-        }
-
+        #region Constructors
         public ShellViewModel(INavigationService navigationService, INavigationViewService navigationViewService)
         {
             NavigationService = navigationService;
             NavigationService.Navigated += OnNavigated;
             NavigationViewService = navigationViewService;
 
-            AllOrNothingViewModel = Ioc.Default.GetService<AllOrNothingViewModel>();
+            AllOrNothingViewModel = Ioc.Default.GetService<MainMenuViewModel>();
             AllOrNothingViewModel.NavigateTo += On_NavigateTo;
 
             PlayerAddingViewModel = Ioc.Default.GetService<PlayerAddingViewModel>();
             PlayerAddingViewModel.NavigateTo += On_NavigateTo;
 
-            QuestionSeriesPageViewModel = Ioc.Default.GetService<QuestionSeriesPageViewModel>();
+            QuestionSeriesPageViewModel = Ioc.Default.GetService<QuestionSerieEditorViewModel>();
             QuestionSeriesPageViewModel.NavigateTo += On_NavigateTo;
 
-            AllOrNothingSettingsViewModel = Ioc.Default.GetService<AllOrNothingSettingsViewModel>();
+            AllOrNothingSettingsViewModel = Ioc.Default.GetService<GameSettingsViewModel>();
             AllOrNothingSettingsViewModel.NavigateTo += On_NavigateTo;
 
-            GameViewModel = Ioc.Default.GetRequiredService<AllOrNothingGameViewModel>();
+            GameViewModel = Ioc.Default.GetRequiredService<GameViewModel>();
 
-        }     
+        }
+        #endregion
 
-        private void On_HidePage(object sender, string e)
+        #region Properties
+        //frame wrappers
+        public object Selected
         {
-            //if (!string.IsNullOrEmpty(e))
-            //{
-            //    NavigationViewService.SetNavItemVisibility(e, false);
-            //}
-            //TODO
+            get { return _selected; }
+            set { SetProperty(ref _selected, value); }
+        }
+        public bool IsBackEnabled
+        {
+            get { return _isBackEnabled; }
+            set { SetProperty(ref _isBackEnabled, value); }
         }
 
-        private void On_HidePages(object sender, System.Collections.Generic.List<string> e)
+        public GameSettingsViewModel AllOrNothingSettingsViewModel
         {
-            //if (e is null || e.Count == 0)
-            //{
-            //    NavigationViewService.ShowAllPage();
-            //}
-            //else
-            //{
-            //    NavigationViewService.HideAllPageExcept(e);
-            //}
+            get => _allOrNothingSettingsViewModel;
+            set => SetProperty(ref _allOrNothingSettingsViewModel, value);
         }
 
+        public MainMenuViewModel AllOrNothingViewModel
+        {
+            get => _allOrNothingViewModel;
+            set => SetProperty(ref _allOrNothingViewModel, value);
+        }
+
+        public PlayerAddingViewModel PlayerAddingViewModel
+        {
+            get => _playerAddingViewModel;
+            set => SetProperty(ref _playerAddingViewModel, value);
+        }
+
+        public QuestionSerieEditorViewModel QuestionSeriesPageViewModel
+        {
+            get => _questionSeriesPageViewModel;
+            set => SetProperty(ref _questionSeriesPageViewModel, value);
+        }
+
+        public GameViewModel GameViewModel
+        {
+            get => _gameViewModel;
+            set => SetProperty(ref _gameViewModel, value);
+        }
+
+        public INavigationService NavigationService { get; }
+
+        public INavigationViewService NavigationViewService { get; }
+        #endregion
+
+        #region EventHandler
         private void On_NavigateTo(object sender, NavigateToEventargs e)
         {
             if (!NavigationViewService.MenuPointExists(e.PageName))
@@ -118,7 +105,7 @@ namespace AllOrNothing.ViewModels
         private void OnNavigated(object sender, NavigationEventArgs e)
         {
             IsBackEnabled = NavigationService.CanGoBack;
-            if (e.SourcePageType == typeof(SettingsPage))
+            if (e.SourcePageType == typeof(AppSettingsPage))
             {
                 Selected = NavigationViewService.SettingsItem;
                 return;
@@ -130,5 +117,6 @@ namespace AllOrNothing.ViewModels
                 Selected = selectedItem;
             }
         }
+        #endregion
     }
 }

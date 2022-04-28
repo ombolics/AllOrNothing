@@ -6,16 +6,26 @@ using Microsoft.UI.Xaml.Navigation;
 
 namespace AllOrNothing.Services
 {
-    // For more information on navigation between pages see
-    // https://github.com/Microsoft/WindowsTemplateStudio/blob/release/docs/WinUI/navigation.md
     public class NavigationService : INavigationService
     {
+        #region Fields
         private readonly IPageService _pageService;
         private object _lastParameterUsed;
         private Frame _frame;
+        #endregion
 
+        #region Contructors
+        public NavigationService(IPageService pageService)
+        {
+            _pageService = pageService;
+        }
+        #endregion
+
+        #region Events
         public event NavigatedEventHandler Navigated;
+        #endregion
 
+        #region Properties
         public Frame Frame
         {
             get
@@ -36,14 +46,10 @@ namespace AllOrNothing.Services
                 RegisterFrameEvents();
             }
         }
-
         public bool CanGoBack => Frame.CanGoBack;
+        #endregion
 
-        public NavigationService(IPageService pageService)
-        {
-            _pageService = pageService;
-        }
-
+        #region Methods
         private void RegisterFrameEvents()
         {
             if (_frame != null)
@@ -122,5 +128,6 @@ namespace AllOrNothing.Services
                 Navigated?.Invoke(sender, e);
             }
         }
+        #endregion
     }
 }

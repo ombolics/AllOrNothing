@@ -10,10 +10,15 @@ namespace AllOrNothing.Services
 {
     public class ThemeSelectorService : IThemeSelectorService
     {
+        #region Fields
         private const string SettingsKey = "AppBackgroundRequestedTheme";
+        #endregion
 
+        #region Properties
         public ElementTheme Theme { get; set; } = ElementTheme.Default;
+        #endregion
 
+        #region Methods
         public async Task InitializeAsync()
         {
             Theme = await LoadThemeFromSettingsAsync();
@@ -56,5 +61,6 @@ namespace AllOrNothing.Services
         {
             await ApplicationData.Current.LocalSettings.SaveAsync(SettingsKey, theme.ToString());
         }
+        #endregion
     }
 }

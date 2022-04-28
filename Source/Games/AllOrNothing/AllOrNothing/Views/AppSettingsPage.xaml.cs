@@ -7,13 +7,13 @@ using Microsoft.UI.Xaml.Controls;
 namespace AllOrNothing.Views
 {
     // TODO WTS: Change the URL for your privacy policy, currently set to https://YourPrivacyUrlGoesHere
-    public sealed partial class SettingsPage : Page
+    public sealed partial class AppSettingsPage : Page
     {
-        public SettingsViewModel ViewModel { get; }
+        public AppSettingsViewModel ViewModel { get; }
 
-        public SettingsPage()
+        public AppSettingsPage()
         {
-            ViewModel = Ioc.Default.GetService<SettingsViewModel>();
+            ViewModel = Ioc.Default.GetService<AppSettingsViewModel>();
             InitializeComponent();
         }
     }

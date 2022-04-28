@@ -20,7 +20,7 @@ namespace AllOrNothingTest
 {
     public class AllOrNothingSettingsViewModelTest : IClassFixture<SettingsViewModelTestFixture>
     {
-        AllOrNothingSettingsViewModel _viewModel;
+        GameSettingsViewModel _viewModel;
         private readonly SettingsViewModelTestFixture _fixture;
         public AllOrNothingSettingsViewModelTest(SettingsViewModelTestFixture fixture)
         {
@@ -82,7 +82,7 @@ namespace AllOrNothingTest
         [Fact]
         public void TeamGenerationTest_MaxTeamSize()
         {
-            _viewModel = new AllOrNothingSettingsViewModel(
+            _viewModel = new GameSettingsViewModel(
                 Ioc.Default.GetService<INavigationViewService>(),
                 Ioc.Default.GetService<IMapper>(),
                 Ioc.Default.GetService<IUnitOfWork>());
@@ -109,7 +109,7 @@ namespace AllOrNothingTest
         [Fact]
         public void TeamGenerationTest_EachPlayerInOneTeam()
         {
-            _viewModel = new AllOrNothingSettingsViewModel(
+            _viewModel = new GameSettingsViewModel(
                 Ioc.Default.GetService<INavigationViewService>(),
                 Ioc.Default.GetService<IMapper>(),
                 Ioc.Default.GetService<IUnitOfWork>());
@@ -128,7 +128,7 @@ namespace AllOrNothingTest
         [Fact]
         public void EachTeamAppearsTheRequieredTime()
         {
-            _viewModel = new AllOrNothingSettingsViewModel(
+            _viewModel = new GameSettingsViewModel(
                 Ioc.Default.GetService<INavigationViewService>(),
                 Ioc.Default.GetService<IMapper>(),
                 Ioc.Default.GetService<IUnitOfWork>());
@@ -153,7 +153,7 @@ namespace AllOrNothingTest
         [Fact]
         public void EachSheduleContainsDifferentTeams()
         {
-            _viewModel = new AllOrNothingSettingsViewModel(
+            _viewModel = new GameSettingsViewModel(
                 Ioc.Default.GetService<INavigationViewService>(),
                 Ioc.Default.GetService<IMapper>(),
                 Ioc.Default.GetService<IUnitOfWork>());
@@ -197,7 +197,7 @@ namespace AllOrNothingTest
         [Fact]
         public void EachSheduleContainsTheRequieredAmountOfTeams()
         {
-            _viewModel = new AllOrNothingSettingsViewModel(
+            _viewModel = new GameSettingsViewModel(
                 Ioc.Default.GetService<INavigationViewService>(),
                 Ioc.Default.GetService<IMapper>(),
                 Ioc.Default.GetService<IUnitOfWork>());
@@ -211,7 +211,7 @@ namespace AllOrNothingTest
         [Fact]
         public void EmptyTeamList()
         {
-            _viewModel = new AllOrNothingSettingsViewModel(
+            _viewModel = new GameSettingsViewModel(
                 Ioc.Default.GetService<INavigationViewService>(),
                 Ioc.Default.GetService<IMapper>(),
                 Ioc.Default.GetService<IUnitOfWork>());

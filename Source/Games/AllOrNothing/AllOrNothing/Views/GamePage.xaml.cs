@@ -14,7 +14,7 @@ namespace AllOrNothing.Views
     /// </summary>
     public sealed partial class GamePage : Page
     {
-        public AllOrNothingGameViewModel ViewModel { get; } = Ioc.Default.GetService<AllOrNothingGameViewModel>();
+        public GameViewModel ViewModel { get; } = Ioc.Default.GetService<GameViewModel>();
         public GamePage()
         {
             NavigationCacheMode = NavigationCacheMode.Enabled;

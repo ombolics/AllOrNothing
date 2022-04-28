@@ -21,46 +21,109 @@ namespace AllOrNothing.ViewModels
         TEMATICAL,
         LIGHTNING
     }
-
-    public class AllOrNothingGameViewModel : ViewModelBase
+    //TODO: egységesíteni a neveket (game over vs round over)
+    public class GameViewModel : ViewModelBase
     {
-        public AllOrNothingGameViewModel(INavigationViewService navigationViewService, IMapper mapper) : base(navigationViewService)
-        {
-            ScoreTest = 3000;
+        #region Fields
+        private GamePhase _gamePhase;
+        private ObservableCollection<AnswerLogModel> _answerLog;
+        private RoundModel _selectedRound;
 
+        private ICommand _toggleTimerCommand;
+        private ICommand _gameOverCommand;
+        private ICommand _skipAnswerCommand;
+        private ICommand _submitAnswerCommand;
+        private ICommand _showLightningCommand;
+        private ICommand _loadFromFileCommand;
+
+        private string _answerText;
+        private StandingDto _pickingTeam;
+        private int _pickingIndex;
+        private DispatcherTimer _gameTimer;
+        private XamlRoot _pageXamlRoot;
+        private QuestionDto _currentQuestion;
+        private string _occasionName;
+        #endregion
+
+        #region Constructors
+        public GameViewModel(INavigationViewService navigationViewService) 
+            : base(navigationViewService)
+        {
             _gameTimer = new DispatcherTimer();
             _gameTimer.Interval = TimeSpan.FromSeconds(1);
             _gameTimer.Tick += _gameTimer_Tick;
-            _mapper = mapper;
-
-            ReachablePages = new List<Type> { typeof(AllOrNothingSettingsViewModel) };
+            ReachablePages = new List<Type> { typeof(GameSettingsViewModel) };
         }
-        private GamePhase _gamePhase;
+        #endregion
 
-        private ObservableCollection<AnswerLogModel> _answerLog;
+        #region Events
+        public event EventHandler<RoundModel> RoundOver;
+        #endregion
+
+        #region Properties
         public ObservableCollection<AnswerLogModel> AnswerLog
         {
             get => _answerLog;
             set => SetProperty(ref _answerLog, value);
         }
-
-
-        public event EventHandler<string> HidePage;
-
-        private void SetupLightning()
+        public string AnswerText
         {
-            GamePhase = GamePhase.LIGHTNING;
-            CurrentQuestion = new QuestionDto
+            get => _answerText;
+            set => SetProperty(ref _answerText, value);
+        }
+        public StandingDto PickingTeam
+        {
+            get => _pickingTeam;
+            set => SetProperty(ref _pickingTeam, value);
+        }
+        public XamlRoot PageXamlRoot
+        {
+            get => _pageXamlRoot;
+            set => SetProperty(ref _pageXamlRoot, value);
+        }
+        public string OccasionName
+        {
+            get => _occasionName;
+            set => SetProperty(ref _occasionName, value);
+        }
+
+        public QuestionDto CurrentQuestion
+        {
+            get => _currentQuestion;
+            set
             {
-                Value = 3000,
-            };
+                if (GamePhase == GamePhase.LIGHTNING && value == null)
+                {
+                    value = new QuestionDto
+                    {
+                        Value = 3000,
+                    };
+                }
+                Debug.WriteLine("VM\t" + value?.GetHashCode());
+                SetProperty(ref _currentQuestion, value);
+            }
         }
-
-        private void SetupTematical()
+        public RoundModel SelectedRound
         {
-            GamePhase = GamePhase.TEMATICAL;
+            get => _selectedRound;
+            set => SetProperty(ref _selectedRound, value);
+        }
+        public GamePhase GamePhase
+        {
+            get => _gamePhase;
+            set => SetProperty(ref _gamePhase, value);
         }
 
+        public ICommand ToggleTimerCommand => _toggleTimerCommand ??= new RelayCommand(ToggleTimer);
+        public ICommand GameOverCommand => _gameOverCommand ??= new RelayCommand(On_RoundOver);
+        public ICommand SkipAnswerCommand => _skipAnswerCommand ??= new RelayCommand(SkipAnswer);
+        public ICommand SubmitAnswerCommand => _submitAnswerCommand ??= new RelayCommand(SubmitAnser);
+        public ICommand ShowLightningCommand => _showLightningCommand ??= new RelayCommand(ShowLightning);
+        public ICommand LoadFromFileCommand => _loadFromFileCommand ??= new RelayCommand(LoadFromFileClicked);
+
+        #endregion
+
+        #region Methods
         public void SetupRound(RoundModel m)
         {
             m.RoundSettings.TematicalTime = m.RoundSettings.TematicalTime.ShiftToRight();
@@ -85,6 +148,28 @@ namespace AllOrNothing.ViewModels
             _pickingIndex = 0;
             PickingTeam = SelectedRound.RoundStandings[_pickingIndex];
         }
+        public void SkipAnswer()
+        {
+            if (CurrentQuestion != null)
+            {
+                AnswerText = string.Empty;
+                CurrentQuestion = null;
+                PickingTeam = SelectedRound.RoundStandings[++_pickingIndex % SelectedRound.RoundStandings.Count];
+            }
+        }
+        private void SetupLightning()
+        {
+            GamePhase = GamePhase.LIGHTNING;
+            CurrentQuestion = new QuestionDto
+            {
+                Value = 3000,
+            };
+        }
+
+        private void SetupTematical()
+        {
+            GamePhase = GamePhase.TEMATICAL;
+        }
 
         private void _gameTimer_Tick(object sender, object e)
         {
@@ -108,18 +193,6 @@ namespace AllOrNothing.ViewModels
             }
         }
 
-
-        private RoundModel _selectedRound;
-
-
-        private ICommand _toggleTimerCommand;
-        public ICommand ToggleTimerCommand => _toggleTimerCommand ??= new RelayCommand(ToggleTimer);
-
-        //TODO: egységesíteni a neveket (game over vs round over)
-        private ICommand _gameOverCommand;
-        public ICommand GameOverCommand => _gameOverCommand ??= new RelayCommand(On_RoundOver);
-
-        public event EventHandler<RoundModel> RoundOver;
         private async void On_RoundOver()
         {
             string popUpContent = "Biztosan véget vet a játéknak?";
@@ -127,8 +200,8 @@ namespace AllOrNothing.ViewModels
             {
                 popUpContent += "\nA villámkérdések még visszavannak!";
             }
-            
-            if(await PopupManager.ShowDialog(PageXamlRoot, "Kör vége?", popUpContent,ContentDialogButton.Primary,"Igen","Mégse") == ContentDialogResult.Primary)
+
+            if (await PopupManager.ShowDialog(PageXamlRoot, "Kör vége?", popUpContent, ContentDialogButton.Primary, "Igen", "Mégse") == ContentDialogResult.Primary)
             {
                 SelectedRound.RoundEnded = true;
                 //TODO create game history
@@ -137,37 +210,6 @@ namespace AllOrNothing.ViewModels
                 RoundOver?.Invoke(this, SelectedRound);
             }
         }
-
-        private ICommand _skipAnswerCommand;
-        public ICommand SkipAnswerCommand => _skipAnswerCommand ??= new RelayCommand(SkipAnswer);
-
-        public void SkipAnswer()
-        {
-            if (CurrentQuestion != null)
-            {
-                AnswerText = string.Empty;
-                CurrentQuestion = null;
-                PickingTeam = SelectedRound.RoundStandings[++_pickingIndex % SelectedRound.RoundStandings.Count];
-            }
-        }
-
-        private ICommand _submitAnswerCommand;
-        public ICommand SubmitAnswerCommand => _submitAnswerCommand ??= new RelayCommand(SubmitAnser);
-
-        private string _answerText;
-        public string AnswerText
-        {
-            get => _answerText;
-            set => SetProperty(ref _answerText, value);
-        }
-
-        private StandingDto _pickingTeam;
-        public StandingDto PickingTeam
-        {
-            get => _pickingTeam;
-            set => SetProperty(ref _pickingTeam, value);
-        }
-        private int _pickingIndex;
 
         private void SubmitAnser()
         {
@@ -197,11 +239,8 @@ namespace AllOrNothing.ViewModels
             AnswerLog.Add(answ);
             PickingTeam = SelectedRound.RoundStandings[++_pickingIndex % SelectedRound.RoundStandings.Count];
             AnswerText = string.Empty;
-            CurrentQuestion = null;          
+            CurrentQuestion = null;
         }
-
-        private ICommand _showLightningCommand;
-        public ICommand ShowLightningCommand => _showLightningCommand ??= new RelayCommand(ShowLightning);
 
         private async void ShowLightning()
         {
@@ -210,9 +249,6 @@ namespace AllOrNothing.ViewModels
                 SetupLightning();
             }
         }
-
-        private ICommand _loadFromFileCommand;
-        public ICommand LoadFromFileCommand => _loadFromFileCommand ??= new RelayCommand(LoadFromFileClicked);
 
         public async void LoadFromFileClicked()
         {
@@ -225,15 +261,6 @@ namespace AllOrNothing.ViewModels
 
             var file = await picker.PickSingleFileAsync();
 
-        }
-
-        private DispatcherTimer _gameTimer;
-
-        private XamlRoot _pageXamlRoot;
-        public XamlRoot PageXamlRoot
-        {
-            get => _pageXamlRoot;
-            set => SetProperty(ref _pageXamlRoot, value);
         }
 
         private void ToggleTimer()
@@ -251,64 +278,6 @@ namespace AllOrNothing.ViewModels
                 _gameTimer.Start();
             }
         }
-
-        private int _scoreTest;
-        public int ScoreTest
-        {
-            get => _scoreTest;
-            set => SetProperty(ref _scoreTest, value);
-        }
-
-
-        private readonly List<string> _enabledPages = new List<string> { "Beállítások", "Játék" };
-        private readonly IMapper _mapper;
-
-        /// <summary>
-        /// <param>
-        /// The members of the parameter are enabled
-        /// </param>
-        /// </summary>
-        public event EventHandler<List<string>> HidePages;
-        public void OnNavigatedTo(object parameter)
-        {
-            HidePages?.Invoke(this, _enabledPages);
-        }
-
-
-        private QuestionDto _currentQuestion;
-
-        private string _occasionName;
-        public string OccasionName
-        {
-            get => _occasionName;
-            set => SetProperty(ref _occasionName, value);
-        }
-
-        public QuestionDto CurrentQuestion
-        {
-            get => _currentQuestion;
-            set
-            {
-                if(GamePhase == GamePhase.LIGHTNING && value == null)
-                {
-                    value = new QuestionDto
-                    {
-                        Value = 3000,
-                    };
-                }
-                Debug.WriteLine("VM\t" + value?.GetHashCode());
-                SetProperty(ref _currentQuestion, value);
-            }
-        }
-        public RoundModel SelectedRound
-        {
-            get => _selectedRound;
-            set => SetProperty(ref _selectedRound, value);
-        }
-        public GamePhase GamePhase
-        {
-            get => _gamePhase;
-            set => SetProperty(ref _gamePhase, value);
-        }
+        #endregion
     }
 }

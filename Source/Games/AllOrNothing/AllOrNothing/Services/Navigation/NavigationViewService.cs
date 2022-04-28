@@ -16,22 +16,29 @@ namespace AllOrNothing.Services
 {
     public class NavigationViewService : INavigationViewService
     {
+        #region Fields
         private readonly INavigationService _navigationService;
         private readonly IPageService _pageService;
         private NavigationView _navigationView;
+        #endregion
 
-        public IList<object> MenuItems
-            => _navigationView.MenuItems;
-
-        public object SettingsItem
-            => _navigationView.SettingsItem;
-
+        #region Contructors
         public NavigationViewService(INavigationService navigationService, IPageService pageService)
         {
             _navigationService = navigationService;
             _pageService = pageService;
         }
+        #endregion
 
+        #region Properties
+        public IList<object> MenuItems
+            => _navigationView.MenuItems;
+
+        public object SettingsItem
+            => _navigationView.SettingsItem;
+        #endregion
+
+        #region Methods
         public void Initialize(NavigationView navigationView)
         {
             _navigationView = navigationView;
@@ -121,7 +128,7 @@ namespace AllOrNothing.Services
         {
             if (args.IsSettingsInvoked)
             {
-                _navigationService.NavigateTo(typeof(SettingsViewModel).FullName);
+                _navigationService.NavigateTo(typeof(AppSettingsViewModel).FullName);
             }
             else
             {
@@ -180,13 +187,13 @@ namespace AllOrNothing.Services
         {
             INavigationAware vm = GetItemKeyType(item).Name switch
             {
-                nameof(AllOrNothingGameViewModel) => Ioc.Default.GetService<AllOrNothingGameViewModel>(),
-                nameof(AllOrNothingSettingsViewModel) => Ioc.Default.GetService<AllOrNothingSettingsViewModel>(),
-                nameof(AllOrNothingViewModel) => Ioc.Default.GetService<AllOrNothingViewModel>(),
+                nameof(GameViewModel) => Ioc.Default.GetService<GameViewModel>(),
+                nameof(GameSettingsViewModel) => Ioc.Default.GetService<GameSettingsViewModel>(),
+                nameof(MainMenuViewModel) => Ioc.Default.GetService<MainMenuViewModel>(),
                 nameof(PlayerAddingViewModel) => Ioc.Default.GetService<PlayerAddingViewModel>(),
-                nameof(QuestionSeriesPageViewModel) => Ioc.Default.GetService<QuestionSeriesPageViewModel>(),
+                nameof(QuestionSerieEditorViewModel) => Ioc.Default.GetService<QuestionSerieEditorViewModel>(),
                 nameof(ScoreBoardPageViewModel) => Ioc.Default.GetService<ScoreBoardPageViewModel>(),
-                nameof(SettingsViewModel) => Ioc.Default.GetService<SettingsViewModel>(),
+                nameof(AppSettingsViewModel) => Ioc.Default.GetService<AppSettingsViewModel>(),
 
                 _ => throw new Exception()
             };
@@ -228,5 +235,6 @@ namespace AllOrNothing.Services
                 }
             }
         }
+        #endregion
     }
 }

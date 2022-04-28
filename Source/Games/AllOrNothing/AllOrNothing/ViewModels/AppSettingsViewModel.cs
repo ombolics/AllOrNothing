@@ -7,29 +7,38 @@ using Windows.ApplicationModel;
 
 namespace AllOrNothing.ViewModels
 {
-    public class SettingsViewModel : ViewModelBase
+    public class AppSettingsViewModel : ViewModelBase
     {
+        #region Fields
         private readonly IThemeSelectorService _themeSelectorService;
         private ElementTheme _elementTheme;
+        private string _versionDescription;
+        private ICommand _switchThemeCommand;
+        #endregion
 
+        #region Contructors
+        public AppSettingsViewModel(INavigationViewService navigationViewService, IThemeSelectorService themeSelectorService)
+            : base(navigationViewService)
+        {
+            _themeSelectorService = themeSelectorService;
+            _elementTheme = _themeSelectorService.Theme;
+            VersionDescription = GetVersionDescription();
+        }
+        #endregion
+
+        #region Properties
         public ElementTheme ElementTheme
         {
             get { return _elementTheme; }
 
             set { SetProperty(ref _elementTheme, value); }
         }
-
-        private string _versionDescription;
-
         public string VersionDescription
         {
             get { return _versionDescription; }
 
             set { SetProperty(ref _versionDescription, value); }
         }
-
-        private ICommand _switchThemeCommand;
-
         public ICommand SwitchThemeCommand
         {
             get
@@ -50,15 +59,9 @@ namespace AllOrNothing.ViewModels
                 return _switchThemeCommand;
             }
         }
+        #endregion
 
-        public SettingsViewModel(INavigationViewService navigationViewService, IThemeSelectorService themeSelectorService)
-            : base(navigationViewService)
-        {
-            _themeSelectorService = themeSelectorService;
-            _elementTheme = _themeSelectorService.Theme;
-            VersionDescription = GetVersionDescription();
-        }
-
+        #region Methods
         private string GetVersionDescription()
         {
             var appName = "AppDisplayName".GetLocalized();
@@ -68,5 +71,6 @@ namespace AllOrNothing.ViewModels
 
             return $"{appName} - {version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
         }
+        #endregion
     }
 }

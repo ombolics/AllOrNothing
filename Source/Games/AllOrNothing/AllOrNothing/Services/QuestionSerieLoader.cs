@@ -11,13 +11,19 @@ namespace AllOrNothing.Services
 {
     public class QuestionSerieLoader
     {
+        #region Fields
+        private IUnitOfWork _unitOfWork;
+        private List<Competence> _allCompetences;
+        #endregion
+
+        #region Constructors
         public QuestionSerieLoader(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
-        private IUnitOfWork _unitOfWork;
-        private List<Competence> _allCompetences;
+        #endregion
 
+        #region Methods
         //mostly for testing porpusses
         public void SetupAllCompetences()
         {
@@ -97,9 +103,9 @@ namespace AllOrNothing.Services
                 value = null;
                 return false;
             }
-            
 
-            if(value.Topics.Count != 5 || !value.Topics.All(t => t.Questions.Count == 6))
+
+            if (value.Topics.Count != 5 || !value.Topics.All(t => t.Questions.Count == 6))
             {
                 value = null;
                 return false;
@@ -119,7 +125,7 @@ namespace AllOrNothing.Services
             if (author == null)
             {
                 string name = data[3].Trim();
-                if(string.IsNullOrWhiteSpace(name))
+                if (string.IsNullOrWhiteSpace(name))
                 {
                     author = null;
                 }
@@ -130,7 +136,7 @@ namespace AllOrNothing.Services
                         Name = name,
                         Institute = data[5].Trim(),
                     };
-                }           
+                }
             }
             return author;
         }
@@ -159,7 +165,7 @@ namespace AllOrNothing.Services
             {
                 value = null;
                 return false;
-            }             
+            }
 
             const string sectionDelimeter = "\r\r\n";
             const string rowDelimeter = "\r\n";
@@ -176,7 +182,7 @@ namespace AllOrNothing.Services
             {
                 var authorData = splitedContent[0].Split(rowDelimeter)[1].Split("\r");
                 Player author = ParseAuthor(authorData);
-              
+
                 foreach (var pack in splitedContent[1].Split("\r\n\r\n"))
                 {
                     var splitedWithDelimeter1 = pack.Split(rowDelimeter);
@@ -213,14 +219,14 @@ namespace AllOrNothing.Services
                 value = null;
                 return false;
             }
-            
+
 
             if (value.Topics.Count != 5 || !value.Topics.All(t => t.Questions.Count == 6))
             {
                 value = null;
                 return false;
             }
-                
+
             return true;
         }
 
@@ -251,5 +257,6 @@ namespace AllOrNothing.Services
             }
             return !hasError;
         }
+        #endregion 
     }
 }

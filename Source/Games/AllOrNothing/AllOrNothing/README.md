@@ -1,6 +1,10 @@
 ﻿## Component infos
 ### ActivationHandler
-	-https://github.com/Microsoft/WindowsTemplateStudio/blob/release/docs/WinUI/activation.md
+-	https://github.com/Microsoft/WindowsTemplateStudio/blob/release/docs/WinUI/activation.md
+### Drag & Drop
+-	https://github.com/Microsoft/WindowsTemplateStudio/blob/release/docs/UWP/features/drag-and-drop.md
+### Navigation
+-	https://github.com/Microsoft/WindowsTemplateStudio/blob/release/docs/WinUI/navigation.md
 
 
 #Validation Info

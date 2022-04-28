@@ -11,40 +11,39 @@ namespace AllOrNothing.ViewModels
 {
     public class ScoreBoardPageViewModel : ViewModelBase
     {
+        #region Fields
+        private ObservableCollection<StandingDto> _gameStandings;
+        private IList<StandingDto> _lastRoundStandings;
+        private string _roundDisplayText;
+        #endregion
+
+        #region Constructors
         public ScoreBoardPageViewModel(INavigationViewService navigationViewService)
             : base(navigationViewService)
         {
-
         }
+        #endregion
 
-        public void DataGridRowLoading(object sender, DataGridRowEventArgs e)
-        {
-            e.Row.Header = e.Row.GetIndex().ToString();
-        }
-
-        private ObservableCollection<StandingDto> _gameStandings;
-
+        #region Properties
         public ObservableCollection<StandingDto> GameStandings
         {
             get => _gameStandings;
             set => SetProperty(ref _gameStandings, value);
         }
-
-        private IList<StandingDto> _lastRoundStandings;
-
         public IList<StandingDto> LastRoundStandings
         {
             get => _lastRoundStandings;
             set => SetProperty(ref _lastRoundStandings, value);
         }
-
-        private string _roundDisplayText;
         public string RoundDisplayText
         {
             get => _roundDisplayText;
             set => SetProperty(ref _roundDisplayText, value);
         }
-        public void InitVm(ObservableCollection<StandingDto> gameStandings)
+        #endregion
+
+        #region Methods
+        public void Init(ObservableCollection<StandingDto> gameStandings)
         {
             GameStandings = gameStandings;
             RoundDisplayText = "A legutóbbi kör eredménye";
@@ -71,5 +70,6 @@ namespace AllOrNothing.ViewModels
             }      
             GameStandings = new ObservableCollection<StandingDto>(GameStandings.OrderByDescending(s => s.Score).ThenBy(s => s.Team.TeamName).ToList());
         }
+        #endregion
     }
 }

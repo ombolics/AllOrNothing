@@ -15,12 +15,15 @@ namespace AllOrNothing.Services
 {
     public class ActivationService : IActivationService
     {
+        #region Fields
         private readonly ActivationHandler<LaunchActivatedEventArgs> _defaultHandler;
         private readonly IEnumerable<IActivationHandler> _activationHandlers;
         private readonly INavigationService _navigationService;
         private readonly IThemeSelectorService _themeSelectorService;
         private UIElement _shell = null;
+        #endregion
 
+        #region Constructors
         public ActivationService(ActivationHandler<LaunchActivatedEventArgs> defaultHandler, IEnumerable<IActivationHandler> activationHandlers, INavigationService navigationService, IThemeSelectorService themeSelectorService)
         {
             _defaultHandler = defaultHandler;
@@ -28,7 +31,9 @@ namespace AllOrNothing.Services
             _navigationService = navigationService;
             _themeSelectorService = themeSelectorService;
         }
+        #endregion
 
+        #region Methods
         public async Task ActivateAsync(object activationArgs)
         {
             // Initialize services that you need before app activation
@@ -86,5 +91,6 @@ namespace AllOrNothing.Services
             await _themeSelectorService.SetRequestedThemeAsync();
             await Task.CompletedTask;
         }
+        #endregion
     }
 }
