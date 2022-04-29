@@ -1,4 +1,5 @@
 ﻿using AllOrNothing.Contracts.Services;
+using AllOrNothing.Contracts.ViewModels;
 using AllOrNothing.Helpers;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
@@ -25,10 +26,6 @@ namespace AllOrNothing.ViewModels
         }
         #endregion
 
-        #region Events
-        public event EventHandler<NavigateToEventargs> NavigateTo;
-        #endregion
-
         #region Properties
         public XamlRoot PageXamlRoot { get; set; }
         public ICommand NewGameCommand => _newGameCommand ?? (_newGameCommand = new RelayCommand(NewGameClicked));
@@ -40,17 +37,17 @@ namespace AllOrNothing.ViewModels
         #region Methods
         private void OpenPlayeraddingPage()
         {
-            NavigateTo?.Invoke(this, new NavigateToEventargs { PageVM = typeof(PlayerAddingViewModel), PageName = "Játékosok" });
+            RaiseNavigateTo(new NavigateToEventArgs { PageVM = typeof(PlayerAddingViewModel), PageName = "Játékosok" });
         }
 
         private void OpenQuestionSeries()
         {
-            NavigateTo?.Invoke(this, new NavigateToEventargs { PageVM = typeof(QuestionSerieEditorViewModel), PageName = "Kérdéssorok" });
+            RaiseNavigateTo(new NavigateToEventArgs { PageVM = typeof(QuestionSerieEditorViewModel), PageName = "Kérdéssorok" });
         }
 
         private void OpenStatsPage()
         {
-            NavigateTo?.Invoke(this, new NavigateToEventargs { PageVM = typeof(StatisticsViewModel), PageName = "Statisztikák" });
+            RaiseNavigateTo(new NavigateToEventArgs { PageVM = typeof(StatisticsViewModel), PageName = "Statisztikák" });
         }
 
         private async void NewGameClicked()
@@ -64,7 +61,7 @@ namespace AllOrNothing.ViewModels
             }
             Ioc.Default.GetService<ScoreBoardPageViewModel>().IsMenuButtonVisible = false;
             vm.ResetSettings();
-            NavigateTo?.Invoke(this, new NavigateToEventargs { PageVM = typeof(GameSettingsViewModel), PageName = "Beállítások" });
+            RaiseNavigateTo(new NavigateToEventArgs { PageVM = typeof(GameSettingsViewModel), PageName = "Beállítások" });
         }
         #endregion
     }

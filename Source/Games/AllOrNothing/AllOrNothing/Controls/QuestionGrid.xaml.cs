@@ -13,7 +13,19 @@ namespace AllOrNothing.Controls
 {
     public sealed partial class QuestionGrid : UserControl
     {
+        #region Fields
         private QuestionSerieDto _questionSerie;
+        private Grid _buttonGrid;
+        #endregion
+
+        #region Construtors
+        public QuestionGrid()
+        {
+            this.InitializeComponent();
+        }
+        #endregion
+
+        #region Propeties
         public QuestionSerieDto QuestionSerie
         {
             get => _questionSerie;
@@ -24,26 +36,11 @@ namespace AllOrNothing.Controls
                     CreateGrid();
             }
         }
-
-        public QuestionGrid()
-        {
-            this.InitializeComponent();
-        }
-
-
-
         public string QuestionDisplay
         {
             get { return (string)GetValue(QuestionDisplayProperty); }
             set { SetValue(QuestionDisplayProperty, value); }
         }
-
-        // Using a DependencyProperty as the backing store for QuestionDisplay.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty QuestionDisplayProperty =
-            DependencyProperty.Register("QuestionDisplay", typeof(string), typeof(QuestionGrid), null);
-
-
-
         public QuestionDto CurrentQuestion
         {
             get { return (QuestionDto)GetValue(CurrentQuestionProperty); }
@@ -52,15 +49,20 @@ namespace AllOrNothing.Controls
                 Debug.WriteLine("QG\t" + value?.GetHashCode());
                 SetValue(CurrentQuestionProperty, value);
                 QuestionDisplay = CurrentQuestion == null ? "" : CurrentQuestion.Text;
-                
+
             }
         }
+        #endregion
 
-        // Using a DependencyProperty as the backing store for CurrentQuestion.  This enables animation, styling, binding, etc...
+        #region Dependecy properties
+        public static readonly DependencyProperty QuestionDisplayProperty =
+            DependencyProperty.Register("QuestionDisplay", typeof(string), typeof(QuestionGrid), null);
+
         public static readonly DependencyProperty CurrentQuestionProperty =
             DependencyProperty.Register("CurrentQuestion", typeof(QuestionDto), typeof(QuestionGrid), null);
+        #endregion
 
-        private Grid _buttonGrid;
+        #region Mehtods
         private void CreateGrid()
         {
             MainGrid.Children.Remove(_buttonGrid);
@@ -149,5 +151,6 @@ namespace AllOrNothing.Controls
             //TODO kép hang videó typusok megjelenítése         
             CurrentQuestion = button.Question;
         }
+        #endregion      
     }
 }

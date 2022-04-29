@@ -8,11 +8,13 @@ using Windows.Storage.Streams;
 namespace AllOrNothing.Helpers
 {
     // Use these extension methods to store and retrieve local and roaming app data
-    // More details regarding storing and retrieving app data at https://docs.microsoft.com/windows/uwp/app-settings/store-and-retrieve-app-data
     public static class SettingsStorageExtensions
     {
+        #region Constants
         private const string FileExtension = ".json";
+        #endregion
 
+        #region Methods
         public static bool IsRoamingStorageAvailable(this ApplicationData appData)
         {
             return appData.RoamingStorageQuota == 0;
@@ -115,5 +117,6 @@ namespace AllOrNothing.Helpers
         {
             return string.Concat(name, FileExtension);
         }
+        #endregion
     }
 }

@@ -4,8 +4,12 @@ using System;
 
 namespace AllOrNothing.Helpers
 {
+    /// <summary>
+    /// Class for binding elemets to page's viewmodel from data template
+    /// </summary>
     public static class AncestorHelper
     {
+        #region Dependency properties
         public static readonly DependencyProperty AncestorTypeProperty =
             DependencyProperty.RegisterAttached(
                 "AncestorType",
@@ -13,9 +17,11 @@ namespace AllOrNothing.Helpers
                 typeof(AncestorHelper),
                 new PropertyMetadata(default(Type), OnAncestorTypeChanged)
         );
+        #endregion
 
+        #region Methods
         public static void SetAncestorType(FrameworkElement element, Type value) =>
-            element.SetValue(AncestorTypeProperty, value);
+           element.SetValue(AncestorTypeProperty, value);
 
         public static Type GetAncestorType(FrameworkElement element) =>
             (Type)element.GetValue(AncestorTypeProperty);
@@ -54,6 +60,6 @@ namespace AllOrNothing.Helpers
 
             return FindParent(parent, ancestorType);
         }
-
+        #endregion
     }
 }

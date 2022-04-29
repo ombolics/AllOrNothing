@@ -35,13 +35,8 @@ namespace AllOrNothing.Repository
             optionsBuilder.EnableSensitiveDataLogging(true);
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-
-                //TODO kivenni az eszköznév specifikus dolgokat a connection stringből DESKTOP-B5C457P\SQLEXPRESS
-                //optionsBuilder.UseSqlServer(@"Server=DESKTOP-B5C457P\SQLEXPRESS;Integrated Security=true;Database=AllOrNothingDb;");
                 optionsBuilder.UseSqlite("Data source=AllOrNothingDb.db");
             }
-
         }
     }
 }

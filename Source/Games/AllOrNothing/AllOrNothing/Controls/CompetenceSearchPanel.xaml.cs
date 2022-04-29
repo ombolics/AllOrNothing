@@ -16,23 +16,24 @@ namespace AllOrNothing.Controls
 {
     public sealed partial class CompetenceSearchPanel : UserControl
     {
+        #region Fields
+        private List<Competence> _selectableCompetences;
+        private ICommand _removeCompetenceCommand;
+        #endregion
+
+        #region Constructors
         public CompetenceSearchPanel()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
+        #endregion
 
+        #region Properties
         public List<Competence> AllCompetences
         {
             get { return (List<Competence>)GetValue(AllCompetencesProperty); }
             set { SetValue(AllCompetencesProperty, value); }
         }
-
-        // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty AllCompetencesProperty =
-            DependencyProperty.Register("AllCompetences", typeof(List<Competence>), typeof(CompetenceSearchPanel), null);
-
-
-
         public ObservableCollection<CompetenceDto> SelectedCompetences
         {
             get { return (ObservableCollection<CompetenceDto>)GetValue(SelectedCompetencesProperty); }
@@ -42,22 +43,26 @@ namespace AllOrNothing.Controls
 
             }
         }
-
-        // Using a DependencyProperty as the backing store for SelectedCompetences.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty SelectedCompetencesProperty =
-            DependencyProperty.Register("SelectedCompetences", typeof(ObservableCollection<CompetenceDto>), typeof(CompetenceSearchPanel), null);
-
         public IMapper Mapper
         {
             get { return (IMapper)GetValue(MapperProperty); }
             set { SetValue(MapperProperty, value); }
         }
+        public ICommand RemoveCompetenceCommand => _removeCompetenceCommand ??= new RelayCommand<object>(RemoveCompetence);
+        #endregion
 
-        // Using a DependencyProperty as the backing store for Mapper.  This enables animation, styling, binding, etc...
+        #region Dependecy properties
+        public static readonly DependencyProperty AllCompetencesProperty =
+           DependencyProperty.Register("AllCompetences", typeof(List<Competence>), typeof(CompetenceSearchPanel), null);
+
+        public static readonly DependencyProperty SelectedCompetencesProperty =
+            DependencyProperty.Register("SelectedCompetences", typeof(ObservableCollection<CompetenceDto>), typeof(CompetenceSearchPanel), null);
+
         public static readonly DependencyProperty MapperProperty =
             DependencyProperty.Register("Mapper", typeof(IMapper), typeof(CompetenceSearchPanel), null);
+        #endregion
 
-
+        #region Methods
         private void SetRemoveCommands()
         {
             foreach (var item in SelectedCompetences)
@@ -65,8 +70,6 @@ namespace AllOrNothing.Controls
                 item.RemoveCommand = RemoveCompetenceCommand as RelayCommand<object>;
             }
         }
-
-        private List<Competence> _selectableCompetences;
         public void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
             // Since selecting an item will also change the text,
@@ -83,50 +86,17 @@ namespace AllOrNothing.Controls
                         .ToList();
                 }
 
-                //TODO Search for players in database
-
                 foreach (var comp in _selectableCompetences)
                 {
-                    //var found = splitText.All((key) =>
-                    //{
-                    //    return player.Name.ToLower().Contains(key);
-                    //});
-
                     //found
                     if (splitText.All((key) => comp.Name.ToLower().Contains(key)))
                     {
                         suitableItems.Add(Mapper.Map<CompetenceDto>(comp));
                     }
                 }
-
-                //if (suitableItems.Count == 0)
-                //{
-                //    var notfoundDisplay = new StackPanel
-                //    {
-                //        Orientation = Orientation.Horizontal,
-                //        Spacing = 30.0,
-                //    };
-
-                //    notfoundDisplay.Children.Add(new TextBlock
-                //    {
-                //        Text = "Nincs ilyen játkos!",
-                //    });
-
-                //    notfoundDisplay.Children.Add(new Button
-                //    {
-                //        Content = new TextBlock
-                //        {
-                //            Text = "Új játékos",
-                //        },
-                //        //Command = NavigateToNewPlayerPageCommand,
-                //    });
-                //    suitableItems.Add(notfoundDisplay);
-                //}
                 sender.ItemsSource = suitableItems;
             }
         }
-        private ICommand _removeCompetenceCommand;
-        public ICommand RemoveCompetenceCommand => _removeCompetenceCommand ??= new RelayCommand<object>(RemoveCompetence);
 
         private void RemoveCompetence(object obj)
         {
@@ -146,16 +116,12 @@ namespace AllOrNothing.Controls
                 sender.ItemsSource = null;
                 return;
             }
-
-            //if (args.SelectedItem is StackPanel notFoundDisplay)
-            //{
-            //    NavigateTo?.Invoke(this, new NavigateToEventargs { PageName = "Új játékos", PageVM = typeof(PlayerAddingViewModel) });
-            //}
         }
 
         private void ItemsControl_Loaded(object sender, RoutedEventArgs e)
         {
             SetRemoveCommands();
         }
+        #endregion
     }
 }

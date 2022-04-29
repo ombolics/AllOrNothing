@@ -5,14 +5,60 @@ namespace AllOrNothing.Controls
 {
     class ValidatedTextBox : TextBox
     {
+        #region Fields
+        private string _originalContent;
+        #endregion
+
+        #region Constructors
         public ValidatedTextBox()
-        {
-            TextChanging += ValidatedTextBox_TextChanging;
+        {         
             LostFocus += ValidatedTextBox_LostFocus;
             _originalContent = "";
         }
+        #endregion
 
+        #region Properties
+        public bool ValidateNumbers
+        {
+            get { return (bool)GetValue(ValidateNumbersProperty); }
+            set
+            {
+                SetValue(ValidateNumbersProperty, value);
+                if (value)
+                {
+                    _originalContent = "0";
+                }
+            }
+        }
+        public string ValidatedText
+        {
+            get { return (string)GetValue(ValidatedTextProperty); }
+            set
+            {
+                Text = value;
+                _originalContent = value;
+                SetValue(ValidatedTextProperty, value);
+            }
+        }
+        public bool SpecialCharactersEnabled
+        {
+            get { return (bool)GetValue(SpecialCharactersEnabledProperty); }
+            set { SetValue(SpecialCharactersEnabledProperty, value); }
+        }
+        #endregion
 
+        #region Dependency properties
+        public static readonly DependencyProperty ValidateNumbersProperty =
+            DependencyProperty.Register("ValidateNumbers", typeof(bool), typeof(ValidatedTextBox), null);
+
+        public static readonly DependencyProperty ValidatedTextProperty =
+            DependencyProperty.Register("ValidatedText", typeof(string), typeof(ValidatedTextBox), null);
+
+        public static readonly DependencyProperty SpecialCharactersEnabledProperty =
+            DependencyProperty.Register("SpecialCharactersEnabled", typeof(bool), typeof(ValidatedTextBox), null);
+        #endregion
+
+        #region Methods
         private void ValidatedTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
             var textBox = sender as TextBox;
@@ -27,58 +73,6 @@ namespace AllOrNothing.Controls
             {
             }
         }
-
-        public bool ValidateNumbers
-        {
-            get { return (bool)GetValue(ValidateNumbersProperty); }
-            set
-            {
-                SetValue(ValidateNumbersProperty, value);
-                if (value)
-                {
-                    _originalContent = "0";
-                }
-            }
-        }
-
-        // Using a DependencyProperty as the backing store for ValidateNumbers.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ValidateNumbersProperty =
-            DependencyProperty.Register("ValidateNumbers", typeof(bool), typeof(ValidatedTextBox), null);
-
-
-
-        public string ValidatedText
-        {
-            get { return (string)GetValue(ValidatedTextProperty); }
-            set
-            {
-                Text = value;
-                _originalContent = value;
-                SetValue(ValidatedTextProperty, value);
-            }
-        }
-
-        // Using a DependencyProperty as the backing store for ValidatedText.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ValidatedTextProperty =
-            DependencyProperty.Register("ValidatedText", typeof(string), typeof(ValidatedTextBox), null);
-
-
-
-        public bool SpecialCharactersEnabled
-        {
-            get { return (bool)GetValue(SpecialCharactersEnabledProperty); }
-            set { SetValue(SpecialCharactersEnabledProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for SpecialCharactersEnabled.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty SpecialCharactersEnabledProperty =
-            DependencyProperty.Register("SpecialCharactersEnabled", typeof(bool), typeof(ValidatedTextBox), null);
-
-        private string _originalContent;
-
-        private void ValidatedTextBox_TextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
-        {
-
-        }
+        #endregion
     }
 }

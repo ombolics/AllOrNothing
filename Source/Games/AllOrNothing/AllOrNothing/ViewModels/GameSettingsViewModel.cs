@@ -1,4 +1,5 @@
 ﻿using AllOrNothing.Contracts.Services;
+using AllOrNothing.Contracts.ViewModels;
 using AllOrNothing.Controls;
 using AllOrNothing.Data;
 using AllOrNothing.Helpers;
@@ -29,6 +30,7 @@ namespace AllOrNothing.ViewModels
         #region Fields
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IQuestionSerieLoader _questionSerieLoader;
 
         private List<Competence> _allCompetences;
         private bool _canGoToNextPage;
@@ -55,18 +57,15 @@ namespace AllOrNothing.ViewModels
         #endregion
 
         #region Constructors
-        public GameSettingsViewModel(INavigationViewService navigationViewService, IMapper mapper, IUnitOfWork unitOfWork)
+        public GameSettingsViewModel(INavigationViewService navigationViewService, IMapper mapper, IUnitOfWork unitOfWork, IQuestionSerieLoader questionSerieLoader)
             : base(navigationViewService)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
+            _questionSerieLoader = questionSerieLoader;
 
             ResetSettings();
         }
-        #endregion
-
-        #region Events
-        public event EventHandler<NavigateToEventargs> NavigateTo;
         #endregion
 
         #region Properties
@@ -200,7 +199,7 @@ namespace AllOrNothing.ViewModels
                 //todo átgondolni
                 ResetSettings();
                 IsMenuButtonVisible = false;
-                NavigateTo(this, new NavigateToEventargs { PageName = "Főmenü", PageVM = typeof(MainMenuViewModel) });
+                RaiseNavigateTo(new NavigateToEventArgs { PageName = "Főmenü", PageVM = typeof(MainMenuViewModel) });
             }
         }
 
@@ -283,9 +282,8 @@ namespace AllOrNothing.ViewModels
 
             AvaibleSeries = new ObservableCollection<QuestionSerieDto>(AvaibleSeries.Where(s => s.FromFile == false).ToList());
 
-            var questionSerieLoader = Ioc.Default.GetService<QuestionSerieLoader>();
             string errorMessage = "";
-            var series = questionSerieLoader.LoadAllSeriesFromFolder(App.QuestionSerieFolder, out errorMessage);
+            var series = _questionSerieLoader.LoadAllSeriesFromFolder(App.QuestionSerieFolder, out errorMessage);
 
             foreach (var serie in series)
             {
@@ -535,7 +533,7 @@ namespace AllOrNothing.ViewModels
 
         private void NavigateToNewPlayerPage()
         {
-            NavigateTo?.Invoke(this, new NavigateToEventargs { PageName = "Játékosok", PageVM = typeof(PlayerAddingViewModel) });
+            RaiseNavigateTo(new NavigateToEventArgs { PageName = "Játékosok", PageVM = typeof(PlayerAddingViewModel) });
         }
 
         public void On_RemovePlayer(object param)
@@ -604,7 +602,7 @@ namespace AllOrNothing.ViewModels
 
             if (args.SelectedItem is StackPanel notFoundDisplay)
             {
-                NavigateTo?.Invoke(this, new NavigateToEventargs { PageName = "Játékosok", PageVM = typeof(PlayerAddingViewModel) });
+                RaiseNavigateTo(new NavigateToEventArgs { PageName = "Játékosok", PageVM = typeof(PlayerAddingViewModel) });
             }
 
         }
@@ -686,7 +684,7 @@ namespace AllOrNothing.ViewModels
                 vm.RoundOver += GameVM_RoundOver;
                 GameInProgress = true;
             }
-            NavigateTo?.Invoke(this, new NavigateToEventargs { PageVM = typeof(GameViewModel), PageName = "Játék" }); 
+            RaiseNavigateTo(new NavigateToEventArgs { PageVM = typeof(GameViewModel), PageName = "Játék" });
         }
 
         private void GameVM_RoundOver(object sender, RoundModel e)
@@ -706,7 +704,7 @@ namespace AllOrNothing.ViewModels
                 //TODO: az oldal eltűnést és megjelenést rendbrakni
                 IsMenuButtonVisible = false;
             }
-            NavigateTo?.Invoke(this, new NavigateToEventargs { PageVM = typeof(ScoreBoardPageViewModel), PageName = "Eredmények" });
+            RaiseNavigateTo(new NavigateToEventArgs { PageVM = typeof(ScoreBoardPageViewModel), PageName = "Eredmények" });
         }
         public override void OnNavigatedTo()
         {

@@ -9,18 +9,12 @@ namespace AllOrNothing.Controls
 {
     class PlayerTextBlock : StackPanel
     {
+        #region Fields
         private TextBlock _display;
-        public TextBlock Display
-        {
-            get => _display;
-            set => _display = value;
-        }
         private Border _border;
-        public Border Border
-        {
-            get => _border;
-            set => _border = value;
-        }
+        #endregion
+
+        #region Constructors
         public PlayerTextBlock()
         {
             _display = new TextBlock();
@@ -54,21 +48,24 @@ namespace AllOrNothing.Controls
             Border.Child = Display;
             Children.Add(Border);
         }
+        #endregion
 
-
-
+        #region Properties
+        public TextBlock Display
+        {
+            get => _display;
+            set => _display = value;
+        }
+        public Border Border
+        {
+            get => _border;
+            set => _border = value;
+        }
         public Brush ForeGround
         {
             get { return (Brush)GetValue(ForeGroundProperty); }
             set { SetValue(ForeGroundProperty, value); }
         }
-
-        // Using a DependencyProperty as the backing store for ForeGround.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ForeGroundProperty =
-            DependencyProperty.Register("ForeGround", typeof(Brush), typeof(PlayerTextBlock), null);
-
-
-
         public DragablePlayer Player
         {
             get { return (DragablePlayer)GetValue(PlayerProperty); }
@@ -77,11 +74,14 @@ namespace AllOrNothing.Controls
                 SetValue(PlayerProperty, value);
             }
         }
+        #endregion
 
-        // Using a DependencyProperty as the backing store for Player.  This enables animation, styling, binding, etc...
+        #region Dependency properties
+        public static readonly DependencyProperty ForeGroundProperty =
+            DependencyProperty.Register("ForeGround", typeof(Brush), typeof(PlayerTextBlock), null);
+
         public static readonly DependencyProperty PlayerProperty =
             DependencyProperty.Register("Player", typeof(DragablePlayer), typeof(PlayerTextBlock), null);
-
-
+        #endregion
     }
 }

@@ -5,7 +5,8 @@
 -	https://github.com/Microsoft/WindowsTemplateStudio/blob/release/docs/UWP/features/drag-and-drop.md
 ### Navigation
 -	https://github.com/Microsoft/WindowsTemplateStudio/blob/release/docs/WinUI/navigation.md
-
+### SettingsStorage
+-	https://docs.microsoft.com/windows/uwp/app-settings/store-and-retrieve-app-data
 
 #Validation Info
 

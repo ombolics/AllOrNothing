@@ -69,6 +69,7 @@ namespace AllOrNothing
             services.AddSingleton<IActivationService, ActivationService>();
             services.AddSingleton<IPageService, PageService>();
             services.AddSingleton<INavigationService, NavigationService>();
+            services.AddTransient<IQuestionSerieLoader, QuestionSerieLoader>();
 
             // Core Services
             //services.AddTransient<IAllOrNothingDbContext, AllOrNothingDbContext>();

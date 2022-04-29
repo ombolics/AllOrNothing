@@ -1,4 +1,5 @@
 ﻿using AllOrNothing.Contracts.Services;
+using AllOrNothing.Contracts.ViewModels;
 using AllOrNothing.Controls;
 using AllOrNothing.Data;
 using AllOrNothing.Helpers;
@@ -16,7 +17,7 @@ using System.Windows.Input;
 
 namespace AllOrNothing.ViewModels
 {
-    public class QuestionSerieEditorViewModel : ViewModelBase
+    public class QuestionSerieEditorViewModel : ViewModelBase, IExitable
     {
         #region Fields
         private readonly IUnitOfWork _unitOfWork;
@@ -49,10 +50,6 @@ namespace AllOrNothing.ViewModels
             AllCompetences = _unitOfWork.Competences.GetAll().ToList();
             UnselectedTextVisible = true;
         }
-        #endregion
-
-        #region Events
-        public event EventHandler<NavigateToEventargs> NavigateTo;
         #endregion
 
         #region Properties
@@ -164,12 +161,12 @@ namespace AllOrNothing.ViewModels
             }
         }
 
-        private async void Exit()
+        public  async void Exit()
         {
             if (await PopupManager.ShowDialog(PageXamlRoot, "Biztosan kilép?", "Ha kilép, minden nem mentett módosítás elveszik.", ContentDialogButton.Primary, "Igen", "Mégse") == ContentDialogResult.Primary)
             {
                 IsMenuButtonVisible = false;
-                NavigateTo?.Invoke(this, new NavigateToEventargs { PageName = "Főmenü", PageVM = typeof(MainMenuViewModel) });
+                RaiseNavigateTo(new NavigateToEventArgs { PageName = "Főmenü", PageVM = typeof(MainMenuViewModel) });
             }
         }
         //TODO mentés előtt ne lehessen másikat kiválasztani

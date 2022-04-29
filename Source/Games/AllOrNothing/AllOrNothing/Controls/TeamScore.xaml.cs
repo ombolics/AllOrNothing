@@ -11,72 +11,47 @@ using System.Diagnostics;
 namespace AllOrNothing.Controls
 {
     public sealed partial class TeamScore : UserControl
-    {
+    {       
+        #region Constructors
         public TeamScore()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
+        #endregion
 
-
-
+        #region Properties
         public StandingDto Standing
         {
             get { return (StandingDto)GetValue(StandingProperty); }
             set { SetValue(StandingProperty, value); }
         }
-
-        // Using a DependencyProperty as the backing store for Standing.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty StandingProperty =
-            DependencyProperty.Register("Standing", typeof(StandingDto), typeof(TeamScore), null);
-
-
-
-        //public static readonly DependencyProperty ScoreProperty = DependencyProperty.Register(
-        //"Score", typeof(int),
-        //typeof(TeamScore),
-        //null
-        //);
-
-        //public Team Team
-        //{
-        //    get { return (Team)GetValue(TeamProperty); }
-        //    set { SetValue(TeamProperty, value); }
-        //}
-
-        //// Using a DependencyProperty as the backing store for Team.  This enables animation, styling, binding, etc...
-        //public static readonly DependencyProperty TeamProperty =
-        //    DependencyProperty.Register("Team", typeof(Team), typeof(TeamScore), null);
-
-
-
         public QuestionDto CurrentQuestion
         {
             get { return (QuestionDto)GetValue(CurrentQuestionProperty); }
             set { SetValue(CurrentQuestionProperty, value); }
         }
-
-        // Using a DependencyProperty as the backing store for CurrentQuestion.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty CurrentQuestionProperty = DependencyProperty.Register(
-            "CurrentQuestion", 
-            typeof(QuestionDto), 
-            typeof(TeamScore),
-            new PropertyMetadata(null,new PropertyChangedCallback(On_CurrentQuestionChanged)));
-
-        private static void On_CurrentQuestionChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        public GamePhase GamePhase
         {
-            var o = e.OldValue;
-            var n = e.NewValue;
-            _ = 0;
+            get { return (GamePhase)GetValue(GamePhaseProperty); }
+            set { SetValue(GamePhaseProperty, value); }
         }
+        #endregion
 
+        #region Dependecy propeties
+        public static readonly DependencyProperty StandingProperty =
+            DependencyProperty.Register("Standing", typeof(StandingDto), typeof(TeamScore), null);
 
+        public static readonly DependencyProperty CurrentQuestionProperty = DependencyProperty.Register(
+            "CurrentQuestion",
+            typeof(QuestionDto),
+            typeof(TeamScore),
+            null);
 
-        //public int Score
-        //{
-        //    get { return (int)GetValue(ScoreProperty); }
-        //    set { SetValue(ScoreProperty, value); }
-        //}
+        public static readonly DependencyProperty GamePhaseProperty =
+            DependencyProperty.Register("GamePhase", typeof(GamePhase), typeof(TeamScore), null);
+        #endregion
 
+        #region Methods
         private void On_ButtonPressed(object sender, RoutedEventArgs e)
         {
             if (CurrentQuestion == null)
@@ -87,30 +62,9 @@ namespace AllOrNothing.Controls
             else
                 Standing.Score -= CurrentQuestion.Value;
 
-            //SetValue(CurrentQuestionProperty, null);
-            if(GamePhase == GamePhase.TEMATICAL)
+            if (GamePhase == GamePhase.TEMATICAL)
                 CurrentQuestion = null;
         }
-
-
-
-        public GamePhase GamePhase
-        {
-            get { return (GamePhase)GetValue(GamePhaseProperty); }
-            set { SetValue(GamePhaseProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty GamePhaseProperty =
-            DependencyProperty.Register("GamePhase", typeof(GamePhase), typeof(TeamScore), null);
-
-
-
-        private void On_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            //int scr;
-            //if (int.TryParse(ScoreBox.Text, out scr))
-            //    Score = scr;
-        }
+        #endregion
     }
 }

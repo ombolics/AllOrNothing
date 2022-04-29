@@ -68,7 +68,6 @@
                                         FontSize="30"
                                         BorderThickness="0"
                                         FontWeight="SemiBold"
-                                        TextChanged="On_TextChanged"
                                         ValidateNumbers="True"/>
             </Grid>
 

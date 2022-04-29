@@ -29,20 +29,19 @@ namespace AllOrNothingTest
             {
                 Ioc.Default.ConfigureServices(ConfigureServices());
                 _fixture.MyProperty = 1;
-            }
-           
+            }        
         }
 
         #region Helper Methods
         private System.IServiceProvider ConfigureServices()
         {
-            // TODO WTS: Register your services, viewmodels and pages here
             var services = new ServiceCollection();
 
 
             services.AddSingleton<INavigationViewService, NavigationViewService>();
             services.AddSingleton<IPageService, PageService>();
             services.AddSingleton<INavigationService, NavigationService>();
+            services.AddSingleton<IQuestionSerieLoader, QuestionSerieLoader>();
 
             // Core Services
             //services.AddTransient<IAllOrNothingDbContext, AllOrNothingDbContext>();
@@ -85,7 +84,8 @@ namespace AllOrNothingTest
             _viewModel = new GameSettingsViewModel(
                 Ioc.Default.GetService<INavigationViewService>(),
                 Ioc.Default.GetService<IMapper>(),
-                Ioc.Default.GetService<IUnitOfWork>());
+                Ioc.Default.GetService<IUnitOfWork>(),
+                Ioc.Default.GetService<IQuestionSerieLoader>());
             
             var teams = _viewModel.GenerateTeams(GetPlayerCollection(10), 2);
             teams.Count.Should().Be(5);
@@ -112,7 +112,8 @@ namespace AllOrNothingTest
             _viewModel = new GameSettingsViewModel(
                 Ioc.Default.GetService<INavigationViewService>(),
                 Ioc.Default.GetService<IMapper>(),
-                Ioc.Default.GetService<IUnitOfWork>());
+                Ioc.Default.GetService<IUnitOfWork>(),
+                Ioc.Default.GetService<IQuestionSerieLoader>());
 
             var players = GetPlayerCollection(10);
             var teams = _viewModel.GenerateTeams(players, 2);
@@ -131,7 +132,8 @@ namespace AllOrNothingTest
             _viewModel = new GameSettingsViewModel(
                 Ioc.Default.GetService<INavigationViewService>(),
                 Ioc.Default.GetService<IMapper>(),
-                Ioc.Default.GetService<IUnitOfWork>());
+                Ioc.Default.GetService<IUnitOfWork>(),
+                Ioc.Default.GetService<IQuestionSerieLoader>());
 
             var teams = _viewModel.GenerateTeams(GetPlayerCollection(2), 1);
             var shedule = _viewModel.GenerateSchedule(teams, 3);
@@ -156,7 +158,8 @@ namespace AllOrNothingTest
             _viewModel = new GameSettingsViewModel(
                 Ioc.Default.GetService<INavigationViewService>(),
                 Ioc.Default.GetService<IMapper>(),
-                Ioc.Default.GetService<IUnitOfWork>());
+                Ioc.Default.GetService<IUnitOfWork>(),
+                Ioc.Default.GetService<IQuestionSerieLoader>());
 
             // (round count * team count ) mod 4
 
@@ -200,7 +203,8 @@ namespace AllOrNothingTest
             _viewModel = new GameSettingsViewModel(
                 Ioc.Default.GetService<INavigationViewService>(),
                 Ioc.Default.GetService<IMapper>(),
-                Ioc.Default.GetService<IUnitOfWork>());
+                Ioc.Default.GetService<IUnitOfWork>(),
+                Ioc.Default.GetService<IQuestionSerieLoader>());
 
             var teams = _viewModel.GenerateTeams(GetPlayerCollection(2), 1);
             var shedules = _viewModel.GenerateSchedule(teams, 3);
@@ -214,7 +218,8 @@ namespace AllOrNothingTest
             _viewModel = new GameSettingsViewModel(
                 Ioc.Default.GetService<INavigationViewService>(),
                 Ioc.Default.GetService<IMapper>(),
-                Ioc.Default.GetService<IUnitOfWork>());
+                Ioc.Default.GetService<IUnitOfWork>(),
+                Ioc.Default.GetService<IQuestionSerieLoader>());
 
             
         }

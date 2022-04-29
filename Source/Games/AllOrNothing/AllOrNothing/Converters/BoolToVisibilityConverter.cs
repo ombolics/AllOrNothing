@@ -36,7 +36,5 @@ namespace AllOrNothing.Converters
         {
             throw new NotImplementedException();
         }
-
-
     }
 }

@@ -1,4 +1,5 @@
-﻿using AllOrNothing.Data;
+﻿using AllOrNothing.Contracts.Services;
+using AllOrNothing.Data;
 using AllOrNothing.Repository;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Text;
 
 namespace AllOrNothing.Services
 {
-    public class QuestionSerieLoader
+    public class QuestionSerieLoader : QuestionSerieLoaderBase
     {
         #region Fields
         private IUnitOfWork _unitOfWork;
@@ -30,7 +31,7 @@ namespace AllOrNothing.Services
             _allCompetences = _unitOfWork.Competences.GetAll().ToList();
         }
 
-        public List<QuestionSerie> LoadAllSeriesFromFolder(string folderPath, out string errorMessage)
+        public override List<QuestionSerie> LoadAllSeriesFromFolder(string folderPath, out string errorMessage)
         {
             errorMessage = "";
             SetupAllCompetences();
@@ -59,7 +60,7 @@ namespace AllOrNothing.Services
             return result;
         }
 
-        public bool ParseOldFormat(string name, string content, out QuestionSerie value)
+        public override bool ParseOldFormat(string name, string content, out QuestionSerie value)
         {
             value = new QuestionSerie()
             {
@@ -113,7 +114,7 @@ namespace AllOrNothing.Services
             return true;
         }
 
-        private Player ParseAuthor(string[] data)
+        public override Player ParseAuthor(string[] data)
         {
             Player author = null;
             int expectedId;
@@ -140,8 +141,35 @@ namespace AllOrNothing.Services
             }
             return author;
         }
+        public Topic ParseTopic(string data, string rowDelimeter)
+        {                   
+            var splitedWithDelimeter1 = data.Split(rowDelimeter);
+            var line = splitedWithDelimeter1.Length < 2 ? data.Split("\r") : splitedWithDelimeter1;
+            Topic topic = new Topic()
+            {
+                Name = line[0].Trim(),
+                Competences = ParseCompetences(line[1]),
+                Description = line[2].Trim(),
+            };
 
-        private List<Competence> ParseCompetences(string row)
+            int questionCounter = 1;
+            for (int i = 3; i < line.Length - 1; i += 2)
+            {
+                topic.Questions.Add(new Question
+                {
+                    Text = line[i],
+                    Type = QuestionType.THEMATICAL,
+                    Resource = null,
+                    Answer = line[i + 1],
+                    ResourceType = QuestionResourceType.TEXT,
+                    Value = questionCounter < 6 ? questionCounter * 1000 : 8000,
+                });
+                questionCounter++;
+            }
+            return topic;          
+        }
+
+        public override List<Competence> ParseCompetences(string row)
         {
             List<Competence> value = new List<Competence>();
             foreach (var item in row.Replace("(", "").Replace(")", "").Split(','))
@@ -159,7 +187,7 @@ namespace AllOrNothing.Services
             }
             return value.Count == 0 ? null : value;
         }
-        public bool ParseNewFormat(string name, string content, out QuestionSerie value)
+        public override bool ParseNewFormat(string name, string content, out QuestionSerie value)
         {
             if (content == null || string.IsNullOrWhiteSpace(content))
             {
@@ -180,57 +208,29 @@ namespace AllOrNothing.Services
 
             try
             {
-                var authorData = splitedContent[0].Split(rowDelimeter)[1].Split("\r");
-                Player author = ParseAuthor(authorData);
-
+                Player author = ParseAuthor(splitedContent[0].Split(rowDelimeter)[1].Split("\r"));
                 foreach (var pack in splitedContent[1].Split("\r\n\r\n"))
                 {
-                    var splitedWithDelimeter1 = pack.Split(rowDelimeter);
-                    var line = splitedWithDelimeter1.Length < 2 ? pack.Split("\r") : splitedWithDelimeter1;
-                    Topic topic = new Topic()
-                    {
-                        Name = line[0].Trim(),
-                        Author = author,
-                        Competences = ParseCompetences(line[1]),
-                        Description = line[2].Trim(),
-                    };
-
-                    int questionCounter = 1;
-                    for (int i = 3; i < line.Length - 1; i += 2)
-                    {
-                        topic.Questions.Add(new Question
-                        {
-                            Text = line[i],
-                            Type = QuestionType.THEMATICAL,
-                            Resource = null,
-                            Answer = line[i + 1],
-                            ResourceType = QuestionResourceType.TEXT,
-                            Value = questionCounter < 6 ? questionCounter * 1000 : 8000,
-                        });
-                        questionCounter++;
-                    }
-
+                    var topic = ParseTopic(pack, rowDelimeter);
+                    topic.Author = author;
                     value.Topics.Add(topic);
                 }
             }
-            catch (Exception e)
+            catch 
             {
-
                 value = null;
                 return false;
             }
-
 
             if (value.Topics.Count != 5 || !value.Topics.All(t => t.Questions.Count == 6))
             {
                 value = null;
                 return false;
             }
-
             return true;
         }
 
-        public bool LoadFromTxt(string path, out QuestionSerie value)
+        public override bool LoadFromTxt(string path, out QuestionSerie value)
         {
             bool hasError = false;
             value = null;

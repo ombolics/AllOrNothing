@@ -1,4 +1,5 @@
 ﻿using AllOrNothing.Contracts.Services;
+using AllOrNothing.Contracts.ViewModels;
 using AllOrNothing.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -94,7 +95,7 @@ namespace AllOrNothing.ViewModels
         #endregion
 
         #region EventHandler
-        private void On_NavigateTo(object sender, NavigateToEventargs e)
+        private void On_NavigateTo(object sender, NavigateToEventArgs e)
         {
             if (!NavigationViewService.MenuPointExists(e.PageName))
                 NavigationViewService.AddNavItem(new NavigationViewItem { Content = e.PageName }, e.PageVM);

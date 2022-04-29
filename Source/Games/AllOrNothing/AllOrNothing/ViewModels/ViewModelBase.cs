@@ -17,6 +17,10 @@ namespace AllOrNothing.ViewModels
         private ICollection<Type> _reachablePages;
         #endregion
 
+        #region Events
+        public event EventHandler<NavigateToEventArgs> NavigateTo;
+        #endregion
+
         #region Constructors
         public ViewModelBase(INavigationViewService navigationViewService)
         {
@@ -25,6 +29,11 @@ namespace AllOrNothing.ViewModels
         #endregion
 
         #region INavigationAware implementation (virtual)
+        public virtual void RaiseNavigateTo(NavigateToEventArgs e)
+        {
+            NavigateTo?.Invoke(this, e);
+        }
+
         /// <summary>
         /// Method to be executed after navigating from the page
         /// </summary>

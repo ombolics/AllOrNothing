@@ -6,10 +6,6 @@ namespace AllOrNothing.Helpers
 {
     public class StandingDtoComparer : Comparer<StandingDto>, IComparer
     {
-        public StandingDtoComparer()
-        {
-
-        }
         public override int Compare(StandingDto x, StandingDto y)
         {
             if (x.Score > y.Score)

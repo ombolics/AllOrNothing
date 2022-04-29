@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace AllOrNothing.ViewModels
+namespace AllOrNothing.Contracts.ViewModels
 {
-    public class NavigateToEventargs
+    public class NavigateToEventArgs
     {
         public Type PageVM { get; set; }
         public string PageName { get; set; }

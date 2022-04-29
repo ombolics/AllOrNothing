@@ -1,4 +1,5 @@
 ﻿using AllOrNothing.Contracts.Services;
+using AllOrNothing.Contracts.ViewModels;
 using AllOrNothing.Controls;
 using AllOrNothing.Data;
 using AllOrNothing.Helpers;
@@ -15,7 +16,7 @@ using System.Windows.Input;
 
 namespace AllOrNothing.ViewModels
 {
-    public class PlayerAddingViewModel : ViewModelBase
+    public class PlayerAddingViewModel : ViewModelBase, IExitable
     {
         #region Fields
         private IMapper _mapper;
@@ -44,10 +45,6 @@ namespace AllOrNothing.ViewModels
             _mapper = mapper;
             AllPlayers = new ObservableCollection<PlayerDto>(_mapper.Map<ICollection<PlayerDto>>(_unitOfWork.Players.GetAllAvaible()));
         }
-        #endregion
-
-        #region Events
-        public event EventHandler<NavigateToEventargs> NavigateTo;
         #endregion
 
         #region Properties
@@ -107,12 +104,12 @@ namespace AllOrNothing.ViewModels
         #endregion
 
         #region Methods
-        private async void Exit()
+        public  async void Exit()
         {
             if (await PopupManager.ShowDialog(PageXamlRoot, "Biztosan kilép?", "Ha kilép, minden nem mentett módosítás elveszik.", ContentDialogButton.Primary, "Igen", "Mégse") == ContentDialogResult.Primary)
             {
                 IsMenuButtonVisible = false;
-                NavigateTo?.Invoke(this, new NavigateToEventargs { PageName = "Főmenü", PageVM = typeof(MainMenuViewModel) });
+                RaiseNavigateTo(new NavigateToEventArgs { PageName = "Főmenü", PageVM = typeof(MainMenuViewModel) });
             }
         }
 

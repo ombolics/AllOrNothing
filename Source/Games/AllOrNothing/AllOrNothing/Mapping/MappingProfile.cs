@@ -34,7 +34,6 @@ namespace AllOrNothing.Mapping
         {
             CreateMap<PlayerDto, Player>();
             CreateMap<TeamDto, Team>();
-
             CreateMap<QuestionDto, Question>();
             CreateMap<QuestionSerieDto, QuestionSerie>();
             CreateMap<TopicDto, Topic>();
