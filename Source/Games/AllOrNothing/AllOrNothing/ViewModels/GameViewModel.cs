@@ -34,7 +34,6 @@ namespace AllOrNothing.ViewModels
         private ICommand _skipAnswerCommand;
         private ICommand _submitAnswerCommand;
         private ICommand _showLightningCommand;
-        private ICommand _loadFromFileCommand;
 
         private string _answerText;
         private StandingDto _pickingTeam;
@@ -119,7 +118,6 @@ namespace AllOrNothing.ViewModels
         public ICommand SkipAnswerCommand => _skipAnswerCommand ??= new RelayCommand(SkipAnswer);
         public ICommand SubmitAnswerCommand => _submitAnswerCommand ??= new RelayCommand(SubmitAnser);
         public ICommand ShowLightningCommand => _showLightningCommand ??= new RelayCommand(ShowLightning);
-        public ICommand LoadFromFileCommand => _loadFromFileCommand ??= new RelayCommand(LoadFromFileClicked);
 
         #endregion
 
@@ -132,15 +130,10 @@ namespace AllOrNothing.ViewModels
             SelectedRound = m;
 
             if (SelectedRound.RoundSettings.IsTematicalAllowed)
-            {
                 SetupTematical();
-            }
             else
-            {
                 SetupLightning();
-            }
-
-
+            
             if (SelectedRound.RoundSettings.IsGameWithoutButtonsEnabled)
             {
                 AnswerLog = new ObservableCollection<AnswerLogModel>();

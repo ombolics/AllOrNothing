@@ -48,7 +48,7 @@ namespace AllOrNothing.Services
                 }
                 else
                 {
-                    var error = $"{file.Split(@"\").Last()}\n";
+                    var error = $"\t{file.Split(@"\").Last()}\n";
                     errorMessage += errorMessage == "" ? "Probléma lépett fel a következő fájlok beolvasása során:\n" + error : error;
                 }
             }

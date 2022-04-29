@@ -71,13 +71,14 @@
                                         ValidateNumbers="True"/>
             </Grid>
 
-            <Grid Grid.Column="1">
+            <Grid Grid.Column="1"
+                  Visibility="{x:Bind IsAddingButtonVisible, Converter={StaticResource BoolToVisibilityConverter}}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Button Grid.Row="0" 
+                <Button Grid.Row="0"
                         x:Name="PlusButton"
                         Height="40"
                         Width="40"

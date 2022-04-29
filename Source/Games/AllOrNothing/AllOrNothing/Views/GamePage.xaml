@@ -182,29 +182,35 @@
                 <Grid Style="{ThemeResource MainGridStyle}"
                       Grid.Row="0">
 
-                    <ListBox ItemsSource="{x:Bind ViewModel.SelectedRound.RoundStandings, Mode=OneWay}"                         
+                    <ItemsControl ItemsSource="{x:Bind ViewModel.SelectedRound.RoundStandings, Mode=OneWay}"                         
                              HorizontalContentAlignment="Stretch"
                              VerticalContentAlignment="Stretch"
-                             SelectedItem="{x:Bind ViewModel.PickingTeam, Mode=TwoWay}"
                              Background="{ThemeResource MainColor2}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <con:UniformGrid Columns="1"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
 
-                        <ListBox.ItemTemplate>
+                        <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <cc:TeamScore Standing="{Binding}"
                                               CurrentQuestion="{Binding ViewModel.CurrentQuestion, Mode=TwoWay, ElementName=gamePage}"
-                                              HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                              Margin="0,0,0,0"
-                                              GamePhase="{Binding ViewModel.GamePhase, Mode=OneWay, ElementName=gamePage}"/>
+                                              HorizontalAlignment="Stretch" 
+                                              VerticalAlignment="Stretch"
+                                              Margin="15,15,15,15"
+                                              GamePhase="{Binding ViewModel.GamePhase, Mode=OneWay, ElementName=gamePage}"
+                                              IsAddingButtonVisible="False"/>
                             </DataTemplate>
-                        </ListBox.ItemTemplate>
-                        
-                        <ListBox.ItemContainerStyle>
+                        </ItemsControl.ItemTemplate>
+
+                        <!--<ItemsControl.ItemContainerStyle>
                             <Style TargetType="ListBoxItem">
                                 <Setter Property="HorizontalContentAlignment"  Value="Stretch"></Setter>
                                 <Setter Property="VerticalContentAlignment"  Value="Stretch"></Setter>
                             </Style>
-                        </ListBox.ItemContainerStyle>
-                    </ListBox>
+                        </ItemsControl.ItemContainerStyle>-->
+                    </ItemsControl>
                 </Grid>
 
                 <Button Grid.Row="1" 
@@ -251,7 +257,6 @@
                                Foreground="{ThemeResource MainColor1}"
                                FontSize="40"
                                VerticalAlignment="Center"
-                               HorizontalAlignment="Center"
                                FontWeight="SemiBold"
                                Margin="20,10,10,10"/>
 
@@ -345,9 +350,11 @@
                             <DataTemplate>
                                 <cc:TeamScore Standing="{Binding}"
                                               CurrentQuestion="{Binding ViewModel.CurrentQuestion, Mode=TwoWay, ElementName=gamePage}"
-                                          HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                            Margin="15,15,15,15"
-                                               GamePhase="{Binding ViewModel.GamePhase, Mode=OneWay, ElementName=gamePage}"/>
+                                              HorizontalAlignment="Stretch" 
+                                              VerticalAlignment="Stretch"
+                                              Margin="15,15,15,15"
+                                              GamePhase="{Binding ViewModel.GamePhase, Mode=OneWay, ElementName=gamePage}"
+                                              IsAddingButtonVisible="True"/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>

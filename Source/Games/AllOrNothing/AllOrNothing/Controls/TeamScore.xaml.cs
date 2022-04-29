@@ -35,6 +35,11 @@ namespace AllOrNothing.Controls
             get { return (GamePhase)GetValue(GamePhaseProperty); }
             set { SetValue(GamePhaseProperty, value); }
         }
+        public bool IsAddingButtonVisible
+        {
+            get { return (bool)GetValue(IsAddingButtonVisibleProperty); }
+            set { SetValue(IsAddingButtonVisibleProperty, value); }
+        }
         #endregion
 
         #region Dependecy propeties
@@ -46,6 +51,9 @@ namespace AllOrNothing.Controls
             typeof(QuestionDto),
             typeof(TeamScore),
             null);
+
+        public static readonly DependencyProperty IsAddingButtonVisibleProperty =
+            DependencyProperty.Register("IsAddingButtonVisible", typeof(bool), typeof(TeamScore), null);
 
         public static readonly DependencyProperty GamePhaseProperty =
             DependencyProperty.Register("GamePhase", typeof(GamePhase), typeof(TeamScore), null);

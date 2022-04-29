@@ -156,11 +156,11 @@
                                             </dd:DragDropService.VisualConfiguration>
 
                                             <TextBox Text="{Binding TeamName, Mode=TwoWay}" 
-                                                     Margin="10,10,0,10" 
+                                                     Margin="10,10,10,0" 
                                                      HorizontalAlignment="Center" 
                                                      FontSize="15"
                                                      FontWeight="Bold" 
-                                                     Foreground="{ThemeResource MainColor1 }"
+                                                     Foreground="{ThemeResource MainColor1}"
                                                      Background="Transparent"
                                                      IsSpellCheckEnabled="False"
                                                      BorderThickness="0"/>
@@ -206,19 +206,32 @@
 
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="5*"/>
                     <ColumnDefinition Width="5*"/>
                     <ColumnDefinition Width="6*"/>
-                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="2*"/>
                 </Grid.ColumnDefinitions>
 
                 <Button Grid.Column="0"
-                        Content="Kilépés" 
                         FontSize="{ThemeResource LargeFontSize}" 
-                        VerticalAlignment="Stretch"
-                         
-                        Command="{x:Bind ViewModel.ExitCommand}"/>
+                        VerticalAlignment="Stretch"                         
+                        Command="{x:Bind ViewModel.ExitCommand}"
+                        Margin="10,10,10,10"
+                        CornerRadius="10"
+                        Padding="0,0,0,0">
+                    <Grid>
+                        <Image Source="/Assets/background.png"
+                               Stretch="UniformToFill"/>
+                        <TextBlock Text="Kilépés"
+                                   FontSize="{ThemeResource LargeFontSize}"
+                                   FontWeight="Bold"
+                                   Foreground="White"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+                    </Grid>
+                </Button>
+
 
                 <!--Setting1-->
                 <Grid Grid.Column="1" 
@@ -231,7 +244,7 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0" Text="Körökkel kapcsolatos adatok" 
+                    <TextBlock Grid.Row="0" Text="Játszma beállításai" 
                                    Margin="15,15,15,15"
                                    Style="{ThemeResource MainTitleStyle}"/>
 
@@ -258,7 +271,7 @@
                                 Orientation="Horizontal" 
                                 Margin="10,0,0,5">
 
-                        <TextBlock Text="Körök száma:"
+                        <TextBlock Text="Fordulók száma:"
                                    Style="{ThemeResource CommonTextStyle}"/>
 
                         <cc:ValidatedTextBox ValidatedText="{x:Bind ViewModel.GameModel.GameSettings.NumberOfRounds, Mode=TwoWay}"
@@ -281,7 +294,7 @@
                     </Grid.RowDefinitions>
 
                     <TextBlock Grid.Row="0" 
-                               Text="Csapatokkal kapcsolatos adatok" 
+                               Text="Csapatok beállításai" 
                                HorizontalAlignment="Stretch"
                                Margin="15,15,15,15"
                                Style="{ThemeResource MainTitleStyle}"/>
@@ -373,10 +386,26 @@
                 </Grid>
 
                 <Button Grid.Column="4"
-                        Visibility="{x:Bind ViewModel.CanGoToNextPage, Mode=OneWay, Converter = {StaticResource BoolToVisibilityConverter}}" 
-                        Content="Tovább" FontSize="{ThemeResource LargeFontSize}" 
+                        Visibility="{x:Bind ViewModel.CanGoToNextPage, Mode=OneWay, Converter = {StaticResource BoolToVisibilityConverter}}"                        
                         VerticalAlignment="Stretch"
-                        HorizontalAlignment="Stretch" Command="{x:Bind ViewModel.ShowRoundSettingsCommand}"/>
+                        HorizontalAlignment="Stretch" 
+                        Command="{x:Bind ViewModel.ShowRoundSettingsCommand}"
+                        Margin="10,10,10,10"
+                        CornerRadius ="10"
+                        Padding="0,0,0,0">
+                    <Grid Margin="0,0,0,0">
+                        <Image Source="/Assets/background.png" 
+                               Stretch="UniformToFill"
+                               HorizontalAlignment="Stretch"
+                               VerticalAlignment="Stretch"/>
+                        <TextBlock Text="Tovább" 
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontSize="{ThemeResource LargeFontSize}"
+                                   Foreground="White"
+                                   FontWeight="Bold"/>
+                    </Grid>
+                </Button>
             </Grid>
         </Grid>
         <!--#endregion-->
@@ -583,13 +612,25 @@
 
 
                     <Button Grid.Column="1" 
-                            Content="Indítás" 
                             FontSize="{ThemeResource LargeFontSize}"
                             HorizontalAlignment="Stretch" 
                             VerticalAlignment="Stretch"
                             Margin="10,10,10,10" 
-                            CornerRadius="10" 
-                            Command="{x:Bind ViewModel.StartGameCommand}"/>
+                            CornerRadius="10"
+                            Padding="0,0,0,0"
+                            Command="{x:Bind ViewModel.StartGameCommand}">
+                        <Grid>
+                            <Image Source="/Assets/background.png"
+                                   Stretch="UniformToFill"/>
+                            
+                            <TextBlock Text="Indítás" 
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontSize="{ThemeResource LargeFontSize}"
+                                   Foreground="White"
+                                   FontWeight="Bold"/>
+                        </Grid>
+                    </Button>
                 </Grid>
 
                 <!--QuestionSeries-->
@@ -603,17 +644,27 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <StackPanel Grid.Row="0" 
-                                Orientation="Horizontal" 
-                                Spacing="20">
-
-                        <TextBlock Text="Kiválasztott kérdéssor"
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <TextBlock Grid.Column="0"
+                                   Text="Kérdéssorok"
                                    Style="{ThemeResource MainTitleStyle}"
                                    Margin="10,10,10,10"/>
 
-                        <Button Content="Betöltés fájlból" 
-                                Command="{x:Bind ViewModel.LoadFromFileCommand}"/>
-                    </StackPanel>
+                        <Button Grid.Column="1" 
+                                Content="Kérdéssorok betöltése fájlból" 
+                                Command="{x:Bind ViewModel.LoadFromFileCommand}"
+                                CornerRadius="10"
+                                Foreground="{ThemeResource MainColor1}"
+                                FontSize="18"
+                                FontWeight="SemiBold"
+                                HorizontalAlignment="Right"/>
+                    </Grid>
+                   
 
                     <con:DataGrid Grid.Row="1"
                                    Foreground="{ThemeResource MainColor1}"

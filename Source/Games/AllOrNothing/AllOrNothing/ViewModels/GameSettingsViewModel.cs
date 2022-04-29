@@ -157,46 +157,33 @@ namespace AllOrNothing.ViewModels
         #region Methods
         public void ResetSettings()
         {
-
             IsMenuButtonVisible = false;
             ReachablePages = null;
-
             IsGameSettingsVisible = true;
-
             _gameModel = new GameModel(new GameSettingsModel(), new ObservableCollection<StandingDto>());
             _rounds = null;
             _selectedRound = null;
-
-            //_unitOfWork.QuestionSeries.Add(DummyData.DummyData.QS1);
-            //_unitOfWork.Complete();
-
             _avaiblePlayers = new SortedSet<PlayerDto>(new PlayerDtoComparer());
             _avaiblePlayers.UnionWith(Mapper.Map<IEnumerable<PlayerDto>>(_unitOfWork.Players.GetAllAvaible()));
+            _teams = new();
+            _selectedPlayers = new();
+            AllCompetences = _unitOfWork.Competences.GetAll().ToList();
 
-            var all = _unitOfWork.QuestionSeries.GetAllAvaible();
-            var tmp = Mapper.Map<IEnumerable<QuestionSerie>, IEnumerable<QuestionSerieDto>>(all);
-
-            foreach (var serie in tmp)
+            var series = Mapper.Map<IEnumerable<QuestionSerie>, IEnumerable<QuestionSerieDto>>(_unitOfWork.QuestionSeries.GetAllAvaible());
+            foreach (var serie in series)
             {
                 foreach (var topic in serie.Topics)
                 {
                     topic.Questions.Sort(new QuestionDtoComparer());
                 }
             }
-
-            AvaibleSeries = new ObservableCollection<QuestionSerieDto>(tmp);
-
-            _teams = new();
-            _selectedPlayers = new();
-
-            AllCompetences = _unitOfWork.Competences.GetAll().ToList();
+            AvaibleSeries = new ObservableCollection<QuestionSerieDto>(series);  
         }
 
         private async void Exit()
         {
             if (await PopupManager.ShowDialog(PageXamlRoot, "Kilépés?", "Biztosan kilép?", ContentDialogButton.Primary, "Igen", "Mégse") == ContentDialogResult.Primary)
             {
-                //todo átgondolni
                 ResetSettings();
                 IsMenuButtonVisible = false;
                 RaiseNavigateTo(new NavigateToEventArgs { PageName = "Főmenü", PageVM = typeof(MainMenuViewModel) });
@@ -261,7 +248,6 @@ namespace AllOrNothing.ViewModels
             if (!checkBox.IsChecked.GetValueOrDefault(false))
                 return;
 
-
             if (checkBox.Name == "tematicalCheckBox" && GameModel.GameSettings.GeneralTematicalTime.TotalSeconds == 0)
             {
                 GameModel.GameSettings.GeneralTematicalTime = TimeSpan.FromHours(1);
@@ -304,7 +290,6 @@ namespace AllOrNothing.ViewModels
                         Name = "Nem ismert",
                     };
                 }
-
                 AvaibleSeries.Add(dto);
             }
 
@@ -322,14 +307,6 @@ namespace AllOrNothing.ViewModels
         public void RoundSelected(object sender, ItemClickEventArgs e)
         {
             SelectedRound = e.ClickedItem as RoundModel;
-        }
-
-        public void FinalizeSettings()
-        {
-            var roundSettings = new List<RoundSettingsModel>();
-            //TODO értelmesen megcsinálni
-            var tmp = new RoundSettingsModel();
-
         }
 
         public ObservableCollection<TeamDto> GenerateTeams(ICollection<PlayerDto> players, int maxTeamSize)
@@ -693,15 +670,12 @@ namespace AllOrNothing.ViewModels
             {
                 IsMenuButtonVisible = false;
                 GameInProgress = false;
-            }
-                
+            }              
 
-            //TODO: ténylege kell ez ide? nem elég csak az eredmények oldalában kezelni az eventet?
             var vm = Ioc.Default.GetService<ScoreBoardPageViewModel>();
             vm.UpdateStandings(e);
             if (e.IsFinalRound)
             {
-                //TODO: az oldal eltűnést és megjelenést rendbrakni
                 IsMenuButtonVisible = false;
             }
             RaiseNavigateTo(new NavigateToEventArgs { PageVM = typeof(ScoreBoardPageViewModel), PageName = "Eredmények" });
