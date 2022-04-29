@@ -1,5 +1,6 @@
 ﻿using AllOrNothing.Activation;
 using AllOrNothing.Contracts.Services;
+using AllOrNothing.Data;
 using AllOrNothing.Repository;
 using AllOrNothing.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -8,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -78,8 +80,41 @@ namespace AllOrNothing.Services
             //create database if not exists
             using (var serviceScope = Ioc.Default.GetService<IServiceScopeFactory>().CreateScope())
             {
+                
+                var path = @$"{System.AppDomain.CurrentDomain.BaseDirectory}..\..\..\..\..\..\..\AllOrNothing.Repository\AllOrNothingDb.db";
+                bool dbExistedBefore = File.Exists(path);
+
                 var context = serviceScope.ServiceProvider.GetRequiredService<AllOrNothingDbContext>();
                 context.Database.Migrate();
+
+                //Add competences if the db didnt existed before
+                if(! dbExistedBefore)
+                {
+                    var unitOfWork = Ioc.Default.GetService<IUnitOfWork>();
+                    Competence[] competences =
+                    {
+                    new Competence{Name = "Biológia"},
+                    new Competence{Name = "Kémia"},
+                    new Competence{Name = "Sport"},
+                    new Competence{Name = "Szórakozás"},
+                    new Competence{Name = "Életmód"},
+                    new Competence{Name = "Művészet"},
+                    new Competence{Name = "Mindennapok"},
+                    new Competence{Name = "Földrajz"},
+                    new Competence{Name = "Történelem"},
+                    new Competence{Name = "Irodalom"},
+                    new Competence{Name = "Matematika "},
+                    new Competence{Name = "Fizika"},
+                    new Competence{Name = "Technológia"},
+                    };
+
+                    foreach (var item in competences)
+                    {
+                        unitOfWork.Competences.Add(item);
+                    }
+                    unitOfWork.Complete();
+
+                }               
             }
 
             await _themeSelectorService.InitializeAsync().ConfigureAwait(false);
