@@ -6,6 +6,7 @@ using AllOrNothing.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.Collections.Generic;
@@ -22,22 +23,26 @@ namespace AllOrNothing.Services
         private readonly IEnumerable<IActivationHandler> _activationHandlers;
         private readonly INavigationService _navigationService;
         private readonly IThemeSelectorService _themeSelectorService;
+        private readonly ILogger<ActivationService> _logger;
         private UIElement _shell = null;
         #endregion
 
         #region Constructors
-        public ActivationService(ActivationHandler<LaunchActivatedEventArgs> defaultHandler, IEnumerable<IActivationHandler> activationHandlers, INavigationService navigationService, IThemeSelectorService themeSelectorService)
+        public ActivationService(ActivationHandler<LaunchActivatedEventArgs> defaultHandler, IEnumerable<IActivationHandler> activationHandlers, 
+            INavigationService navigationService, IThemeSelectorService themeSelectorService, ILogger<ActivationService> logger)
         {
             _defaultHandler = defaultHandler;
             _activationHandlers = activationHandlers;
             _navigationService = navigationService;
             _themeSelectorService = themeSelectorService;
+            _logger = logger;
         }
         #endregion
 
         #region Methods
         public async Task ActivateAsync(object activationArgs)
         {
+            _logger.LogInformation("Activatoin started");
             // Initialize services that you need before app activation
             // take into account that the splash screen is shown while this code runs.
             await InitializeAsync();
@@ -57,6 +62,7 @@ namespace AllOrNothing.Services
 
             // Tasks after activation
             await StartupAsync();
+            _logger.LogInformation("Activatoin ended");
         }
 
         private async Task HandleActivationAsync(object activationArgs)
@@ -114,7 +120,7 @@ namespace AllOrNothing.Services
                     }
                     unitOfWork.Complete();
 
-                }               
+                }       
             }
 
             await _themeSelectorService.InitializeAsync().ConfigureAwait(false);
@@ -123,6 +129,7 @@ namespace AllOrNothing.Services
 
         private async Task StartupAsync()
         {
+            _logger.LogInformation("Startup started");
             await _themeSelectorService.SetRequestedThemeAsync();
             await Task.CompletedTask;
         }

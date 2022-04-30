@@ -35,7 +35,8 @@ namespace AllOrNothing.Repository
             optionsBuilder.EnableSensitiveDataLogging(true);
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlite("Data source=AllOrNothingDb.db");
+                var dir = System.AppDomain.CurrentDomain.BaseDirectory;
+                optionsBuilder.UseSqlite($@"Data source={dir}\AllOrNothingDb.db");
             }
         }
     }

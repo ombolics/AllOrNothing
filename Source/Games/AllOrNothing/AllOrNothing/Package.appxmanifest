@@ -7,12 +7,12 @@
   IgnorableNamespaces="uap rescap">
 
   <Identity
-    Name="f4391cfb-2c5c-4457-b068-ab574b611f78"
+    Name="MindentVagySemmitPackage"
     Publisher="CN=Csaba Ömböli"
-    Version="1.0.8.0" />
+    Version="1.0.11.0" />
 
   <Properties>
-    <DisplayName>AllOrNothing</DisplayName>
+    <DisplayName>Mindent vagy semmit</DisplayName>
     <PublisherDisplayName>Csabi</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -31,7 +31,7 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="$targetentrypoint$">
       <uap:VisualElements
-        DisplayName="AllOrNothing"
+        DisplayName="Mindent vagy semmit"
         Description="AllOrNothing"
         BackgroundColor="transparent"
         Square150x150Logo="Assets\Square150x150Logo.png"

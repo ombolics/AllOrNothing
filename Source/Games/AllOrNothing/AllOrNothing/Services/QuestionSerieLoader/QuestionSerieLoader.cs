@@ -176,7 +176,7 @@ namespace AllOrNothing.Services
             {
                 if (string.IsNullOrWhiteSpace(item))
                     continue;
-                var competences = _allCompetences.Where(c => c.Name.Contains(item.Trim()));
+                var competences = _allCompetences.Where(c => c.Name.ToLower().Contains(item.Trim().ToLower()));
                 foreach (var competence in competences)
                 {
                     if (!value.Contains(competence))
@@ -216,7 +216,7 @@ namespace AllOrNothing.Services
                     value.Topics.Add(topic);
                 }
             }
-            catch 
+            catch (Exception e)
             {
                 value = null;
                 return false;

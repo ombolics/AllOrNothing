@@ -128,6 +128,7 @@
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.0.0" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.8" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Serilog.Extensions.Logging.File" Version="3.0.0-dev-00067" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
 

@@ -402,8 +402,64 @@ namespace AllOrNothing.ViewModels
 
         public List<Schedule> GenerateSchedule(IList<TeamDto> teams, int numberOfRounds)
         {
-            var schedules = new List<Schedule>();
+            if (teams.Count < 4)
+                return null;
+            int totalAppereaceCount = teams.Count * numberOfRounds;
+            List<int> roundCounts = new List<int>();
 
+            switch (totalAppereaceCount % 4)
+            {
+                case 0:
+                    for (int i = 0; i < totalAppereaceCount/4; i++)
+                    {
+                        roundCounts.Add(4);
+                    }
+                    break;
+                case 1:
+                    if(teams.Count > 5)
+                    {
+                        for (int i = 0; i < (totalAppereaceCount - 9) / 4; i++)
+                        {
+                            roundCounts.Add(4);
+                        }
+                        roundCounts.Add(3);
+                        roundCounts.Add(3);
+                        roundCounts.Add(3);
+                    }
+                    else
+                    {
+                        roundCounts.Add(3);
+                        roundCounts.Add(2);
+                    }
+                    break;
+                case 2:
+                    if (teams.Count > 6)
+                    {
+                        for (int i = 0; i < (totalAppereaceCount - 6) / 4; i++)
+                        {
+                            roundCounts.Add(4);
+                        }
+                        roundCounts.Add(3);
+                        roundCounts.Add(3);
+                    }
+                    else
+                    {
+                        roundCounts.Add(3);
+                        roundCounts.Add(3);
+                    }
+                    break;
+                case 3:
+                    for (int i = 0; i < (totalAppereaceCount - 3) / 4; i++)
+                    {
+                        roundCounts.Add(4);
+                    }
+                    roundCounts.Add(3);
+                    break;
+                default:
+                    break;
+            }
+
+            var schedules = new List<Schedule>();
             var matrix = new int[teams.Count, teams.Count];
             var occurrences = new Dictionary<int, int>();
 
@@ -412,14 +468,15 @@ namespace AllOrNothing.ViewModels
                 occurrences.Add(i, 0);
             }
             bool isRunning = occurrences.Any(p => p.Value < numberOfRounds);
-            //while there is a team, that didnt play the requiered times
-            while (isRunning)
+
+
+
+            foreach (var roundCount in roundCounts)
             {
                 // the index of team in Teams
                 var round = new List<int>();
-
                 // we need a maximum of 4 team in a round
-                for (int i = 0; i < 4 && isRunning; i++)
+                for (int i = 0; i < roundCount; i++)
                 {
                     if (i == 0)
                     {
@@ -588,10 +645,10 @@ namespace AllOrNothing.ViewModels
         {
             message = "";
             var result = false;
-            if (Teams.Count < 2)
+            if (Teams.Count < 4)
             {
                 result = true;
-                message += "Legalább 2 csapatnak kell szerepelnie!\n";
+                message += "Legalább 4 csapatnak kell szerepelnie!\n";
             }
 
             if (!(GameModel.GameSettings.IsLightningAllowed || GameModel.GameSettings.IsTematicalAllowed))

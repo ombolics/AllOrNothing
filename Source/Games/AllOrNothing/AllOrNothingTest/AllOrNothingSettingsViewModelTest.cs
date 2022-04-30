@@ -47,6 +47,8 @@ namespace AllOrNothingTest
             //services.AddTransient<IAllOrNothingDbContext, AllOrNothingDbContext>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             //services.AddDbContext<AllOrNothingDbContext>(optionsBuilder => optionsBuilder.UseSqlServer(@"Server=DESKTOP-B5C457P\SQLEXPRESS;Integrated Security=true;Database=AllOrNothingDb;"));
+            var dir = System.AppDomain.CurrentDomain.BaseDirectory;
+            services.AddDbContext<AllOrNothingDbContext>(optionsBuilder => optionsBuilder.UseSqlite(@$"Data source={dir}..\..\..\..\AllOrNothing.Repository\AllOrNothingDb.db"));
 
             //Mapping
 
@@ -135,7 +137,7 @@ namespace AllOrNothingTest
                 Ioc.Default.GetService<IUnitOfWork>(),
                 Ioc.Default.GetService<IQuestionSerieLoader>());
 
-            var teams = _viewModel.GenerateTeams(GetPlayerCollection(2), 1);
+            var teams = _viewModel.GenerateTeams(GetPlayerCollection(4), 1);
             var shedule = _viewModel.GenerateSchedule(teams, 3);
 
             foreach (var team in teams)
@@ -143,12 +145,56 @@ namespace AllOrNothingTest
                 shedule.Count(s => s.Teams.Contains(team)).Should().Be(3);
             }
 
-            teams = _viewModel.GenerateTeams(GetPlayerCollection(10), 1);
+
+            // mod = 1
+            teams = _viewModel.GenerateTeams(GetPlayerCollection(5), 1);
+            shedule = _viewModel.GenerateSchedule(teams, 1);
+
+            foreach (var team in teams)
+            {
+                shedule.Count(s => s.Teams.Contains(team)).Should().Be(1);
+            }
+
+            teams = _viewModel.GenerateTeams(GetPlayerCollection(9), 1);
+            shedule = _viewModel.GenerateSchedule(teams, 1);
+
+            foreach (var team in teams)
+            {
+                shedule.Count(s => s.Teams.Contains(team)).Should().Be(1);
+            }
+
+            //mod = 2
+            teams = _viewModel.GenerateTeams(GetPlayerCollection(6), 1);
+            shedule = _viewModel.GenerateSchedule(teams, 1);
+
+            foreach (var team in teams)
+            {
+                shedule.Count(s => s.Teams.Contains(team)).Should().Be(1);
+            }
+
+            teams = _viewModel.GenerateTeams(GetPlayerCollection(10), 3);
             shedule = _viewModel.GenerateSchedule(teams, 3);
 
             foreach (var team in teams)
             {
                 shedule.Count(s => s.Teams.Contains(team)).Should().Be(3);
+            }
+
+            //mod = 3
+            teams = _viewModel.GenerateTeams(GetPlayerCollection(7), 1);
+            shedule = _viewModel.GenerateSchedule(teams, 1);
+
+            foreach (var team in teams)
+            {
+                shedule.Count(s => s.Teams.Contains(team)).Should().Be(1);
+            }
+
+            teams = _viewModel.GenerateTeams(GetPlayerCollection(11), 1);
+            shedule = _viewModel.GenerateSchedule(teams, 1);
+
+            foreach (var team in teams)
+            {
+                shedule.Count(s => s.Teams.Contains(team)).Should().Be(1);
             }
         }
 
@@ -163,22 +209,9 @@ namespace AllOrNothingTest
 
             // (round count * team count ) mod 4
 
-            // team count is low
-            var teams = _viewModel.GenerateTeams(GetPlayerCollection(2), 1);
-            var shedules = _viewModel.GenerateSchedule(teams, 2);
-            shedules.All(s => s.Teams.Distinct().Count() == s.Teams.Count).Should().BeTrue();
-
-            teams = _viewModel.GenerateTeams(GetPlayerCollection(3), 1);
-            shedules = _viewModel.GenerateSchedule(teams, 4);
-            shedules.All(s => s.Teams.Distinct().Count() == s.Teams.Count).Should().BeTrue();
-
-            teams = _viewModel.GenerateTeams(GetPlayerCollection(5), 1);
-            shedules = _viewModel.GenerateSchedule(teams, 1);
-            shedules.All(s => s.Teams.Distinct().Count() == s.Teams.Count).Should().BeTrue();
-
             // 0
-            teams = _viewModel.GenerateTeams(GetPlayerCollection(10), 1);
-            shedules = _viewModel.GenerateSchedule(teams, 2);
+            var teams = _viewModel.GenerateTeams(GetPlayerCollection(10), 1);
+            var shedules = _viewModel.GenerateSchedule(teams, 2);
             shedules.All(s => s.Teams.Distinct().Count() == s.Teams.Count).Should().BeTrue();
 
             //1
@@ -206,10 +239,22 @@ namespace AllOrNothingTest
                 Ioc.Default.GetService<IUnitOfWork>(),
                 Ioc.Default.GetService<IQuestionSerieLoader>());
 
-            var teams = _viewModel.GenerateTeams(GetPlayerCollection(2), 1);
+            //todo újraírni miután megvan a generálás
+            var teams = _viewModel.GenerateTeams(GetPlayerCollection(4), 1);
             var shedules = _viewModel.GenerateSchedule(teams, 3);
 
             shedules.All(s => s.Teams.Count <= 4).Should().BeTrue();
+
+
+            teams = _viewModel.GenerateTeams(GetPlayerCollection(5), 1);
+            shedules = _viewModel.GenerateSchedule(teams, 1);
+
+            shedules.All(s => s.Teams.Count == 3 || s.Teams.Count == 2).Should().BeTrue();
+
+            teams = _viewModel.GenerateTeams(GetPlayerCollection(17), 1);
+            shedules = _viewModel.GenerateSchedule(teams, 5);
+
+            shedules.All(s => s.Teams.Count <= 4 && s.Teams.Count >= 3).Should().BeTrue();
         }
 
         [Fact]
@@ -220,8 +265,6 @@ namespace AllOrNothingTest
                 Ioc.Default.GetService<IMapper>(),
                 Ioc.Default.GetService<IUnitOfWork>(),
                 Ioc.Default.GetService<IQuestionSerieLoader>());
-
-            
         }
         #endregion
     }

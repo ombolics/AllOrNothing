@@ -1,7 +1,14 @@
+using AllOrNothing.Contracts.Services;
 using AllOrNothing.Data;
+using AllOrNothing.Mapping;
 using AllOrNothing.Repository;
 using AllOrNothing.Services;
+using AllOrNothingTest.Helpers;
+using AutoMapper;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,16 +17,45 @@ using Xunit;
 
 namespace AllOrNothingTest
 {
-    public class QuestionSerieLoaderTest
+    public class QuestionSerieLoaderTest : IClassFixture<QuestoinSerieLoaderTestFixture>
     {
 
+        private QuestoinSerieLoaderTestFixture _fixture;
         private readonly QuestionSerieLoader _serieLoader;
         private readonly IUnitOfWork _unitOfWork;
 
-        public QuestionSerieLoaderTest()
+        public QuestionSerieLoaderTest(QuestoinSerieLoaderTestFixture fixture)
         {
-            _unitOfWork = new UnitOfWork(new AllOrNothingDbContext());
-            _serieLoader = new QuestionSerieLoader(_unitOfWork);
+            _fixture = fixture;
+            if(!fixture.Used)
+            {
+                Ioc.Default.ConfigureServices(ConfigureServices());              
+                fixture.Used = true;
+            }
+            _unitOfWork = Ioc.Default.GetService<IUnitOfWork>();
+            _serieLoader = Ioc.Default.GetService<QuestionSerieLoader>();
+            _serieLoader.SetupAllCompetences();
+        }
+
+        private System.IServiceProvider ConfigureServices()
+        {
+            var services = new ServiceCollection();
+            services.AddSingleton<QuestionSerieLoader>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+  
+            var dir = System.AppDomain.CurrentDomain.BaseDirectory;
+            services.AddDbContext<AllOrNothingDbContext>(optionsBuilder => optionsBuilder.UseSqlite(@$"Data source={dir}..\..\..\..\AllOrNothing.Repository\AllOrNothingDb.db"));
+
+            //Mapping
+
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
+            return services.BuildServiceProvider();
         }
 
         private string ReadFileContent(string path)
@@ -250,7 +286,7 @@ namespace AllOrNothingTest
 
             sucess.Should().BeTrue();
             serie.Topics[0].Competences.Count.Should().Be(1);
-            serie.Topics[0].Competences[0].Name.Should().Be("történelem");
+            serie.Topics[0].Competences[0].Name.ToLower().Should().Be("történelem");
             for (int i = 1; i < serie.Topics.Count; i++)
             {
                 serie.Topics[i].Competences.Should().BeNull();
@@ -260,7 +296,7 @@ namespace AllOrNothingTest
         [Fact]
         public void NewFormat_SameCompetenceIsGivenTwiceAtATopic()
         {
-            _serieLoader.SetupAllCompetences();
+            
             QuestionSerie serie;
             bool sucess = _serieLoader.ParseNewFormat("NewFormat_SameCompetenceIsGivenTwiceAtATopic", ReadFileContent("TestFiles/QuestionSerieLoader/NewFormat_SameCompetenceIsGivenTwiceAtATopic.txt"), out serie);
 
@@ -348,8 +384,8 @@ namespace AllOrNothingTest
             QuestionSerie serie;
             bool sucess = _serieLoader.ParseNewFormat("NewFormat_WrongCompetenceDelimeter", ReadFileContent("TestFiles/QuestionSerieLoader/NewFormat_WrongCompetenceDelimeter.txt"), out serie);
 
-            sucess.Should().BeFalse();
-            serie.Should().BeNull();
+            sucess.Should().BeTrue();
+            serie.Should().NotBeNull();
         }
         #endregion
     }
