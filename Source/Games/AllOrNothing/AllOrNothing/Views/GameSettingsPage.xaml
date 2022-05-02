@@ -379,7 +379,7 @@
                                     SelectedTimeChanged="{x:Bind ViewModel.TimePicker_SelectedTimeChanged, Mode=OneWay}"/>
                     </StackPanel>
 
-                    <CheckBox Grid.Row="3" Content="Gombok nélüli játék" 
+                    <CheckBox Grid.Row="3" Content="Automatizált játék" 
                               Margin="20,0,0,0"
                               IsChecked="{x:Bind ViewModel.GameModel.GameSettings.IsGameWithoutButtonsEnabled, Mode=TwoWay}"
                               Checked="{x:Bind ViewModel.GmaWithoutButtonsChecked}"/>

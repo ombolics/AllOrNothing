@@ -10,16 +10,32 @@
     xmlns:fa5="http://schemas.fontawesome.com/icons/"  
     xmlns:winui="using:Microsoft.UI.Xaml.Controls"
     Loaded="OnLoaded"
-    Background="White"
-    >
+    Background="Transparent">
 
     <Page.Resources>
         <SolidColorBrush x:Key="NavigationViewTopPaneBackground" Color="{ThemeResource MainColor1}" />
-        <SolidColorBrush x:Key="NavigationViewItemForeground" Color="White"/>
+        <!--<SolidColorBrush x:Key="NavigationViewItemForeground" Color="White"/>-->
     </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-
-    <NavigationView x:Name="navigationView"
+        <Grid x:Name="TitleBar">
+            <Rectangle x:Name="BackgroundElement" Fill="Transparent" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Image Height="20" Margin="5,5,5,5" Source="/Assets/icon.ico" />
+                <TextBlock Grid.Column="1" VerticalAlignment="Center" Text="Mindent vagy semmit" />
+            </Grid>
+        </Grid>
+        
+        <NavigationView Grid.Row="1"
+                        x:Name="navigationView"
                     IsBackButtonVisible="Collapsed"
                     IsBackEnabled="{x:Bind ViewModel.IsBackEnabled, Mode=OneWay}"
                     SelectedItem="{x:Bind ViewModel.Selected, Mode=OneWay}"
@@ -28,16 +44,21 @@
                     ExpandedModeThresholdWidth="1280"
                     PaneDisplayMode="Top"
                     Background="White">
-        <NavigationView.MenuItems>
-            <NavigationViewItem Content="Főmenü" helpers:NavHelper.NavigateTo="AllOrNothing.ViewModels.MainMenuViewModel" FontSize="{ThemeResource LargeFontSize}" FontWeight="bold" Foreground="White"/>
-        </NavigationView.MenuItems>
-        
-        <Grid>
-            <Frame x:Name="shellFrame" 
+            <NavigationView.MenuItems>
+                <NavigationViewItem Content="Főmenü" 
+                                helpers:NavHelper.NavigateTo="AllOrNothing.ViewModels.MainMenuViewModel" 
+                                FontSize="{ThemeResource LargeFontSize}" 
+                                FontWeight="bold" 
+                                Foreground="White"/>
+            </NavigationView.MenuItems>
+
+            <Grid>
+                <Frame x:Name="shellFrame" 
                    BorderThickness="0" 
                    IsNavigationStackEnabled="False"
                    Margin="15,15,15,15"
                    Background="White"/>
-        </Grid>
-    </NavigationView>
+            </Grid>
+        </NavigationView>
+    </Grid>
 </Page>

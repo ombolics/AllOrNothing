@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Core;
 
 namespace AllOrNothing.Services
 {
@@ -51,7 +52,12 @@ namespace AllOrNothing.Services
             {
                 _shell = Ioc.Default.GetService<ShellPage>();
                 App.MainWindow.Content = _shell ?? new Frame();
+                if (App.MainWindow.Content is FrameworkElement frameworkElement)
+                {
+                    frameworkElement.RequestedTheme = ElementTheme.Light;
+                }
             }
+
 
             // Depending on activationArgs one of ActivationHandlers or DefaultActivationHandler
             // will navigate to the first page

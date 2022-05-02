@@ -176,6 +176,11 @@ namespace AllOrNothing.ViewModels
             var dialogContent = "";
             try
             {
+                if (EditingSerie.Topics.Any(t => t.Questions.Any(q => string.IsNullOrWhiteSpace(q.Text) || string.IsNullOrWhiteSpace(q.Answer))) ||
+                    EditingSerie.Topics.Any(t => string.IsNullOrWhiteSpace(t.Name)))
+                {
+                    throw new InvalidOperationException("Fields must be filled!");
+                }
                 bool serieChanged = !EditingSerie.HasTheSameValue(_originalSerie);
                 if (IsNewSerieSelected)
                 {
@@ -189,7 +194,7 @@ namespace AllOrNothing.ViewModels
                             mapped.Topics[i].Competences[j] = _unitOfWork.Competences.Get(EditingSerie.Topics[i].Competences[j].Id);
                         }
                     }
-                    _unitOfWork.QuestionSeries.Add(mapped);
+                    _unitOfWork.QuestionSeries.Add(mapped);                   
                 }
                 else if (serieChanged)
                 {
@@ -229,10 +234,11 @@ namespace AllOrNothing.ViewModels
                     dialogContent = "Sikeres mentés!";
                 }
             }
-            catch
+            catch (Exception e)
             {
                 dialogTitle = "Sikertelen mentés";
                 dialogContent = "Sikertelen mentés! Töltse ki az összes kötelező mezőt! (Cím, téma címek, kérdések, válaszok, kérdések értékei)";
+                         
             }
             PopupManager.ShowDialog(PageXamlRoot, dialogTitle, dialogContent, ContentDialogButton.Close, "", "Ok");
         }

@@ -494,7 +494,7 @@ namespace AllOrNothing.ViewModels
                         for (int j = 0; j < minTeams.Count; j++)
                         {
                             var val = SumOfPlayedAgainstTeamsInRound(minTeams[j].Key, round, matrix);
-                            if (val < min)
+                            if (val < min && !round.Contains(minTeams[j].Key))
                             {
                                 min = val;
                                 minIndex = minTeams[j].Key;

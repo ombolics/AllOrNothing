@@ -2,7 +2,7 @@
 using AllOrNothing.ViewModels;
 
 using CommunityToolkit.Mvvm.DependencyInjection;
-
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 
@@ -22,6 +22,9 @@ namespace AllOrNothing.Views
         {
             ViewModel = viewModel;
             InitializeComponent();
+            App.MainWindow.ExtendsContentIntoTitleBar = true;
+            App.MainWindow.SetTitleBar(BackgroundElement);
+            App.MainWindow.Title = "Mindent vagy semmit";
             ViewModel.NavigationService.Frame = shellFrame;
             ViewModel.NavigationViewService.Initialize(navigationView);
         }
