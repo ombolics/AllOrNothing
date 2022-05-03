@@ -416,7 +416,7 @@ namespace AllOrNothing.ViewModels
                     }
                     break;
                 case 1:
-                    if(teams.Count > 5)
+                    if(totalAppereaceCount > 5)
                     {
                         for (int i = 0; i < (totalAppereaceCount - 9) / 4; i++)
                         {
@@ -433,7 +433,7 @@ namespace AllOrNothing.ViewModels
                     }
                     break;
                 case 2:
-                    if (teams.Count > 6)
+                    if (totalAppereaceCount > 6)
                     {
                         for (int i = 0; i < (totalAppereaceCount - 6) / 4; i++)
                         {

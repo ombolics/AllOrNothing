@@ -188,7 +188,7 @@ namespace AllOrNothing.ViewModels
 
         private async void On_RoundOver()
         {
-            string popUpContent = "Biztosan véget vet a játéknak?";
+            string popUpContent = "Biztosan véget vet a körnek?";
             if (GamePhase == GamePhase.TEMATICAL && SelectedRound.RoundSettings.IsLightningAllowed)
             {
                 popUpContent += "\nA villámkérdések még visszavannak!";
