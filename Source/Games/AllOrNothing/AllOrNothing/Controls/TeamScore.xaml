@@ -40,8 +40,8 @@
               CornerRadius="10">
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="4*"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0">

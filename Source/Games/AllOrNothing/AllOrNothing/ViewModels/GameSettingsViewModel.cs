@@ -691,7 +691,7 @@ namespace AllOrNothing.ViewModels
                 message += "Válasszon ki egy kérdéssort!\n";
             else if(GameModel.GameSettings.IsGameWithoutButtonsEnabled && !SelectedRound.RoundSettings.QuestionSerie.CanBePlayedWithoutButtons)
             {
-                message += "Olyan kérdéssort válasszon ki, ami kompatibilis a nyomógombok nélküli játékkal!\n";
+                message += "Olyan kérdéssort válasszon ki, ami kompatibilis az automatizált játékkal!\n";
             }
 
             if (SelectedRound != null && !(SelectedRound.RoundSettings.IsTematicalAllowed || SelectedRound.RoundSettings.IsLightningAllowed))

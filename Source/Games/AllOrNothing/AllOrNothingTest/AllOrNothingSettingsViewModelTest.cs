@@ -218,6 +218,10 @@ namespace AllOrNothingTest
             teams = _viewModel.GenerateTeams(GetPlayerCollection(9), 1);
             shedules = _viewModel.GenerateSchedule(teams, 5);
             shedules.All(s => s.Teams.Distinct().Count() == s.Teams.Count).Should().BeTrue();
+            
+            teams = _viewModel.GenerateTeams(GetPlayerCollection(5), 1);
+            shedules = _viewModel.GenerateSchedule(teams, 5);
+            shedules.All(s => s.Teams.Distinct().Count() == s.Teams.Count).Should().BeTrue();
 
             //2
             teams = _viewModel.GenerateTeams(GetPlayerCollection(11), 1);
