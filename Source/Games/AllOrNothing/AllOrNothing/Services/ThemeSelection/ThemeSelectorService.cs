@@ -37,7 +37,6 @@ namespace AllOrNothing.Services
         {
             if (App.MainWindow.Content is FrameworkElement rootElement)
             {
-                //TODO uncomment
                 rootElement.RequestedTheme = Theme;
             }
 

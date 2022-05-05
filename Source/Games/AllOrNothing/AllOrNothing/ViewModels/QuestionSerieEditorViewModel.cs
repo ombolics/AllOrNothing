@@ -169,7 +169,6 @@ namespace AllOrNothing.ViewModels
                 RaiseNavigateTo(new NavigateToEventArgs { PageName = "Főmenü", PageVM = typeof(MainMenuViewModel) });
             }
         }
-        //TODO mentés előtt ne lehessen másikat kiválasztani
         private async void Save()
         {
             var dialogTitle = "";

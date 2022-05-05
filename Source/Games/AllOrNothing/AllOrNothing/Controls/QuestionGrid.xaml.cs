@@ -147,8 +147,7 @@ namespace AllOrNothing.Controls
         {
             var button = (sender as QuestionButton);
             button.Visibility = Visibility.Collapsed;
-
-            //TODO kép hang videó typusok megjelenítése         
+       
             CurrentQuestion = button.Question;
         }
         #endregion      

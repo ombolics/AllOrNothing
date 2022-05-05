@@ -127,11 +127,7 @@ namespace AllOrNothing.Services.DragAndDrop
                     args.Data.SetText(JsonSerializer.Serialize(tb.Player));
                 }
 
-                //args.AllowedOperations = DataPackageOperation.Move;
-
-                //var asd = RandomAccessStream.
-                //args.Data.SetData("TestData", RandomAccessStreamReference.Cre);
-                //sender.StartDragAsync()
+               
                 if (visualConfiguration.DropOverImage != null)
                 {
                     args.DragUI.SetContentFromBitmapImage(visualConfiguration.DragStartingImage as BitmapImage);

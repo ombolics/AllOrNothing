@@ -247,7 +247,6 @@ namespace AllOrNothingTest
                 Ioc.Default.GetService<IUnitOfWork>(),
                 Ioc.Default.GetService<IQuestionSerieLoader>());
 
-            //todo újraírni miután megvan a generálás
             var teams = _viewModel.GenerateTeams(GetPlayerCollection(4), 1);
             var shedules = _viewModel.GenerateSchedule(teams, 3);
 

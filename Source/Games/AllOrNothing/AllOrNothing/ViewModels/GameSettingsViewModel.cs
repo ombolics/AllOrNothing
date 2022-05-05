@@ -580,7 +580,6 @@ namespace AllOrNothing.ViewModels
         public void ItemDragStarting(UIElement sender, DragStartingEventArgs e)
         {
             e.AllowedOperations = DataPackageOperation.Move;
-            var asd = e.Data;
         }
 
         public void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)

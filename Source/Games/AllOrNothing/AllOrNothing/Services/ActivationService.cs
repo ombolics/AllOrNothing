@@ -89,45 +89,46 @@ namespace AllOrNothing.Services
 
         private async Task InitializeAsync()
         {
-            //create database if not exists
-            using (var serviceScope = Ioc.Default.GetService<IServiceScopeFactory>().CreateScope())
-            {
+            ////create database if not exists
+            //using (var serviceScope = Ioc.Default.GetService<IServiceScopeFactory>().CreateScope())
+            //{
                 
-                var path = @$"{System.AppDomain.CurrentDomain.BaseDirectory}..\..\..\..\..\..\..\AllOrNothing.Repository\AllOrNothingDb.db";
-                bool dbExistedBefore = File.Exists(path);
+            //    var path = @$"{System.AppDomain.CurrentDomain.BaseDirectory}..\..\..\..\..\..\..\AllOrNothing.Repository\AllOrNothingDb.db";
+            //    bool dbExistedBefore = File.Exists(path);
 
-                var context = serviceScope.ServiceProvider.GetRequiredService<AllOrNothingDbContext>();
-                context.Database.Migrate();
+            //    var context = serviceScope.ServiceProvider.GetRequiredService<AllOrNothingDbContext>();
+            //    //context.Database.Migrate();
+            //    context.Database.EnsureCreated();
 
-                //Add competences if the db didnt existed before
-                if(! dbExistedBefore)
-                {
-                    var unitOfWork = Ioc.Default.GetService<IUnitOfWork>();
-                    Competence[] competences =
-                    {
-                    new Competence{Name = "Biológia"},
-                    new Competence{Name = "Kémia"},
-                    new Competence{Name = "Sport"},
-                    new Competence{Name = "Szórakozás"},
-                    new Competence{Name = "Életmód"},
-                    new Competence{Name = "Művészet"},
-                    new Competence{Name = "Mindennapok"},
-                    new Competence{Name = "Földrajz"},
-                    new Competence{Name = "Történelem"},
-                    new Competence{Name = "Irodalom"},
-                    new Competence{Name = "Matematika "},
-                    new Competence{Name = "Fizika"},
-                    new Competence{Name = "Technológia"},
-                    };
+            //    //Add competences if the db didnt existed before
+            //    if(! dbExistedBefore)
+            //    {
+            //        var unitOfWork = Ioc.Default.GetService<IUnitOfWork>();
+            //        Competence[] competences =
+            //        {
+            //        new Competence{Name = "Biológia"},
+            //        new Competence{Name = "Kémia"},
+            //        new Competence{Name = "Sport"},
+            //        new Competence{Name = "Szórakozás"},
+            //        new Competence{Name = "Életmód"},
+            //        new Competence{Name = "Művészet"},
+            //        new Competence{Name = "Mindennapok"},
+            //        new Competence{Name = "Földrajz"},
+            //        new Competence{Name = "Történelem"},
+            //        new Competence{Name = "Irodalom"},
+            //        new Competence{Name = "Matematika "},
+            //        new Competence{Name = "Fizika"},
+            //        new Competence{Name = "Technológia"},
+            //        };
 
-                    foreach (var item in competences)
-                    {
-                        unitOfWork.Competences.Add(item);
-                    }
-                    unitOfWork.Complete();
+            //        foreach (var item in competences)
+            //        {
+            //            unitOfWork.Competences.Add(item);
+            //        }
+            //        unitOfWork.Complete();
 
-                }       
-            }
+            //    }       
+            //}
 
             await _themeSelectorService.InitializeAsync().ConfigureAwait(false);
             await Task.CompletedTask;
@@ -136,7 +137,15 @@ namespace AllOrNothing.Services
         private async Task StartupAsync()
         {
             _logger.LogInformation("Startup started");
-            await _themeSelectorService.SetRequestedThemeAsync();
+            //for later use
+            //await _themeSelectorService.SetRequestedThemeAsync();
+
+            //Remove it after once theme selection is fully implemented
+            if (App.MainWindow.Content is FrameworkElement rootElement)
+            {
+                rootElement.RequestedTheme = ElementTheme.Light;
+            }
+
             await Task.CompletedTask;
         }
         #endregion

@@ -23,13 +23,14 @@ namespace AllOrNothing
     {
         public static Window MainWindow { get; set; } = new Window() { Title = "AppDisplayName".GetLocalized() };
         public static readonly string QuestionSerieFolder = @$"{System.AppDomain.CurrentDomain.BaseDirectory}\QuestionSerieSamples";
-
+        private readonly ILogger<App> _logger;
         public App()
         {
             InitializeComponent();
             UnhandledException += App_UnhandledException;
             Ioc.Default.ConfigureServices(ConfigureServices());
 
+            _logger = Ioc.Default.GetService<ILogger<App>>();
             StorageFolder folder = ApplicationData.Current.LocalFolder;
             string fullPath = $"{folder.Path}\\Logs\\App.log";
 
@@ -51,6 +52,7 @@ namespace AllOrNothing
         {
             // TODO WTS: Please log and handle the exception as appropriate to your scenario
             // For more info see https://docs.microsoft.com/windows/winui/api/microsoft.ui.xaml.unhandledexceptioneventargs
+            _logger.LogError(e.Message);
         }
 
         protected override async void OnLaunched(LaunchActivatedEventArgs args)

@@ -7,13 +7,13 @@
     xmlns:xaml="using:Microsoft.UI.Xaml"
     xmlns:converters="using:AllOrNothing.Converters"
     mc:Ignorable="d"
-    Style="{StaticResource PageStyle}">
+    Background="{ThemeResource MainColor2}"
+    CornerRadius="20">
 
     <Grid Margin="{StaticResource MediumLeftRightMargin}">
         <StackPanel x:Name="ContentArea">
-            <TextBlock x:Uid="Settings_Personalization" 
-                       Style="{ThemeResource SubtitleTextBlockStyle}" />
-            <StackPanel Margin="{StaticResource SmallTopBottomMargin}">
+            <!-- For future usage -->
+            <!--<StackPanel Margin="{StaticResource SmallTopBottomMargin}">
                 <TextBlock x:Uid="Settings_Theme" />
 
                 <StackPanel Margin="{StaticResource XSmallTopMargin}">
@@ -47,21 +47,31 @@
                         </RadioButton.CommandParameter>
                     </RadioButton>
                 </StackPanel>
-            </StackPanel>
+            </StackPanel>-->
 
-            <TextBlock Text="Valami leírás az appról..." 
-                       Style="{ThemeResource SubtitleTextBlockStyle}" />
+            <TextBlock Text="Tudnivalók az alkalmazásról" 
+                       Style="{ThemeResource TitleStyle}" />
 
             <StackPanel Margin="{StaticResource XSmallTopMargin}">
                 <TextBlock Text="{x:Bind ViewModel.VersionDescription, Mode=OneWay}" 
-                           Style="{ThemeResource BodyTextBlockStyle}" />
+                           Style="{ThemeResource CommonTextStyle}" />
 
                 <TextBlock
-                    Text="Valami leírás az appról..."
+                    Text="Az alkalmazás a Mindent vagy semmit c. televíziós vetélekdő által megteremtett kvízformátum használatához nyújt támogatást. Rézletesebb leírást a dokumentáció ad."
                     Margin="{StaticResource XSmallTopMargin}"
-                    Style="{ThemeResource BodyTextBlockStyle}" />
-                <HyperlinkButton x:Uid="SettingsPage_PrivacyTermsLink" 
-                                 Margin="{StaticResource XSmallTopMargin}" />
+                    Style="{ThemeResource CommonTextStyle}" />
+
+                <TextBlock
+                    Text="Keszítette: Ömböli Csaba"
+                    Margin="{StaticResource XSmallTopMargin}"
+                    Style="{ThemeResource CommonTextStyle}" />
+
+                <TextBlock
+                    Text="Ⓒ 2022 Minden jog fenntartva"
+                    Margin="{StaticResource XSmallTopMargin}"
+                    Style="{ThemeResource CommonTextStyle}" />
+                <!--<HyperlinkButton x:Uid="SettingsPage_PrivacyTermsLink" 
+                                 Margin="{StaticResource XSmallTopMargin}" />-->
             </StackPanel>
         </StackPanel>
     </Grid>

@@ -122,7 +122,6 @@ namespace AllOrNothing.Mapping
         //Used in the question serie page
         public void TextBoxChanged(object sender, TextChangedEventArgs e)
         {
-            //TODO validálás
             if (sender is TextBox textBox && textBox.Name == "serieNameTextBox" && Name != textBox.Text.Trim())
             {
                 Name = textBox.Text.Trim();

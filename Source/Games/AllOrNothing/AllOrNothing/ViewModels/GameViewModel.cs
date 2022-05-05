@@ -166,8 +166,6 @@ namespace AllOrNothing.ViewModels
 
         private void _gameTimer_Tick(object sender, object e)
         {
-            //var asd = SelectedRound.TematicalTime.ToString();
-
             if (GamePhase == GamePhase.TEMATICAL)
             {
                 SelectedRound.RoundSettings.TematicalTime = SelectedRound.RoundSettings.TematicalTime.Subtract(TimeSpan.FromSeconds(1));
