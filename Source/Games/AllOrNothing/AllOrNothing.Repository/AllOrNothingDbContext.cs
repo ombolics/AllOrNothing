@@ -33,6 +33,7 @@ namespace AllOrNothing.Repository
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.EnableSensitiveDataLogging(true);
+
             if (!optionsBuilder.IsConfigured)
             {
                 var dir = System.AppDomain.CurrentDomain.BaseDirectory;

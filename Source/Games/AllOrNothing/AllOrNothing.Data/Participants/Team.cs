@@ -10,7 +10,6 @@ namespace AllOrNothing.Data
         public int Id { get; set; }
         [Required]
         public List<Player> Players { get; set; }
-        //public ICommand TestCommand { get; set; }
         [Required]
         public string TeamName { get; set; }
     }

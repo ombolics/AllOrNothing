@@ -11,11 +11,5 @@ namespace AllOrNothing.Data
         public string Institute { get; set; }
         public string NickName { get; set; }
         public bool IsDeleted { get; set; }
-        //public ICommand RemoveCommand { get; set; }
-        //public ICommand TestCommand { get; set; }
-        //public override string ToString()
-        //{
-        //    return Name;
-        //}
     }
 }

@@ -9,7 +9,6 @@
             originalSerie.IsDeleted = newSerie.IsDeleted;
             for (int i = 0; i < originalSerie.Topics.Count; i++)
             {
-
                 originalSerie.Topics[i].SetValue(newSerie.Topics[i]);
             }
 
