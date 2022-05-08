@@ -173,6 +173,7 @@ namespace AllOrNothing.ViewModels
             _avaiblePlayers.UnionWith(Mapper.Map<IEnumerable<PlayerDto>>(_unitOfWork.Players.GetAllAvaible()));
             _teams = new();
             _selectedPlayers = new();
+            FinalRound = null;
             AllCompetences = _unitOfWork.Competences.GetAll().ToList();
 
             var series = Mapper.Map<IEnumerable<QuestionSerie>, IEnumerable<QuestionSerieDto>>(_unitOfWork.QuestionSeries.GetAllAvaible());
