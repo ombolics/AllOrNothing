@@ -45,6 +45,13 @@ namespace AllOrNothing.Models
             set => SetProperty(ref _roundEnded, value);
         }
 
+        private bool _roundStarted;
+        public bool RoundStarted
+        {
+            get => _roundStarted;
+            set => SetProperty(ref _roundStarted, value);
+        }
+
         private bool _isFinalRound;
         public bool IsFinalRound
         {

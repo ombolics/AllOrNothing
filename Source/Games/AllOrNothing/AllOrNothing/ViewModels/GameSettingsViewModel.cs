@@ -46,6 +46,7 @@ namespace AllOrNothing.ViewModels
         private RoundModel _finalRound;
         private bool _isFinalRound;
         private ObservableCollection<TeamDto> _teams;
+        private bool _pageEnabled;
 
         private ICommand _exitCommand;
         private ICommand _generateTeamsCommand;
@@ -143,6 +144,11 @@ namespace AllOrNothing.ViewModels
         {
             get => _gameInProgress;
             set => SetProperty(ref _gameInProgress, value);
+        }
+        public bool PageEnabled
+        {
+            get => _pageEnabled;
+            set => SetProperty(ref _pageEnabled, value);
         }
 
         public ICommand ExitCommand => _exitCommand ??= new RelayCommand(Exit);
@@ -698,7 +704,7 @@ namespace AllOrNothing.ViewModels
 
             return message != "";
         }
-
+        
         private async void StartGameClicked()
         {
             var message = "";
@@ -708,8 +714,9 @@ namespace AllOrNothing.ViewModels
                 return;
             }
 
-            var vm = Ioc.Default.GetService<GameViewModel>();          
+            var vm = Ioc.Default.GetService<GameViewModel>();    
             vm.SetupRound(SelectedRound);
+            SelectedRound.RoundStarted = true;
 
             if (!GameInProgress)
             {
@@ -740,6 +747,8 @@ namespace AllOrNothing.ViewModels
         {
             base.OnNavigatedTo();
             _avaiblePlayers.UnionWith(Mapper.Map<IEnumerable<PlayerDto>>(_unitOfWork.Players.GetAllAvaible()));
+
+            PageEnabled = Rounds == null ? true : !Rounds.Any(rm => rm.RoundStarted && !rm.RoundEnded);
 
             if (FinalRound == null && Rounds != null && Rounds.All(r => r.RoundEnded))
             {

@@ -28,15 +28,18 @@ namespace AllOrNothing
         {
             InitializeComponent();
             UnhandledException += App_UnhandledException;
+
             Ioc.Default.ConfigureServices(ConfigureServices());
 
-            _logger = Ioc.Default.GetService<ILogger<App>>();
             StorageFolder folder = ApplicationData.Current.LocalFolder;
-            string fullPath = $"{folder.Path}\\Logs\\App.log";
-
             // Tell the logging service to use Serilog.File extension.
+            string fullPath = $"{folder.Path}\\Logs\\App.log";
             Ioc.Default.GetService<ILoggerFactory>().AddFile(fullPath);
+            _logger = Ioc.Default.GetService<ILogger<App>>();
 
+
+            var dir = System.AppDomain.CurrentDomain.BaseDirectory;
+            _logger.LogInformation($"Database connectionstring is:\tData source={dir}\\AllOrNothingDb.db");
             //Borderless mode
             //MainWindow.ExtendsContentIntoTitleBar = true;
 

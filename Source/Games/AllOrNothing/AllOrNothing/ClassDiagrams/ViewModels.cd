@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="AllOrNothing.Contracts.ViewModels.NavigateToEventArgs">
+    <Position X="29.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Contracts\ViewModels\NavigateToEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AllOrNothing.ViewModels.AppSettingsViewModel">
+    <Position X="20" Y="8.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAEAAAAAAAAABEAAAAAAAAAAKAAAAAM=</HashCode>
+      <FileName>ViewModels\AppSettingsViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AllOrNothing.ViewModels.GameSettingsViewModel">
+    <Position X="25.5" Y="8.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>CGGhGiUgTCksIgRgKiJRCZTCCMADBhkALsAIAMogCSI=</HashCode>
+      <FileName>ViewModels\GameSettingsViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AllOrNothing.ViewModels.GameViewModel">
+    <Position X="38" Y="8.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>gCAKgFIEAElAEgAKEoAYABABgAACbQRAAJAAUgAGAEA=</HashCode>
+      <FileName>ViewModels\GameViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AllOrNothing.ViewModels.MainMenuViewModel">
+    <Position X="20.75" Y="13.25" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>ACAACAABAAAAAAAAAAAAAAAAAgAAAECCQQAAAEQBAAA=</HashCode>
+      <FileName>ViewModels\MainMenuViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AllOrNothing.ViewModels.PlayerAddingViewModel">
+    <Position X="29.5" Y="8.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>ACWAAJAAEAAIAAFIAwBhAAAAAAFAAAEIIFCAABAEAAg=</HashCode>
+      <FileName>ViewModels\PlayerAddingViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="AllOrNothing.ViewModels.QuestionSerieEditorViewModel">
+    <Position X="34" Y="8.5" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>CGaAAJAAAAAAIAFACgBBAiBAAoFIAAEEIEAAgBAMAAg=</HashCode>
+      <FileName>ViewModels\QuestionSerieEditorViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="AllOrNothing.ViewModels.ScoreBoardPageViewModel">
+    <Position X="32" Y="18.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgBACBAEAAwA=</HashCode>
+      <FileName>ViewModels\ScoreBoardPageViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AllOrNothing.ViewModels.ShellViewModel">
+    <Position X="29" Y="18.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>OAACAAAAAAIAAAAQQgAICAIhAEAAAAEAEAAAAAAAAAI=</HashCode>
+      <FileName>ViewModels\ShellViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AllOrNothing.ViewModels.StatisticsViewModel">
+    <Position X="29.5" Y="16.75" Width="2.25" />
+    <InheritanceLine Type="AllOrNothing.ViewModels.ViewModelBase" ManuallyRouted="true" FixedToPoint="true">
+      <Path>
+        <Point X="33.5" Y="7.691" />
+        <Point X="33.5" Y="8.746" />
+        <Point X="32.365" Y="8.746" />
+        <Point X="32.365" Y="17.375" />
+        <Point X="31.75" Y="17.375" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\StatisticsViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AllOrNothing.ViewModels.ViewModelBase" Collapsed="true">
+    <Position X="32.75" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAIAAQCQAAQAAAIAAAQAAIAAAABAAAA=</HashCode>
+      <FileName>ViewModels\ViewModelBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="AllOrNothing.Contracts.ViewModels.IExitable">
+    <Position X="26" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Contracts\ViewModels\IExitable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="AllOrNothing.Contracts.ViewModels.INavigationAware">
+    <Position X="28" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAACQAAQAAAAAAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>Contracts\ViewModels\INavigationAware.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="AllOrNothing.ViewModels.GamePhase">
+    <Position X="36.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAEAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\GameViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

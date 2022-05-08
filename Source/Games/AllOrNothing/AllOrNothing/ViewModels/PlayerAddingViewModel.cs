@@ -131,22 +131,25 @@ namespace AllOrNothing.ViewModels
 
         private async void Save()
         {
-            if (IsNewPlayerSelected)
+            
+            if (!string.IsNullOrWhiteSpace(EditingPlayer.Name))
             {
-                EditingPlayer.Id = 0;
-                _unitOfWork.Players.Add(_mapper.Map<Player>(EditingPlayer));
+                if (IsNewPlayerSelected)
+                {
+                    EditingPlayer.Id = 0;
+                    _unitOfWork.Players.Add(_mapper.Map<Player>(EditingPlayer));
+                }
+                else
+                {
+                    var playerData = _unitOfWork.Players.Get(EditingPlayer.Id);
+                    playerData.Name = EditingPlayer.Name;
+                    playerData.NickName = EditingPlayer.NickName;
+                    playerData.Institute = EditingPlayer.Institute;
+                }
             }
-            else
-            {
-                var playerData = _unitOfWork.Players.Get(EditingPlayer.Id);
-                playerData.Name = EditingPlayer.Name;
-                playerData.NickName = EditingPlayer.NickName;
-                playerData.Institute = EditingPlayer.Institute;
-            }
-
 
             var dialogTitle = "Sikertelen mentés";
-            var dialogContent = "Sikertelen mentés!";
+            var dialogContent = "Sikertelen mentés!\n A név kötelező mező!";
 
             if (_unitOfWork.Complete() > 0)
             {

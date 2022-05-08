@@ -18,7 +18,8 @@
     Background="White"
     Name="gameSettingsPage"
     DataContext="{x:Bind ViewModel}"
-    Loaded="Page_Loaded">
+    Loaded="Page_Loaded"
+    IsEnabled="{x:Bind ViewModel.PageEnabled}">
 
     <Page.Resources>
         <!--#region CheckBox resources-->

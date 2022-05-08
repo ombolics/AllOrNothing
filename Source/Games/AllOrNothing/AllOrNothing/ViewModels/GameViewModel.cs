@@ -42,6 +42,7 @@ namespace AllOrNothing.ViewModels
         private XamlRoot _pageXamlRoot;
         private QuestionDto _currentQuestion;
         private string _occasionName;
+        private bool _lightningButtonVisible;
         #endregion
 
         #region Constructors
@@ -51,7 +52,7 @@ namespace AllOrNothing.ViewModels
             _gameTimer = new DispatcherTimer();
             _gameTimer.Interval = TimeSpan.FromSeconds(1);
             _gameTimer.Tick += _gameTimer_Tick;
-            ReachablePages = new List<Type> { typeof(GameSettingsViewModel) };
+            ReachablePages = new List<Type>();
         }
         #endregion
 
@@ -112,6 +113,11 @@ namespace AllOrNothing.ViewModels
             get => _gamePhase;
             set => SetProperty(ref _gamePhase, value);
         }
+        public bool LightningButtonVisible
+        {
+            get => _lightningButtonVisible;
+            set => SetProperty(ref _lightningButtonVisible, value);
+        }
 
         public ICommand ToggleTimerCommand => _toggleTimerCommand ??= new RelayCommand(ToggleTimer);
         public ICommand GameOverCommand => _gameOverCommand ??= new RelayCommand(On_RoundOver);
@@ -123,10 +129,7 @@ namespace AllOrNothing.ViewModels
 
         #region Methods
         public void SetupRound(RoundModel m)
-        {
-            m.RoundSettings.TematicalTime = m.RoundSettings.TematicalTime.ShiftToRight();
-            m.RoundSettings.LightningTime = m.RoundSettings.LightningTime.ShiftToRight();
-
+        {         
             SelectedRound = m;
 
             if (SelectedRound.RoundSettings.IsTematicalAllowed)
@@ -152,7 +155,9 @@ namespace AllOrNothing.ViewModels
         }
         private void SetupLightning()
         {
+            SelectedRound.RoundSettings.LightningTime = SelectedRound.RoundSettings.LightningTime.ShiftToRight();
             GamePhase = GamePhase.LIGHTNING;
+            LightningButtonVisible = false;
             CurrentQuestion = new QuestionDto
             {
                 Value = 3000,
@@ -162,6 +167,8 @@ namespace AllOrNothing.ViewModels
         private void SetupTematical()
         {
             GamePhase = GamePhase.TEMATICAL;
+            LightningButtonVisible = SelectedRound.RoundSettings.IsLightningAllowed;
+            SelectedRound.RoundSettings.TematicalTime = SelectedRound.RoundSettings.TematicalTime.ShiftToRight();
         }
 
         private void _gameTimer_Tick(object sender, object e)

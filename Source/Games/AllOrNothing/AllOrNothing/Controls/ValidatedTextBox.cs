@@ -69,6 +69,7 @@ namespace AllOrNothing.Controls
                 return;
             }
 
+            //for Later Usage
             if (SpecialCharactersEnabled)
             {
             }

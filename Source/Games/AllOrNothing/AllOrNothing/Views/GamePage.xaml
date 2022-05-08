@@ -370,6 +370,7 @@
                             Content="Nincs válasz" 
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Stretch"
+                            Visibility="{x:Bind ViewModel.GamePhase, Mode=OneWay, Converter={StaticResource GamePhaseToVisibilityConverter}, ConverterParameter=Tematical }"
                             Command="{x:Bind ViewModel.SkipAnswerCommand}"
                             CornerRadius="10"
                             Margin="10,10,10,5"
@@ -388,7 +389,7 @@
                                 HorizontalAlignment="Stretch" 
                                 VerticalAlignment="Stretch" 
                                 Command="{x:Bind ViewModel.ShowLightningCommand}"
-                                Visibility="{x:Bind ViewModel.GamePhase, Mode=OneWay, Converter={StaticResource GamePhaseToVisibilityConverter}, ConverterParameter=Tematical }"
+                                Visibility="{x:Bind ViewModel.LightningButtonVisible, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}"
                                 CornerRadius="10"
                                 Margin="10,5,5,10"
                                 Foreground="{ThemeResource MainColor1}"/>
