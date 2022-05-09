@@ -1,0 +1,651 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="AllOrNothing.Activation.ActivationHandler&lt;T&gt;">
+    <Position X="18.25" Y="8.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAACAAAAAAAAAAAAEIAAAAA=</HashCode>
+      <FileName>Activation\ActivationHandler.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="AllOrNothing.Activation.DefaultActivationHandler">
+    <Position X="18.25" Y="10.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAEIAAAAA=</HashCode>
+      <FileName>Activation\DefaultActivationHandler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AllOrNothing.Behaviors.NavigationViewHeaderBehavior">
+    <Position X="30.75" Y="3" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>BEAAAAAAFEUAAAAEAAACoBIABAgAAAAAAABABCAAIAA=</HashCode>
+      <FileName>Behaviors\NavigationViewHeaderBehavior.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AllOrNothing.Contracts.ViewModels.NavigateToEventArgs">
+    <Position X="28.25" Y="4.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Contracts\ViewModels\NavigateToEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AllOrNothing.Converters.BoolToVisibilityConverter" BaseTypeListCollapsed="true">
+    <Position X="39.75" Y="10.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Converters\BoolToVisibilityConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="AllOrNothing.Converters.EnumToBooleanConverter" BaseTypeListCollapsed="true">
+    <Position X="42" Y="10.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Converters\EnumToBooleanConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="AllOrNothing.Converters.GamePhaseToVisibilityConverter" BaseTypeListCollapsed="true">
+    <Position X="44.25" Y="10.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Converters\GamePhaseToVisibilityConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="AllOrNothing.Converters.NegateConverter" BaseTypeListCollapsed="true">
+    <Position X="39.75" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Converters\NegateConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="AllOrNothing.Converters.NullValueConverter" BaseTypeListCollapsed="true">
+    <Position X="41.5" Y="12.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Converters\NullValueConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="AllOrNothing.Converters.RoundStateToColorConverter" BaseTypeListCollapsed="true">
+    <Position X="43.5" Y="12.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Converters\RoundStateToColorConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="AllOrNothing.Converters.TimeSpanToStringConverter" BaseTypeListCollapsed="true">
+    <Position X="46" Y="12.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Converters\TimeSpanToStringConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="AllOrNothing.Helpers.PlayerDtoComparer" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="44.5" Y="14.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>Helpers\Comparers\PlayerDtoComparer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="AllOrNothing.Helpers.QuestionDtoComparer" BaseTypeListCollapsed="true">
+    <Position X="42" Y="14.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>Helpers\Comparers\QuestionDtoComparer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="AllOrNothing.Helpers.StandingDtoComparer" BaseTypeListCollapsed="true">
+    <Position X="39.75" Y="14.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>Helpers\Comparers\StandingDtoComparer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="AllOrNothing.Helpers.FrameExtensions">
+    <Position X="49.25" Y="10.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Helpers\Extensions\FrameExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AllOrNothing.Helpers.ResourceExtensions">
+    <Position X="51.5" Y="10.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAAAAAAAAAAAAAAIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Helpers\Extensions\ResourceExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AllOrNothing.Helpers.SettingsStorageExtensions">
+    <Position X="49.25" Y="12" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAAAAAAACAAAAwIgQAAAIAAEAAAAAAAA=</HashCode>
+      <FileName>Helpers\Extensions\SettingsStorageExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AllOrNothing.Helpers.AncestorHelper">
+    <Position X="49.25" Y="15.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAACAAAAAAAAAEIAACAAAoAQAAAAAAA=</HashCode>
+      <FileName>Helpers\AncestorHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AllOrNothing.Helpers.Json">
+    <Position X="52.25" Y="14.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Helpers\Json.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AllOrNothing.Helpers.NavHelper">
+    <Position X="52.25" Y="12.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAIAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Helpers\NavHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AllOrNothing.Helpers.PopupManager">
+    <Position X="47" Y="16.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Helpers\PopupManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AllOrNothing.Helpers.TimeSpanHelper">
+    <Position X="47" Y="14.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Helpers\TimeSpanHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AllOrNothing.Services.NavigationService" BaseTypeListCollapsed="true">
+    <Position X="36.25" Y="3" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAIgAAAAACAAAIAAAAAIAEAAAAQgAABABE=</HashCode>
+      <FileName>Services\Navigation\NavigationService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="AllOrNothing.Services.NavigationViewService" BaseTypeListCollapsed="true">
+    <Position X="33.5" Y="3" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>QABgAIA0BAAAARAAMAAAAgAACQICAAAAEAAAAQAAAAA=</HashCode>
+      <FileName>Services\Navigation\NavigationViewService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="AllOrNothing.Services.PageService" BaseTypeListCollapsed="true">
+    <Position X="38.5" Y="6" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAAABAAAAAAAAAIgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\Navigation\PageService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="AllOrNothing.Services.ThemeSelectorService">
+    <Position X="33.25" Y="9" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>EIAAAAAAAAAAAICQAAAAAAAAAAAIAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Services\ThemeSelection\ThemeSelectorService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="AllOrNothing.Services.ActivationService">
+    <Position X="21.25" Y="10.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>EgAAAAAAQAAAAAAIIAAAAQAAIAAAAAAAAgAAAAAAgAI=</HashCode>
+      <FileName>Services\ActivationService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="AllOrNothing.ViewModels.AppSettingsViewModel">
+    <Position X="34.5" Y="19.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAEAAAAAAAAABEAAAAAAAAAAKAAAAAM=</HashCode>
+      <FileName>ViewModels\AppSettingsViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AllOrNothing.ViewModels.GameSettingsViewModel">
+    <Position X="31.75" Y="25.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>CGGhGiUgTCksIgRgKiJRCZTCCMADBhkALsAIAMogCSI=</HashCode>
+      <FileName>ViewModels\GameSettingsViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AllOrNothing.ViewModels.GameViewModel">
+    <Position X="44.25" Y="20.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>gCAKgFIEAElAEgAKEoAYABABgAACbQRAAJAAUgAGAEA=</HashCode>
+      <FileName>ViewModels\GameViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AllOrNothing.ViewModels.MainMenuViewModel">
+    <Position X="31.25" Y="20.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>ACAACAABAAAAAAAAAAAAAAAAAgAAAECCQQAAAEQBAAA=</HashCode>
+      <FileName>ViewModels\MainMenuViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AllOrNothing.ViewModels.PlayerAddingViewModel">
+    <Position X="35.25" Y="25.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>ACWAAJAAEAAIAAFIAwBhAAAAAAFAAAEIIFCAABAEAAg=</HashCode>
+      <FileName>ViewModels\PlayerAddingViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="AllOrNothing.ViewModels.QuestionSerieEditorViewModel">
+    <Position X="41.25" Y="23.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>CGaAAJAAAAAAIAFACgBBAiBAAoFIAAEEIEAAgBAMAAg=</HashCode>
+      <FileName>ViewModels\QuestionSerieEditorViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="AllOrNothing.ViewModels.ScoreBoardPageViewModel">
+    <Position X="40.25" Y="19.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgBACBAEAAwA=</HashCode>
+      <FileName>ViewModels\ScoreBoardPageViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AllOrNothing.ViewModels.ShellViewModel">
+    <Position X="38.25" Y="27.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>OAACAAAAAAIAAAAQQgAICAIhAEAAAAEAEAAAAAAAAAI=</HashCode>
+      <FileName>ViewModels\ShellViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AllOrNothing.ViewModels.StatisticsViewModel">
+    <Position X="34.25" Y="23.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\StatisticsViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AllOrNothing.ViewModels.ViewModelBase">
+    <Position X="37.5" Y="21" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAIAAQCQAAQAAAIAAAQAAIAAAABAAAA=</HashCode>
+      <FileName>ViewModels\ViewModelBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="AllOrNothing.Services.QuestionSerieLoader">
+    <Position X="29.5" Y="13.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>ACQAAAAAAIAAAAAAAgEAAAAAAICAAAAgAAAAoAAAAAA=</HashCode>
+      <FileName>Services\QuestionSerieLoader\QuestionSerieLoader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AllOrNothing.Services.QuestionSerieLoaderBase">
+    <Position X="27.25" Y="13.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAIAAAAAAAAEAAAAAAACAAAAgAAAAIAAAAAA=</HashCode>
+      <FileName>Services\QuestionSerieLoader\QuestionSerieLoaderBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="AllOrNothing.Services.DragAndDrop.DragDropService">
+    <Position X="62.5" Y="9" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AEEAACAACAAgAAAAAgAQAAAEAAEAAAAAgAAAAAAAAAA=</HashCode>
+      <FileName>Services\DragAndDrop\DragDropService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AllOrNothing.Services.DragAndDrop.DropConfiguration">
+    <Position X="59.25" Y="9" Width="3" />
+    <TypeIdentifier>
+      <HashCode>ABAhoBABoAAAAABUCAAAApQAAAAUAAAAAAAAAEAAKCA=</HashCode>
+      <FileName>Services\DragAndDrop\DropConfiguration.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AllOrNothing.Services.DragAndDrop.ListViewDropConfiguration">
+    <Position X="62.5" Y="13" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAAAAAAAgAAAAAAAAAAAAACAAAAQAAAA=</HashCode>
+      <FileName>Services\DragAndDrop\ListViewDropConfiguration.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AllOrNothing.Services.DragAndDrop.VisualDropConfiguration">
+    <Position X="65.75" Y="9" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABABAAAAgAAAAAABAAEAAIAAAAQACCAIQACAAAA=</HashCode>
+      <FileName>Services\DragAndDrop\VisualDropConfiguration.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AllOrNothing.Mapping.CompetenceDto">
+    <Position X="55.25" Y="18" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AACCIAAAAAAABAAEAAAAAAUAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Mapping\Dto\CompetenceDto.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AllOrNothing.Mapping.PlayerDto">
+    <Position X="61" Y="17.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AACDIAAAAAIABAAEAABAACQAAAAAAAEAAAAAAwAAAAA=</HashCode>
+      <FileName>Mapping\Dto\PlayerDto.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AllOrNothing.Mapping.QuestionDto">
+    <Position X="56.5" Y="22.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>ABCCAAAAIAQAAAAAAAAAQAAAABAAAAEIAQAgCgQQAAA=</HashCode>
+      <FileName>Mapping\Dto\QuestionDto.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AllOrNothing.Mapping.QuestionSerieDto">
+    <Position X="59.25" Y="22.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AACDIAAAAAAAAgCAAAAAAAQAAABCAAEEEAAAASAAAgA=</HashCode>
+      <FileName>Mapping\Dto\QuestionSerieDto.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AllOrNothing.Mapping.StandingDto">
+    <Position X="62.5" Y="22.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAACCgCAAAAAAggAAAACAAAAAAAAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>Mapping\Dto\StandingDto.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AllOrNothing.Mapping.TeamDto">
+    <Position X="51" Y="22.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AEACAAAAAggAAAAAAIQEQQABBSBgAAQBAQAAAAIAAAA=</HashCode>
+      <FileName>Mapping\Dto\TeamDto.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AllOrNothing.Mapping.TopicDto">
+    <Position X="53.5" Y="22.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AACDIQABAAAgAAAEggABAAQACAQAQAEEAAAAIAAAAAA=</HashCode>
+      <FileName>Mapping\Dto\TopicDto.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AllOrNothing.Mapping.MappingProfile">
+    <Position X="58.25" Y="18" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAAAAAAABAgAAAAAAAA=</HashCode>
+      <FileName>Mapping\MappingProfile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AllOrNothing.Data.DataExtensions.QuestionExtensions">
+    <Position X="57.5" Y="31" Width="1.75" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="AllOrNothing.Data.DataExtensions.QuestionSerieExtension">
+    <Position X="57.5" Y="32.25" Width="2" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="AllOrNothing.Data.DataExtensions.TopicExtensions">
+    <Position X="57.5" Y="29.5" Width="1.75" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="AllOrNothing.Data.Answer">
+    <Position X="60.75" Y="29.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="AllOrNothing.Data.RoundHistory">
+    <Position X="64.25" Y="29.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="AllOrNothing.Data.Standing">
+    <Position X="66" Y="29.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="AllOrNothing.Data.Player">
+    <Position X="72" Y="29.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="AllOrNothing.Data.Team">
+    <Position X="62.5" Y="29.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="AllOrNothing.Data.Competence">
+    <Position X="68" Y="31.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="AllOrNothing.Data.QuestionResourceType">
+    <Position X="67.75" Y="29.5" Width="2" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="AllOrNothing.Data.QuestionType">
+    <Position X="69.75" Y="32.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="AllOrNothing.Data.Question">
+    <Position X="70" Y="29.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="AllOrNothing.Data.QuestionSerie">
+    <Position X="66.25" Y="31.75" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="AllOrNothing.Data.Topic">
+    <Position X="71.75" Y="32.25" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="AllOrNothing.Models.AnswerLogModel">
+    <Position X="49.25" Y="34" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAEAIAAAAABAAAAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>Models\AnswerLogModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AllOrNothing.Models.DragablePlayer">
+    <Position X="47.5" Y="36.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAABAAAAAAACRACgAgAAEAAAAAAQAAAQA=</HashCode>
+      <FileName>Models\DragablePlayer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AllOrNothing.Models.GameModel">
+    <Position X="51.25" Y="34" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAgA=</HashCode>
+      <FileName>Models\GameModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AllOrNothing.Models.GameSettingsModel">
+    <Position X="53.75" Y="34" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>MEQQAMAAAAAEFJIAAAAKAABACEQAgIAACAIAAAICAgA=</HashCode>
+      <FileName>Models\GameSettingsModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AllOrNothing.Models.RoundModel">
+    <Position X="49.75" Y="36.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAACQAAACAAAAAAAgAAAAAAAAACgVAAAQIAAAAAAA=</HashCode>
+      <FileName>Models\RoundModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AllOrNothing.Models.RoundSettingsModel">
+    <Position X="44.5" Y="34" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAQACqAAAAABAAAAAAAQAAAQAAQAAIAAAASAAABAAgA=</HashCode>
+      <FileName>Models\RoundSettingsModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AllOrNothing.Models.Schedule">
+    <Position X="47.5" Y="34" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAE=</HashCode>
+      <FileName>Models\Schedule.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AllOrNothing.Models.DragDropStartingData">
+    <Position X="66.25" Y="14.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\DragDropStartingData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AllOrNothing.Models.DragDropCompletedData">
+    <Position X="66.25" Y="13" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Models\DragDropCompletedData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AllOrNothing.Models.DragDropData">
+    <Position X="68.5" Y="13" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>Models\DragDropData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AllOrNothing.Repository.Repositories.CompetenceRepository">
+    <Position X="25.75" Y="19.25" Width="2" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="AllOrNothing.Repository.PlayerRepository">
+    <Position X="26.25" Y="21.5" Width="2" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="AllOrNothing.Repository.Repositories.QuestionSerieRepository">
+    <Position X="21.25" Y="24.5" Width="2.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="AllOrNothing.Repository.Repository&lt;TEntity&gt;">
+    <Position X="23.75" Y="20.75" Width="1.75" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="AllOrNothing.Repository.Repositories.TopicRepository">
+    <Position X="25.25" Y="25" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="AllOrNothing.Repository.AllOrNothingDbContext" BaseTypeListCollapsed="true">
+    <Position X="15.75" Y="27.5" Width="3" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="AllOrNothing.Repository.UnitOfWork" BaseTypeListCollapsed="true">
+    <Position X="18.25" Y="30.5" Width="2.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Interface Name="AllOrNothing.Activation.IActivationHandler">
+    <Position X="20.5" Y="8.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Activation\IActivationHandler.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="AllOrNothing.Contracts.Services.IActivationService">
+    <Position X="22.75" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Contracts\Services\IActivationService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="AllOrNothing.Contracts.Services.INavigationService">
+    <Position X="38.5" Y="3" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAACAAAAAAAAAAAEAAAAQAAABAAE=</HashCode>
+      <FileName>Contracts\Services\INavigationService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="AllOrNothing.Contracts.Services.INavigationViewService">
+    <Position X="28.25" Y="6.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAUBAAAARAAAAAAAAAAAQACAAAAEAAAAQAAAAA=</HashCode>
+      <FileName>Contracts\Services\INavigationViewService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="AllOrNothing.Contracts.Services.IPageService">
+    <Position X="40.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAAAAAAAAAAAAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Contracts\Services\IPageService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="AllOrNothing.Contracts.Services.IQuestionSerieLoader">
+    <Position X="24.75" Y="13.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAAAAAAAAAAAAAAAACAAAAgAAAAIAAAAAA=</HashCode>
+      <FileName>Contracts\Services\IQuestionSerieLoader.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="AllOrNothing.Contracts.Services.IThemeSelectorService">
+    <Position X="36.25" Y="7.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAACQAAAAAAAAAAAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Contracts\Services\IThemeSelectorService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="AllOrNothing.Contracts.ViewModels.IExitable">
+    <Position X="38.25" Y="25.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Contracts\ViewModels\IExitable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="AllOrNothing.Contracts.ViewModels.INavigationAware">
+    <Position X="37.5" Y="18.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAACQAAQAAAAAAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>Contracts\ViewModels\INavigationAware.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="AllOrNothing.Repository.Contracts.ICompetenceRepository">
+    <Position X="14" Y="20" Width="2" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="AllOrNothing.Repository.Contracts.IPlayerRepository">
+    <Position X="16" Y="23.75" Width="2" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="AllOrNothing.Repository.Contracts.IQuestionRepository">
+    <Position X="18.5" Y="23" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="AllOrNothing.Repository.Contracts.IQuestionSerieRepository">
+    <Position X="13.75" Y="21.5" Width="2.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="AllOrNothing.Repository.Contracts.IRepository&lt;TEntity&gt;">
+    <Position X="17" Y="20.25" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="AllOrNothing.Repository.Contracts.ITopicRepository">
+    <Position X="19.25" Y="20.75" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="AllOrNothing.Repository.IAllOrNothingDbContext">
+    <Position X="19" Y="28" Width="2" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="AllOrNothing.Repository.IUnitOfWork">
+    <Position X="15.75" Y="30.75" Width="2" />
+    <TypeIdentifier />
+  </Interface>
+  <Enum Name="AllOrNothing.Behaviors.NavigationViewHeaderMode">
+    <Position X="28.25" Y="3" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAAAAAEAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Behaviors\NavigationViewHeaderMode.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="AllOrNothing.ViewModels.GamePhase">
+    <Position X="42.75" Y="21.75" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAEAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\GameViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
