@@ -18,7 +18,7 @@ namespace AllOrNothing.Models
             get => _canDrag;
             set => SetProperty(ref _canDrag, value);
         }
-
+        public string DisplayName => ToString();
         private ICommand _changePlayerCommand;
         public ICommand ChangePlayerCommand => _changePlayerCommand ??= new RelayCommand<DragablePlayer>(On_ChangePlayer);
         public event EventHandler<DragablePlayer> SwitchPlayers;
@@ -26,6 +26,10 @@ namespace AllOrNothing.Models
         private void On_ChangePlayer(DragablePlayer obj)
         {
             SwitchPlayers?.Invoke(this, obj);
+        }
+        public override string ToString()
+        {
+            return $"{Name} (Id:{Id})";
         }
     }
 }

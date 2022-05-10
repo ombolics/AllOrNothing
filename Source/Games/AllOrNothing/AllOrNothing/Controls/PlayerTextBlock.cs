@@ -21,7 +21,7 @@ namespace AllOrNothing.Controls
             Binding b = new Binding
             {
                 Source = this,
-                Path = new PropertyPath($"{nameof(Player)}.{nameof(Player.Name)}"),
+                Path = new PropertyPath($"{nameof(Player)}.{nameof(Player.DisplayName)}"),
                 Mode = BindingMode.OneWay,
                 UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
             };

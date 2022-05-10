@@ -748,6 +748,7 @@ namespace AllOrNothing.ViewModels
         {
             base.OnNavigatedTo();
             _avaiblePlayers.UnionWith(Mapper.Map<IEnumerable<PlayerDto>>(_unitOfWork.Players.GetAllAvaible()));
+            _avaiblePlayers.RemoveWhere(p => SelectedPlayers.Any(p1 => p1.Id == p.Id));
 
             PageEnabled = Rounds == null ? true : !Rounds.Any(rm => rm.RoundStarted && !rm.RoundEnded);
 

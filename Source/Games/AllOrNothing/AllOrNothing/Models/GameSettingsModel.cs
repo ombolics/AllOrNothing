@@ -37,7 +37,12 @@ namespace AllOrNothing.Models
             {
                 if (value != _numberOfRounds)
                 {
-                    _numberOfRounds = value < 1 ? 1 : value;
+                    if (value < 1)
+                        _numberOfRounds = 1;
+                    else if (value > 20)
+                        _numberOfRounds = 20;
+                    else
+                        _numberOfRounds = value;
                     OnPropertyChanged(nameof(NumberOfRounds));
                 }
             }

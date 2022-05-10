@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Windows.Storage;
+using Windows.UI.ViewManagement;
 
 namespace AllOrNothing
 {
@@ -48,7 +49,6 @@ namespace AllOrNothing
             {
                 Directory.CreateDirectory(QuestionSerieFolder);
             }
-
         }
 
         private void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
