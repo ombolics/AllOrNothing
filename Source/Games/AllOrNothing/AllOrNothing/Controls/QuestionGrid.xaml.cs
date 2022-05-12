@@ -100,7 +100,12 @@ namespace AllOrNothing.Controls
                     BorderThickness = new Thickness(0, 0, 0, 0),
                     Margin = new Thickness(5, 5, 5, 20),
 
-                    Content = _questionSerie.Topics[i].Name,
+                    Content = new TextBlock
+                    {
+                        Text = _questionSerie.Topics[i].Name,
+                        TextWrapping = TextWrapping.WrapWholeWords,
+                        TextAlignment = TextAlignment.Center,
+                    },
                     Flyout = !string.IsNullOrEmpty(_questionSerie.Topics[i].Description)
                     ? new Flyout()
                     {

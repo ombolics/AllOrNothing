@@ -39,7 +39,7 @@
                     IsBackButtonVisible="Collapsed"
                     IsBackEnabled="{x:Bind ViewModel.IsBackEnabled, Mode=OneWay}"
                     SelectedItem="{x:Bind ViewModel.Selected, Mode=OneWay}"
-                    IsSettingsVisible="True"
+                    IsSettingsVisible="False"
                     IsPaneToggleButtonVisible="True"
                     ExpandedModeThresholdWidth="1280"
                     PaneDisplayMode="Top"
