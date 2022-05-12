@@ -93,7 +93,7 @@ namespace AllOrNothing.Services
             //using (var serviceScope = Ioc.Default.GetService<IServiceScopeFactory>().CreateScope())
             //{
                 
-            //    var path = @$"{System.AppDomain.CurrentDomain.BaseDirectory}..\..\..\..\..\..\..\AllOrNothing.Repository\AllOrNothingDb.db";
+            //    var path = @$"{System.AppDomain.CurrentDomain.BaseDirectory}\AllOrNothingDb.db";
             //    bool dbExistedBefore = File.Exists(path);
 
             //    var context = serviceScope.ServiceProvider.GetRequiredService<AllOrNothingDbContext>();

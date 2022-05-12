@@ -47,6 +47,7 @@ namespace AllOrNothing.ViewModels
         private bool _isFinalRound;
         private ObservableCollection<TeamDto> _teams;
         private bool _pageEnabled;
+        private bool _isLoadFromFileButtonEnabled;
 
         private ICommand _exitCommand;
         private ICommand _generateTeamsCommand;
@@ -150,6 +151,11 @@ namespace AllOrNothing.ViewModels
             get => _pageEnabled;
             set => SetProperty(ref _pageEnabled, value);
         }
+        public bool IsLoadFromFileButtonEnabled 
+        {
+            get => _isLoadFromFileButtonEnabled;
+            set => SetProperty(ref _isLoadFromFileButtonEnabled, value);
+        }
 
         public ICommand ExitCommand => _exitCommand ??= new RelayCommand(Exit);
         public ICommand GenerateTeamsCommand => _generateTeamsCommand ??= new RelayCommand(GenerateTeamsClicked);
@@ -164,6 +170,7 @@ namespace AllOrNothing.ViewModels
         public void ResetSettings()
         {
             IsMenuButtonVisible = false;
+            IsLoadFromFileButtonEnabled = true;
             ReachablePages = null;
             IsGameSettingsVisible = true;
             _gameModel = new GameModel(new GameSettingsModel(), new ObservableCollection<StandingDto>());
@@ -241,7 +248,7 @@ namespace AllOrNothing.ViewModels
                 return;
             }
 
-            if (checkBox.Name == "roundLightningCheckBox")
+            if (checkBox.Name == "roundLightningCheckBox" && SelectedRound.RoundSettings.LightningTime.TotalSeconds == 0)
             {
                 SelectedRound.RoundSettings.LightningTime = TimeSpan.FromHours(1);
                 return;
@@ -272,7 +279,7 @@ namespace AllOrNothing.ViewModels
 
         private async void LoadFromFileClicked()
         {
-
+            IsLoadFromFileButtonEnabled = false;
             AvaibleSeries = new ObservableCollection<QuestionSerieDto>(AvaibleSeries.Where(s => s.FromFile == false).ToList());
 
             string errorMessage = "";
@@ -304,6 +311,7 @@ namespace AllOrNothing.ViewModels
             {
                 await PopupManager.ShowDialog(PageXamlRoot, "Hiba a betöltéskor!", errorMessage, ContentDialogButton.Close, "", "Ok");
             }
+            IsLoadFromFileButtonEnabled = true;
         }
 
         public void AutoSuggestBox_LostFocus(object sender, RoutedEventArgs e)
@@ -695,7 +703,9 @@ namespace AllOrNothing.ViewModels
 
             if (SelectedRound != null && SelectedRound.RoundSettings.IsTematicalAllowed && SelectedRound.RoundSettings.QuestionSerie == null)
                 message += "Válasszon ki egy kérdéssort!\n";
-            else if(GameModel.GameSettings.IsGameWithoutButtonsEnabled && !SelectedRound.RoundSettings.QuestionSerie.CanBePlayedWithoutButtons)
+            
+            if(SelectedRound != null && GameModel.GameSettings.IsGameWithoutButtonsEnabled &&
+               SelectedRound.RoundSettings.QuestionSerie != null && !SelectedRound.RoundSettings.QuestionSerie.CanBePlayedWithoutButtons)
             {
                 message += "Olyan kérdéssort válasszon ki, ami kompatibilis az automatizált játékkal!\n";
             }

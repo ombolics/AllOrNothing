@@ -361,9 +361,9 @@
                                   IsChecked="{x:Bind ViewModel.GameModel.GameSettings.IsTematicalAllowed, Mode=TwoWay}"
                                   Checked="{x:Bind ViewModel.TematicalCheckBoxChecked, Mode=OneWay}"/>
 
-                        <TimePicker ClockIdentifier="24HourClock" Time="{x:Bind ViewModel.GameModel.GameSettings.GeneralTematicalTime, Mode=TwoWay}" 
-                                    x:Name="tematicalTimePicker"
-                                    SelectedTime="7:00" 
+                        <TimePicker ClockIdentifier="24HourClock" 
+                                    Time="{x:Bind ViewModel.GameModel.GameSettings.GeneralTematicalTime, Mode=TwoWay}" 
+                                    x:Name="tematicalTimePicker" 
                                     IsEnabled="{x:Bind ViewModel.GameModel.GameSettings.IsTematicalAllowed, Mode=TwoWay}"
                                     SelectedTimeChanged="{x:Bind ViewModel.TimePicker_SelectedTimeChanged, Mode=OneWay}"/>
                     </StackPanel>
@@ -378,9 +378,9 @@
                                   IsChecked="{x:Bind ViewModel.GameModel.GameSettings.IsLightningAllowed, Mode=TwoWay}"
                                   Checked="{x:Bind ViewModel.LightningCheckBoxChecked, Mode=OneWay}"/>
 
-                        <TimePicker ClockIdentifier="24HourClock" Time="{x:Bind ViewModel.GameModel.GameSettings.GeneralLightningTime, Mode=TwoWay}" 
+                        <TimePicker ClockIdentifier="24HourClock" 
+                                    Time="{x:Bind ViewModel.GameModel.GameSettings.GeneralLightningTime, Mode=TwoWay}" 
                                     x:Name="lightningTimePicker"
-                                    SelectedTime="3:00"
                                     IsEnabled="{x:Bind ViewModel.GameModel.GameSettings.IsLightningAllowed, Mode=TwoWay}"
                                     SelectedTimeChanged="{x:Bind ViewModel.TimePicker_SelectedTimeChanged, Mode=OneWay}"/>
                     </StackPanel>
@@ -579,7 +579,7 @@
                                       Margin="20,0,10,5"                                       
                                       x:Name="roundTematicalCheckbox"
                                       BorderThickness="0"
-                                      IsEnabled="{x:Bind ViewModel.GameModel.GameSettings.IsGameWithoutButtonsEnabled,Mode=OneWay, Converter={StaticResource NegateConverter}}"
+                                    
                                       IsChecked="{x:Bind ViewModel.SelectedRound.RoundSettings.IsTematicalAllowed, Mode=TwoWay}"
                                       Checked="{x:Bind ViewModel.TematicalCheckBoxChecked, Mode=OneWay}">
                                 <CheckBox.Resources>
@@ -588,7 +588,6 @@
                             </CheckBox>
 
                             <TimePicker ClockIdentifier="24HourClock" 
-                                        Time="7:00"
                                         x:Name="roundTematicalTime"
                                         IsEnabled="{x:Bind ViewModel.SelectedRound.RoundSettings.IsTematicalAllowed, Mode=TwoWay}"
                                         SelectedTime="{x:Bind ViewModel.SelectedRound.RoundSettings.TematicalTime, Mode=TwoWay}"
@@ -611,7 +610,7 @@
                             <TimePicker ClockIdentifier="24HourClock"
                                         x:Name="roundLightningTime"
                                         IsEnabled="{x:Bind ViewModel.SelectedRound.RoundSettings.IsLightningAllowed, Mode=TwoWay}"
-                                        Time="3:00" SelectedTime="{x:Bind ViewModel.SelectedRound.RoundSettings.LightningTime, Mode=TwoWay}"
+                                        SelectedTime="{x:Bind ViewModel.SelectedRound.RoundSettings.LightningTime, Mode=TwoWay}"
                                         SelectedTimeChanged="{x:Bind ViewModel.TimePicker_SelectedTimeChanged, Mode=OneWay}"/>
                         </StackPanel>
                     </Grid>
@@ -668,7 +667,8 @@
                                 Foreground="{ThemeResource MainColor1}"
                                 FontSize="18"
                                 FontWeight="SemiBold"
-                                HorizontalAlignment="Right"/>
+                                HorizontalAlignment="Right"
+                                IsEnabled="{x:Bind ViewModel.IsLoadFromFileButtonEnabled, Mode=OneWay}"/>
                     </Grid>
                    
 
