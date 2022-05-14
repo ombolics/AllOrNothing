@@ -1,6 +1,5 @@
 ﻿using AllOrNothing.Activation;
 using AllOrNothing.Contracts.Services;
-using AllOrNothing.Data;
 using AllOrNothing.Helpers;
 using AllOrNothing.Mapping;
 using AllOrNothing.Repository;
@@ -13,18 +12,15 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Windows.Storage;
-using Windows.UI.ViewManagement;
 
 namespace AllOrNothing
 {
     public partial class App : Application
     {
         public static Window MainWindow { get; set; } = new Window() { Title = "AppDisplayName".GetLocalized() };
-        public static readonly string QuestionSerieFolder = @$"{System.AppDomain.CurrentDomain.BaseDirectory}\QuestionSerieSamples";
+        public static readonly string QuestionSerieFolder = @$"{System.AppDomain.CurrentDomain.BaseDirectory}\Kérdéssorok";
         private readonly ILogger<App> _logger;
         public App()
         {
@@ -89,7 +85,7 @@ namespace AllOrNothing
             // Core Services
             //services.AddTransient<IAllOrNothingDbContext, AllOrNothingDbContext>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
-            
+
             var dir = System.AppDomain.CurrentDomain.BaseDirectory;
             //services.AddDbContext<AllOrNothingDbContext>(optionsBuilder => optionsBuilder.UseSqlite(@$"Data source={dir}..\..\..\..\..\..\..\AllOrNothing.Repository\AllOrNothingDb.db"));
             services.AddDbContext<AllOrNothingDbContext>(optionsBuilder => optionsBuilder.UseSqlite(@$"Data source={dir}\AllOrNothingDb.db"));

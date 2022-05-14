@@ -152,7 +152,7 @@ namespace AllOrNothing.Controls
         {
             var button = (sender as QuestionButton);
             button.Visibility = Visibility.Collapsed;
-       
+
             CurrentQuestion = button.Question;
         }
         #endregion      

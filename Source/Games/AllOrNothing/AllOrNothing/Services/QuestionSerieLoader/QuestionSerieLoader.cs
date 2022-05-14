@@ -1,9 +1,7 @@
-﻿using AllOrNothing.Contracts.Services;
-using AllOrNothing.Data;
+﻿using AllOrNothing.Data;
 using AllOrNothing.Repository;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -142,7 +140,7 @@ namespace AllOrNothing.Services
             return author;
         }
         public Topic ParseTopic(string data, string rowDelimeter)
-        {                   
+        {
             var splitedWithDelimeter1 = data.Split(rowDelimeter);
             var line = splitedWithDelimeter1.Length < 2 ? data.Split("\r") : splitedWithDelimeter1;
             Topic topic = new Topic()
@@ -166,7 +164,7 @@ namespace AllOrNothing.Services
                 });
                 questionCounter++;
             }
-            return topic;          
+            return topic;
         }
 
         public override List<Competence> ParseCompetences(string row)

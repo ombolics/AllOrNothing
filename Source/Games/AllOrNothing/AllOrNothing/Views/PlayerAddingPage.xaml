@@ -149,6 +149,7 @@
                              x:Name="nameTextBox"
                              IsEnabled="{x:Bind ViewModel.FormEnabled, Mode=OneWay}"
                              HorizontalAlignment="Stretch"
+                             IsSpellCheckEnabled="False"
                              Style="{ThemeResource CommonTextBoxStyle}"/>
 
                     <!--NickName-->
@@ -165,6 +166,7 @@
                              x:Name="nickNameTextBox"
                              IsEnabled="{x:Bind ViewModel.FormEnabled, Mode=OneWay}"
                              HorizontalAlignment="Stretch"
+                             IsSpellCheckEnabled="False"
                              Style="{ThemeResource CommonTextBoxStyle}"/>
 
                     <!--Institute-->
@@ -181,6 +183,7 @@
                              x:Name="instituteTextBox"
                              IsEnabled="{x:Bind ViewModel.FormEnabled, Mode=OneWay}"
                              HorizontalAlignment="Stretch"
+                             IsSpellCheckEnabled="False"
                              Style="{ThemeResource CommonTextBoxStyle}"/>
                 </Grid>
 

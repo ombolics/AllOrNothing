@@ -44,15 +44,15 @@
     <None Remove="Controls\CompetenceSearchPanel.xaml" />
     <None Remove="Controls\CustomDialog.xaml" />
     <None Remove="Converters\Converters.xaml" />
-    <None Remove="QuestionSerieSamples\András01.txt" />
-    <None Remove="QuestionSerieSamples\András02.txt" />
-    <None Remove="QuestionSerieSamples\CorruptedFile2.json" />
-    <None Remove="QuestionSerieSamples\Döntő 2011a.txt" />
-    <None Remove="QuestionSerieSamples\Flóra1.txt" />
-    <None Remove="QuestionSerieSamples\Test1.txt" />
-    <None Remove="QuestionSerieSamples\ÖCS_01.txt" />
-    <None Remove="QuestionSerieSamples\ÖCS_02.txt" />
-    <None Remove="QuestionSerieSamples\ÖCS_03.txt" />
+    <None Remove="Kérdéssorok\András01.txt" />
+    <None Remove="Kérdéssorok\András02.txt" />
+    <None Remove="Kérdéssorok\CorruptedFile2.json" />
+    <None Remove="Kérdéssorok\Döntő 2011a.txt" />
+    <None Remove="Kérdéssorok\Flóra1.txt" />
+    <None Remove="Kérdéssorok\Test1.txt" />
+    <None Remove="Kérdéssorok\ÖCS_01.txt" />
+    <None Remove="Kérdéssorok\ÖCS_02.txt" />
+    <None Remove="Kérdéssorok\ÖCS_03.txt" />
     <None Remove="Styles\AutoSuggestBoxStyle.xaml" />
     <None Remove="Styles\CheckBox.xaml" />
     <None Remove="Styles\DataGrid.xaml" />
@@ -84,31 +84,31 @@
     <Content Include="Assets\Wide310x150Logo.scale-200.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="QuestionSerieSamples\Flóra1.txt">
+    <Content Include="Kérdéssorok\Flóra1.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="QuestionSerieSamples\CorruptedFile2.json">
+    <Content Include="Kérdéssorok\CorruptedFile2.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="QuestionSerieSamples\András01.txt">
+    <Content Include="Kérdéssorok\András01.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="QuestionSerieSamples\András02.txt">
+    <Content Include="Kérdéssorok\András02.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="QuestionSerieSamples\Döntő 2011a.txt">
+    <Content Include="Kérdéssorok\Döntő 2011a.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="QuestionSerieSamples\Test1.txt">
+    <Content Include="Kérdéssorok\Test1.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="QuestionSerieSamples\ÖCS_01.txt">
+    <Content Include="Kérdéssorok\ÖCS_01.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="QuestionSerieSamples\ÖCS_02.txt">
+    <Content Include="Kérdéssorok\ÖCS_02.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="QuestionSerieSamples\ÖCS_03.txt">
+    <Content Include="Kérdéssorok\ÖCS_03.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

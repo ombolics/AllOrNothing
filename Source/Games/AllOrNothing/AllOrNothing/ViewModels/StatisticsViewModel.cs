@@ -1,9 +1,4 @@
 ﻿using AllOrNothing.Contracts.Services;
-using AllOrNothing.Services;
-using CommunityToolkit.Mvvm.ComponentModel;
-using Microsoft.UI.Xaml.Navigation;
-using OxyPlot;
-using System;
 
 namespace AllOrNothing.ViewModels
 {
@@ -14,7 +9,7 @@ namespace AllOrNothing.ViewModels
     public class StatisticsViewModel : ViewModelBase
     {
         public StatisticsViewModel(INavigationViewService navigationViewService)
-            :base(navigationViewService)
+            : base(navigationViewService)
         {
         }
     }

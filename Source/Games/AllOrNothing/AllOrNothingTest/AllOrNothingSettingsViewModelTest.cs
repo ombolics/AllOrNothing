@@ -1,5 +1,4 @@
 ﻿using AllOrNothing.Contracts.Services;
-using AllOrNothing.Data;
 using AllOrNothing.Mapping;
 using AllOrNothing.Repository;
 using AllOrNothing.Services;
@@ -10,9 +9,7 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using Xunit;
 
@@ -29,7 +26,7 @@ namespace AllOrNothingTest
             {
                 Ioc.Default.ConfigureServices(ConfigureServices());
                 _fixture.MyProperty = 1;
-            }        
+            }
         }
 
         #region Helper Methods
@@ -72,7 +69,7 @@ namespace AllOrNothingTest
                     Id = i,
                     Name = $"TestName{i}",
                     NickName = $"T{i}",
-                    Institute = "Test",                 
+                    Institute = "Test",
                 });
             }
             return value;
@@ -88,7 +85,7 @@ namespace AllOrNothingTest
                 Ioc.Default.GetService<IMapper>(),
                 Ioc.Default.GetService<IUnitOfWork>(),
                 Ioc.Default.GetService<IQuestionSerieLoader>());
-            
+
             var teams = _viewModel.GenerateTeams(GetPlayerCollection(10), 2);
             teams.Count.Should().Be(5);
             teams.All(t => t.Players.Count >= 1).Should().BeTrue();
@@ -218,7 +215,7 @@ namespace AllOrNothingTest
             teams = _viewModel.GenerateTeams(GetPlayerCollection(9), 1);
             shedules = _viewModel.GenerateSchedule(teams, 5);
             shedules.All(s => s.Teams.Distinct().Count() == s.Teams.Count).Should().BeTrue();
-            
+
             teams = _viewModel.GenerateTeams(GetPlayerCollection(5), 1);
             shedules = _viewModel.GenerateSchedule(teams, 5);
             shedules.All(s => s.Teams.Distinct().Count() == s.Teams.Count).Should().BeTrue();

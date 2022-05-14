@@ -1,4 +1,3 @@
-using AllOrNothing.Contracts.Services;
 using AllOrNothing.Data;
 using AllOrNothing.Mapping;
 using AllOrNothing.Repository;
@@ -9,7 +8,6 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -27,9 +25,9 @@ namespace AllOrNothingTest
         public QuestionSerieLoaderTest(QuestoinSerieLoaderTestFixture fixture)
         {
             _fixture = fixture;
-            if(!fixture.Used)
+            if (!fixture.Used)
             {
-                Ioc.Default.ConfigureServices(ConfigureServices());              
+                Ioc.Default.ConfigureServices(ConfigureServices());
                 fixture.Used = true;
             }
             _unitOfWork = Ioc.Default.GetService<IUnitOfWork>();
@@ -42,7 +40,7 @@ namespace AllOrNothingTest
             var services = new ServiceCollection();
             services.AddSingleton<QuestionSerieLoader>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
-  
+
             var dir = System.AppDomain.CurrentDomain.BaseDirectory;
             services.AddDbContext<AllOrNothingDbContext>(optionsBuilder => optionsBuilder.UseSqlite(@$"Data source={dir}..\..\..\..\AllOrNothing.Repository\AllOrNothingDb.db"));
 
@@ -105,7 +103,7 @@ namespace AllOrNothingTest
         {
             QuestionSerie serie;
             bool sucess = _serieLoader.ParseOldFormat("OldLessTopic", ReadFileContent("TestFiles/QuestionSerieLoader/OldFormat_LessTopic.txt"), out serie);
-            
+
             sucess.Should().BeFalse();
             serie.Should().BeNull();
         }
@@ -296,7 +294,7 @@ namespace AllOrNothingTest
         [Fact]
         public void NewFormat_SameCompetenceIsGivenTwiceAtATopic()
         {
-            
+
             QuestionSerie serie;
             bool sucess = _serieLoader.ParseNewFormat("NewFormat_SameCompetenceIsGivenTwiceAtATopic", ReadFileContent("TestFiles/QuestionSerieLoader/NewFormat_SameCompetenceIsGivenTwiceAtATopic.txt"), out serie);
 

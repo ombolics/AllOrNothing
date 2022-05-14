@@ -1,8 +1,6 @@
 ﻿using AllOrNothing.Contracts.Services;
-using AllOrNothing.Helpers;
 using AllOrNothing.Mapping;
 using AllOrNothing.Models;
-using CommunityToolkit.WinUI.UI.Controls;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -60,14 +58,14 @@ namespace AllOrNothing.ViewModels
             {
                 RoundDisplayText = "A döntő eredménye";
                 return;
-            }               
+            }
 
             foreach (var standing in LastRoundStandings)
             {
                 var gameStanding = GameStandings.Single(s => s.Team == standing.Team);
                 gameStanding.Score += standing.Score;
                 gameStanding.MatchPlayed++;
-            }      
+            }
             GameStandings = new ObservableCollection<StandingDto>(GameStandings.OrderByDescending(s => s.Score).ThenBy(s => s.Team.TeamName).ToList());
         }
         #endregion

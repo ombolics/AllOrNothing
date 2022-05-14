@@ -1,27 +1,22 @@
 ﻿using AllOrNothing.Contracts.Services;
 using AllOrNothing.Contracts.ViewModels;
-using AllOrNothing.Controls;
 using AllOrNothing.Data;
 using AllOrNothing.Helpers;
 using AllOrNothing.Mapping;
 using AllOrNothing.Models;
 using AllOrNothing.Repository;
-using AllOrNothing.Services;
 using AutoMapper;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.ApplicationModel.DataTransfer;
-using Windows.UI;
 
 namespace AllOrNothing.ViewModels
 {
@@ -151,7 +146,7 @@ namespace AllOrNothing.ViewModels
             get => _pageEnabled;
             set => SetProperty(ref _pageEnabled, value);
         }
-        public bool IsLoadFromFileButtonEnabled 
+        public bool IsLoadFromFileButtonEnabled
         {
             get => _isLoadFromFileButtonEnabled;
             set => SetProperty(ref _isLoadFromFileButtonEnabled, value);
@@ -191,7 +186,7 @@ namespace AllOrNothing.ViewModels
                     topic.Questions.Sort(new QuestionDtoComparer());
                 }
             }
-            AvaibleSeries = new ObservableCollection<QuestionSerieDto>(series);  
+            AvaibleSeries = new ObservableCollection<QuestionSerieDto>(series);
         }
 
         private async void Exit()
@@ -238,7 +233,7 @@ namespace AllOrNothing.ViewModels
             if (!checkBox.IsChecked.GetValueOrDefault(false))
                 return;
 
-            if(checkBox.Name == "lightningCheckBox")
+            if (checkBox.Name == "lightningCheckBox")
             {
                 GameModel.GameSettings.IsGameWithoutButtonsEnabled = false;
                 if (GameModel.GameSettings.GeneralLightningTime.TotalSeconds == 0)
@@ -253,7 +248,7 @@ namespace AllOrNothing.ViewModels
                 SelectedRound.RoundSettings.LightningTime = TimeSpan.FromHours(1);
                 return;
             }
-            
+
         }
 
         public void TematicalCheckBoxChecked(object sender, RoutedEventArgs e)
@@ -265,11 +260,11 @@ namespace AllOrNothing.ViewModels
             if (checkBox.Name == "tematicalCheckBox" && GameModel.GameSettings.GeneralTematicalTime.TotalSeconds == 0)
             {
                 GameModel.GameSettings.GeneralTematicalTime = TimeSpan.FromHours(1);
-            }         
+            }
             else if (checkBox.Name == "roundTematicalCheckBox" && SelectedRound.RoundSettings.TematicalTime.TotalSeconds == 0)
             {
                 SelectedRound.RoundSettings.TematicalTime = TimeSpan.FromHours(1);
-            }          
+            }
         }
 
         private void GenerateTeamsClicked()
@@ -318,7 +313,7 @@ namespace AllOrNothing.ViewModels
         {
             (sender as AutoSuggestBox).ItemsSource = null;
         }
- 
+
         public void RoundSelected(object sender, ItemClickEventArgs e)
         {
             SelectedRound = e.ClickedItem as RoundModel;
@@ -425,13 +420,13 @@ namespace AllOrNothing.ViewModels
             switch (totalAppereaceCount % 4)
             {
                 case 0:
-                    for (int i = 0; i < totalAppereaceCount/4; i++)
+                    for (int i = 0; i < totalAppereaceCount / 4; i++)
                     {
                         roundCounts.Add(4);
                     }
                     break;
                 case 1:
-                    if(totalAppereaceCount > 5)
+                    if (totalAppereaceCount > 5)
                     {
                         for (int i = 0; i < (totalAppereaceCount - 9) / 4; i++)
                         {
@@ -629,7 +624,7 @@ namespace AllOrNothing.ViewModels
                         VerticalAlignment = VerticalAlignment.Center,
                         TextWrapping = TextWrapping.WrapWholeWords,
                     });
-                    
+
                     suitableItems.Add(notfoundDisplay);
                 }
                 sender.ItemsSource = suitableItems;
@@ -697,14 +692,14 @@ namespace AllOrNothing.ViewModels
 
         private bool HasRoundValidationErrors(out string message)
         {
-            message = "";          
+            message = "";
             if (SelectedRound == null || SelectedRound.RoundEnded)
                 message += "Válasszon ki egy le nem játszott kört!\n";
 
             if (SelectedRound != null && SelectedRound.RoundSettings.IsTematicalAllowed && SelectedRound.RoundSettings.QuestionSerie == null)
                 message += "Válasszon ki egy kérdéssort!\n";
-            
-            if(SelectedRound != null && GameModel.GameSettings.IsGameWithoutButtonsEnabled &&
+
+            if (SelectedRound != null && GameModel.GameSettings.IsGameWithoutButtonsEnabled &&
                SelectedRound.RoundSettings.QuestionSerie != null && !SelectedRound.RoundSettings.QuestionSerie.CanBePlayedWithoutButtons)
             {
                 message += "Olyan kérdéssort válasszon ki, ami kompatibilis az automatizált játékkal!\n";
@@ -715,7 +710,7 @@ namespace AllOrNothing.ViewModels
 
             return message != "";
         }
-        
+
         private async void StartGameClicked()
         {
             var message = "";
@@ -725,7 +720,7 @@ namespace AllOrNothing.ViewModels
                 return;
             }
 
-            var vm = Ioc.Default.GetService<GameViewModel>();    
+            var vm = Ioc.Default.GetService<GameViewModel>();
             vm.SetupRound(SelectedRound);
             SelectedRound.RoundStarted = true;
 
@@ -744,7 +739,7 @@ namespace AllOrNothing.ViewModels
             {
                 IsMenuButtonVisible = false;
                 GameInProgress = false;
-            }              
+            }
 
             var vm = Ioc.Default.GetService<ScoreBoardPageViewModel>();
             vm.UpdateStandings(e);

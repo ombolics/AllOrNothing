@@ -18,7 +18,7 @@ namespace AllOrNothing.Models
             GameSettings = settings;
             GameStandings = standings;
         }
-        
+
         public ObservableCollection<StandingDto> GameStandings
         {
             get => _gameStandings;

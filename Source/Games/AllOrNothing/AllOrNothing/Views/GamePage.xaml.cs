@@ -24,6 +24,6 @@ namespace AllOrNothing.Views
         private void gamePage_Loaded(object sender, RoutedEventArgs e)
         {
             ViewModel.PageXamlRoot = this.Content.XamlRoot;
-        }     
+        }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using AllOrNothing.Contracts.Services;
 using AllOrNothing.Contracts.ViewModels;
-using AllOrNothing.Controls;
 using AllOrNothing.Data;
 using AllOrNothing.Helpers;
 using AllOrNothing.Mapping;
@@ -104,7 +103,7 @@ namespace AllOrNothing.ViewModels
         #endregion
 
         #region Methods
-        public  async void Exit()
+        public async void Exit()
         {
             if (await PopupManager.ShowDialog(PageXamlRoot, "Biztosan kilép?", "Ha kilép, minden nem mentett módosítás elveszik.", ContentDialogButton.Primary, "Igen", "Mégse") == ContentDialogResult.Primary)
             {
@@ -131,7 +130,7 @@ namespace AllOrNothing.ViewModels
 
         private async void Save()
         {
-            
+
             if (!string.IsNullOrWhiteSpace(EditingPlayer.Name))
             {
                 if (IsNewPlayerSelected)

@@ -1,9 +1,7 @@
 ﻿using AllOrNothing.Contracts.Services;
-using AllOrNothing.Controls;
 using AllOrNothing.Helpers;
 using AllOrNothing.Mapping;
 using AllOrNothing.Models;
-using AutoMapper;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -46,7 +44,7 @@ namespace AllOrNothing.ViewModels
         #endregion
 
         #region Constructors
-        public GameViewModel(INavigationViewService navigationViewService) 
+        public GameViewModel(INavigationViewService navigationViewService)
             : base(navigationViewService)
         {
             _gameTimer = new DispatcherTimer();
@@ -129,14 +127,14 @@ namespace AllOrNothing.ViewModels
 
         #region Methods
         public void SetupRound(RoundModel m)
-        {         
+        {
             SelectedRound = m;
 
             if (SelectedRound.RoundSettings.IsTematicalAllowed)
                 SetupTematical();
             else
                 SetupLightning();
-            
+
             if (SelectedRound.RoundSettings.IsGameWithoutButtonsEnabled)
             {
                 AnswerLog = new ObservableCollection<AnswerLogModel>();

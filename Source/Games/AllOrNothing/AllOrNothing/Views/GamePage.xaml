@@ -135,6 +135,7 @@
 
                     <TextBox Grid.Row="1"  PlaceholderText="Válasz..." VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                              Text="{x:Bind ViewModel.AnswerText, Mode=TwoWay}"
+                             
                              Style="{ThemeResource MainTextBoxStyle}"/>
 
                     <Grid Grid.Row="2">

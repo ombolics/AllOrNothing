@@ -182,7 +182,8 @@
                              Margin="10,10,10,10" FontSize="{ThemeResource MediumFontSize}" 
                              x:Name="serieNameTextbox"
                              HorizontalAlignment="Stretch"
-                             Style="{ThemeResource CommonTextBoxStyle}"/>
+                             Style="{ThemeResource CommonTextBoxStyle}"
+                             IsSpellCheckEnabled="False"/>
                 </StackPanel>
 
                 <ScrollViewer Grid.Row="1">
@@ -216,7 +217,8 @@
                                                              Margin="10,10,10,0" FontSize="{ThemeResource MediumFontSize}"
                                                              HorizontalAlignment="Stretch"
                                                              x:Name="topicNameTextbox"
-                                                             Style="{ThemeResource CommonTextBoxStyle}"/>
+                                                             Style="{ThemeResource CommonTextBoxStyle}"
+                                                             IsSpellCheckEnabled="False"/>
                                                 </StackPanel>
 
                                                 <!--leírás-->
@@ -232,7 +234,8 @@
                                                              HorizontalAlignment="Stretch"
                                                              TextWrapping="Wrap"
                                                              x:Name="topicDescriptionTextbox"
-                                                             Style="{ThemeResource CommonTextBoxStyle}"/>
+                                                             Style="{ThemeResource CommonTextBoxStyle}"
+                                                             IsSpellCheckEnabled="False"/>
                                                 </StackPanel>
                                             </Grid>
 
@@ -314,7 +317,8 @@
                                                                      TextWrapping="Wrap" 
                                                                      MaxWidth="600"
                                                                      x:Name="questionTextBox"
-                                                                     Style="{ThemeResource CommonTextBoxStyle}"/>
+                                                                     Style="{ThemeResource CommonTextBoxStyle}"
+                                                                     IsSpellCheckEnabled="False"/>
 
                                                         </Grid>
                                                         <Grid>
@@ -336,7 +340,8 @@
                                                                      FontSize="{ThemeResource MediumFontSize}" 
                                                                      TextWrapping="Wrap"
                                                                      Style="{ThemeResource CommonTextBoxStyle}"
-                                                                     x:Name="answerTextBox"/>
+                                                                     x:Name="answerTextBox"
+                                                                     IsSpellCheckEnabled="False"/>
 
                                                             <TextBlock Grid.Column="2" 
                                                                        Text="Érték"  
@@ -349,7 +354,8 @@
                                                                                  FontSize="{ThemeResource MediumFontSize}"
                                                                                  Style="{ThemeResource CommonTextBoxStyle}"
                                                                                  ValidateNumbers="True"
-                                                                                 x:Name="valueTextBox"/>
+                                                                                 x:Name="valueTextBox"
+                                                                                 IsSpellCheckEnabled="False"/>
                                                         </Grid>
                                                     </StackPanel>
                                                 </DataTemplate>

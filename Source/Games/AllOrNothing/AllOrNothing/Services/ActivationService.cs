@@ -1,19 +1,13 @@
 ﻿using AllOrNothing.Activation;
 using AllOrNothing.Contracts.Services;
-using AllOrNothing.Data;
-using AllOrNothing.Repository;
 using AllOrNothing.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.Core;
 
 namespace AllOrNothing.Services
 {
@@ -29,7 +23,7 @@ namespace AllOrNothing.Services
         #endregion
 
         #region Constructors
-        public ActivationService(ActivationHandler<LaunchActivatedEventArgs> defaultHandler, IEnumerable<IActivationHandler> activationHandlers, 
+        public ActivationService(ActivationHandler<LaunchActivatedEventArgs> defaultHandler, IEnumerable<IActivationHandler> activationHandlers,
             INavigationService navigationService, IThemeSelectorService themeSelectorService, ILogger<ActivationService> logger)
         {
             _defaultHandler = defaultHandler;
@@ -92,7 +86,7 @@ namespace AllOrNothing.Services
             ////create database if not exists
             //using (var serviceScope = Ioc.Default.GetService<IServiceScopeFactory>().CreateScope())
             //{
-                
+
             //    var path = @$"{System.AppDomain.CurrentDomain.BaseDirectory}\AllOrNothingDb.db";
             //    bool dbExistedBefore = File.Exists(path);
 

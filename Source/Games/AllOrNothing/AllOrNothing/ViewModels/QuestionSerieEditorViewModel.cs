@@ -1,6 +1,5 @@
 ﻿using AllOrNothing.Contracts.Services;
 using AllOrNothing.Contracts.ViewModels;
-using AllOrNothing.Controls;
 using AllOrNothing.Data;
 using AllOrNothing.Helpers;
 using AllOrNothing.Mapping;
@@ -161,7 +160,7 @@ namespace AllOrNothing.ViewModels
             }
         }
 
-        public  async void Exit()
+        public async void Exit()
         {
             if (await PopupManager.ShowDialog(PageXamlRoot, "Biztosan kilép?", "Ha kilép, minden nem mentett módosítás elveszik.", ContentDialogButton.Primary, "Igen", "Mégse") == ContentDialogResult.Primary)
             {
@@ -193,7 +192,7 @@ namespace AllOrNothing.ViewModels
                             mapped.Topics[i].Competences[j] = _unitOfWork.Competences.Get(EditingSerie.Topics[i].Competences[j].Id);
                         }
                     }
-                    _unitOfWork.QuestionSeries.Add(mapped);                   
+                    _unitOfWork.QuestionSeries.Add(mapped);
                 }
                 else if (serieChanged)
                 {
@@ -237,7 +236,7 @@ namespace AllOrNothing.ViewModels
             {
                 dialogTitle = "Sikertelen mentés";
                 dialogContent = "Sikertelen mentés! Töltse ki az összes kötelező mezőt! (Cím, téma címek, kérdések, válaszok, kérdések értékei)";
-                         
+
             }
             PopupManager.ShowDialog(PageXamlRoot, dialogTitle, dialogContent, ContentDialogButton.Close, "", "Ok");
         }

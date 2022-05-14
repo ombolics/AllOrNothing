@@ -3,7 +3,6 @@ using AllOrNothing.Models;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Imaging;
-using System.Runtime.Serialization;
 using System.Text.Json;
 using Windows.ApplicationModel.DataTransfer;
 
@@ -127,7 +126,7 @@ namespace AllOrNothing.Services.DragAndDrop
                     args.Data.SetText(JsonSerializer.Serialize(tb.Player));
                 }
 
-               
+
                 if (visualConfiguration.DropOverImage != null)
                 {
                     args.DragUI.SetContentFromBitmapImage(visualConfiguration.DragStartingImage as BitmapImage);

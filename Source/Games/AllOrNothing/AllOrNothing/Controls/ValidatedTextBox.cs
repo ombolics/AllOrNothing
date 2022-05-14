@@ -11,7 +11,7 @@ namespace AllOrNothing.Controls
 
         #region Constructors
         public ValidatedTextBox()
-        {         
+        {
             LostFocus += ValidatedTextBox_LostFocus;
             _originalContent = "";
         }
