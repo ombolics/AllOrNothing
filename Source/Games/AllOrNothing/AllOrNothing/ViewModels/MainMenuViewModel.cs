@@ -53,7 +53,7 @@ namespace AllOrNothing.ViewModels
         {
             var vm = Ioc.Default.GetService<GameSettingsViewModel>();
             if (vm.GameInProgress &&
-                await PopupManager.ShowDialog(PageXamlRoot, "Új játékor kezd?", "Egy játék jelenleg is aktív! Ha új játékot kezd, a jelenlegi játék összes eredménye elveszik!",
+                await PopupManager.ShowDialog(PageXamlRoot, "Új játékot kezd?", "Egy játék jelenleg is aktív! Ha új játékot kezd, a jelenlegi játék összes eredménye elveszik!",
                 ContentDialogButton.Primary, "Igen", "Mégse") != ContentDialogResult.Primary)
             {
                 return;
