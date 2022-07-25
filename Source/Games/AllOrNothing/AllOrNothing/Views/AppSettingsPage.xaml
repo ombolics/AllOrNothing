@@ -13,7 +13,7 @@
     <Grid Margin="{StaticResource MediumLeftRightMargin}">
         <StackPanel x:Name="ContentArea">
             <!-- For future usage -->
-            <!--<StackPanel Margin="{StaticResource SmallTopBottomMargin}">
+            <StackPanel Margin="{StaticResource SmallTopBottomMargin}">
                 <TextBlock x:Uid="Settings_Theme" />
 
                 <StackPanel Margin="{StaticResource XSmallTopMargin}">
@@ -47,7 +47,84 @@
                         </RadioButton.CommandParameter>
                     </RadioButton>
                 </StackPanel>
-            </StackPanel>-->
+            </StackPanel>
+
+            <StackPanel>
+                <TextBlock Text="Téma"
+                           Style="{ThemeResource TitleStyle}"/>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Column="0"
+                          Grid.Row="0"
+                        CornerRadius="10"
+                      Width="300"
+                      HorizontalAlignment="Left">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Border
+                            Background="#578791">
+                            <TextBlock Grid.Column="0" Text=" "/>
+                        </Border>
+                        <Border Grid.Column="1"
+                            Background="#91c4b1"/>
+                        <Border Grid.Column="2"
+                            Background="#cedfcc"/>
+                        <Border Grid.Column="3"
+                            Background="#e0ebde"/>
+                        
+                    </Grid>
+                    <RadioButton Grid.Column="1"
+                                 Grid.Row="0"
+                                 Command="{x:Bind ViewModel.Theme1Command}">
+                        <TextBlock Text="Zöld téma"/>
+                    </RadioButton>
+
+                    <Grid Grid.Column="0"
+                          Grid.Row="1"
+                        CornerRadius="10"
+                      Width="300"
+                      HorizontalAlignment="Left">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Border
+                            Background="#6E85B7">
+                            <TextBlock Grid.Column="0" Text=" "/>
+                        </Border>
+                        <Border Grid.Column="1"
+                            Background="#B2C8DF"/>
+                        <Border Grid.Column="2"
+                            Background="#C4D7E0"/>
+                        <Border Grid.Column="3"
+                            Background="#F8F9D7"/>
+
+                    </Grid>
+                    <RadioButton Grid.Column="1"
+                                 Grid.Row="1"
+                                 Command="{x:Bind ViewModel.Theme1Command}">
+                        <TextBlock Text="Zöld téma"/>
+                    </RadioButton>
+                </Grid>
+                
+            </StackPanel>
 
             <TextBlock Text="Tudnivalók az alkalmazásról" 
                        Style="{ThemeResource TitleStyle}" />

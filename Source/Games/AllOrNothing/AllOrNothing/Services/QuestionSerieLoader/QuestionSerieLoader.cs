@@ -1,5 +1,6 @@
 ﻿using AllOrNothing.Data;
 using AllOrNothing.Repository;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,12 +14,14 @@ namespace AllOrNothing.Services
         #region Fields
         private IUnitOfWork _unitOfWork;
         private List<Competence> _allCompetences;
+        private ILogger<QuestionSerieLoader> _logger;
         #endregion
 
         #region Constructors
-        public QuestionSerieLoader(IUnitOfWork unitOfWork)
+        public QuestionSerieLoader(IUnitOfWork unitOfWork, ILogger<QuestionSerieLoader> logger)
         {
             _unitOfWork = unitOfWork;
+            _logger = logger;
         }
         #endregion
 
@@ -57,7 +60,37 @@ namespace AllOrNothing.Services
             }
             return result;
         }
+        public Topic ParseOldTopic(string data, string rowDelimeter)
+        {
+            if (string.IsNullOrWhiteSpace(data))
+                return null;
 
+            if (string.IsNullOrEmpty(rowDelimeter))
+                throw new ArgumentException(nameof(rowDelimeter), "The row delimeter cannot be null or empty!");
+
+            var lines = data.Split(rowDelimeter);
+            Topic topic = new Topic()
+            {
+                Name = lines[0].Trim(),
+                Author = null,
+                Competences = null,
+                Description = null,
+            };
+
+            for (int i = 1; i < lines.Length; i++)
+            {
+                topic.Questions.Add(new Question
+                {
+                    Text = lines[i],
+                    Type = QuestionType.THEMATICAL,
+                    Resource = null,
+                    Answer = null,
+                    ResourceType = QuestionResourceType.TEXT,
+                    Value = i < 6 ? i * 1000 : 8000,
+                });
+            }
+            return topic;
+        }
         public override bool ParseOldFormat(string name, string content, out QuestionSerie value)
         {
             value = new QuestionSerie()
@@ -72,37 +105,17 @@ namespace AllOrNothing.Services
                 var topicArray = content.Split("\r\n\r\n");
                 foreach (var pack in topicArray)
                 {
-                    var line = pack.Split("\r\n");
-                    Topic topic = new Topic()
-                    {
-                        Name = line[0].Trim(),
-                        Author = null,
-                        Competences = null,
-                        Description = null,
-                    };
-
-                    for (int i = 1; i < line.Length; i++)
-                    {
-                        topic.Questions.Add(new Question
-                        {
-                            Text = line[i],
-                            Type = QuestionType.THEMATICAL,
-                            Resource = null,
-                            Answer = null,
-                            ResourceType = QuestionResourceType.TEXT,
-                            Value = i < 6 ? i * 1000 : 8000,
-                        });
-                    }
-                    value.Topics.Add(topic);
-                }
+                    var result = ParseOldTopic(pack, "\r\n");
+                    if (null != result)
+                        value.Topics.Add(result);
+                }                                
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
+                _logger.LogCritical(e, $"Error while parsing old serie format from file - {e.Message}");
                 value = null;
                 return false;
             }
-
 
             if (value.Topics.Count != 5 || !value.Topics.All(t => t.Questions.Count == 6))
             {
@@ -139,7 +152,7 @@ namespace AllOrNothing.Services
             }
             return author;
         }
-        public Topic ParseTopic(string data, string rowDelimeter)
+        public Topic ParseNewTopic(string data, string rowDelimeter)
         {
             var splitedWithDelimeter1 = data.Split(rowDelimeter);
             var line = splitedWithDelimeter1.Length < 2 ? data.Split("\r") : splitedWithDelimeter1;
@@ -209,7 +222,7 @@ namespace AllOrNothing.Services
                 Player author = ParseAuthor(splitedContent[0].Split(rowDelimeter)[1].Split("\r"));
                 foreach (var pack in splitedContent[1].Split("\r\n\r\n"))
                 {
-                    var topic = ParseTopic(pack, rowDelimeter);
+                    var topic = ParseNewTopic(pack, rowDelimeter);
                     topic.Author = author;
                     value.Topics.Add(topic);
                 }

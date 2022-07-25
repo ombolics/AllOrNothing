@@ -1,7 +1,8 @@
 {
   "profiles": {
     "AllOrNothing (Package)": {
-      "commandName": "MsixPackage"
+      "commandName": "MsixPackage",
+      "nativeDebugging": true
     },
     "AllOrNothing (Unpackaged)": {
       "commandName": "Executable",
