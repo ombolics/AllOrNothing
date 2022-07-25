@@ -57,7 +57,8 @@
 
                 <!--#region Player adding area-->
                 <ScrollViewer Grid.Column="0" 
-                              Style="{StaticResource NeutralContentControlStyle}">
+                              Style="{StaticResource NeutralContentControlStyle}"
+                              Background="{ThemeResource NeutralColor1}">
 
                     <StackPanel Orientation="Vertical"
                                 HorizontalAlignment="Stretch" 
@@ -66,7 +67,8 @@
                         <TextBlock Text="Játékosok" 
                                HorizontalAlignment="Stretch"
                                Margin="15,15,15,15"
-                               Style="{ThemeResource MainTitleStyle}"/>
+                               Style="{ThemeResource MainTitleStyle}"
+                               Foreground="{ThemeResource MainColor1}"/>
 
                         <AutoSuggestBox PlaceholderText="Játékos keresése" 
                                         QueryIcon="Find" 
@@ -96,10 +98,12 @@
                                     <DataTemplate>
 
                                         <StackPanel Orientation="Horizontal"
-                                                    Style="{ThemeResource SmallMainPanelStyle}">
+                                                    Style="{ThemeResource SmallMainPanelStyle}"
+                                                    Background="{ThemeResource MainColor2}">
 
                                             <TextBlock Text="{Binding Name}" 
                                                        Style="{ThemeResource CommonTextStyle}"
+                                                       Foreground="{ThemeResource MainColor1}"
                                                        Margin="5,5,5,5"/>
 
                                             <Button Background="Transparent"
@@ -129,11 +133,13 @@
 
                 <!--Teams-->
                 <ScrollViewer Grid.Column="1" 
-                              Style="{ThemeResource MainContentControlStyle}">
+                              Style="{ThemeResource MainContentControlStyle}"
+                              Background="{ThemeResource MainColor2}">
 
                     <StackPanel Orientation="Vertical">
                         <TextBlock Text="Csapatok" 
                                    Style="{ThemeResource MainTitleStyle}"
+                                   Foreground="{ThemeResource MainColor1}"
                                    Margin="15,15,15,15"/>
 
                         <ItemsControl ItemsSource="{x:Bind ViewModel.Teams, Mode=OneWay}"   >
@@ -149,7 +155,8 @@
                                     <StackPanel>
                                         <StackPanel Orientation="Vertical" 
                                                     AllowDrop="{Binding AllowDrop}"
-                                                    Style="{ThemeResource NeutralPanelStyle}">
+                                                    Style="{ThemeResource NeutralPanelStyle}"
+                                                    Background="{ThemeResource NeutralColor1}">
 
                                             <dd:DragDropService.Configuration>
                                                 <dd:DropConfiguration DropTextCommand="{Binding AddPlayerCommand}"/>
@@ -243,7 +250,8 @@
                 <Grid Grid.Column="1" 
                             HorizontalAlignment="Stretch" 
                             VerticalAlignment="Stretch" 
-                            Style="{ThemeResource MainGridStyle}">
+                            Style="{ThemeResource MainGridStyle}"
+                      Background="{ThemeResource MainColor2}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="*"/>
@@ -252,7 +260,8 @@
 
                     <TextBlock Grid.Row="0" Text="Játszma beállításai" 
                                    Margin="15,15,15,15"
-                                   Style="{ThemeResource MainTitleStyle}"/>
+                                   Style="{ThemeResource MainTitleStyle}"
+                               Foreground="{ThemeResource MainColor1}"/>
 
                     <Grid Grid.Row="1" 
                           VerticalAlignment="Center" 
@@ -264,12 +273,14 @@
 
                         <TextBlock Grid.Column="0" 
                                    Text="Alkalom neve:"
-                                   Style="{ThemeResource CommonTextStyle}"/>
+                                   Style="{ThemeResource CommonTextStyle}"
+                                   Foreground="{ThemeResource MainColor1}"/>
 
                         <TextBox Grid.Column="1" PlaceholderText="Pl.: Kvízklub 2022.04.10."
                                  Text="{x:Bind ViewModel.GameModel.GameSettings.OccasionName, Mode=TwoWay}"
                                  IsSpellCheckEnabled="False"
-                                 Style="{ThemeResource CommonTextBoxStyle}"/>
+                                 Style="{ThemeResource CommonTextBoxStyle}"
+                                 Foreground="{ThemeResource MainColor1}"/>
                     </Grid>
 
                     <StackPanel Grid.Row="2" 
@@ -278,11 +289,13 @@
                                 Margin="10,0,0,5">
 
                         <TextBlock Text="Fordulók száma:"
-                                   Style="{ThemeResource CommonTextStyle}"/>
+                                   Style="{ThemeResource CommonTextStyle}"
+                                   Foreground="{ThemeResource MainColor1}"/>
 
                         <cc:ValidatedTextBox ValidatedText="{x:Bind ViewModel.GameModel.GameSettings.NumberOfRounds, Mode=TwoWay}"
                                              ValidateNumbers="True"
                                              Style="{ThemeResource CommonTextBoxStyle}"
+                                             Foreground="{ThemeResource MainColor1}"
                                              IsSpellCheckEnabled="False"
                                              TextAlignment="Center"/>
                     </StackPanel>
@@ -292,7 +305,8 @@
                 <Grid Grid.Column="2"
                             HorizontalAlignment="Stretch" 
                             VerticalAlignment="Stretch" 
-                            Style="{ThemeResource NeutralGridStyle}">
+                            Style="{ThemeResource NeutralGridStyle}"
+                      Background="{ThemeResource NeutralColor1}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="*"/>
@@ -303,7 +317,8 @@
                                Text="Csapatok beállításai" 
                                HorizontalAlignment="Stretch"
                                Margin="15,15,15,15"
-                               Style="{ThemeResource MainTitleStyle}"/>
+                               Style="{ThemeResource MainTitleStyle}"
+                               Foreground="{ThemeResource MainColor1}"/>
 
                     <Grid Grid.Row="1" 
                           Margin="10,0,0,5" 
@@ -315,14 +330,18 @@
 
                         <TextBlock Grid.Column="0" 
                                    Text="Maximális csaptalétszám:"
-                                   Style="{ThemeResource CommonTextStyle}"/>
+                                   Style="{ThemeResource CommonTextStyle}"
+                                   
+                                   Foreground="{ThemeResource MainColor1}"/>
                         <cc:ValidatedTextBox Height="30"
                                              Grid.Column="1"
                                              TextAlignment="Center"
                                              ValidatedText="{x:Bind ViewModel.GameModel.GameSettings.MaxTeamSize, Mode=TwoWay}" 
                                              ValidateNumbers="True"
                                              IsSpellCheckEnabled="False"
-                                             Style="{ThemeResource MainTextBoxStyle}"/>
+                                             Style="{ThemeResource MainTextBoxStyle}"
+                                             Foreground="{ThemeResource MainColor1}"
+                                             Background="{ThemeResource MainColor3}"/>
                     </Grid>
 
                     <Button Grid.Row="2" 
@@ -339,7 +358,8 @@
 
                 <!--Setting3-->
                 <Grid Grid.Column="3"
-                      Style="{ThemeResource MainGridStyle}">
+                      Style="{ThemeResource MainGridStyle}"
+                      Background="{ThemeResource MainColor2}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="*"/>
@@ -350,7 +370,8 @@
                     <TextBlock Grid.Row="0" Text="Játékmódok" 
                                HorizontalAlignment="Stretch" 
                                Margin="15,15,15,15"
-                               Style="{ThemeResource MainTitleStyle}"/>
+                               Style="{ThemeResource MainTitleStyle}"
+                               Foreground="{ThemeResource MainColor1}"/>
 
                     <StackPanel Grid.Row="1" Orientation="Horizontal"
                                 VerticalAlignment="Stretch"
@@ -432,6 +453,7 @@
                            Text="Körök beosztása"
                            Margin="10,10,10,10"
                            Style="{ThemeResource MainTitleStyle}"
+                           Foreground="{ThemeResource MainColor1}"
                            Visibility="{x:Bind ViewModel.SelectedRound.IsFinalRound, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=negate}"/>
 
                 <ListView Grid.Row="1" 
@@ -448,6 +470,7 @@
                           VerticalAlignment="Stretch"
                           AllowDrop="True"
                           Style="{ThemeResource MainListViewStyle}"
+                          Background="{ThemeResource MainColor2}"
                           ItemClick="{x:Bind ViewModel.RoundSelected}"
                           Padding="0,0,0,0">
 
@@ -494,6 +517,7 @@
                                                     CornerRadius="5">
                                                 <TextBlock Text="{Binding TeamName}"
                                                            Style="{ThemeResource TitleStyle}"
+                                                           Foreground="{ThemeResource MainColor1}"
                                                            Margin=" 5,5,5,5"
                                                            TextWrapping="WrapWholeWords"/>
                                             </Border>
@@ -558,6 +582,7 @@
                     <!--Gamemode related stuff-->
                     <Grid Grid.Column="0"
                           Style="{ThemeResource NeutralGridStyle}"
+                          Background="{ThemeResource NeutralColor1}"
                           HorizontalAlignment="Stretch" 
                           VerticalAlignment="Stretch">
                         <Grid.RowDefinitions>
@@ -570,6 +595,7 @@
                                    Text="Játékmódok"
                                    HorizontalAlignment="Stretch"
                                    Style="{ThemeResource MainTitleStyle}"
+                                   Foreground="{ThemeResource MainColor1}"
                                    Margin="10,10,10,10"/>
 
                         <StackPanel Grid.Row="1" 
@@ -641,6 +667,7 @@
                 <!--QuestionSeries-->
                 <Grid Grid.Row="1"
                       Style="{ThemeResource NeutralGridStyle}"
+                      Background="{ThemeResource NeutralColor1}"
                       HorizontalAlignment="Stretch" 
                       VerticalAlignment="Stretch">
 
@@ -658,6 +685,7 @@
                         <TextBlock Grid.Column="0"
                                    Text="Kérdéssorok"
                                    Style="{ThemeResource MainTitleStyle}"
+                                   Foreground="{ThemeResource MainColor1}"
                                    Margin="10,10,10,10"/>
 
                         <Button Grid.Column="1" 

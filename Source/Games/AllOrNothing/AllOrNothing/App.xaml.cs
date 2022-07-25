@@ -29,10 +29,10 @@ namespace AllOrNothing
 
             Ioc.Default.ConfigureServices(ConfigureServices());
 
-            StorageFolder folder = ApplicationData.Current.LocalFolder;
-            // Tell the logging service to use Serilog.File extension.
-            string fullPath = $"{folder.Path}\\Logs\\App.log";
-            Ioc.Default.GetService<ILoggerFactory>().AddFile(fullPath);
+            //StorageFolder folder = ApplicationData.Current.LocalFolder;
+            //// Tell the logging service to use Serilog.File extension.
+            //string fullPath = $"{folder.Path}\\Logs\\App.log";
+            //Ioc.Default.GetService<ILoggerFactory>().AddFile(fullPath);
             _logger = Ioc.Default.GetService<ILogger<App>>();
 
 

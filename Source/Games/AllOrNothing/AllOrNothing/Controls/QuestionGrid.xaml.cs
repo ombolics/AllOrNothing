@@ -125,7 +125,7 @@ namespace AllOrNothing.Controls
                 Grid.SetRow(headerButton, 0);
                 for (int j = 1; j < _questionSerie.Topics[i].Questions.Count + 1; j++)
                 {
-                    QuestionButton b = new QuestionButton(_questionSerie.Topics[i].Questions[j - 1])
+                    QuestionButton b = new QuestionButton(_questionSerie.Topics[i].Questions[j - 1], _questionSerie.Topics[i].Name)
                     {
                         CornerRadius = new CornerRadius(10),
                         Background = new SolidColorBrush(Color.FromArgb(255, 255, 255, 255)),

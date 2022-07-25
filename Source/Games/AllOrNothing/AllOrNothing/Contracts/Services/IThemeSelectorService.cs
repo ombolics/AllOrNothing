@@ -5,11 +5,11 @@ namespace AllOrNothing.Contracts.Services
 {
     public interface IThemeSelectorService
     {
-        ElementTheme Theme { get; }
+        UITheme Theme { get; }
 
         Task InitializeAsync();
 
-        Task SetThemeAsync(ElementTheme theme);
+        Task SetThemeAsync(UITheme theme);
 
         Task SetRequestedThemeAsync();
     }

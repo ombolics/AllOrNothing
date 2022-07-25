@@ -6,4 +6,6 @@
         <Setter Property="Background" Value="{ThemeResource SystemControlAccentAcrylicWindowAccentMediumHighBrush}" />
     </Style>
 
+    <SolidColorBrush x:Key="NavigationViewTopPaneBackground" Color="{ThemeResource MainColor1}" />
+
 </ResourceDictionary>

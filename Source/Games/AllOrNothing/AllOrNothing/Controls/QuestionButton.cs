@@ -7,19 +7,20 @@ namespace AllOrNothing.Controls
     {
         public QuestionButton()
         {
-
         }
+        private string _topicName;
         private QuestionDto _question;
         public QuestionDto Question
         {
             get => _question;
             set => _question = value;
-
         }
 
-        public QuestionButton(QuestionDto question) : base()
+        public string TopicName { get; set; }
+        public QuestionButton(QuestionDto question, string topicName) : base()
         {
             _question = question;
+            _topicName = topicName;
         }
     }
 }

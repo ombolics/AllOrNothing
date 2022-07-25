@@ -13,8 +13,8 @@
     Background="Transparent">
 
     <Page.Resources>
-        <SolidColorBrush x:Key="NavigationViewTopPaneBackground" Color="{ThemeResource MainColor1}" />
-        <!--<SolidColorBrush x:Key="NavigationViewItemForeground" Color="White"/>-->
+        <!--<SolidColorBrush x:Key="NavigationViewTopPaneBackground" Color="{ThemeResource MainColor1}" />-->
+        <SolidColorBrush x:Key="NavigationViewItemForeground" Color="White"/>
     </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -39,7 +39,7 @@
                     IsBackButtonVisible="Collapsed"
                     IsBackEnabled="{x:Bind ViewModel.IsBackEnabled, Mode=OneWay}"
                     SelectedItem="{x:Bind ViewModel.Selected, Mode=OneWay}"
-                    IsSettingsVisible="False"
+                    IsSettingsVisible="True"
                     IsPaneToggleButtonVisible="True"
                     ExpandedModeThresholdWidth="1280"
                     PaneDisplayMode="Top"
